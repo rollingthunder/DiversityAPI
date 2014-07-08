@@ -1,0 +1,144 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6D76AA66-D37B-4A90-9255-9FC60ABCB8A6}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API", "DiversityService.API\DiversityService.API.csproj", "{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{257B821C-5795-4A0D-9B50-165ABA114CCC}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureWebsitePublishModule.psm1 = PublishScripts\AzureWebsitePublishModule.psm1
+		PublishScripts\Publish-WebApplicationWebsite.ps1 = PublishScripts\Publish-WebApplicationWebsite.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{586D50E0-49CF-44D2-9C61-447C46BA170C}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\DiversityServiceAPIWebHost-WAWS-dev.json = PublishScripts\Configurations\DiversityServiceAPIWebHost-WAWS-dev.json
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.Test", "DiversityService.API.Test\DiversityService.API.Test.csproj", "{015E3ED1-A751-435A-A608-487D088494FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.WebHost", "DiversityService.API.WebHost\DiversityService.API.WebHost.csproj", "{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.Model", "DiversityService.API.Model\DiversityService.API.Model.csproj", "{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.Resources", "DiversityService.API.Resources\DiversityService.API.Resources.csproj", "{ABC6C87E-371B-4547-9C01-D007D3C9C170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.Collection", "DiversityService.API.Collection\DiversityService.API.Collection.csproj", "{49E502EF-2918-4098-AFC4-4461BE012684}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|x64.ActiveCfg = Release|Any CPU
+		{0FC0DE5E-B18F-4C16-AF70-B77F1DF8BB35}.Release|x86.ActiveCfg = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|x64.ActiveCfg = Release|Any CPU
+		{015E3ED1-A751-435A-A608-487D088494FB}.Release|x86.ActiveCfg = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|x64.ActiveCfg = Release|Any CPU
+		{B6DF982C-AECD-42CF-920C-0C0ED3D3CE9A}.Release|x86.ActiveCfg = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|x64.ActiveCfg = Release|Any CPU
+		{0BDD8E4F-945E-4124-A914-C7FF50EA4E3C}.Release|x86.ActiveCfg = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|ARM.ActiveCfg = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|x64.ActiveCfg = Release|Any CPU
+		{ABC6C87E-371B-4547-9C01-D007D3C9C170}.Release|x86.ActiveCfg = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|ARM.ActiveCfg = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|x64.ActiveCfg = Release|Any CPU
+		{49E502EF-2918-4098-AFC4-4461BE012684}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{586D50E0-49CF-44D2-9C61-447C46BA170C} = {257B821C-5795-4A0D-9B50-165ABA114CCC}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = DiversityPhone.vsmdi
+	EndGlobalSection
+EndGlobal

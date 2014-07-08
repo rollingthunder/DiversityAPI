@@ -1,0 +1,505 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DiversityMobile.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.TaxRef_BfN_VPlants' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TaxRef_BfN_VPlants">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="Synonymy" />
+          </Key>
+          <Property Name="NameURI" Type="varchar" MaxLength="285" />
+          <Property Name="TaxonNameCache" Type="nvarchar" MaxLength="125" />
+          <Property Name="TaxonNameSinAuthors" Type="nvarchar" MaxLength="1058" />
+          <Property Name="GenusOrSupragenericName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="InfraspecificEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="Synonymy" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="200" />
+          <Property Name="Order" Type="nvarchar" MaxLength="200" />
+          <Property Name="AcceptedNameCache" Type="nvarchar" MaxLength="255" />
+          <Property Name="AcceptedNameURI" Type="varchar" MaxLength="285" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.TaxRef_DGfM_Fungi' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TaxRef_DGfM_Fungi">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="Synonymy" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="varchar" MaxLength="285" />
+          <Property Name="TaxonNameCache" Type="nvarchar" MaxLength="255" />
+          <Property Name="TaxonNameSinAuthors" Type="nvarchar" MaxLength="1058" />
+          <Property Name="GenusOrSupragenericName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="InfraspecificEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="Synonymy" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="200" />
+          <Property Name="Order" Type="nvarchar" MaxLength="200" />
+          <Property Name="AcceptedNameCache" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.TaxRef_LIAS_Erys_DE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TaxRef_LIAS_Erys_DE">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="varchar" MaxLength="285" />
+          <Property Name="TaxonNameCache" Type="nvarchar" MaxLength="125" />
+          <Property Name="TaxonNameSinAuthors" Type="nvarchar" MaxLength="1058" />
+          <Property Name="GenusOrSupragenericName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="InfraspecificEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="Synonymy" Type="nvarchar" MaxLength="255" />
+          <Property Name="Family" Type="varchar" MaxLength="12" />
+          <Property Name="Order" Type="varchar" MaxLength="11" />
+          <Property Name="AcceptedNameCache" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.TaxRef_LIAS_Lichens_DE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TaxRef_LIAS_Lichens_DE">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="Synonymy" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="nvarchar" MaxLength="255" />
+          <Property Name="TaxonNameCache" Type="nvarchar" MaxLength="255" />
+          <Property Name="TaxonNameSinAuthors" Type="nvarchar" MaxLength="1058" />
+          <Property Name="GenusOrSupragenericName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="InfraspecificEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="Synonymy" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Family" Type="nvarchar" MaxLength="200" />
+          <Property Name="Order" Type="nvarchar" MaxLength="200" />
+          <Property Name="AcceptedNameCache" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.TaxRef_LIAS_LichFungi_DE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TaxRef_LIAS_LichFungi_DE">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="nvarchar" MaxLength="255" />
+          <Property Name="TaxonNameCache" Type="nvarchar" MaxLength="255" />
+          <Property Name="TaxonNameSinAuthors" Type="nvarchar" MaxLength="1058" />
+          <Property Name="GenusOrSupragenericName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="InfraspecificEpithet" Type="nvarchar" MaxLength="100" />
+          <Property Name="Synonymy" Type="nvarchar" MaxLength="255" />
+          <Property Name="Family" Type="nvarchar" MaxLength="200" />
+          <Property Name="Order" Type="nvarchar" MaxLength="200" />
+          <Property Name="AcceptedNameCache" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="varchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.Terms_LebensraumTypen' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Terms_LebensraumTypen">
+          <Key>
+            <PropertyRef Name="PropertyID" />
+            <PropertyRef Name="DisplayText" />
+            <PropertyRef Name="TermID" />
+          </Key>
+          <Property Name="PropertyID" Type="int" Nullable="false" />
+          <Property Name="PropertyURI" Type="varchar" MaxLength="285" />
+          <Property Name="DisplayText" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="HierarchyCache" Type="nvarchar" MaxLength="400" />
+          <Property Name="TermID" Type="int" Nullable="false" />
+          <Property Name="BroaderTermID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DiversityMobile.dbo.Terms_Pflanzengesellschaften' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Terms_Pflanzengesellschaften">
+          <Key>
+            <PropertyRef Name="PropertyID" />
+            <PropertyRef Name="DisplayText" />
+            <PropertyRef Name="TermID" />
+          </Key>
+          <Property Name="PropertyID" Type="int" Nullable="false" />
+          <Property Name="PropertyURI" Type="varchar" MaxLength="285" />
+          <Property Name="DisplayText" Type="nvarchar" MaxLength="400" Nullable="false" />
+          <Property Name="HierarchyCache" Type="nvarchar" MaxLength="1609" />
+          <Property Name="TermID" Type="int" Nullable="false" />
+          <Property Name="BroaderTermID" Type="int" />
+        </EntityType>
+        <EntityContainer Name="DiversityMobileStoreContainer">
+          <EntitySet Name="TaxRef_BfN_VPlants" EntityType="Self.TaxRef_BfN_VPlants" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TaxRef_BfN_VPlants].[NameURI] AS [NameURI], 
+    [TaxRef_BfN_VPlants].[TaxonNameCache] AS [TaxonNameCache], 
+    [TaxRef_BfN_VPlants].[TaxonNameSinAuthors] AS [TaxonNameSinAuthors], 
+    [TaxRef_BfN_VPlants].[GenusOrSupragenericName] AS [GenusOrSupragenericName], 
+    [TaxRef_BfN_VPlants].[SpeciesEpithet] AS [SpeciesEpithet], 
+    [TaxRef_BfN_VPlants].[InfraspecificEpithet] AS [InfraspecificEpithet], 
+    [TaxRef_BfN_VPlants].[Synonymy] AS [Synonymy], 
+    [TaxRef_BfN_VPlants].[Family] AS [Family], 
+    [TaxRef_BfN_VPlants].[Order] AS [Order], 
+    [TaxRef_BfN_VPlants].[AcceptedNameCache] AS [AcceptedNameCache], 
+    [TaxRef_BfN_VPlants].[AcceptedNameURI] AS [AcceptedNameURI]
+    FROM [dbo].[TaxRef_BfN_VPlants] AS [TaxRef_BfN_VPlants]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TaxRef_DGfM_Fungi" EntityType="Self.TaxRef_DGfM_Fungi" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TaxRef_DGfM_Fungi].[NameURI] AS [NameURI], 
+    [TaxRef_DGfM_Fungi].[TaxonNameCache] AS [TaxonNameCache], 
+    [TaxRef_DGfM_Fungi].[TaxonNameSinAuthors] AS [TaxonNameSinAuthors], 
+    [TaxRef_DGfM_Fungi].[GenusOrSupragenericName] AS [GenusOrSupragenericName], 
+    [TaxRef_DGfM_Fungi].[SpeciesEpithet] AS [SpeciesEpithet], 
+    [TaxRef_DGfM_Fungi].[InfraspecificEpithet] AS [InfraspecificEpithet], 
+    [TaxRef_DGfM_Fungi].[Synonymy] AS [Synonymy], 
+    [TaxRef_DGfM_Fungi].[Family] AS [Family], 
+    [TaxRef_DGfM_Fungi].[Order] AS [Order], 
+    [TaxRef_DGfM_Fungi].[AcceptedNameCache] AS [AcceptedNameCache], 
+    [TaxRef_DGfM_Fungi].[AcceptedNameURI] AS [AcceptedNameURI]
+    FROM [dbo].[TaxRef_DGfM_Fungi] AS [TaxRef_DGfM_Fungi]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TaxRef_LIAS_Erys_DE" EntityType="Self.TaxRef_LIAS_Erys_DE" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TaxRef_LIAS_Erys_DE].[NameURI] AS [NameURI], 
+    [TaxRef_LIAS_Erys_DE].[TaxonNameCache] AS [TaxonNameCache], 
+    [TaxRef_LIAS_Erys_DE].[TaxonNameSinAuthors] AS [TaxonNameSinAuthors], 
+    [TaxRef_LIAS_Erys_DE].[GenusOrSupragenericName] AS [GenusOrSupragenericName], 
+    [TaxRef_LIAS_Erys_DE].[SpeciesEpithet] AS [SpeciesEpithet], 
+    [TaxRef_LIAS_Erys_DE].[InfraspecificEpithet] AS [InfraspecificEpithet], 
+    [TaxRef_LIAS_Erys_DE].[Synonymy] AS [Synonymy], 
+    [TaxRef_LIAS_Erys_DE].[Family] AS [Family], 
+    [TaxRef_LIAS_Erys_DE].[Order] AS [Order], 
+    [TaxRef_LIAS_Erys_DE].[AcceptedNameCache] AS [AcceptedNameCache], 
+    [TaxRef_LIAS_Erys_DE].[AcceptedNameURI] AS [AcceptedNameURI]
+    FROM [dbo].[TaxRef_LIAS_Erys_DE] AS [TaxRef_LIAS_Erys_DE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TaxRef_LIAS_Lichens_DE" EntityType="Self.TaxRef_LIAS_Lichens_DE" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TaxRef_LIAS_Lichens_DE].[NameURI] AS [NameURI], 
+    [TaxRef_LIAS_Lichens_DE].[TaxonNameCache] AS [TaxonNameCache], 
+    [TaxRef_LIAS_Lichens_DE].[TaxonNameSinAuthors] AS [TaxonNameSinAuthors], 
+    [TaxRef_LIAS_Lichens_DE].[GenusOrSupragenericName] AS [GenusOrSupragenericName], 
+    [TaxRef_LIAS_Lichens_DE].[SpeciesEpithet] AS [SpeciesEpithet], 
+    [TaxRef_LIAS_Lichens_DE].[InfraspecificEpithet] AS [InfraspecificEpithet], 
+    [TaxRef_LIAS_Lichens_DE].[Synonymy] AS [Synonymy], 
+    [TaxRef_LIAS_Lichens_DE].[Family] AS [Family], 
+    [TaxRef_LIAS_Lichens_DE].[Order] AS [Order], 
+    [TaxRef_LIAS_Lichens_DE].[AcceptedNameCache] AS [AcceptedNameCache], 
+    [TaxRef_LIAS_Lichens_DE].[AcceptedNameURI] AS [AcceptedNameURI]
+    FROM [dbo].[TaxRef_LIAS_Lichens_DE] AS [TaxRef_LIAS_Lichens_DE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TaxRef_LIAS_LichFungi_DE" EntityType="Self.TaxRef_LIAS_LichFungi_DE" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TaxRef_LIAS_LichFungi_DE].[NameURI] AS [NameURI], 
+    [TaxRef_LIAS_LichFungi_DE].[TaxonNameCache] AS [TaxonNameCache], 
+    [TaxRef_LIAS_LichFungi_DE].[TaxonNameSinAuthors] AS [TaxonNameSinAuthors], 
+    [TaxRef_LIAS_LichFungi_DE].[GenusOrSupragenericName] AS [GenusOrSupragenericName], 
+    [TaxRef_LIAS_LichFungi_DE].[SpeciesEpithet] AS [SpeciesEpithet], 
+    [TaxRef_LIAS_LichFungi_DE].[InfraspecificEpithet] AS [InfraspecificEpithet], 
+    [TaxRef_LIAS_LichFungi_DE].[Synonymy] AS [Synonymy], 
+    [TaxRef_LIAS_LichFungi_DE].[Family] AS [Family], 
+    [TaxRef_LIAS_LichFungi_DE].[Order] AS [Order], 
+    [TaxRef_LIAS_LichFungi_DE].[AcceptedNameCache] AS [AcceptedNameCache], 
+    [TaxRef_LIAS_LichFungi_DE].[AcceptedNameURI] AS [AcceptedNameURI]
+    FROM [dbo].[TaxRef_LIAS_LichFungi_DE] AS [TaxRef_LIAS_LichFungi_DE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Terms_LebensraumTypen" EntityType="Self.Terms_LebensraumTypen" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Terms_LebensraumTypen].[PropertyID] AS [PropertyID], 
+    [Terms_LebensraumTypen].[PropertyURI] AS [PropertyURI], 
+    [Terms_LebensraumTypen].[DisplayText] AS [DisplayText], 
+    [Terms_LebensraumTypen].[HierarchyCache] AS [HierarchyCache], 
+    [Terms_LebensraumTypen].[TermID] AS [TermID], 
+    [Terms_LebensraumTypen].[BroaderTermID] AS [BroaderTermID]
+    FROM [dbo].[Terms_LebensraumTypen] AS [Terms_LebensraumTypen]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Terms_Pflanzengesellschaften" EntityType="Self.Terms_Pflanzengesellschaften" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Terms_Pflanzengesellschaften].[PropertyID] AS [PropertyID], 
+    [Terms_Pflanzengesellschaften].[PropertyURI] AS [PropertyURI], 
+    [Terms_Pflanzengesellschaften].[DisplayText] AS [DisplayText], 
+    [Terms_Pflanzengesellschaften].[HierarchyCache] AS [HierarchyCache], 
+    [Terms_Pflanzengesellschaften].[TermID] AS [TermID], 
+    [Terms_Pflanzengesellschaften].[BroaderTermID] AS [BroaderTermID]
+    FROM [dbo].[Terms_Pflanzengesellschaften] AS [Terms_Pflanzengesellschaften]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DiversityMobile" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TaxRef_BfN_VPlants">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="Synonymy" />
+          </Key>
+          <Property Name="NameURI" Type="String" MaxLength="285" FixedLength="false" Unicode="false" />
+          <Property Name="TaxonNameCache" Type="String" MaxLength="125" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameSinAuthors" Type="String" MaxLength="1058" FixedLength="false" Unicode="true" />
+          <Property Name="GenusOrSupragenericName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InfraspecificEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Synonymy" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Family" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptedNameCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptedNameURI" Type="String" MaxLength="285" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TaxRef_DGfM_Fungi">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="Synonymy" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="String" MaxLength="285" FixedLength="false" Unicode="false" />
+          <Property Name="TaxonNameCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameSinAuthors" Type="String" MaxLength="1058" FixedLength="false" Unicode="true" />
+          <Property Name="GenusOrSupragenericName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InfraspecificEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Synonymy" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Family" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptedNameCache" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxRef_LIAS_Erys_DE">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="String" MaxLength="285" FixedLength="false" Unicode="false" />
+          <Property Name="TaxonNameCache" Type="String" MaxLength="125" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameSinAuthors" Type="String" MaxLength="1058" FixedLength="false" Unicode="true" />
+          <Property Name="GenusOrSupragenericName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InfraspecificEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Synonymy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Family" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Order" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="AcceptedNameCache" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxRef_LIAS_Lichens_DE">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="Synonymy" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameSinAuthors" Type="String" MaxLength="1058" FixedLength="false" Unicode="true" />
+          <Property Name="GenusOrSupragenericName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InfraspecificEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Synonymy" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Family" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptedNameCache" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TaxRef_LIAS_LichFungi_DE">
+          <Key>
+            <PropertyRef Name="GenusOrSupragenericName" />
+            <PropertyRef Name="AcceptedNameCache" />
+            <PropertyRef Name="AcceptedNameURI" />
+          </Key>
+          <Property Name="NameURI" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TaxonNameSinAuthors" Type="String" MaxLength="1058" FixedLength="false" Unicode="true" />
+          <Property Name="GenusOrSupragenericName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SpeciesEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InfraspecificEpithet" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Synonymy" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Family" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AcceptedNameCache" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AcceptedNameURI" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Terms_LebensraumTypen">
+          <Key>
+            <PropertyRef Name="PropertyID" />
+            <PropertyRef Name="DisplayText" />
+            <PropertyRef Name="TermID" />
+          </Key>
+          <Property Name="PropertyID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyURI" Type="String" MaxLength="285" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayText" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HierarchyCache" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="TermID" Type="Int32" Nullable="false" />
+          <Property Name="BroaderTermID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Terms_Pflanzengesellschaften">
+          <Key>
+            <PropertyRef Name="PropertyID" />
+            <PropertyRef Name="DisplayText" />
+            <PropertyRef Name="TermID" />
+          </Key>
+          <Property Name="PropertyID" Type="Int32" Nullable="false" />
+          <Property Name="PropertyURI" Type="String" MaxLength="285" FixedLength="false" Unicode="false" />
+          <Property Name="DisplayText" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HierarchyCache" Type="String" MaxLength="1609" FixedLength="false" Unicode="true" />
+          <Property Name="TermID" Type="Int32" Nullable="false" />
+          <Property Name="BroaderTermID" Type="Int32" />
+        </EntityType>
+        <EntityContainer Name="Mobile" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TaxRef_BfN_VPlants" EntityType="Self.TaxRef_BfN_VPlants" />
+          <EntitySet Name="TaxRef_DGfM_Fungi" EntityType="Self.TaxRef_DGfM_Fungi" />
+          <EntitySet Name="TaxRef_LIAS_Erys_DE" EntityType="Self.TaxRef_LIAS_Erys_DE" />
+          <EntitySet Name="TaxRef_LIAS_Lichens_DE" EntityType="Self.TaxRef_LIAS_Lichens_DE" />
+          <EntitySet Name="TaxRef_LIAS_LichFungi_DE" EntityType="Self.TaxRef_LIAS_LichFungi_DE" />
+          <EntitySet Name="Terms_LebensraumTypen" EntityType="Self.Terms_LebensraumTypen" />
+          <EntitySet Name="Terms_Pflanzengesellschaften" EntityType="Self.Terms_Pflanzengesellschaften" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DiversityMobileStoreContainer" CdmEntityContainer="Mobile">
+          <EntitySetMapping Name="TaxRef_BfN_VPlants">
+            <EntityTypeMapping TypeName="DiversityMobile.TaxRef_BfN_VPlants">
+              <MappingFragment StoreEntitySet="TaxRef_BfN_VPlants">
+                <ScalarProperty Name="NameURI" ColumnName="NameURI" />
+                <ScalarProperty Name="TaxonNameCache" ColumnName="TaxonNameCache" />
+                <ScalarProperty Name="TaxonNameSinAuthors" ColumnName="TaxonNameSinAuthors" />
+                <ScalarProperty Name="GenusOrSupragenericName" ColumnName="GenusOrSupragenericName" />
+                <ScalarProperty Name="SpeciesEpithet" ColumnName="SpeciesEpithet" />
+                <ScalarProperty Name="InfraspecificEpithet" ColumnName="InfraspecificEpithet" />
+                <ScalarProperty Name="Synonymy" ColumnName="Synonymy" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="AcceptedNameCache" ColumnName="AcceptedNameCache" />
+                <ScalarProperty Name="AcceptedNameURI" ColumnName="AcceptedNameURI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxRef_DGfM_Fungi">
+            <EntityTypeMapping TypeName="DiversityMobile.TaxRef_DGfM_Fungi">
+              <MappingFragment StoreEntitySet="TaxRef_DGfM_Fungi">
+                <ScalarProperty Name="NameURI" ColumnName="NameURI" />
+                <ScalarProperty Name="TaxonNameCache" ColumnName="TaxonNameCache" />
+                <ScalarProperty Name="TaxonNameSinAuthors" ColumnName="TaxonNameSinAuthors" />
+                <ScalarProperty Name="GenusOrSupragenericName" ColumnName="GenusOrSupragenericName" />
+                <ScalarProperty Name="SpeciesEpithet" ColumnName="SpeciesEpithet" />
+                <ScalarProperty Name="InfraspecificEpithet" ColumnName="InfraspecificEpithet" />
+                <ScalarProperty Name="Synonymy" ColumnName="Synonymy" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="AcceptedNameCache" ColumnName="AcceptedNameCache" />
+                <ScalarProperty Name="AcceptedNameURI" ColumnName="AcceptedNameURI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxRef_LIAS_Erys_DE">
+            <EntityTypeMapping TypeName="DiversityMobile.TaxRef_LIAS_Erys_DE">
+              <MappingFragment StoreEntitySet="TaxRef_LIAS_Erys_DE">
+                <ScalarProperty Name="NameURI" ColumnName="NameURI" />
+                <ScalarProperty Name="TaxonNameCache" ColumnName="TaxonNameCache" />
+                <ScalarProperty Name="TaxonNameSinAuthors" ColumnName="TaxonNameSinAuthors" />
+                <ScalarProperty Name="GenusOrSupragenericName" ColumnName="GenusOrSupragenericName" />
+                <ScalarProperty Name="SpeciesEpithet" ColumnName="SpeciesEpithet" />
+                <ScalarProperty Name="InfraspecificEpithet" ColumnName="InfraspecificEpithet" />
+                <ScalarProperty Name="Synonymy" ColumnName="Synonymy" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="AcceptedNameCache" ColumnName="AcceptedNameCache" />
+                <ScalarProperty Name="AcceptedNameURI" ColumnName="AcceptedNameURI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxRef_LIAS_Lichens_DE">
+            <EntityTypeMapping TypeName="DiversityMobile.TaxRef_LIAS_Lichens_DE">
+              <MappingFragment StoreEntitySet="TaxRef_LIAS_Lichens_DE">
+                <ScalarProperty Name="NameURI" ColumnName="NameURI" />
+                <ScalarProperty Name="TaxonNameCache" ColumnName="TaxonNameCache" />
+                <ScalarProperty Name="TaxonNameSinAuthors" ColumnName="TaxonNameSinAuthors" />
+                <ScalarProperty Name="GenusOrSupragenericName" ColumnName="GenusOrSupragenericName" />
+                <ScalarProperty Name="SpeciesEpithet" ColumnName="SpeciesEpithet" />
+                <ScalarProperty Name="InfraspecificEpithet" ColumnName="InfraspecificEpithet" />
+                <ScalarProperty Name="Synonymy" ColumnName="Synonymy" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="AcceptedNameCache" ColumnName="AcceptedNameCache" />
+                <ScalarProperty Name="AcceptedNameURI" ColumnName="AcceptedNameURI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxRef_LIAS_LichFungi_DE">
+            <EntityTypeMapping TypeName="DiversityMobile.TaxRef_LIAS_LichFungi_DE">
+              <MappingFragment StoreEntitySet="TaxRef_LIAS_LichFungi_DE">
+                <ScalarProperty Name="NameURI" ColumnName="NameURI" />
+                <ScalarProperty Name="TaxonNameCache" ColumnName="TaxonNameCache" />
+                <ScalarProperty Name="TaxonNameSinAuthors" ColumnName="TaxonNameSinAuthors" />
+                <ScalarProperty Name="GenusOrSupragenericName" ColumnName="GenusOrSupragenericName" />
+                <ScalarProperty Name="SpeciesEpithet" ColumnName="SpeciesEpithet" />
+                <ScalarProperty Name="InfraspecificEpithet" ColumnName="InfraspecificEpithet" />
+                <ScalarProperty Name="Synonymy" ColumnName="Synonymy" />
+                <ScalarProperty Name="Family" ColumnName="Family" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="AcceptedNameCache" ColumnName="AcceptedNameCache" />
+                <ScalarProperty Name="AcceptedNameURI" ColumnName="AcceptedNameURI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Terms_LebensraumTypen">
+            <EntityTypeMapping TypeName="DiversityMobile.Terms_LebensraumTypen">
+              <MappingFragment StoreEntitySet="Terms_LebensraumTypen">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="PropertyURI" ColumnName="PropertyURI" />
+                <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
+                <ScalarProperty Name="HierarchyCache" ColumnName="HierarchyCache" />
+                <ScalarProperty Name="TermID" ColumnName="TermID" />
+                <ScalarProperty Name="BroaderTermID" ColumnName="BroaderTermID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Terms_Pflanzengesellschaften">
+            <EntityTypeMapping TypeName="DiversityMobile.Terms_Pflanzengesellschaften">
+              <MappingFragment StoreEntitySet="Terms_Pflanzengesellschaften">
+                <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
+                <ScalarProperty Name="PropertyURI" ColumnName="PropertyURI" />
+                <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
+                <ScalarProperty Name="HierarchyCache" ColumnName="HierarchyCache" />
+                <ScalarProperty Name="TermID" ColumnName="TermID" />
+                <ScalarProperty Name="BroaderTermID" ColumnName="BroaderTermID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

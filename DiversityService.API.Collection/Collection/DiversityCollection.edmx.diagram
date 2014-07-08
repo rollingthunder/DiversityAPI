@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7afbaecafd7d49f782ad924b08866c28" Name="Collection">
+        <EntityTypeShape EntityType="DiversityCollection.Analysis" Width="1.5" PointX="9.375" PointY="40.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.AnalysisResult" Width="1.5" PointX="11.625" PointY="44.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.Event" Width="2.625" PointX="0.75" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.EventProperty" Width="3.625" PointX="4.125" PointY="21.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.EventSeries" Width="2.25" PointX="2.625" PointY="37.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.EventSeriesImage" Width="3" PointX="2.25" PointY="41" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.Specimen" Width="1.5" PointX="4.125" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.SpecimenImage" Width="3" PointX="11.625" PointY="32.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.Identification" Width="1.5" PointX="8.625" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.IdentificationUnit" Width="2.375" PointX="5.75" PointY="34.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.IdentificationUnitAnalysis" Width="3.375" PointX="11.625" PointY="39.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.IdentificationUnitGeoAnalysis" Width="2.25" PointX="7.625" PointY="45.375" IsExpanded="true" />
+        <AssociationConnector Association="DiversityCollection.FK_AnalysisResult_Analysis" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationAnalysis_IdentificationAnalysis" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationUnitAnalysis_IdentificationAnalysis" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionEvent_CollectionEventSeries" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionEventProperty_CollectionEvent" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionSpecimen_CollectionEvent" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionEventSeriesImage_CollectionEventSeries" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionSpecimenImage_CollectionSpecimen" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationUnit_CollectionSpecimen" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionSpecimenImage_IdentificationUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_Identification_IdentificationUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationUnit_IdentificationUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationUnit_IdentificationUnit1" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationUnitAnalysis_IdentificationUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="DiversityCollection.FK_IdentificationUnitGeoAnalysis_IdentificationUnit" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DiversityCollection.CollectionAgent" Width="1.5" PointX="6.375" PointY="28.875" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionAgent_CollectionSpecimen" />
+        <EntityTypeShape EntityType="DiversityCollection.Property" Width="1.5" PointX="9.25" PointY="9.125" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionEventDescriptor_Descriptor" />
+        <AssociationConnector Association="DiversityCollection.FK_Descriptor_Descriptor" />
+        <EntityTypeShape EntityType="DiversityCollection.EventImage" Width="2.625" PointX="4.125" PointY="8.375" />
+        <AssociationConnector Association="DiversityCollection.FK_CollectionEventImage_CollectionEvent" />
+        <AssociationConnector Association="DiversityCollection.EventSeriesEventSeries" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -883,8 +883,8 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SeriesCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Geography" Type="Geography" />
-          <Property Name="StartDateUTC" Type="DateTime" Precision="3" />
-          <Property Name="EndDateUTC" Type="DateTime" Precision="3" />
+          <Property Name="StartDateLocal" Type="DateTime" Precision="3" />
+          <Property Name="EndDateLocal" Type="DateTime" Precision="3" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_CollectionEvent_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEvent" />
           <NavigationProperty Name="Images" Relationship="Self.FK_CollectionEventSeriesImage_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEventSeriesImage" />
@@ -923,19 +923,17 @@
         </EntityType>
         <EntityType Name="Specimen">
           <Key>
-            <PropertyRef Name="CollectionSpecimenID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="CollectionSpecimenID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Version" Type="Int32" Nullable="false" />
-          <Property Name="CollectionEventID" Type="Int32" />
-          <Property Name="CollectionID" Type="Int32" />
+          <Property Name="EventID" Type="Int32" />
           <Property Name="AccessionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="AccessionDate" Type="DateTime" Precision="3" />
           <Property Name="AccessionDay" Type="Byte" />
           <Property Name="AccessionMonth" Type="Byte" />
           <Property Name="AccessionYear" Type="Int16" />
-          <Property Name="AccessionDateSupplement" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="AccessionDateCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccessionDateCategory" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="DepositorsName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DepositorsAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="DepositorsAccessionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1037,10 +1035,10 @@
         <EntityType Name="IdentificationUnit">
           <Key>
             <PropertyRef Name="CollectionSpecimenID" />
-            <PropertyRef Name="IdentificationUnitID" />
+            <PropertyRef Name="Id" />
           </Key>
           <Property Name="CollectionSpecimenID" Type="Int32" Nullable="false" />
-          <Property Name="IdentificationUnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastIdentificationCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FamilyCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="OrderCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -1212,7 +1210,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CollectionSpecimen">
-              <PropertyRef Name="CollectionEventID" />
+              <PropertyRef Name="EventID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1235,7 +1233,7 @@
           <End Role="CollectionSpecimenImage" Type="DiversityCollection.SpecimenImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionSpecimen">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CollectionSpecimenImage">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1249,7 +1247,7 @@
           <End Role="IdentificationUnit" Type="Self.IdentificationUnit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionSpecimen">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1262,7 +1260,7 @@
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CollectionSpecimenImage">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1278,7 +1276,7 @@
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Identification">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1292,7 +1290,7 @@
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnit1">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1306,7 +1304,7 @@
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnit1">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1320,7 +1318,7 @@
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnitAnalysis">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1336,7 +1334,7 @@
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnitGeoAnalysis">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1468,7 +1466,7 @@
           <End Type="DiversityCollection.CollectionAgent" Role="CollectionAgent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Specimen">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CollectionAgent">
               <PropertyRef Name="CollectionSpecimenID" />
@@ -1648,8 +1646,8 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SeriesCode" ColumnName="SeriesCode" />
                 <ScalarProperty Name="Geography" ColumnName="Geography" />
-                <ScalarProperty Name="StartDateUTC" ColumnName="DateStart" />
-                <ScalarProperty Name="EndDateUTC" ColumnName="DateEnd" />
+                <ScalarProperty Name="StartDateLocal" ColumnName="DateStart" />
+                <ScalarProperty Name="EndDateLocal" ColumnName="DateEnd" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1685,16 +1683,14 @@
           <EntitySetMapping Name="CollectionSpecimen">
             <EntityTypeMapping TypeName="DiversityCollection.Specimen">
               <MappingFragment StoreEntitySet="CollectionSpecimen">
-                <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
+                <ScalarProperty Name="Id" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="CollectionEventID" ColumnName="CollectionEventID" />
-                <ScalarProperty Name="CollectionID" ColumnName="CollectionID" />
+                <ScalarProperty Name="EventID" ColumnName="CollectionEventID" />
                 <ScalarProperty Name="AccessionNumber" ColumnName="AccessionNumber" />
                 <ScalarProperty Name="AccessionDate" ColumnName="AccessionDate" />
                 <ScalarProperty Name="AccessionDay" ColumnName="AccessionDay" />
                 <ScalarProperty Name="AccessionMonth" ColumnName="AccessionMonth" />
                 <ScalarProperty Name="AccessionYear" ColumnName="AccessionYear" />
-                <ScalarProperty Name="AccessionDateSupplement" ColumnName="AccessionDateSupplement" />
                 <ScalarProperty Name="AccessionDateCategory" ColumnName="AccessionDateCategory" />
                 <ScalarProperty Name="DepositorsName" ColumnName="DepositorsName" />
                 <ScalarProperty Name="DepositorsAgentURI" ColumnName="DepositorsAgentURI" />
@@ -1792,7 +1788,7 @@
             <EntityTypeMapping TypeName="DiversityCollection.IdentificationUnit">
               <MappingFragment StoreEntitySet="IdentificationUnit">
                 <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
-                <ScalarProperty Name="IdentificationUnitID" ColumnName="IdentificationUnitID" />
+                <ScalarProperty Name="Id" ColumnName="IdentificationUnitID" />
                 <ScalarProperty Name="LastIdentificationCache" ColumnName="LastIdentificationCache" />
                 <ScalarProperty Name="FamilyCache" ColumnName="FamilyCache" />
                 <ScalarProperty Name="OrderCache" ColumnName="OrderCache" />

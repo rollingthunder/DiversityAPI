@@ -211,9 +211,6 @@
     <Compile Include="..\DiversityService.API.Model\CollectionServer.cs">
       <Link>Models\CollectionServer.cs</Link>
     </Compile>
-    <Compile Include="..\DiversityService.API.Model\EventSeries.cs">
-      <Link>Models\EventSeries.cs</Link>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -257,7 +254,9 @@
     <Compile Include="CollectionServerConfigurationSection.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MultimediaController.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -281,8 +280,10 @@
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CollectionServer.Internal.cs" />
+    <Compile Include="Models\Event.Validation.cs" />
     <Compile Include="Models\EventSeries.Validation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Specimen.Validation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -381,6 +382,10 @@
       <Project>{49e502ef-2918-4098-afc4-4461be012684}</Project>
       <Name>DiversityService.API.Collection</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DiversityService.API.Model\DiversityService.API.Model.csproj">
+      <Project>{0bdd8e4f-945e-4124-a914-c7ff50ea4e3c}</Project>
+      <Name>DiversityService.API.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DiversityService.API.Resources\DiversityService.API.Resources.csproj">
       <Project>{abc6c87e-371b-4547-9c01-d007d3c9c170}</Project>
       <Name>DiversityService.API.Resources</Name>
@@ -416,7 +421,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>58194</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52194/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -21,16 +21,14 @@ namespace DiversityService.Collection
             this.CollectionAgent = new HashSet<CollectionAgent>();
         }
     
-        public int CollectionSpecimenID { get; set; }
+        public int Id { get; set; }
         public int Version { get; set; }
-        public Nullable<int> CollectionEventID { get; set; }
-        public Nullable<int> CollectionID { get; set; }
+        public Nullable<int> EventID { get; set; }
         public string AccessionNumber { get; set; }
         public Nullable<System.DateTime> AccessionDate { get; set; }
         public Nullable<byte> AccessionDay { get; set; }
         public Nullable<byte> AccessionMonth { get; set; }
         public Nullable<short> AccessionYear { get; set; }
-        public string AccessionDateSupplement { get; set; }
         public string AccessionDateCategory { get; set; }
         public string DepositorsName { get; set; }
         public string DepositorsAgentURI { get; set; }

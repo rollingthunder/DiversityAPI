@@ -21,12 +21,13 @@ namespace DiversityService.API.WebHost
 
     public interface IRepository<T> where T : class, IIdentifiable
     {
+        IUnitOfWork Transaction { get; }
         IQueryable<T> All { get; }    
         IQueryable<T> AllEager(params Expression<Func<T, object>>[] includes); 
-        T Find(int id); 
+        Task<T> Find(int id); 
         void Insert(T entity); 
         void Update(T entity); 
-        void Delete(int id);
+        Task Delete(int id);
     }
 
     public interface IRepositoryFactory

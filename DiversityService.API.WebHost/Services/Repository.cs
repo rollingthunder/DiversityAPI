@@ -5,14 +5,24 @@
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading.Tasks;
     using System.Web;
 
     public class Repository<T> : IRepository<T> where T : class, IIdentifiable
     {
+        private readonly IUnitOfWork transaction;
         private readonly CollectionContext context;
         public Repository(IUnitOfWork uow)
         {
+            transaction = uow;
             context = uow.Context as CollectionContext;
+        }
+        public IUnitOfWork Transaction
+        {
+            get
+            {
+                return transaction;
+            }
         }
         public IQueryable<T> All
         {
@@ -30,9 +40,9 @@
             }
             return query;
         }
-        public T Find(int id)
+        public Task<T> Find(int id)
         {
-            return context.Set<T>().Find(id);
+            return context.Set<T>().FindAsync(id);
         }
         public void Insert(T item)
         {
@@ -42,9 +52,10 @@
         {
             context.Set<T>().Attach(item); context.Entry(item).State = EntityState.Modified;
         }
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var item = context.Set<T>().Find(id); context.Set<T>().Remove(item);
+            var item = await context.Set<T>().FindAsync(id); 
+            context.Set<T>().Remove(item);
         }
         public void Dispose()
         {

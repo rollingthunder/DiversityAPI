@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace DiversityService.API.WebHost.Controllers
 {
-    [Authorize]
     public class SeriesController : ApiController
     {
         private readonly IRepositoryFactory Repository;
@@ -40,54 +39,42 @@ namespace DiversityService.API.WebHost.Controllers
         }
 
         // GET api/series/5
-        public HttpResponseMessage Get(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
             var Series = this.Repository.Get<Collection.EventSeries>();
-            var series = Series.Find(id);
+            var series = await Series.Find(id);
 
             if (series == null)
             {
-                throw new HttpResponseException(new HttpResponseMessage()
-                {
-                    StatusCode = HttpStatusCode.NotFound,
-                    ReasonPhrase = Messages.Series_NotFound
-                });
+                return NotFound();
             }
 
-            var dto = new EventSeries();
-            Mapper.Map(series, dto);
+            var dto = Mapper.Map<EventSeries>(series);
 
-            return new HttpResponseMessage()
-            {
-                Content = new ObjectContent<EventSeries>(dto, Configuration.Formatters.JsonFormatter) 
-            };
+            return Json(dto);   
         }
 
         // POST api/values
         [ValidateModel]
-        public async Task<IHttpActionResult> Post(EventSeries value)
+        public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var Series = Repository.Get<Collection.EventSeries>();
+            var Series = Repository.Get<Collection.EventSeries>();            
 
             var series = Mapper.Map<Collection.EventSeries>(value);
 
             Series.Insert(series);
+            Series.Transaction.Save();
 
             return Json(series.Id);
         }
 
         // PUT api/values/5
         public void Put(int id, [FromBody]EventSeries value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
         {
         }
     }

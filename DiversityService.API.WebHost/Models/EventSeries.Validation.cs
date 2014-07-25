@@ -6,7 +6,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
-    public partial class EventSeries : IValidatableObject
+    public class EventSeriesBindingModel : EventSeriesUpload, IValidatableObject
     {
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -22,7 +22,7 @@
 
             if (this.EndDateUTC.HasValue)
             {
-                if(this.EndDateUTC.Value > this.StartDateUTC.Value)
+                if(this.EndDateUTC.Value < this.StartDateUTC.Value)
                 {
                     yield return new ValidationResult(Messages.Series_EndBeforeStart);
                 }
@@ -35,6 +35,12 @@
             if(string.IsNullOrWhiteSpace(this.Description))
             {
                 yield return new ValidationResult(Messages.Series_NoDescription);
+            }  
+         
+            // DB: Series Code (nvarchar(50))
+            if(this.Code != null && this.Code.Length > 50)
+            {
+                yield return new ValidationResult(Messages.Series_CodeTooLong);
             }
         }
     }

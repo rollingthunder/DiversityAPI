@@ -11,7 +11,7 @@
         <EntityTypeShape EntityType="DiversityCollection.EventProperty" Width="3.625" PointX="4.125" PointY="21.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.EventSeries" Width="2.25" PointX="2.625" PointY="37.25" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.EventSeriesImage" Width="3" PointX="2.25" PointY="41" IsExpanded="true" />
-        <EntityTypeShape EntityType="DiversityCollection.Specimen" Width="1.5" PointX="4.125" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiversityCollection.Specimen" Width="2.625" PointX="3.625" PointY="27.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.SpecimenImage" Width="3" PointX="11.625" PointY="32.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.Identification" Width="1.5" PointX="8.625" PointY="33.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.IdentificationUnit" Width="2.375" PointX="5.75" PointY="34.125" IsExpanded="true" />

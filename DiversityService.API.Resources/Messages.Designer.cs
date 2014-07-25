@@ -62,7 +62,43 @@ namespace DiversityService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Series must start before it ends.
+        ///   Looks up a localized string similar to The Event TimeStamp lies in the future..
+        /// </summary>
+        public static string Event_FutureDate {
+            get {
+                return ResourceManager.GetString("Event_FutureDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Event must have a Location Description..
+        /// </summary>
+        public static string Event_NoLocation {
+            get {
+                return ResourceManager.GetString("Event_NoLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Transaction Guid is missing..
+        /// </summary>
+        public static string No_TransactionGuid {
+            get {
+                return ResourceManager.GetString("No_TransactionGuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Series Code provided is more than 50 characters in length..
+        /// </summary>
+        public static string Series_CodeTooLong {
+            get {
+                return ResourceManager.GetString("Series_CodeTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Series must start before it ends..
         /// </summary>
         public static string Series_EndBeforeStart {
             get {
@@ -80,7 +116,7 @@ namespace DiversityService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Description may not be null, empty or consist entirely of whitespace.
+        ///   Looks up a localized string similar to The Description may not be null, empty or consist entirely of whitespace..
         /// </summary>
         public static string Series_NoDescription {
             get {
@@ -103,6 +139,24 @@ namespace DiversityService.API.Resources {
         public static string Series_NotFound {
             get {
                 return ResourceManager.GetString("Series_NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Specimen CollectionDate lies in the Future..
+        /// </summary>
+        public static string Specimen_FutureDate {
+            get {
+                return ResourceManager.GetString("Specimen_FutureDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The CollectionDate is a required Member..
+        /// </summary>
+        public static string Specimen_NoCollectionDate {
+            get {
+                return ResourceManager.GetString("Specimen_NoCollectionDate", resourceCulture);
             }
         }
     }

@@ -51,21 +51,22 @@ namespace DiversityService.API.Test
         }
 
         [Fact]
-        public void Returns_A_Series_By_Id()
+        public async void Returns_A_Series_By_Id()
         {
             // Arrange        
             int id = 12345;
-            var employee = new Collection.EventSeries()
+            var series = new Collection.EventSeries()
             {
                 Id = id,
                 SeriesCode = "TestCode",
                 Description = "TestDescription"
             };
-            this.Repository.Setup(x => x.Find(id)).Returns(employee);
+            this.Repository.Setup(x => x.Find(id)).Returns(Task.FromResult(series));
             this.CreateTarget();
 
             // Act   
-            HttpResponseMessage response = this.Target.Get(id);
+            var action = await this.Target.Get(id);
+            var response = await action.ExecuteAsync(CancellationToken.None);
 
             // Assert   
             Assert.NotNull(response);
@@ -74,14 +75,14 @@ namespace DiversityService.API.Test
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var content = (response.Content as ObjectContent<EventSeries>);
             var result = content.Value as EventSeries;
-            Assert.Equal(employee.Id, result.Id);
-            Assert.Equal(employee.SeriesCode, result.SeriesCode);
-            Assert.Equal(employee.Description, result.Description);
+            Assert.Equal(series.Id, result.Id);
+            Assert.Equal(series.SeriesCode, result.Code);
+            Assert.Equal(series.Description, result.Description);
 
         }
 
         [Fact]
-        public void Returns_404_For_Invalid_Id()
+        public async void Returns_404_For_Invalid_Id()
         {
             // Arrange    
             int invalidId = 12345;
@@ -92,7 +93,8 @@ namespace DiversityService.API.Test
             HttpResponseMessage response = null;
             try
             {
-                response = this.Target.Get(invalidId);
+                var action = await this.Target.Get(invalidId);
+                response = await action.ExecuteAsync(CancellationToken.None);
                 Assert.True(false, "Should Have Thrown");
             }
             catch (HttpResponseException ex)
@@ -132,7 +134,7 @@ namespace DiversityService.API.Test
         public async void Inserts_A_New_Series()
         {
             // Arrange 
-            var series = new EventSeries();
+            var series = new EventSeriesBindingModel();
             var id = Rnd.Next();
             Repository.Setup(x => x.Insert(It.IsAny<Collection.EventSeries>()))
                 .Callback<Collection.EventSeries>(s => s.Id = id);

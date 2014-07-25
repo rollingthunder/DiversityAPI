@@ -25,7 +25,7 @@ namespace DiversityService.Collection
         }
     
         public int CollectionSpecimenID { get; set; }
-        public int IdentificationUnitID { get; set; }
+        public int Id { get; set; }
         public string LastIdentificationCache { get; set; }
         public string FamilyCache { get; set; }
         public string OrderCache { get; set; }

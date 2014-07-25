@@ -98,6 +98,10 @@
       <Project>{49e502ef-2918-4098-afc4-4461be012684}</Project>
       <Name>DiversityService.API.Collection</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DiversityService.API.Model\DiversityService.API.Model.csproj">
+      <Project>{0bdd8e4f-945e-4124-a914-c7ff50ea4e3c}</Project>
+      <Name>DiversityService.API.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DiversityService.API.WebHost\DiversityService.API.WebHost.csproj">
       <Project>{b6df982c-aecd-42cf-920c-0c0ed3d3ce9a}</Project>
       <Name>DiversityService.API.WebHost</Name>

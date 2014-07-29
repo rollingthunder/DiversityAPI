@@ -44,7 +44,8 @@
                 .InRequestScope();
 
             Bind<IMappingEngine>()
-                .ToConstant(Mapper.Engine);
+                .ToMethod((_) => Mapper.Engine)
+                .InSingletonScope();
 
             Bind<ApplicationUserManager>()
                 .ToMethod(ctx =>

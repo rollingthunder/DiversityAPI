@@ -11,22 +11,21 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    public class SeriesController : ApiController
+    public class SeriesController : DiversityController
     {
         private readonly IRepositoryFactory Repository;
         private readonly IMappingEngine Mapper;
 
-
         public SeriesController(
             IRepositoryFactory repo,
-            AutoMapper.IMappingEngine mapper
+            IMappingEngine mapper
             )
         {
             this.Repository = repo;
             this.Mapper = mapper;
         }
 
-        [Queryable(PageSize = 20)]
+        [Queryable(PageSize = 100)]
         public IQueryable<EventSeries> Get()
         {
             var Series = this.Repository.Get<Collection.EventSeries>();
@@ -36,7 +35,6 @@
                 .To<EventSeries>();
         }
 
-        // GET api/series/5
         public async Task<IHttpActionResult> Get(int id)
         {
             var Series = this.Repository.Get<Collection.EventSeries>();
@@ -52,7 +50,6 @@
             return Json(dto);
         }
 
-        // POST api/values
         [ValidateModel]
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
@@ -69,7 +66,7 @@
 
             if(existing != null)
             {
-                return this.SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing), existing.Id);
+                return SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing), existing.Id);
             }
 
 

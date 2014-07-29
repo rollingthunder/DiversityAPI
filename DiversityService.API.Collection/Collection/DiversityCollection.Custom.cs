@@ -9,7 +9,7 @@
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity;
 
-    public partial class Event : IIdentifiable
+    public partial class Event : IIdentifiable, IGuidIdentifiable
     {
         public DateTime? TimeStamp 
         {
@@ -57,7 +57,7 @@
         }
     }
 
-    public partial class EventSeries : IIdentifiable
+    public partial class EventSeries : IIdentifiable, IGuidIdentifiable
     {
 
     }

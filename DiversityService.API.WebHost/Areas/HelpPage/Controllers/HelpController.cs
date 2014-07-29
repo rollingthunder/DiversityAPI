@@ -20,7 +20,7 @@ namespace DiversityService.API.WebHost.Areas.HelpPage.Controllers
 
         public HelpController(HttpConfiguration config)
         {
-            this.Configuration = config;
+            Configuration = config;
         }
 
         public HttpConfiguration Configuration { get; private set; }
@@ -33,7 +33,7 @@ namespace DiversityService.API.WebHost.Areas.HelpPage.Controllers
 
         public ActionResult Api(string apiId)
         {
-            if (!string.IsNullOrEmpty(apiId))
+            if (!String.IsNullOrEmpty(apiId))
             {
                 HelpPageApiModel apiModel = Configuration.GetHelpPageApiModel(apiId);
                 if (apiModel != null)
@@ -47,7 +47,7 @@ namespace DiversityService.API.WebHost.Areas.HelpPage.Controllers
 
         public ActionResult ResourceModel(string modelName)
         {
-            if (!string.IsNullOrEmpty(modelName))
+            if (!String.IsNullOrEmpty(modelName))
             {
                 ModelDescriptionGenerator modelDescriptionGenerator = Configuration.GetModelDescriptionGenerator();
                 ModelDescription modelDescription;

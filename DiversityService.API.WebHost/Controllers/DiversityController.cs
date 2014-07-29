@@ -1,8 +1,8 @@
 ﻿namespace DiversityService.API.WebHost.Controllers
 {
-    using DiversityService.API.Resources;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -10,11 +10,9 @@
     using System.Web.Http;
     using System.Web.Http.Results;
     using System.Web.Http.Routing;
-    using System.Web.Mvc;
 
-    public static class ControllerExtensions
+    public abstract class DiversityController : ApiController
     {
-
         public class SeeOtherRouteNegotiatedContentResult<T> : CreatedAtRouteNegotiatedContentResult<T>
         {
             public SeeOtherRouteNegotiatedContentResult(string routeName, IDictionary<string, object> routeValues, T content, ApiController controller)
@@ -30,9 +28,11 @@
             }
         }
 
-        public static SeeOtherRouteNegotiatedContentResult<T> SeeOtherAtRoute<T>(this ApiController controller, string routeName, object routeValues, T content)
+        protected SeeOtherRouteNegotiatedContentResult<T> SeeOtherAtRoute<T>(string routeName, object routeValues, T content)
         {
-            return new SeeOtherRouteNegotiatedContentResult<T>(routeName, new HttpRouteValueDictionary(routeValues), content, controller);
+            return new SeeOtherRouteNegotiatedContentResult<T>(routeName, new HttpRouteValueDictionary(routeValues), content, this);
         }
+
+
     }
 }

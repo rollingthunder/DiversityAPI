@@ -22,19 +22,17 @@ namespace DiversityService.API.WebHost.Areas.HelpPage
             {
                 string query = urlParts[1];
                 string[] queryKeys = HttpUtility.ParseQueryString(query).AllKeys;
-                queryKeyString = string.Join("_", queryKeys);
+                queryKeyString = String.Join("_", queryKeys);
             }
 
             StringBuilder friendlyPath = new StringBuilder();
-            friendlyPath.AppendFormat(
-                "{0}-{1}",
+            friendlyPath.AppendFormat("{0}-{1}",
                 description.HttpMethod.Method,
-                localPath.Replace("/", "-").Replace("{", string.Empty).Replace("}", string.Empty));
+                localPath.Replace("/", "-").Replace("{", String.Empty).Replace("}", String.Empty));
             if (queryKeyString != null)
             {
-                friendlyPath.AppendFormat("_{0}", queryKeyString);
+                friendlyPath.AppendFormat("_{0}", queryKeyString.Replace('.', '-'));
             }
-
             return friendlyPath.ToString();
         }
     }

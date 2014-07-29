@@ -150,7 +150,7 @@
   <data name="Series_NoStartDate" xml:space="preserve">
     <value>The Series must have a start date</value>
   </data>
-  <data name="Series_NotFound" xml:space="preserve">
-    <value>There is no series with this id</value>
+  <data name="Resource_Exists" xml:space="preserve">
+    <value>This Resource already exists.</value>
   </data>
 </root>

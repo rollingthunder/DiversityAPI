@@ -11,9 +11,9 @@ namespace DiversityService.API.WebHost.Controllers
 {
     public class CollectionController : ApiController
     {
-        private readonly IEnumerable<CollectionServer> ServerDescriptors;
+        private readonly IEnumerable<InternalCollectionServer> ServerDescriptors;
 
-        public CollectionController(IEnumerable<CollectionServer> configuredServers)
+        public CollectionController(IEnumerable<InternalCollectionServer> configuredServers)
         {
             ServerDescriptors = configuredServers;
         }

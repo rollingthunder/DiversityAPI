@@ -89,6 +89,15 @@ namespace DiversityService.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This Resource already exists..
+        /// </summary>
+        public static string Resource_Exists {
+            get {
+                return ResourceManager.GetString("Resource_Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Series Code provided is more than 50 characters in length..
         /// </summary>
         public static string Series_CodeTooLong {

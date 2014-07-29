@@ -12,11 +12,11 @@ namespace DiversityService.API.WebHost
 {
     public class ConfigurationModule : NinjectModule
     {
-        private IEnumerable<CollectionServer> LoadServerConfiguration(Ninject.Activation.IContext ctx)
+        private IEnumerable<InternalCollectionServer> LoadServerConfiguration(Ninject.Activation.IContext ctx)
         {
             var serverSection = (CollectionServerConfigurationSection)ConfigurationManager.GetSection("collectionServers");
             var collectionServers = serverSection.Servers.Cast<CollectionServerElement>()
-                .Select(Mapper.Map<CollectionServer>)
+                .Select(Mapper.Map<InternalCollectionServer>)
                 .ToList();
 
             // Throws if there are duplicate Ids
@@ -27,7 +27,7 @@ namespace DiversityService.API.WebHost
 
         public override void Load()
         {
-            this.Bind<IEnumerable<CollectionServer>>()
+            this.Bind<IEnumerable<InternalCollectionServer>>()
                 .ToMethod(LoadServerConfiguration)
                 .InSingletonScope();
                 

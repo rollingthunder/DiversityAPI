@@ -15,11 +15,11 @@ namespace DiversityService.API.WebHost
         {
             Bind<CollectionController>()
                 .ToSelf()
-                .WithConstructorArgument(typeof(IEnumerable<CollectionServer>), ctx => ctx.Kernel.Get<IEnumerable<CollectionServer>>());
+                .WithConstructorArgument(typeof(IEnumerable<InternalCollectionServer>), ctx => ctx.Kernel.Get<IEnumerable<InternalCollectionServer>>());
 
             Bind<AccountController>()
                 .ToSelf()
-                .WithConstructorArgument(typeof(IEnumerable<CollectionServer>), ctx => ctx.Kernel.Get<IEnumerable<CollectionServer>>());
+                .WithConstructorArgument(typeof(IEnumerable<InternalCollectionServer>), ctx => ctx.Kernel.Get<IEnumerable<InternalCollectionServer>>());
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DiversityService.API.Model
 {
-    public partial class CollectionServer
+    public class InternalCollectionServer : CollectionServer
     {
         [JsonIgnore]
         public string Address { get; set; }

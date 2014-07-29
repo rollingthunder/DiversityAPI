@@ -65,7 +65,7 @@
                 var userId = User.Identity.GetUserId();
                 var appUser = UserManager.FindById(userId);
 
-                var servers = ctx.Kernel.Get<IEnumerable<CollectionServer>>();
+                var servers = ctx.Kernel.Get<IEnumerable<InternalCollectionServer>>();
                 var server = servers.Single(x => x.Id == appUser.CollectionId);
 
                 string connectionString = ConfigurationManager.ConnectionStrings["Collection"].ConnectionString;

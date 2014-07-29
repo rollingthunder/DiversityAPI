@@ -42,6 +42,11 @@
             {
                 yield return new ValidationResult(Messages.Series_CodeTooLong);
             }
+
+            if (this.TransactionGuid == Guid.Empty)
+            {
+                yield return new ValidationResult(Messages.No_TransactionGuid);
+            }
         }
     }
 }

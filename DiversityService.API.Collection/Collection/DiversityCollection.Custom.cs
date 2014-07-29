@@ -6,6 +6,8 @@
     using System.Collections;
     using System.Globalization;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity;
 
     public partial class Event : IIdentifiable
     {
@@ -109,6 +111,8 @@
         {
             ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized +=
                 (sender, e) => ForceUTC(e.Entity);
+            ((IObjectContextAdapter)this).ObjectContext.SavingChanges +=
+                (sender, e) => ForceLocal(sender);
         }
 
 
@@ -129,7 +133,44 @@
                 if (dt == null)
                     continue;
 
-                property.SetValue(entity, DateTime.SpecifyKind(dt.Value, DateTimeKind.Utc));
+                // Assume Local Times in DB 
+                // Convert to UTC
+
+                property.SetValue(entity, dt.Value.ToUniversalTime());
+            }
+        }
+
+        public static void ForceLocal(object sender)
+        {
+            // Ensure that we are passed an ObjectContext
+            ObjectContext context = sender as ObjectContext;
+            if (context != null)
+            {
+                foreach (ObjectStateEntry entry in
+                    context.ObjectStateManager.GetObjectStateEntries(
+                    EntityState.Added | EntityState.Modified))
+                {
+                    var entity = entry.Entity;
+
+                    if (entity == null)
+                        continue;
+
+                    var properties = entity.GetType().GetProperties()
+                        .Where(x => x.PropertyType == typeof(DateTime) || x.PropertyType == typeof(DateTime?));
+
+                    foreach (var property in properties)
+                    {
+                        var dt = property.PropertyType == typeof(DateTime?)
+                            ? (DateTime?)property.GetValue(entity)
+                            : (DateTime)property.GetValue(entity);
+
+                        if (dt == null)
+                            continue;
+
+                        // Store only local time into DB (mainly for backward compat)
+                        property.SetValue(entity, dt.Value.ToLocalTime());
+                    }
+                }
             }
         }
     }

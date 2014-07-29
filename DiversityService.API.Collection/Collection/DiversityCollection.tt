@@ -1,8 +1,38 @@
 ﻿<#@ template language="C#" debug="false" hostspecific="true"#>
 <#@ include file="EF6.Utility.CS.ttinclude"#><#@ 
- output extension=".cs"#><#
+ output extension=".cs"#>
+<#@ assembly name="System.Xml" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Xsl" #><#
+const string inputFile = @"DiversityCollection.edmx";  
+#><#
+// XSLT Post Processing  
+XmlDocument rawXDoc = new XmlDocument();  
+XmlDocument xDoc = new XmlDocument();  
+XmlReaderSettings settings = new XmlReaderSettings {  
+    //ConformanceLevel = ConformanceLevel.Document;
+    DtdProcessing = DtdProcessing.Prohibit
+};
+//Note that to use the Host.ResolvePath below you must set hostspecific="true" in the template directive.
+using (FileStream rawDocFileSteam =    File.OpenRead(Host.ResolvePath(inputFile))) {
+    using (XmlReader rawDocReader = XmlReader.Create(rawDocFileSteam, settings)) {
+        using (XmlTextReader xsltReader = new XmlTextReader(Host.ResolvePath("DataModelTransform.xslt")) ) {
+            XslCompiledTransform xsltTransform = new XslCompiledTransform();
+            xsltTransform.Load(xsltReader); //Ensure the XML Resolver is null, or a XmlSecureResolver to prevent a Billion Laughs denial of service.
+            using (MemoryStream ms = new MemoryStream()) {
+                xsltTransform.Transform(rawDocReader, null, ms); 
+                ms.Position = 0;
+                xDoc.Load(ms);
+            }
+        }
+    }
+}
 
-const string inputFile = @"DiversityCollection.edmx";
+xDoc.Save(Host.ResolvePath(inputFile));
+
+#>
+<#
+
 var textTransform = DynamicTextTransformation.Create(this);
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
@@ -723,4 +753,7 @@ public static void ArgumentNotNull<T>(T arg, string name) where T : class
         throw new ArgumentNullException(name);
     }
 }
+
+
+
 #>

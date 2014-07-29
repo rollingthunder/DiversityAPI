@@ -20,10 +20,6 @@ namespace DiversityService.Collection
         public string DisplayText { get; set; }
         public Nullable<short> DisplayOrder { get; set; }
         public string Notes { get; set; }
-        public string LogInsertedBy { get; set; }
-        public Nullable<System.DateTime> LogInsertedWhen { get; set; }
-        public string LogUpdatedBy { get; set; }
-        public Nullable<System.DateTime> LogUpdatedWhen { get; set; }
         public System.Guid RowGUID { get; set; }
     
         public virtual Analysis Analysis { get; set; }

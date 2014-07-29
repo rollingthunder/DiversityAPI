@@ -22,10 +22,6 @@ namespace DiversityService.Collection
         public string ResponsibleName { get; set; }
         public string ResponsibleAgentURI { get; set; }
         public string Notes { get; set; }
-        public Nullable<System.DateTime> LogCreatedWhen { get; set; }
-        public string LogCreatedBy { get; set; }
-        public Nullable<System.DateTime> LogUpdatedWhen { get; set; }
-        public string LogUpdatedBy { get; set; }
         public System.Guid RowGUID { get; set; }
     
         public virtual IdentificationUnit IdentificationUnit { get; set; }

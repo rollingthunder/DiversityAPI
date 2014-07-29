@@ -44,10 +44,6 @@ namespace DiversityService.Collection
         public string Circumstances { get; set; }
         public short DisplayOrder { get; set; }
         public string Notes { get; set; }
-        public Nullable<System.DateTime> LogCreatedWhen { get; set; }
-        public string LogCreatedBy { get; set; }
-        public Nullable<System.DateTime> LogUpdatedWhen { get; set; }
-        public string LogUpdatedBy { get; set; }
         public Nullable<int> xx_SubstrateID { get; set; }
         public string xx_SubstrateRelationType { get; set; }
         public Nullable<int> xx_SpecimenPartID { get; set; }

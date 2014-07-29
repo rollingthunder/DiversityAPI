@@ -49,10 +49,6 @@ namespace DiversityService.Collection
         public string InternalNotes { get; set; }
         public Nullable<int> ExternalDatasourceID { get; set; }
         public string ExternalIdentifier { get; set; }
-        public Nullable<System.DateTime> LogCreatedWhen { get; set; }
-        public string LogCreatedBy { get; set; }
-        public Nullable<System.DateTime> LogUpdatedWhen { get; set; }
-        public string LogUpdatedBy { get; set; }
         public bool xx_IsAvailable { get; set; }
         public System.Guid RowGUID { get; set; }
     

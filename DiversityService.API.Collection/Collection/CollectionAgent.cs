@@ -21,10 +21,6 @@ namespace DiversityService.Collection
         public string CollectorsNumber { get; set; }
         public string Notes { get; set; }
         public string DataWithholdingReason { get; set; }
-        public Nullable<System.DateTime> LogCreatedWhen { get; set; }
-        public string LogCreatedBy { get; set; }
-        public Nullable<System.DateTime> LogUpdatedWhen { get; set; }
-        public string LogUpdatedBy { get; set; }
         public bool xx_IsAvailable { get; set; }
         public System.Guid RowGUID { get; set; }
     

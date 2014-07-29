@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DiversityCollection.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DiversityCollection.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
         <EntityType Name="Analysis">
           <Key>
             <PropertyRef Name="AnalysisID" />
@@ -17,10 +17,6 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="AnalysisURI" Type="varchar" MaxLength="255" />
           <Property Name="OnlyHierarchy" Type="bit" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="AnalysisToolID" Type="int" />
         </EntityType>
@@ -35,10 +31,6 @@
           <Property Name="DisplayText" Type="nvarchar" MaxLength="50" />
           <Property Name="DisplayOrder" Type="smallint" />
           <Property Name="Notes" Type="nvarchar" MaxLength="500" />
-          <Property Name="LogInsertedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogInsertedWhen" Type="smalldatetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="smalldatetime" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="CollectionAgent">
@@ -53,10 +45,6 @@
           <Property Name="CollectorsNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="xx_IsAvailable" Type="bit" Nullable="false" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -87,10 +75,6 @@
           <Property Name="CountryCache" Type="nvarchar" MaxLength="50" />
           <Property Name="ToolUsage" Type="xml" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="xx_IsAvailable" Type="bit" Nullable="false" />
           <Property Name="xx_ExpeditionID" Type="int" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
@@ -107,10 +91,6 @@
           <Property Name="Description" Type="xml" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
           <Property Name="IPR" Type="nvarchar" MaxLength="500" />
@@ -138,10 +118,6 @@
           <Property Name="ResponsibleAgentURI" Type="varchar" MaxLength="255" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="AverageValueCache" Type="float" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="CollectionEventSeries">
@@ -156,10 +132,6 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DateStart" Type="datetime" />
           <Property Name="DateEnd" Type="datetime" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="CollectionEventSeriesImage">
@@ -174,10 +146,6 @@
           <Property Name="Description" Type="xml" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
           <Property Name="IPR" Type="nvarchar" MaxLength="500" />
@@ -224,10 +192,6 @@
           <Property Name="InternalNotes" Type="nvarchar(max)" />
           <Property Name="ExternalDatasourceID" Type="int" />
           <Property Name="ExternalIdentifier" Type="nvarchar" MaxLength="100" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="xx_IsAvailable" Type="bit" Nullable="false" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
@@ -245,10 +209,6 @@
           <Property Name="Description" Type="xml" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
           <Property Name="IPR" Type="nvarchar" MaxLength="500" />
@@ -289,10 +249,6 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="ResponsibleName" Type="nvarchar" MaxLength="255" />
           <Property Name="ResponsibleAgentURI" Type="varchar" MaxLength="255" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ReferenceDetails" Type="nvarchar" MaxLength="50" />
         </EntityType>
@@ -321,10 +277,6 @@
           <Property Name="Circumstances" Type="nvarchar" MaxLength="50" />
           <Property Name="DisplayOrder" Type="smallint" Nullable="false" />
           <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="xx_SubstrateID" Type="int" />
           <Property Name="xx_SubstrateRelationType" Type="nvarchar" MaxLength="50" />
           <Property Name="xx_SpecimenPartID" Type="int" />
@@ -353,10 +305,6 @@
           <Property Name="SpecimenPartID" Type="int" />
           <Property Name="ToolID" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ToolUsage" Type="xml" />
         </EntityType>
@@ -374,10 +322,6 @@
           <Property Name="ResponsibleName" Type="nvarchar" MaxLength="255" />
           <Property Name="ResponsibleAgentURI" Type="varchar" MaxLength="255" />
           <Property Name="Notes" Type="nvarchar(max)" />
-          <Property Name="LogCreatedWhen" Type="datetime" />
-          <Property Name="LogCreatedBy" Type="nvarchar" MaxLength="50" />
-          <Property Name="LogUpdatedWhen" Type="datetime" />
-          <Property Name="LogUpdatedBy" Type="nvarchar" MaxLength="50" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Property">
@@ -757,10 +701,11 @@
             <End Role="IdentificationUnitGeoAnalysis" EntitySet="IdentificationUnitGeoAnalysis" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DiversityCollection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DiversityCollection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
         <EntityType Name="Analysis">
           <Key>
             <PropertyRef Name="AnalysisID" />
@@ -773,10 +718,6 @@
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AnalysisURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="OnlyHierarchy" Type="Boolean" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="AnalysisToolID" Type="Int32" />
           <NavigationProperty Name="AnalysisResult" Relationship="Self.FK_AnalysisResult_Analysis" FromRole="Analysis" ToRole="AnalysisResult" />
@@ -795,10 +736,6 @@
           <Property Name="DisplayText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DisplayOrder" Type="Int16" />
           <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="LogInsertedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogInsertedWhen" Type="DateTime" Precision="0" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="0" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Analysis" Relationship="Self.FK_AnalysisResult_Analysis" FromRole="AnalysisResult" ToRole="Analysis" />
         </EntityType>
@@ -808,10 +745,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SeriesID" Type="Int32" />
-          <Property Name="CollectionDay" Type="Byte" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
-          <Property Name="CollectionMonth" Type="Byte" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
-          <Property Name="CollectionYear" Type="Int16" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
-          <Property Name="CollectionTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <Property Name="CollectionDay" Type="Byte" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="CollectionMonth" Type="Byte" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="CollectionYear" Type="Int16" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="CollectionTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="LocalityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HabitatDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -835,10 +772,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DataWithholdingReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IPR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -867,10 +800,6 @@
           <Property Name="ResponsibleAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AverageValueCache" Type="Double" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CollectionEvent" Relationship="Self.FK_CollectionEventProperty_CollectionEvent" FromRole="CollectionEventProperty" ToRole="CollectionEvent" />
           <NavigationProperty Name="Property" Relationship="DiversityCollection.FK_CollectionEventDescriptor_Descriptor" FromRole="EventProperty" ToRole="Property" />
@@ -881,17 +810,17 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SeriesCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Geography" Type="Geography" />
-          <Property Name="StartDateLocal" Type="DateTime" Precision="3" />
-          <Property Name="EndDateLocal" Type="DateTime" Precision="3" />
+          <Property Name="StartDateUTC" Type="DateTime" Precision="3" />
+          <Property Name="EndDateUTC" Type="DateTime" Precision="3" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_CollectionEvent_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEvent" />
           <NavigationProperty Name="Images" Relationship="Self.FK_CollectionEventSeriesImage_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEventSeriesImage" />
-          <Property Name="ParentID" Type="Int32" a:GetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:SetterAccess="Private" />
+          <Property Name="ParentID" Type="Int32" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <NavigationProperty Name="Children" Relationship="DiversityCollection.EventSeriesEventSeries" FromRole="EventSeries" ToRole="ChildSeries" />
           <NavigationProperty Name="Parent" Relationship="DiversityCollection.EventSeriesEventSeries" FromRole="ChildSeries" ToRole="EventSeries" />
-          </EntityType>
+        </EntityType>
         <EntityType Name="EventSeriesImage">
           <Key>
             <PropertyRef Name="SeriesID" />
@@ -904,10 +833,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DataWithholdingReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IPR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -953,10 +878,6 @@
           <Property Name="InternalNotes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ExternalDatasourceID" Type="Int32" />
           <Property Name="ExternalIdentifier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="xx_IsAvailable" Type="Boolean" Nullable="false" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CollectionEvent" Relationship="Self.FK_CollectionSpecimen_CollectionEvent" FromRole="CollectionSpecimen" ToRole="CollectionEvent" />
@@ -978,10 +899,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DataWithholdingReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="IPR" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
@@ -1024,10 +941,6 @@
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="ReferenceDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="IdentificationUnit" Relationship="Self.FK_Identification_IdentificationUnit" FromRole="Identification" ToRole="IdentificationUnit" />
@@ -1057,10 +970,6 @@
           <Property Name="Circumstances" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DisplayOrder" Type="Int16" Nullable="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="xx_SubstrateID" Type="Int32" />
           <Property Name="xx_SubstrateRelationType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="xx_SpecimenPartID" Type="Int32" />
@@ -1098,10 +1007,6 @@
           <Property Name="SpecimenPartID" Type="Int32" />
           <Property Name="ToolID" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="ToolUsage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Analysis" Relationship="Self.FK_IdentificationUnitAnalysis_IdentificationAnalysis" FromRole="IdentificationUnitAnalysis" ToRole="Analysis" />
@@ -1121,10 +1026,6 @@
           <Property Name="ResponsibleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="IdentificationUnit" Relationship="Self.FK_IdentificationUnitGeoAnalysis_IdentificationUnit" FromRole="IdentificationUnitGeoAnalysis" ToRole="IdentificationUnit" />
         </EntityType>
@@ -1451,10 +1352,6 @@
           <Property Name="CollectorsNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DataWithholdingReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LogCreatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogCreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LogUpdatedWhen" Type="DateTime" Precision="3" />
-          <Property Name="LogUpdatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="xx_IsAvailable" Type="Boolean" Nullable="false" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CollectionSpecimen" Relationship="DiversityCollection.FK_CollectionAgent_CollectionSpecimen" FromRole="CollectionAgent" ToRole="Specimen" />
@@ -1545,10 +1442,6 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="AnalysisURI" ColumnName="AnalysisURI" />
                 <ScalarProperty Name="OnlyHierarchy" ColumnName="OnlyHierarchy" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="AnalysisToolID" ColumnName="AnalysisToolID" />
               </MappingFragment>
@@ -1563,10 +1456,6 @@
                 <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="LogInsertedBy" ColumnName="LogInsertedBy" />
-                <ScalarProperty Name="LogInsertedWhen" ColumnName="LogInsertedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1599,10 +1488,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DataWithholdingReason" ColumnName="DataWithholdingReason" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IPR" ColumnName="IPR" />
@@ -1630,10 +1515,6 @@
                 <ScalarProperty Name="ResponsibleAgentURI" ColumnName="ResponsibleAgentURI" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="AverageValueCache" ColumnName="AverageValueCache" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1644,10 +1525,10 @@
                 <ScalarProperty Name="ParentID" ColumnName="SeriesParentID" />
                 <ScalarProperty Name="Id" ColumnName="SeriesID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="SeriesCode" ColumnName="SeriesCode" />
+                <ScalarProperty Name="Code" ColumnName="SeriesCode" />
                 <ScalarProperty Name="Geography" ColumnName="Geography" />
-                <ScalarProperty Name="StartDateLocal" ColumnName="DateStart" />
-                <ScalarProperty Name="EndDateLocal" ColumnName="DateEnd" />
+                <ScalarProperty Name="StartDateUTC" ColumnName="DateStart" />
+                <ScalarProperty Name="EndDateUTC" ColumnName="DateEnd" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1662,10 +1543,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DataWithholdingReason" ColumnName="DataWithholdingReason" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IPR" ColumnName="IPR" />
@@ -1711,10 +1588,6 @@
                 <ScalarProperty Name="InternalNotes" ColumnName="InternalNotes" />
                 <ScalarProperty Name="ExternalDatasourceID" ColumnName="ExternalDatasourceID" />
                 <ScalarProperty Name="ExternalIdentifier" ColumnName="ExternalIdentifier" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="xx_IsAvailable" ColumnName="xx_IsAvailable" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
               </MappingFragment>
@@ -1732,10 +1605,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="DataWithholdingReason" ColumnName="DataWithholdingReason" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="IPR" ColumnName="IPR" />
@@ -1775,10 +1644,6 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ResponsibleName" ColumnName="ResponsibleName" />
                 <ScalarProperty Name="ResponsibleAgentURI" ColumnName="ResponsibleAgentURI" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="ReferenceDetails" ColumnName="ReferenceDetails" />
               </MappingFragment>
@@ -1807,10 +1672,6 @@
                 <ScalarProperty Name="Circumstances" ColumnName="Circumstances" />
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="xx_SubstrateID" ColumnName="xx_SubstrateID" />
                 <ScalarProperty Name="xx_SubstrateRelationType" ColumnName="xx_SubstrateRelationType" />
                 <ScalarProperty Name="xx_SpecimenPartID" ColumnName="xx_SpecimenPartID" />
@@ -1837,10 +1698,6 @@
                 <ScalarProperty Name="SpecimenPartID" ColumnName="SpecimenPartID" />
                 <ScalarProperty Name="ToolID" ColumnName="ToolID" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="ToolUsage" ColumnName="ToolUsage" />
               </MappingFragment>
@@ -1857,10 +1714,6 @@
                 <ScalarProperty Name="ResponsibleName" ColumnName="ResponsibleName" />
                 <ScalarProperty Name="ResponsibleAgentURI" ColumnName="ResponsibleAgentURI" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1870,10 +1723,6 @@
               <MappingFragment StoreEntitySet="CollectionAgent">
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="xx_IsAvailable" ColumnName="xx_IsAvailable" />
-                <ScalarProperty Name="LogUpdatedBy" ColumnName="LogUpdatedBy" />
-                <ScalarProperty Name="LogUpdatedWhen" ColumnName="LogUpdatedWhen" />
-                <ScalarProperty Name="LogCreatedBy" ColumnName="LogCreatedBy" />
-                <ScalarProperty Name="LogCreatedWhen" ColumnName="LogCreatedWhen" />
                 <ScalarProperty Name="DataWithholdingReason" ColumnName="DataWithholdingReason" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="CollectorsNumber" ColumnName="CollectorsNumber" />
@@ -1922,6 +1771,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams />
   </Designer>
 </edmx:Edmx>

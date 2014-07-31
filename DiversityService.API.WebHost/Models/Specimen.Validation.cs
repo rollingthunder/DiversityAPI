@@ -18,6 +18,11 @@
             {
                 yield return new ValidationResult(Messages.Specimen_FutureDate);
             }
+
+            if (this.TransactionGuid == Guid.Empty)
+            {
+                yield return new ValidationResult(Messages.No_TransactionGuid);
+            }
         }
     }
 }

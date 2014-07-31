@@ -153,4 +153,7 @@
   <data name="Resource_Exists" xml:space="preserve">
     <value>This Resource already exists.</value>
   </data>
+  <data name="Event_NoTimeStamp" xml:space="preserve">
+    <value>The Event TimeStamp is missing.</value>
+  </data>
 </root>

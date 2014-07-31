@@ -748,7 +748,7 @@
           <Property Name="CollectionDay" Type="Byte" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="CollectionMonth" Type="Byte" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="CollectionYear" Type="Int16" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <Property Name="CollectionTime" Type="String" MaxLength="50" FixedLength="false" Unicode="false" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="TimeStamp" Type="DateTime" a:GetterAccess="Public" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="LocalityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HabitatDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -759,6 +759,8 @@
           <NavigationProperty Name="Specimen" Relationship="Self.FK_CollectionSpecimen_CollectionEvent" FromRole="CollectionEvent" ToRole="CollectionSpecimen" />
           <Property Name="Version" Type="Int32" Nullable="false" />
           <Property Name="IsAvailable" Type="Boolean" Nullable="false" />
+          <Property Name="CollectionTime" Type="String" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="CollectionDateCategory" Type="String" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         </EntityType>
         <EntityType Name="EventImage">
           <Key>
@@ -1463,6 +1465,9 @@
           <EntitySetMapping Name="CollectionEvent">
             <EntityTypeMapping TypeName="DiversityCollection.Event">
               <MappingFragment StoreEntitySet="CollectionEvent">
+                <ScalarProperty Name="CollectionTime" ColumnName="CollectionTime" />
+                <ScalarProperty Name="CollectionDateCategory" ColumnName="CollectionDateCategory" />
+                <ScalarProperty Name="TimeStamp" ColumnName="CollectionDate" />
                 <ScalarProperty Name="IsAvailable" ColumnName="xx_IsAvailable" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="Id" ColumnName="CollectionEventID" />
@@ -1470,7 +1475,6 @@
                 <ScalarProperty Name="CollectionDay" ColumnName="CollectionDay" />
                 <ScalarProperty Name="CollectionMonth" ColumnName="CollectionMonth" />
                 <ScalarProperty Name="CollectionYear" ColumnName="CollectionYear" />
-                <ScalarProperty Name="CollectionTime" ColumnName="CollectionTime" />
                 <ScalarProperty Name="LocalityDescription" ColumnName="LocalityDescription" />
                 <ScalarProperty Name="HabitatDescription" ColumnName="HabitatDescription" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />

@@ -17,7 +17,17 @@
             if (string.IsNullOrWhiteSpace(this.LocationDescription))
             {
                 yield return new ValidationResult(Messages.Event_NoLocation);
-            }            
+            }
+
+            if(!this.TimeStamp.HasValue)
+            {
+                yield return new ValidationResult(Messages.Event_NoTimeStamp);
+            }
+
+            if (this.TransactionGuid == Guid.Empty)
+            {
+                yield return new ValidationResult(Messages.No_TransactionGuid);
+            }
         }
     }
 }

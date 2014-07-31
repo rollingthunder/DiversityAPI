@@ -66,7 +66,7 @@
 
             if(existing != null)
             {
-                return SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing), existing.Id);
+                return SeeOtherAtRoute(Route.NAME_DEFAULT_API, Route.GetById(existing), existing.Id);
             }
 
 
@@ -75,7 +75,7 @@
             Series.Insert(series);
             Series.Transaction.Save();
 
-            return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(series), series.Id);
+            return CreatedAtRoute(Route.NAME_DEFAULT_API, Route.GetById(series), series.Id);
         }
 
         // PUT api/values/5

@@ -26,13 +26,15 @@ namespace DiversityService.Collection
         private Nullable<byte> CollectionDay { get; set; }
         private Nullable<byte> CollectionMonth { get; set; }
         private Nullable<short> CollectionYear { get; set; }
-        private string CollectionTime { get; set; }
+        public Nullable<System.DateTime> TimeStamp { get; set; }
         public string LocalityDescription { get; set; }
         public string HabitatDescription { get; set; }
         public string Notes { get; set; }
         public System.Guid RowGUID { get; set; }
         public int Version { get; set; }
         public bool IsAvailable { get; set; }
+        private string CollectionTime { get; set; }
+        private string CollectionDateCategory { get; set; }
     
         public virtual EventSeries Series { get; set; }
         public virtual ICollection<EventImage> Images { get; set; }

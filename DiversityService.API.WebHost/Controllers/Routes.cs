@@ -6,12 +6,22 @@ namespace DiversityService.API.WebHost.Controllers
 
     public static class Route
     {
-        public const string DEFAULT_API = "DefaultApi";
+        public const string NAME_DEFAULT_API = "DefaultApi";
+
+        public const string PREFIX_DEFAULT_API = "api/";
 
         public const string SERIES_CONTROLLER = "series";
+        public const string PREFIX_SERIES = PREFIX_DEFAULT_API + SERIES_CONTROLLER + "/";
+
         public const string EVENT_CONTROLLER = "event";
+        public const string PREFIX_EVENT = PREFIX_DEFAULT_API + EVENT_CONTROLLER + "/";
 
         public static object GetById<T>(T entity) where T : IIdentifiable
+        {
+            return GetById<T>(entity.Id);
+        }
+
+        public static object GetById<T>(int id)
         {
             var controller = string.Empty;
 
@@ -31,7 +41,7 @@ namespace DiversityService.API.WebHost.Controllers
             return new
             {
                 controller = controller,
-                id = entity.Id
+                id = id
             };
         }
     }

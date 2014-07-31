@@ -7,7 +7,7 @@
         public Nullable<int> SeriesId { get; set; }
         public string LocationDescription { get; set; }
         public string HabitatDescription { get; set; }
-        public DateTime TimeStamp { get; set; }
+        public DateTime? TimeStamp { get; set; }
         public Localization Localization { get; set; }
     }
 

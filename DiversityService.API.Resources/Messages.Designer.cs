@@ -80,6 +80,15 @@ namespace DiversityService.API.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Event TimeStamp is missing..
+        /// </summary>
+        public static string Event_NoTimeStamp {
+            get {
+                return ResourceManager.GetString("Event_NoTimeStamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Transaction Guid is missing..
         /// </summary>
         public static string No_TransactionGuid {
@@ -143,7 +152,7 @@ namespace DiversityService.API.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is no series with this id.
+        ///   Looks up a localized string similar to There is no series with this id..
         /// </summary>
         public static string Series_NotFound {
             get {

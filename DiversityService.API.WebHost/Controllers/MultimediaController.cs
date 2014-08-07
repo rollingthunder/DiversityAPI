@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace DiversityService.API.WebHost.Controllers
+namespace DiversityService.API.Controllers
 {
     public class MultimediaController : ApiController
     {

@@ -65,6 +65,9 @@
     <Reference Include="Ninject.Extensions.NamedScope">
       <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
     </Reference>
+    <Reference Include="Should">
+      <HintPath>..\packages\Should.1.1.20\lib\Should.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -82,9 +85,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Xbehave">
+      <HintPath>..\packages\Xbehave.1.1.0\lib\net45\Xbehave.dll</HintPath>
+    </Reference>
     <Reference Include="xunit, Version=1.9.2.1705, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
     </Reference>
     <Reference Include="Xunit.Ioc">
       <HintPath>..\packages\xunit.ioc.1.1.3.0\lib\net35\Xunit.Ioc.dll</HintPath>
@@ -97,11 +106,14 @@
   <ItemGroup>
     <Compile Include="AsyncTestQueryable.cs" />
     <Compile Include="DelegatingHandlerExtensions.cs" />
+    <Compile Include="Features\Series\RetrieveSeries.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequireHttpsMessageHandlerTest.cs" />
-    <Compile Include="SeriesControllerTest.cs" />
+    <Compile Include="Features\SeriesFeature.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="TestKernel.cs" />
+    <Compile Include="Units\SeriesControllerTest.cs" />
+    <Compile Include="Units\ValidateModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

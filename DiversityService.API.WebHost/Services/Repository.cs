@@ -1,68 +1,51 @@
-﻿namespace DiversityService.API.WebHost.Services
+﻿namespace DiversityService.API.Services
 {
-    using System;
-    using System.Collections.Generic;
+    using DiversityService.Collection;
     using System.Data.Entity;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using System.Web;
 
-    public class Repository<T> : IRepository<T> where T : class, IIdentifiable
-    {
-        private readonly IUnitOfWork transaction;
-        private readonly CollectionContext context;
-        public Repository(IUnitOfWork uow)
+    public class Store<T> : IStore<T, int> where T : class, DiversityService.API.Model.IIdentifiable
+    {     
+        private readonly CollectionContext Context;
+
+        public Store(CollectionContext ctx)
         {
-            transaction = uow;
-            context = uow.Context as CollectionContext;
+            Context = ctx;
         }
-        public IUnitOfWork Transaction
-        {
-            get
-            {
-                return transaction;
-            }
+        
+        public async Task<IQueryable<T>> FindAsync()
+        {            
+            return Context.Set<T>();
         }
-        public IQueryable<T> All
+        public Task<T> FindAsync(int id)
         {
-            get
-            {
-                return context.Set<T>();
-            }
+            return Context.Set<T>().FindAsync(id);
         }
-        public IQueryable<T> AllEager(params Expression<Func<T, object>>[] includes)
+        public async Task InsertAsync(T item)
         {
-            IQueryable<T> query = context.Set<T>();
-            foreach (var include in includes)
-            {
-                query = query.Include(include);
-            }
-            return query;
+            Context.Entry(item).State = EntityState.Added;
         }
-        public Task<T> Find(int id)
+        public async Task UpdateAsync(T item)
         {
-            return context.Set<T>().FindAsync(id);
+            Context.Set<T>().Attach(item); Context.Entry(item).State = EntityState.Modified;
         }
-        public void Insert(T item)
+        public async Task DeleteAsync(int id)
         {
-            context.Entry(item).State = EntityState.Added;
-        }
-        public void Update(T item)
-        {
-            context.Set<T>().Attach(item); context.Entry(item).State = EntityState.Modified;
-        }
-        public async Task Delete(int id)
-        {
-            var item = await context.Set<T>().FindAsync(id); 
-            context.Set<T>().Remove(item);
+            var item = await Context.Set<T>().FindAsync(id);
+            Context.Set<T>().Remove(item);
         }
         public void Dispose()
         {
-            if (context != null)
+            if (Context != null)
             {
-                context.Dispose();
+                Context.Dispose();
             }
         }
+    }
+
+    public class SeriesStore : Store<EventSeries>, ISeriesStore
+    {
+        public SeriesStore(CollectionContext ctx) : base(ctx) {}
     }
 }

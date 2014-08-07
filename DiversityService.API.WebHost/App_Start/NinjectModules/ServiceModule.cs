@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using DiversityService.API.WebHost.Models;
-    using DiversityService.API.WebHost.Services;
+    using DiversityService.API.Services;
     using Microsoft.AspNet.Identity;
     using Ninject;
     using Ninject.Modules;
@@ -19,28 +19,9 @@
 
     public class ServiceModule : NinjectModule
     {
-        private class RepositoryFactory : IRepositoryFactory
-        {
-            private readonly IKernel Kernel;
-            public RepositoryFactory(IKernel kernel)
-            {
-                this.Kernel = kernel;
-            }
-
-            IRepository<T> IRepositoryFactory.Get<T>()
-            {
-                return Kernel.Get<IRepository<T>>();
-            }
-        }
-
         public override void Load()
         {
-            Bind<IUnitOfWork>()
-                .To<UnitOfWork>()
-                .InRequestScope();
-
-            Bind(typeof(IRepository<>))
-                .To(typeof(Repository<>))
+            Bind<ISeriesStore>().To<SeriesStore>()
                 .InRequestScope();
 
             Bind<IMappingEngine>()
@@ -59,7 +40,7 @@
                 
 
             // TODO Register
-            Bind<IContext>().ToMethod((ctx) =>
+            Bind<CollectionContext>().ToMethod((ctx) =>
             {
                 var User = HttpContext.Current.User;
                 var UserManager = ctx.Kernel.Get<ApplicationUserManager>();
@@ -72,11 +53,7 @@
                 string connectionString = ConfigurationManager.ConnectionStrings["Collection"].ConnectionString;
                 var withCredentials = string.Format(connectionString, server.Address, server.Port, server.Catalog, appUser.BackendUser, appUser.BackendPassword);
                 return new CollectionContext(withCredentials);
-            }).InRequestScope();
-
-            Bind<IRepositoryFactory>()
-                .To<RepositoryFactory>();
-            
+            }).InRequestScope();            
         }
     }
 }

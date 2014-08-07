@@ -1,5 +1,6 @@
-﻿namespace DiversityService.API.WebHost.Controllers
+﻿namespace DiversityService.API.Controllers
 {
+    using DiversityService.API.Results;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,26 +14,9 @@
 
     public abstract class DiversityController : ApiController
     {
-        public class SeeOtherRouteNegotiatedContentResult<T> : CreatedAtRouteNegotiatedContentResult<T>
+        protected SeeOtherAtRouteResult SeeOtherAtRoute(string routeName, object routeValues)
         {
-            public SeeOtherRouteNegotiatedContentResult(string routeName, IDictionary<string, object> routeValues, T content, ApiController controller)
-                : base(routeName, routeValues, content, controller)
-            {
-
-            }
-            public override async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-            {
-                var response = await base.ExecuteAsync(cancellationToken);
-                response.StatusCode = HttpStatusCode.SeeOther;
-                return response;
-            }
+            return new SeeOtherAtRouteResult(routeName, new HttpRouteValueDictionary(routeValues), this);
         }
-
-        protected SeeOtherRouteNegotiatedContentResult<T> SeeOtherAtRoute<T>(string routeName, object routeValues, T content)
-        {
-            return new SeeOtherRouteNegotiatedContentResult<T>(routeName, new HttpRouteValueDictionary(routeValues), content, this);
-        }
-
-
     }
 }

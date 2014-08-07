@@ -1,5 +1,5 @@
 ﻿using DiversityService.API.Model;
-using DiversityService.API.WebHost.Controllers;
+using DiversityService.API.Controllers;
 using Ninject.Modules;
 using Ninject;
 using System;

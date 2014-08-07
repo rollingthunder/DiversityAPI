@@ -1,4 +1,4 @@
-﻿namespace DiversityService.API.WebHost.Controllers
+﻿namespace DiversityService.API.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -20,6 +20,7 @@
     using DiversityService.API.WebHost.Providers;
     using DiversityService.API.WebHost.Results;
     using DiversityService.API.Model;
+    using DiversityService.API.WebHost;
 
     [Authorize]
     [RoutePrefix("api/Account")]

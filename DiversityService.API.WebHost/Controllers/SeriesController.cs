@@ -1,9 +1,9 @@
-﻿namespace DiversityService.API.WebHost.Controllers
+﻿namespace DiversityService.API.Controllers
 {
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using DiversityService.API.Model;
+    using DiversityService.API.Services;
     using DiversityService.API.WebHost.Filters;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -13,32 +13,27 @@
 
     public class SeriesController : DiversityController
     {
-        private readonly IRepositoryFactory Repository;
-        private readonly IMappingEngine Mapper;
+        private readonly ISeriesStore SeriesStore;
+        private readonly IMappingService Mapper;
 
         public SeriesController(
-            IRepositoryFactory repo,
-            IMappingEngine mapper
+            ISeriesStore store,
+            IMappingService mapper
             )
         {
-            this.Repository = repo;
+            this.SeriesStore = store;
             this.Mapper = mapper;
         }
 
-        [Queryable(PageSize = 100)]
-        public IQueryable<EventSeries> Get()
+        public async Task<IEnumerable<EventSeries>> Get()
         {
-            var Series = this.Repository.Get<Collection.EventSeries>();
-
-            return Series.All
-                .Project(Mapper)
-                .To<EventSeries>();
+            var allSeries = await SeriesStore.FindAsync();
+            return allSeries.Select(Mapper.Map<EventSeries>);
         }
 
         public async Task<IHttpActionResult> Get(int id)
         {
-            var Series = this.Repository.Get<Collection.EventSeries>();
-            var series = await Series.Find(id);
+            var series = await SeriesStore.FindAsync(id);
 
             if (series == null)
             {
@@ -47,10 +42,9 @@
 
             var dto = Mapper.Map<EventSeries>(series);
 
-            return Json(dto);
+            return Ok(dto);
         }
 
-        [ValidateModel]
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
             if (!ModelState.IsValid)
@@ -58,29 +52,25 @@
                 return BadRequest(ModelState);
             }
 
-            var Series = Repository.Get<Collection.EventSeries>();
-
-            var existing = (from es in Series.All
+            var existing = (from es in await SeriesStore.FindAsync()
                             where es.RowGUID == value.TransactionGuid
                             select es).SingleOrDefault();
 
             if(existing != null)
             {
-                return SeeOtherAtRoute(Route.NAME_DEFAULT_API, Route.GetById(existing), existing.Id);
+                return SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing));
             }
-
 
             var series = Mapper.Map<Collection.EventSeries>(value);
 
-            Series.Insert(series);
-            Series.Transaction.Save();
+            await SeriesStore.InsertAsync(series);
 
-            return CreatedAtRoute(Route.NAME_DEFAULT_API, Route.GetById(series), series.Id);
+            return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(series), series.Id);
         }
 
-        // PUT api/values/5
-        public void Put(int id, [FromBody]EventSeries value)
-        {
-        }
+        //// PUT api/values/5
+        //public void Put(int id, [FromBody]EventSeries value)
+        //{
+        //}
     }
 }

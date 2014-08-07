@@ -183,6 +183,15 @@
     <Reference Include="WebActivatorEx">
       <HintPath>..\packages\WebActivatorEx.2.0.5\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
+    <Reference Include="WebApiContrib.CollectionJson">
+      <HintPath>..\packages\WebApiContrib.CollectionJson.0.6.2\lib\portable-net40+sl5+win8+wp8+monotouch+monoandroid\WebApiContrib.CollectionJson.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiContrib.Formatting.CollectionJson.Client">
+      <HintPath>..\packages\WebApiContrib.Formatting.CollectionJson.Client.0.6.2\lib\portable-net45+win8+wp8+monotouch+monoandroid\WebApiContrib.Formatting.CollectionJson.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="WebApiContrib.Formatting.CollectionJson.Server">
+      <HintPath>..\packages\WebApiContrib.Formatting.CollectionJson.Server.0.6.2\lib\net45\WebApiContrib.Formatting.CollectionJson.Server.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -299,7 +308,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Results\SeeOtherAtRouteResult.cs" />
+    <Compile Include="Services\AutoMapperMappingService.cs" />
     <Compile Include="Services\CollectionContext.cs" />
+    <Compile Include="Services\ILinkFactory.cs" />
+    <Compile Include="Services\IMappingService.cs" />
+    <Compile Include="Services\IStateFactory.cs" />
     <Compile Include="Services\Repository.cs" />
     <Compile Include="Services\IRepository.cs" />
     <Compile Include="Startup.cs" />

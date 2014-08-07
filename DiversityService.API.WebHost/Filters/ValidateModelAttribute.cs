@@ -1,9 +1,10 @@
 ﻿namespace DiversityService.API.WebHost.Filters
 {
     using System.Net;
-    using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
+    using System.Net.Http;
+    using System.Linq;
 
     public class ValidateModelAttribute : ActionFilterAttribute
     {
@@ -11,10 +12,12 @@
         {
             if (!actionContext.ModelState.IsValid)
             {
-                actionContext.Response = actionContext.Request
+                actionContext.Response = actionContext
+                    .Request
                     .CreateErrorResponse(
-                    HttpStatusCode.BadRequest,
-                    actionContext.ModelState);
+                        HttpStatusCode.BadRequest,
+                        actionContext.ModelState
+                    );
             }
         }
     }

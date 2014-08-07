@@ -6,7 +6,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using AutoMapper;
-using DiversityService.API.WebHost.Controllers;
+using DiversityService.API.Controllers;
 
 namespace DiversityService.API.WebHost
 {

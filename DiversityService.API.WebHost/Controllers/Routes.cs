@@ -1,12 +1,17 @@
 ﻿
-namespace DiversityService.API.WebHost.Controllers
+namespace DiversityService.API.Controllers
 {
     using DiversityService.API.Model;
     using System;
 
     public static class Route
     {
-        public const string NAME_DEFAULT_API = "DefaultApi";
+        // Default Route
+        public const string DEFAULT_API = "DefaultApi";
+        public const string PARAM_CONTROLLER = "controller";
+        public const string PARAM_ID = "id";
+
+
 
         public const string PREFIX_DEFAULT_API = "api/";
 

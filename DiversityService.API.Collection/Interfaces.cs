@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiversityService.API.WebHost
+namespace DiversityService.API.Model
 {   
     public interface IGuidIdentifiable
     {

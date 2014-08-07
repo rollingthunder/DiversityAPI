@@ -1,6 +1,6 @@
 ﻿namespace DiversityService.Collection
 {
-    using DiversityService.API.WebHost;
+    using DiversityService.API.Model;
     using System;
     using System.Linq;
     using System.Collections;

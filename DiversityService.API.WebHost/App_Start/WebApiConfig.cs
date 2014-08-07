@@ -6,7 +6,18 @@ namespace DiversityService.API.WebHost
 {
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void RegisterRoutes(HttpConfiguration config)
+        { 
+            // Web API routes
+            config.MapHttpAttributeRoutes();
+
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
+        }
+
+        public static void RegisterFilters(HttpConfiguration config)
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
@@ -18,14 +29,6 @@ namespace DiversityService.API.WebHost
             config.MessageHandlers.Add(new RequireHttpsMessageHandler());
 
             config.MessageHandlers.Add(new CultureHandler());
-
-            // Web API routes
-            config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional });
         }
     }
 }

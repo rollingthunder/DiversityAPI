@@ -24,10 +24,18 @@
             this.Mapper = mapper;
         }
 
-        public async Task<IQueryable<EventSeries>> Get()
+        public async Task<IQueryable<EventSeries>> Get(string query = null)
         {
-            var allSeries = await SeriesStore.FindAsync();
-            return Mapper.Project<Collection.EventSeries, EventSeries>(allSeries);
+            var seriesQuery = await SeriesStore.FindAsync();
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                seriesQuery = from series in seriesQuery
+                              where series.Code.Contains(query)
+                              select series;
+            }
+
+            return Mapper.Project<Collection.EventSeries, EventSeries>(seriesQuery);
         }
 
         public async Task<IHttpActionResult> Get(int id)

@@ -54,6 +54,40 @@
         }
 
         [Fact]
+        public async Task Returns_Series_filtered_by_code_on_query()
+        {
+            // Arrange            
+            var matchCode = "match";
+            var nonmatchCode = "non";
+            var query = "atc";
+
+            var fakeCollSeries = new[] 
+            { 
+                new Collection.EventSeries() { Code = matchCode }, 
+                new Collection.EventSeries() { Code = nonmatchCode}, 
+                new Collection.EventSeries() { Code = matchCode}, 
+                new Collection.EventSeries() { Code = nonmatchCode}
+            }.AsQueryable();
+
+            this.MockSeriesStore
+                .Setup(x => x.FindAsync())
+                .Returns(Task.FromResult(fakeCollSeries));
+            this.MockMappingService
+                .Setup(x => x.Project<Collection.EventSeries, EventSeries>(It.IsAny<IQueryable<Collection.EventSeries>>()))
+                .Returns((IQueryable<Collection.EventSeries> x) => {
+                    return from cs in x
+                           select new EventSeries() { Code = cs.Code };
+                });
+
+            // Act
+            var result = await Controller.Get(query);
+
+            // Assert
+            Assert.True(result.All(x => x.Code == matchCode), "Query returned a non-matching result");
+            Assert.Equal(2, result.Count());
+        }
+
+        [Fact]
         public async Task Returns_404_for_nonexistent_Series_on_GET()
         {
             // Arrange    
@@ -63,7 +97,7 @@
                 .Returns(Task.FromResult<Collection.EventSeries>(null)); // Simulate no match             
 
             // Act    
-            var result = await Controller.Get(invalidId) as NotFoundResult;            
+            var result = await Controller.Get(invalidId) as NotFoundResult;
 
             // Assert 
             Assert.NotNull(result);
@@ -122,11 +156,11 @@
             // Arrange 
             var id = TestHelper.RandomInt();
             var series = new EventSeriesBindingModel() { TransactionGuid = Guid.NewGuid() };
-            var collSeries = new[]{ new Collection.EventSeries() { Id = id, RowGUID = series.TransactionGuid } };
+            var collSeries = new[] { new Collection.EventSeries() { Id = id, RowGUID = series.TransactionGuid } };
 
             MockSeriesStore
                 .Setup(x => x.FindAsync())
-                .Returns(Task.FromResult(collSeries.AsQueryable()));             
+                .Returns(Task.FromResult(collSeries.AsQueryable()));
 
             // Act
             var result = await Controller.Post(series) as SeeOtherAtRouteResult;

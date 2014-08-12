@@ -2,7 +2,6 @@
 {
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using DiversityService.API.WebHost.Filters;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -25,10 +24,10 @@
             this.Mapper = mapper;
         }
 
-        public async Task<IEnumerable<EventSeries>> Get()
+        public async Task<IQueryable<EventSeries>> Get()
         {
             var allSeries = await SeriesStore.FindAsync();
-            return allSeries.Select(Mapper.Map<EventSeries>);
+            return Mapper.Project<Collection.EventSeries, EventSeries>(allSeries);
         }
 
         public async Task<IHttpActionResult> Get(int id)
@@ -68,7 +67,6 @@
             return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(series), series.Id);
         }
 
-        //// PUT api/values/5
         //public void Put(int id, [FromBody]EventSeries value)
         //{
         //}

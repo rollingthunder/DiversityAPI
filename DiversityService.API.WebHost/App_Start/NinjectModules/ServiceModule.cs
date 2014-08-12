@@ -16,16 +16,18 @@
     using Microsoft.Owin.Security.Cookies;
     using DiversityService.API.Model;
     using System.Collections.Generic;
+    using Ninject.Extensions.Factory;
 
     public class ServiceModule : NinjectModule
     {
         public override void Load()
         {
+
             Bind<ISeriesStore>().To<SeriesStore>()
                 .InRequestScope();
 
-            Bind<IMappingEngine>()
-                .ToMethod((_) => Mapper.Engine)
+            Bind<IMappingService>()
+                .To<AutoMapperMappingService>()
                 .InSingletonScope();
 
             Bind<ApplicationUserManager>()

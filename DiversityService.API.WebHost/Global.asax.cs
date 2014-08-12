@@ -16,8 +16,7 @@ namespace DiversityService.API.WebHost
         {
             AreaRegistration.RegisterAllAreas();
             Mapper.Initialize(MapperConfig.Configure);
-            GlobalConfiguration.Configure(WebApiConfig.RegisterFilters);
-            GlobalConfiguration.Configure(WebApiConfig.RegisterRoutes);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);            

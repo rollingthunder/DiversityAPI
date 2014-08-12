@@ -1,6 +1,6 @@
 ﻿namespace DiversityService.API.Test.Units
 {
-    using DiversityService.API.WebHost.Filters;
+    using DiversityService.API.Filters;
     using System;
     using System.Collections.Generic;
     using System.Linq;

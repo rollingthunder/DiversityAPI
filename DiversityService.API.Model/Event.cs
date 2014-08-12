@@ -2,8 +2,9 @@
 {
     using System;
 
-    public class EventCommon
+    public class Event
     {
+        public Nullable<int> Id { get; set; }
         public Nullable<int> SeriesId { get; set; }
         public string LocationDescription { get; set; }
         public string HabitatDescription { get; set; }
@@ -11,12 +12,7 @@
         public Localization Localization { get; set; }
     }
 
-    public class Event : EventCommon
-    {
-        public int Id { get; set; }
-    }
-
-    public class EventUpload : EventCommon, ITransactedModel
+    public class EventUpload : Event, ITransactedModel
     {
         public Guid TransactionGuid { get; set; }
     }

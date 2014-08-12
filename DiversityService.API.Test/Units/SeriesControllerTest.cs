@@ -73,14 +73,15 @@
         public async Task Returns_all_series_for_unqualified_GET()
         {
             // Arrange            
-            var fakeSeries = new[] { new Collection.EventSeries(), new Collection.EventSeries() };
+            var fakeCollSeries = (new[] { new Collection.EventSeries(), new Collection.EventSeries() }).AsQueryable();
+            var fakeSeries = (new[] { new EventSeries(), new EventSeries() }).AsQueryable();
             var series = new EventSeries();
             this.MockSeriesStore
                 .Setup(x => x.FindAsync())
-                .Returns(Task.FromResult(fakeSeries.AsQueryable()));
+                .Returns(Task.FromResult(fakeCollSeries));
             this.MockMappingService
-                .Setup(x => x.Map<EventSeries>(It.Is<Collection.EventSeries>(y => fakeSeries.Contains(y))))
-                .Returns(series);
+                .Setup(x => x.Project<Collection.EventSeries, EventSeries>(fakeCollSeries))
+                .Returns(fakeSeries);
 
             // Act
             var result = await Controller.Get();

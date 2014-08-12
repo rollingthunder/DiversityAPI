@@ -1,5 +1,4 @@
-﻿using DiversityService.API.WebHost.Filters;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 
 namespace DiversityService.API.WebHost
@@ -8,8 +7,7 @@ namespace DiversityService.API.WebHost
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
-           // filters.Add(new ValidateModelAttribute());
+            filters.Add(new HandleErrorAttribute());            
         }
     }
 }

@@ -2,6 +2,8 @@
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using System;
+    using System.Diagnostics.Contracts;
     using System.Linq;
 
     public class AutoMapperMappingService : IMappingService

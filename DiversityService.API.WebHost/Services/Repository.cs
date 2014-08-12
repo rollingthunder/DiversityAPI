@@ -1,19 +1,30 @@
 ﻿namespace DiversityService.API.Services
 {
     using DiversityService.Collection;
-    using System.Data.Entity;
-    using System.Linq;
-    using System.Threading.Tasks;
+using Ninject;
+using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
     public class Store<T> : IStore<T, int> where T : class, DiversityService.API.Model.IIdentifiable
-    {     
-        private readonly CollectionContext Context;
-
-        public Store(CollectionContext ctx)
+    {
+        public Store(Func<CollectionContext> ContextFactory)
         {
-            Context = ctx;
+            _Context = new Lazy<CollectionContext>(ContextFactory);
         }
-        
+    
+
+        private Lazy<CollectionContext> _Context;
+        private CollectionContext Context 
+        {
+            get
+            { 
+                return _Context.Value;
+            }
+        }
+
+       
         public async Task<IQueryable<T>> FindAsync()
         {            
             return Context.Set<T>();
@@ -37,7 +48,7 @@
         }
         public void Dispose()
         {
-            if (Context != null)
+            if (_Context.IsValueCreated && Context != null)
             {
                 Context.Dispose();
             }
@@ -46,6 +57,9 @@
 
     public class SeriesStore : Store<EventSeries>, ISeriesStore
     {
-        public SeriesStore(CollectionContext ctx) : base(ctx) {}
+        public SeriesStore(Func<CollectionContext> ContextFactory) : base(ContextFactory)
+        {
+
+        }
     }
 }

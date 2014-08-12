@@ -23,9 +23,8 @@
             // Event
             MappingConfiguration.CreateMap<Collection.Event, Event>();
 
-            MappingConfiguration.CreateMap<EventCommon, Collection.Event>()
-                .Include<EventBindingModel, Collection.Event>()
-                .Include<Event, Collection.Event>();
+            MappingConfiguration.CreateMap<Event, Collection.Event>()
+                .Include<EventBindingModel, Collection.Event>();
             MappingConfiguration.CreateMap<EventBindingModel, Collection.Event>()
                 .ForMember(es => es.RowGUID, map => map.MapFrom(es => es.TransactionGuid));
             MappingConfiguration.CreateMap<Event, Collection.Event>();

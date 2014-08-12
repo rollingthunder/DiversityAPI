@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tavis.Link</name>
+    </assembly>
+    <members>
+        <member name="T:Tavis.DelegatingResponseHandler">
+            <summary>
+            HttpResponseHandler that can be chained into a response pipeline
+            </summary>
+        </member>
+        <member name="T:Tavis.IHttpResponseHandler">
+            <summary>
+            This interface is used to provide link objects with behaviour to be performed on the response
+            from following a link.
+            </summary>
+        </member>
+        <member name="T:Tavis.Link">
+            <summary>
+            Link class augments the base LinkRfc class with abilities to:
+                - create HttpRequestMessage
+                - attach link hints
+                - attach response handling behaviour
+                - support for URI templates
+            
+            This class can be subclassed with attributes and behaviour that is specific to a particular link relation
+            </summary>
+        </member>
+        <member name="T:Tavis.LinkRfc">
+            <summary>
+            Link class with all properties as defined by RFC 5788
+            http://tools.ietf.org/html/rfc5988
+            </summary>
+        </member>
+        <member name="M:Tavis.LinkRfc.GetLinkExtension(System.String)">
+            <summary>
+            Retrieve extension attribute from link
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.LinkRfc.SetLinkExtension(System.String,System.String)">
+            <summary>
+            Set extension attribute on link
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Tavis.LinkRfc.#ctor">
+            <summary>
+            Create an instance of a link
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Context">
+            <summary>
+            The URI of the resource that returned the representation that contained this link 
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Target">
+            <summary>
+            The URI of resource that this link is pointing to
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Relation">
+            <summary>
+            A string identify for the Link Relation Type
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Anchor">
+            <summary>
+            An identifier that further qualifies the Context of the link within the current representation  
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Rev">
+            <summary>
+            Reverse link relation
+            </summary>
+            <remarks>
+            Deprecated byRFC5988
+            </remarks>
+        </member>
+        <member name="P:Tavis.LinkRfc.Title">
+            <summary>
+            Human readable description of the purpose of the link
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.TitleEncoding">
+            <summary>
+            Human readable description of the purpose of the link, with support for extended character sets 
+            </summary>
+            <remarks>
+            See RFC 5987 for details
+            </remarks>
+        </member>
+        <member name="P:Tavis.LinkRfc.HrefLang">
+            <summary>
+            Set of languages supported by the target resource
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Media">
+            <summary>
+            Identifier to describe the type of device that the target representation will be rendered on.
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.Type">
+            <summary>
+            Hint to indicate what media type might be returned by the target resource
+            </summary>
+        </member>
+        <member name="P:Tavis.LinkRfc.LinkExtensions">
+            <summary>
+            Returns a list of extension attributes assigned to the link
+            </summary>
+        </member>
+        <member name="M:Tavis.Link.#ctor">
+            <summary>
+            Create an instance of a link.  
+            </summary>
+            <remarks>
+            The empty constructor makes it easier for deserializers to create links.
+            </remarks>
+        </member>
+        <member name="M:Tavis.Link.CreateRequest">
+            <summary>
+            Create an HTTPRequestMessage based on the information stored in the link.
+            </summary>
+            <remarks>This method can be overloaded to provide custom behaviour when creating the link.  </remarks>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Link.HandleResponseAsync(System.Net.Http.HttpResponseMessage)">
+            <summary>
+            Entry point for triggering the execution of the assigned HttpResponseHandler if one exists
+            </summary>
+            <param name="responseMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Link.GetParameterNames">
+            <summary>
+            Returns list of URI Template parameters specified in the Target URI
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Link.GetResolvedTarget">
+            <summary>
+            Resolves the URI Template defined in the Target URI using the assigned URI parameters
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Link.GetParameters">
+            <summary>
+            Returns list of parameters assigned to the link
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Link.AddHint(Tavis.Hint)">
+            <summary>
+            Add a hint to the link.  These hints can be used for serializing into representations on the server, or used to modify the behaviour of the CreateRequestMessage method
+            </summary>
+            <param name="hint"></param>
+        </member>
+        <member name="M:Tavis.Link.GetHints">
+            <summary>
+            Returns a list of assigned link hints
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Link.SetParameter(System.String,System.Object,System.Uri)">
+            <summary>
+            Assign parameter value for use with URI templates
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+            <param name="identifier">URL of documentation for this parameter</param>
+        </member>
+        <member name="M:Tavis.Link.SetParameter(System.String,System.Object)">
+            <summary>
+            Assign parameter value for use with URI templates
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Tavis.Link.UnsetParameter(System.String)">
+            <summary>
+            Remove URI template parameter
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Tavis.Link.AddParametersAsTemplate(System.Nullable{System.Boolean})">
+            <summary>
+            Update target URI with query parameter tokens based on assigned parameters
+            </summary>
+        </member>
+        <member name="P:Tavis.Link.Method">
+            <summary>
+            The HTTP method to be used when following this link, or creating a HTTPRequestMessage
+            </summary>
+        </member>
+        <member name="P:Tavis.Link.Content">
+            <summary>
+            The HTTPContent to be sent with the HTTP request when following this link or creating a HTTPRequestMessage
+            </summary>
+        </member>
+        <member name="P:Tavis.Link.RequestHeaders">
+            <summary>
+            The Request headers to be used when following this link or creating a HttpRequestMessage.
+            </summary>
+            <remarks>
+            HttpRequestMessage instances can only be used once.  Using a link class as a factory for HttpRequestMessages makes it easier to make multiple similar requests.  
+            </remarks>
+        </member>
+        <member name="P:Tavis.Link.HttpResponseHandler">
+            <summary>
+            A handler with knowledge of how to process the response to following a link.  
+            </summary>
+            <remarks>
+            The use of reponse handlers is completely optional.  They become valuable when media type deserializers use the LinkFactory which is has behaviours pre-registered
+            </remarks>
+        </member>
+        <member name="T:Tavis.IANA.RepliesLink">
+            <summary>
+            Identifies a resource that is a reply to the context of the link. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.SearchLink">
+            <summary>
+            Refers to a resource that can be used to search through the link's context and related resources.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.SectionLink">
+            <summary>
+            Refers to a section in a collection of resources.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.SelfLink">
+            <summary>
+            Conveys an identifier for the link's context. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.ServiceLink">
+            <summary>
+            Indicates a URI that can be used to retrieve a service document.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.StartLink">
+            <summary>
+            Refers to the first resource in a collection of resources.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.StylesheetLink">
+            <summary>
+            Refers to a stylesheet.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.SubSectionLink">
+            <summary>
+            Refers to a resource serving as a subsection in a collection of resources.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.SuccessorVersionLink">
+            <summary>
+            Points to a resource containing the successor version in the version history. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.TagLink">
+            <summary>
+            Gives a tag (identified by the given address) that applies to the current document. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.TermsOfServiceLink">
+            <summary>
+            Refers to the terms of service associated with the link's context.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.TypeLink">
+            <summary>
+            Refers to a resource identifying the abstract semantic type of which the link's context is considered to be an instance.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.UpLink">
+            <summary>
+            Refers to a parent document in a hierarchy of documents. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.VersionHistoryLink">
+            <summary>
+            Points to a resource containing the version history for the context. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.ViaLink">
+            <summary>
+            Identifies a resource that is the source of the information in the link's context. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.WorkingCopyLink">
+            <summary>
+            Points to a working copy for this resource.
+            </summary>
+        </member>
+        <member name="T:Tavis.IANA.WorkingCopyOfLink">
+            <summary>
+            Points to the versioned resource from which this working copy was obtained. 
+            </summary>
+        </member>
+        <member name="T:Tavis.IEmbedTarget">
+            <summary>
+            Interface used to implement in client state machines to enable aggregating client state when following a LE link.
+            </summary>
+        </member>
+        <member name="T:Tavis.ILinkExtractor">
+            <summary>
+            This interface can be implemented by media type parsers to provide a generic way to access links in a representation
+            </summary>
+        </member>
+        <member name="M:Tavis.LinkExtensions.AddHandler(Tavis.Link,Tavis.DelegatingResponseHandler)">
+            <summary>
+            Add response handler to end of chain of handlers
+            </summary>
+            <param name="link"></param>
+            <param name="responseHandler"></param>
+        </member>
+        <member name="M:Tavis.LinkExtensions.AsLinkHeader(Tavis.Link)">
+            <summary>
+            Serialize link in format that can be returned as a HttpHeader
+            </summary>
+            <param name="link"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tavis.LinkFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Tavis.LinkFactory.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Tavis.LinkFactory.AddLinkType``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Tavis.LinkFactory.SetHandler``1(Tavis.IHttpResponseHandler)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Tavis.LinkFactory.CreateLink(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="relation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.LinkFactory.CreateLink``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="P:Tavis.LinkFactory.HintFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Tavis.LinkHelper">
+            <summary>
+            Static helper methods for the Link class
+            </summary>
+        </member>
+        <member name="M:Tavis.LinkHelper.GetLinkRelationTypeName``1">
+            <summary>
+            Helper method that reflects over a link type to find a LinkRelationTypeAttribute to return the link relation type name
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.LinkHelper.GetLinkRelationTypeName(System.Type)">
+            <summary>
+            Helper method that reflects over a link type to find a LinkRelationTypeAttribute to return the link relation type name
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tavis.LinkParameter">
+            <summary>
+            Parameter used to fill in URI templates
+            </summary>
+        </member>
+        <member name="T:Tavis.LinkRelationTypeAttribute">
+            <summary>
+            Attribute that enables us to identify a class as representing a specific link relation type and can be extracted with instantiating the class.
+            </summary>
+        </member>
+        <member name="M:Tavis.LinkRelationTypeAttribute.#ctor(System.String)">
+            <summary>
+            Create a new attribute.  For IANA registered link relations name will be simple string, otherwise it should be a URI 
+            </summary>
+            <param name="name"></param>
+        </member>
+    </members>
+</doc>

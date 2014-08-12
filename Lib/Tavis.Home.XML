@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tavis.Home</name>
+    </assembly>
+    <members>
+        <member name="T:Tavis.Home.HomeContent">
+            <summary>
+            This class is an adapter between an instance of a HomeDocument and the HttpContent class needed by HttpResponseMessage 
+            </summary>
+            <remarks>
+            Current this class sets the content type header to application/home+json, however as yet, the media type identifier has not been decided.  This will change.
+            </remarks>
+            <example>
+            return new HttpResponseMessage() {
+                Content = new HomeContent(homeDocument)
+            };
+            </example>
+        </member>
+        <member name="M:Tavis.Home.HomeContent.#ctor(Tavis.Home.HomeDocument)">
+            <summary>
+            
+            </summary>
+            <param name="document"></param>
+        </member>
+        <member name="M:Tavis.Home.HomeContent.SerializeToStreamAsync(System.IO.Stream,System.Net.TransportContext)">
+            <summary>
+            Copies serialized document to network stream
+            </summary>
+            <param name="stream"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Home.HomeContent.TryComputeLength(System.Int64@)">
+            <summary>
+            Returns length serialized document
+            </summary>
+            <param name="length"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Tavis.Home.HomeDocument">
+            <summary>
+            Document Object Model for the media type defined here http://tools.ietf.org/html/draft-nottingham-json-home-03
+            </summary>
+            <remarks>
+            Currently this class only supports serializing the JSON variant of this media type.
+            </remarks>
+        </member>
+        <member name="M:Tavis.Home.HomeDocument.AddResource(Tavis.Link)">
+            <summary>
+            Add a typed link to the Home Document to identify an available resource
+            </summary>
+            <param name="resource"></param>
+        </member>
+        <member name="M:Tavis.Home.HomeDocument.GetResource(System.String)">
+            <summary>
+            Retrieve a typed link based on the link relation name.
+            </summary>
+            <remarks>
+            Currently the specification only supports one resource per link relation type.
+            </remarks>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Home.HomeDocument.Save(System.IO.Stream)">
+            <summary>
+            Serialize the HomeDocument model as text to a Stream
+            </summary>
+            <remarks>
+            The stream will be closed when the method returns.
+            </remarks>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Tavis.Home.HomeDocument.Parse(System.IO.Stream,Tavis.LinkFactory)">
+            <summary>
+            Create a HomeDocument instance from a stream of JSON text that is formatted as per the json-home specification
+            </summary>
+            <param name="jsonStream"></param>
+            <param name="linkFactory">Optionally specifiy a linkFactory for creating strongly typed links.  If one is not provided the default LinkFactory will be created and only IANA registered links will be available as strong types.  All unrecognized link relations will be deserialized as the base Link class.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Tavis.Home.HomeDocument.Parse(System.String,Tavis.LinkFactory)">
+            <summary>
+            Create a HomeDocument instance from a string of JSON text that is formatted as per the json-home specification
+            </summary>
+            <param name="jsonString"></param>
+            <param name="linkFactory">Optionally specifiy a linkFactory for creating strongly typed links.  If one is not provided the default LinkFactory will be created and only IANA registered links will be available as strong types.  All unrecognized link relations will be deserialized as the base Link class.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Tavis.Home.HomeDocument.Resources">
+            <summary>
+            List of links to available resources
+            </summary>
+        </member>
+        <member name="T:Tavis.Home.HomeDocumentExtentions">
+            <summary>
+            Helper methods for building a HomeDocument
+            </summary>
+        </member>
+        <member name="M:Tavis.Home.HomeDocumentExtentions.AddHint``1(Tavis.Link,System.Action{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="link"></param>
+            <param name="configureHint"></param>
+        </member>
+        <member name="M:Tavis.Home.HomeDocumentExtentions.AddResource``1(Tavis.Home.HomeDocument,System.Action{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="homeDocument"></param>
+            <param name="configureLink"></param>
+        </member>
+    </members>
+</doc>

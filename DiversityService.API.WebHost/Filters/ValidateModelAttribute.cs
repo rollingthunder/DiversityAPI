@@ -1,4 +1,4 @@
-﻿namespace DiversityService.API.WebHost.Filters
+﻿namespace DiversityService.API.Filters
 {
     using System.Net;
     using System.Web.Http.Controllers;

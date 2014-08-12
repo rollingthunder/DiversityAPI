@@ -1,0 +1,12 @@
+[submodule "External/Tavis.Home"]
+	path = External/Tavis.Home
+	url = git@github.com:rollingthunder/Tavis.home.git
+[submodule "External/Tavis.Link"]
+	path = External/Tavis.Link
+	url = git@github.com:rollingthunder/Link.git
+[submodule "External/Tavis.PrivateCache"]
+	path = External/Tavis.PrivateCache
+	url = git@github.com:rollingthunder/Tavis.PrivateCache.git
+[submodule "External/Tavis.UriTemplates"]
+	path = External/Tavis.UriTemplates
+	url = git@github.com:rollingthunder/UriTemplates.git

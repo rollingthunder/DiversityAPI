@@ -14,7 +14,7 @@
     using System.Web;
     using DiversityService.API.Services;
     using System.Threading.Tasks;
-    
+
     public class EventController : DiversityController
     {
         private readonly IEventStore EventStore;
@@ -71,39 +71,17 @@
             return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(newEvent), newEvent.Id);
         }
 
-//        [Route(Route.PREFIX_SERIES + "{seriesId}/events", Name="EventsForSeries")]
-//        [HttpGet]
-//        public HttpResponseMessage EventsForSeries(int seriesId)
-//        {
-//            var response = Request.CreateResponse(HttpStatusCode.SeeOther);
+        [Route(Route.PREFIX_SERIES + "{seriesId}/events", Name = "EventsForSeries")]
+        [HttpGet]
+        public async Task<IQueryable<Event>> EventsForSeries(int? seriesId)
+        {
+            var allEvents = await EventStore.FindAsync();
 
-//            var uriBuilder = new StringBuilder();
+            var query = from ev in allEvents
+                        where ev.SeriesID == seriesId
+                        select ev;
 
-//            uriBuilder.Append(Url.Link(Route.NAME_DEFAULT_API, new { controller = Route.EVENT_CONTROLLER }));
-
-//            var query = Request.RequestUri.ParseQueryString();
-
-//            var seriesFilter = string.Format("SeriesId eq {0}", seriesId);
-
-//            var filterQuery = query["$filter"];
-//            if(filterQuery != null)
-//            {
-//                var newFilter = string.Format("{0} and {1}", filterQuery, seriesFilter);
-//                query.Set("$filter", newFilter);
-//            }
-//            else
-//            {
-//                query.Add("$filter", seriesFilter);
-//            }
-
-//            var ammendedQuery = HttpUtility.UrlDecode(query.ToString());
-
-//            uriBuilder.Append('?');
-//            uriBuilder.Append(ammendedQuery);
-
-//            response.Headers.Location = new Uri(uriBuilder.ToString());
-
-//            return response;
-//        }
+            return Mapper.Project<Collection.Event, Event>(query);
+        }
     }
 }

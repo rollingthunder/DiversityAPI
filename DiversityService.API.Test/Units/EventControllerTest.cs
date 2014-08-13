@@ -137,5 +137,38 @@
             Assert.Equal(Route.DEFAULT_API, result.RouteName);
             Assert.Equal(id, (int)result.RouteValues[Route.PARAM_ID]);
         }
+
+        [Fact]
+        public async Task Returns_Events_for_Series()
+        {
+            // Arrange 
+            var seriesId = TestHelper.RandomInt();
+            var collEvents = new[] 
+            { 
+                new Collection.Event() { SeriesID = seriesId },
+                new Collection.Event() { SeriesID = TestHelper.RandomInt() },
+                new Collection.Event() { SeriesID = seriesId },
+                new Collection.Event() { SeriesID = TestHelper.RandomInt() },
+                new Collection.Event() { SeriesID = seriesId },
+                new Collection.Event() { SeriesID = TestHelper.RandomInt() },
+                new Collection.Event() { SeriesID = seriesId },
+                new Collection.Event() { SeriesID = TestHelper.RandomInt() },
+            };
+            MockEventStore
+                .Setup(x => x.FindAsync())
+                .Returns(Task.FromResult(collEvents.AsQueryable()));
+            MockMappingService
+                .Setup(x => x.Project<Collection.Event, Event>(It.IsAny<IQueryable<Collection.Event>>()))
+                .Returns((IQueryable<Collection.Event> evs) => from ev in evs
+                                                               select new Event() { SeriesId = ev.SeriesID });
+
+            // Act
+            var result = await Controller.EventsForSeries(seriesId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(4, result.Count());
+            Assert.True(result.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");
+        }
     }
 }

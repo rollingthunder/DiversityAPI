@@ -297,6 +297,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MultimediaController.cs" />
+    <Compile Include="Controllers\Parameters.cs" />
     <Compile Include="Controllers\Relations.cs" />
     <Compile Include="Controllers\Routes.cs" />
     <Compile Include="Controllers\SeriesController.cs" />

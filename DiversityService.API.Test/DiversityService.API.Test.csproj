@@ -112,6 +112,7 @@
     <Compile Include="Features\SeriesFeature.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="TestKernel.cs" />
+    <Compile Include="Units\EventControllerTest.cs" />
     <Compile Include="Units\SeriesControllerTest.cs" />
     <Compile Include="Units\ValidateModelFilterTest.cs" />
   </ItemGroup>

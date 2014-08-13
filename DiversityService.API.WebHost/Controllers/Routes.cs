@@ -6,6 +6,8 @@ namespace DiversityService.API.Controllers
 
     public static class Route
     {
+        public const string DOCUMENTATION_BASE = "https://api.snsb.info/";
+
         // Default Route
         public const string DEFAULT_API = "DefaultApi";
         public const string PARAM_CONTROLLER = "controller";

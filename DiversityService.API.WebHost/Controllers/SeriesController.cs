@@ -54,11 +54,6 @@
 
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var existing = (from es in await SeriesStore.FindAsync()
                             where es.RowGUID == value.TransactionGuid
                             select es).SingleOrDefault();

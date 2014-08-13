@@ -23,9 +23,10 @@
             // Series
             var series = new Link()
             {
-                Relation = Relations.SERIES_SINGLE,
-                Target = new Uri("series", UriKind.Relative)
+                Relation = Relations.SERIES_SINGLE,                
+                Target = new Uri("series/{id}", UriKind.Relative)
             };
+            series.SetParameter("id", "", Parameters.SERIES_ID);
 
             var allowedMethods = new AllowHint();
             allowedMethods.AddMethod(HttpMethod.Get);

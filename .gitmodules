@@ -10,3 +10,12 @@
 [submodule "External/Tavis.UriTemplates"]
 	path = External/Tavis.UriTemplates
 	url = git@github.com:rollingthunder/UriTemplates.git
+[submodule "External/Siren.Net"]
+	path = External/Siren.Net
+	url = git@github.com:rollingthunder/Siren.Net.git
+[submodule "External/SterlingDB"]
+	path = External/SterlingDB
+	url = git@github.com:rollingthunder/SterlingDB.git
+[submodule "External/Tavis.PrivateCache.Sterling"]
+	path = External/Tavis.PrivateCache.Sterling
+	url = git@github.com:rollingthunder/Tavis.PrivateCache.Sterling.git

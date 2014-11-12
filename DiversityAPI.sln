@@ -45,8 +45,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavis.PrivateCache", "Exter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavis.PrivateCache.Tests", "External\Tavis.PrivateCache\src\PrivateCacheTests\Tavis.PrivateCache.Tests.csproj", "{81A0113C-44C8-44F3-B855-9FFAF5E63FC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavis.PrivateCache-Net40", "External\Tavis.PrivateCache\src\PrivateCache\Tavis.PrivateCache-Net40.csproj", "{54DA742E-963C-4008-9E83-A6787EE270EF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wintellect.Sterling.Core", "External\SterlingDB\Wintellect.Sterling.Core\Wintellect.Sterling.Core.csproj", "{7B8F46DA-A437-45C4-B54A-87B418D5701F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tavis.PrivateCache.Sterling", "External\Tavis.PrivateCache.Sterling\src\Tavis.PrivateCache.Sterling\Tavis.PrivateCache.Sterling.csproj", "{FF5D54EB-02CC-4808-B49B-78DA4C780A2A}"
@@ -235,20 +233,6 @@ Global
 		{81A0113C-44C8-44F3-B855-9FFAF5E63FC5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{81A0113C-44C8-44F3-B855-9FFAF5E63FC5}.Release|x64.ActiveCfg = Release|Any CPU
 		{81A0113C-44C8-44F3-B855-9FFAF5E63FC5}.Release|x86.ActiveCfg = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|ARM.ActiveCfg = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|x64.ActiveCfg = Release|Any CPU
-		{54DA742E-963C-4008-9E83-A6787EE270EF}.Release|x86.ActiveCfg = Release|Any CPU
 		{7B8F46DA-A437-45C4-B54A-87B418D5701F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7B8F46DA-A437-45C4-B54A-87B418D5701F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B8F46DA-A437-45C4-B54A-87B418D5701F}.Debug|ARM.ActiveCfg = Debug|Any CPU

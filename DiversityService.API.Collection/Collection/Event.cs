@@ -32,7 +32,6 @@ namespace DiversityService.Collection
         public string Notes { get; set; }
         public System.Guid RowGUID { get; set; }
         public int Version { get; set; }
-        public bool IsAvailable { get; set; }
         private string CollectionTime { get; set; }
         private string CollectionDateCategory { get; set; }
     

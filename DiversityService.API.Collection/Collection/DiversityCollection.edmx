@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DiversityCollection.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+      <Schema Namespace="DiversityCollection.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
         <EntityType Name="Analysis">
           <Key>
             <PropertyRef Name="AnalysisID" />
@@ -18,7 +18,6 @@
           <Property Name="AnalysisURI" Type="varchar" MaxLength="255" />
           <Property Name="OnlyHierarchy" Type="bit" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="AnalysisToolID" Type="int" />
         </EntityType>
         <EntityType Name="AnalysisResult">
           <Key>
@@ -68,16 +67,13 @@
           <Property Name="HabitatDescription" Type="nvarchar(max)" />
           <Property Name="ReferenceTitle" Type="nvarchar" MaxLength="255" />
           <Property Name="ReferenceURI" Type="varchar" MaxLength="255" />
-          <Property Name="ReferenceDetails" Type="nvarchar" MaxLength="50" />
           <Property Name="CollectingMethod" Type="nvarchar(max)" />
-          <Property Name="xx_MethodID" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="CountryCache" Type="nvarchar" MaxLength="50" />
-          <Property Name="ToolUsage" Type="xml" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
-          <Property Name="xx_IsAvailable" Type="bit" Nullable="false" />
           <Property Name="xx_ExpeditionID" Type="int" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReferenceDetails" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CollectionEventImage">
           <Key>
@@ -88,10 +84,10 @@
           <Property Name="URI" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ResourceURI" Type="varchar" MaxLength="255" />
           <Property Name="ImageType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="xml" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="xml" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
           <Property Name="IPR" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatorAgent" Type="nvarchar" MaxLength="500" />
@@ -128,10 +124,11 @@
           <Property Name="SeriesParentID" Type="int" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SeriesCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="Geography" Type="geography" />
           <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Geography" Type="geography" />
           <Property Name="DateStart" Type="datetime" />
           <Property Name="DateEnd" Type="datetime" />
+          <Property Name="DateCache" Type="datetime" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="CollectionEventSeriesImage">
@@ -143,10 +140,10 @@
           <Property Name="URI" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="ResourceURI" Type="varchar" MaxLength="255" />
           <Property Name="ImageType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="xml" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="xml" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
           <Property Name="IPR" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatorAgent" Type="nvarchar" MaxLength="500" />
@@ -176,7 +173,7 @@
           <Property Name="DepositorsName" Type="nvarchar" MaxLength="255" />
           <Property Name="DepositorsAgentURI" Type="varchar" MaxLength="255" />
           <Property Name="DepositorsAccessionNumber" Type="nvarchar" MaxLength="50" />
-          <Property Name="LabelTitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="LabelTitle" Type="nvarchar(max)" />
           <Property Name="LabelType" Type="nvarchar" MaxLength="50" />
           <Property Name="LabelTranscriptionState" Type="nvarchar" MaxLength="50" />
           <Property Name="LabelTranscriptionNotes" Type="nvarchar" MaxLength="255" />
@@ -186,14 +183,14 @@
           <Property Name="AdditionalNotes" Type="nvarchar(max)" />
           <Property Name="ReferenceTitle" Type="nvarchar" MaxLength="255" />
           <Property Name="ReferenceURI" Type="varchar" MaxLength="255" />
-          <Property Name="ReferenceDetails" Type="nvarchar" MaxLength="50" />
           <Property Name="Problems" Type="nvarchar" MaxLength="255" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
+          <Property Name="xx_IsAvailable" Type="bit" Nullable="false" />
           <Property Name="InternalNotes" Type="nvarchar(max)" />
           <Property Name="ExternalDatasourceID" Type="int" />
           <Property Name="ExternalIdentifier" Type="nvarchar" MaxLength="100" />
-          <Property Name="xx_IsAvailable" Type="bit" Nullable="false" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ReferenceDetails" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="CollectionSpecimenImage">
           <Key>
@@ -206,10 +203,10 @@
           <Property Name="SpecimenPartID" Type="int" />
           <Property Name="IdentificationUnitID" Type="int" />
           <Property Name="ImageType" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="xml" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="DataWithholdingReason" Type="nvarchar" MaxLength="255" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Description" Type="xml" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
           <Property Name="IPR" Type="nvarchar" MaxLength="500" />
           <Property Name="CreatorAgent" Type="nvarchar" MaxLength="500" />
@@ -303,7 +300,6 @@
           <Property Name="ResponsibleAgentURI" Type="varchar" MaxLength="255" />
           <Property Name="AnalysisDate" Type="nvarchar" MaxLength="50" />
           <Property Name="SpecimenPartID" Type="int" />
-          <Property Name="ToolID" Type="int" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="RowGUID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="ToolUsage" Type="xml" />
@@ -604,6 +600,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DiversityMobile_UserTaxonLists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LoginName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DiversityMobile_UserTerminologies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LoginName" Type="nvarchar" Mode="In" />
+        </Function>
         <EntityContainer Name="DiversityCollectionStoreContainer">
           <EntitySet Name="Analysis" EntityType="Self.Analysis" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnalysisResult" EntityType="Self.AnalysisResult" Schema="dbo" store:Type="Tables" />
@@ -719,7 +721,6 @@
           <Property Name="AnalysisURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="OnlyHierarchy" Type="Boolean" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
-          <Property Name="AnalysisToolID" Type="Int32" />
           <NavigationProperty Name="AnalysisResult" Relationship="Self.FK_AnalysisResult_Analysis" FromRole="Analysis" ToRole="AnalysisResult" />
           <NavigationProperty Name="Analysis1" Relationship="Self.FK_IdentificationAnalysis_IdentificationAnalysis" FromRole="Analysis" ToRole="Analysis1" />
           <NavigationProperty Name="Analysis2" Relationship="Self.FK_IdentificationAnalysis_IdentificationAnalysis" FromRole="Analysis1" ToRole="Analysis" />
@@ -748,7 +749,7 @@
           <Property Name="CollectionDay" Type="Byte" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="CollectionMonth" Type="Byte" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="CollectionYear" Type="Int16" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <Property Name="TimeStamp" Type="DateTime" a:GetterAccess="Public" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="TimeStamp" Type="DateTime" a:GetterAccess="Public" a:SetterAccess="Public" Precision="3" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <Property Name="LocalityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HabitatDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -758,9 +759,8 @@
           <NavigationProperty Name="Properties" Relationship="Self.FK_CollectionEventProperty_CollectionEvent" FromRole="CollectionEvent" ToRole="CollectionEventProperty" />
           <NavigationProperty Name="Specimen" Relationship="Self.FK_CollectionSpecimen_CollectionEvent" FromRole="CollectionEvent" ToRole="CollectionSpecimen" />
           <Property Name="Version" Type="Int32" Nullable="false" />
-          <Property Name="IsAvailable" Type="Boolean" Nullable="false" />
-          <Property Name="CollectionTime" Type="String" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <Property Name="CollectionDateCategory" Type="String" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="CollectionTime" Type="String" a:GetterAccess="Private" a:SetterAccess="Private" MaxLength="50" Unicode="false" FixedLength="false" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Name="CollectionDateCategory" Type="String" a:GetterAccess="Private" a:SetterAccess="Private" MaxLength="50" Unicode="true" FixedLength="false" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
         </EntityType>
         <EntityType Name="EventImage">
           <Key>
@@ -822,6 +822,7 @@
           <Property Name="ParentID" Type="Int32" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
           <NavigationProperty Name="Children" Relationship="DiversityCollection.EventSeriesEventSeries" FromRole="EventSeries" ToRole="ChildSeries" />
           <NavigationProperty Name="Parent" Relationship="DiversityCollection.EventSeriesEventSeries" FromRole="ChildSeries" ToRole="EventSeries" />
+          <Property Name="DateCache" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="EventSeriesImage">
           <Key>
@@ -864,7 +865,7 @@
           <Property Name="DepositorsName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DepositorsAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="DepositorsAccessionNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LabelTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LabelTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LabelType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LabelTranscriptionState" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LabelTranscriptionNotes" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -1007,7 +1008,6 @@
           <Property Name="ResponsibleAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="AnalysisDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SpecimenPartID" Type="Int32" />
-          <Property Name="ToolID" Type="Int32" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="ToolUsage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1341,6 +1341,12 @@
             <End Role="EventSeries" EntitySet="EventSeries" />
             <End Role="ChildSeries" EntitySet="EventSeries" />
           </AssociationSet>
+          <FunctionImport Name="DiversityMobile_UserTaxonLists" ReturnType="Collection(DiversityCollection.UserTaxonList)">
+            <Parameter Name="LoginName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DiversityMobile_UserTerminologies" ReturnType="Collection(DiversityCollection.UserTerminology)">
+            <Parameter Name="LoginName" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="CollectionAgent">
           <Key>
@@ -1427,6 +1433,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="UserTaxonList">
+          <Property Type="String" Name="DataBaseName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ListID" Nullable="true" />
+          <Property Type="Int32" Name="ProjectID" Nullable="true" />
+          <Property Type="String" Name="DataSource" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DisplayText" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="TaxonomicGroup" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UserTerminology">
+          <Property Type="String" Name="DataBaseName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TerminologyID" Nullable="true" />
+          <Property Type="String" Name="DisplayText" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1445,7 +1464,6 @@
                 <ScalarProperty Name="AnalysisURI" ColumnName="AnalysisURI" />
                 <ScalarProperty Name="OnlyHierarchy" ColumnName="OnlyHierarchy" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
-                <ScalarProperty Name="AnalysisToolID" ColumnName="AnalysisToolID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1468,7 +1486,6 @@
                 <ScalarProperty Name="CollectionTime" ColumnName="CollectionTime" />
                 <ScalarProperty Name="CollectionDateCategory" ColumnName="CollectionDateCategory" />
                 <ScalarProperty Name="TimeStamp" ColumnName="CollectionDate" />
-                <ScalarProperty Name="IsAvailable" ColumnName="xx_IsAvailable" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
                 <ScalarProperty Name="Id" ColumnName="CollectionEventID" />
                 <ScalarProperty Name="SeriesID" ColumnName="SeriesID" />
@@ -1526,6 +1543,7 @@
           <EntitySetMapping Name="EventSeries">
             <EntityTypeMapping TypeName="DiversityCollection.EventSeries">
               <MappingFragment StoreEntitySet="CollectionEventSeries">
+                <ScalarProperty Name="DateCache" ColumnName="DateCache" />
                 <ScalarProperty Name="ParentID" ColumnName="SeriesParentID" />
                 <ScalarProperty Name="Id" ColumnName="SeriesID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1700,7 +1718,6 @@
                 <ScalarProperty Name="ResponsibleAgentURI" ColumnName="ResponsibleAgentURI" />
                 <ScalarProperty Name="AnalysisDate" ColumnName="AnalysisDate" />
                 <ScalarProperty Name="SpecimenPartID" ColumnName="SpecimenPartID" />
-                <ScalarProperty Name="ToolID" ColumnName="ToolID" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="ToolUsage" ColumnName="ToolUsage" />
@@ -1754,6 +1771,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="DiversityMobile_UserTaxonLists" FunctionName="DiversityCollection.Store.DiversityMobile_UserTaxonLists">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DiversityCollection.UserTaxonList">
+                <ScalarProperty Name="DataBaseName" ColumnName="DataBaseName" />
+                <ScalarProperty Name="ListID" ColumnName="ListID" />
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
+                <ScalarProperty Name="TaxonomicGroup" ColumnName="TaxonomicGroup" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DiversityMobile_UserTerminologies" FunctionName="DiversityCollection.Store.DiversityMobile_UserTerminologies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DiversityCollection.UserTerminology">
+                <ScalarProperty Name="DataBaseName" ColumnName="DataBaseName" />
+                <ScalarProperty Name="TerminologyID" ColumnName="TerminologyID" />
+                <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

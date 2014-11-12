@@ -2,12 +2,12 @@
 {
     using DiversityService.API.Model;
     using System;
-    using System.Linq;
     using System.Collections;
-    using System.Globalization;
-    using System.Data.Entity.Infrastructure;
-    using System.Data.Entity.Core.Objects;
     using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Infrastructure;
+    using System.Globalization;
+    using System.Linq;
 
     public partial class Event : IIdentifiable, IGuidIdentifiable
     {
@@ -34,7 +34,6 @@
                         // If there is no time, all we have is a date
                         // So it would not make sense to convert to UTC
                     }
-
                 }
             }
         }
@@ -60,7 +59,7 @@
                     var secondTimeOfDay = new TimeSpan(timeOfDay.Hours, timeOfDay.Minutes, timeOfDay.Seconds);
                     // Convert to invariant string ([-][d.]hh:mm:ss[.fffffff])
                     ev.CollectionTime = secondTimeOfDay.ToString("c");
-                } 
+                }
                 else
                 {
                     // No Time, only Date information
@@ -71,9 +70,9 @@
                 ev.CollectionYear = (short)timeStamp.Year;
                 ev.CollectionMonth = (byte)timeStamp.Month;
                 ev.CollectionDay = (byte)timeStamp.Day;
-                
+
                 // If the category has not been determined yet, set it.
-                if(string.IsNullOrWhiteSpace(ev.CollectionDateCategory))
+                if (string.IsNullOrWhiteSpace(ev.CollectionDateCategory))
                 {
                     ev.CollectionDateCategory = COLLECTIONDATECATEGORY_ACTUAL;
                 }
@@ -104,7 +103,7 @@
         internal static void OnMaterialized(EventSeries es)
         {
             es.StartDateUTC = EntityHelper.ForceUTC(es.StartDateUTC);
-            es.EndDateUTC = EntityHelper.ForceUTC(es.EndDateUTC);            
+            es.EndDateUTC = EntityHelper.ForceUTC(es.EndDateUTC);
         }
 
         internal static void BeforeSave(EventSeries es)
@@ -154,7 +153,6 @@
 
     public partial class IdentificationUnit : IIdentifiable
     {
-
     }
 
     public static class EntityHelper
@@ -211,7 +209,7 @@
             var entity = e.Entity;
 
             if (entity == null)
-            { 
+            {
                 return;
             }
 
@@ -235,5 +233,14 @@
 
             ((IObjectContextAdapter)this).ObjectContext.SavingChanges += EntityHelper.SavingChanges;
         }
+    }
+
+    public class TaxonListForProject
+    {
+        public int Id { get; set; }
+
+        public int ProjectId { get; set; }
+
+        public string Name { get; set; }
     }
 }

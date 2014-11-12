@@ -30,7 +30,6 @@ namespace DiversityService.Collection
         public string AnalysisURI { get; set; }
         public Nullable<bool> OnlyHierarchy { get; set; }
         public System.Guid RowGUID { get; set; }
-        public Nullable<int> AnalysisToolID { get; set; }
     
         public virtual ICollection<AnalysisResult> AnalysisResult { get; set; }
         public virtual ICollection<Analysis> Analysis1 { get; set; }

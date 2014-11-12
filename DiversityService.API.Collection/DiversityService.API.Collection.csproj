@@ -114,43 +114,14 @@
     <Compile Include="Collection\SpecimenImage.cs">
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
+    <Compile Include="Collection\UserTaxonList.cs">
+      <DependentUpon>DiversityCollection.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Collection\UserTerminology.cs">
+      <DependentUpon>DiversityCollection.tt</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces.cs" />
-    <Compile Include="Mobile\DiversityMobile.Context.cs">
-      <DependentUpon>DiversityMobile.Context.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Mobile\DiversityMobile.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Mobile\DiversityMobile.Designer.cs">
-      <DependentUpon>DiversityMobile.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Mobile\TaxRef_BfN_VPlants.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\TaxRef_DGfM_Fungi.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\TaxRef_LIAS_Erys_DE.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\TaxRef_LIAS_Lichens_DE.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\TaxRef_LIAS_LichFungi_DE.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Terms_LebensraumTypen.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Mobile\Terms_Pflanzengesellschaften.cs">
-      <DependentUpon>DiversityMobile.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,23 +144,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DiversityCollection.edmx</DependentUpon>
       <LastGenOutput>DiversityCollection.cs</LastGenOutput>
-    </None>
-    <EntityDeploy Include="Mobile\DiversityMobile.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DiversityMobile.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Mobile\DiversityMobile.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DiversityMobile.edmx</DependentUpon>
-      <LastGenOutput>DiversityMobile.Context.cs</LastGenOutput>
-    </None>
-    <None Include="Mobile\DiversityMobile.edmx.diagram">
-      <DependentUpon>DiversityMobile.edmx</DependentUpon>
-    </None>
-    <None Include="Mobile\DiversityMobile.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DiversityMobile.edmx</DependentUpon>
-      <LastGenOutput>DiversityMobile.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

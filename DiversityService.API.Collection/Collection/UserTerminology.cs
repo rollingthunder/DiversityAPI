@@ -7,18 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DiversityService.Mobile
+namespace DiversityService.Collection
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Terms_Pflanzengesellschaften
+    public partial class UserTerminology
     {
-        public int PropertyID { get; set; }
-        public string PropertyURI { get; set; }
+        public string DataBaseName { get; set; }
+        public Nullable<int> TerminologyID { get; set; }
         public string DisplayText { get; set; }
-        public string HierarchyCache { get; set; }
-        public int TermID { get; set; }
-        public Nullable<int> BroaderTermID { get; set; }
     }
 }

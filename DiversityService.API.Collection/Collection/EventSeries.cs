@@ -29,6 +29,7 @@ namespace DiversityService.Collection
         public Nullable<System.DateTime> EndDateUTC { get; set; }
         public System.Guid RowGUID { get; set; }
         private Nullable<int> ParentID { get; set; }
+        public Nullable<System.DateTime> DateCache { get; set; }
     
         public virtual ICollection<Event> Events { get; set; }
         public virtual ICollection<EventSeriesImage> Images { get; set; }

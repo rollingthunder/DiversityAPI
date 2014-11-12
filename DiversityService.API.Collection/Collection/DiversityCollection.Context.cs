@@ -12,6 +12,8 @@ namespace DiversityService.Collection
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Collection : DbContext
     {
@@ -40,5 +42,23 @@ namespace DiversityService.Collection
         public virtual DbSet<IdentificationUnitGeoAnalysis> IdentificationUnitGeoAnalysis { get; set; }
         public virtual DbSet<CollectionAgent> CollectionAgent { get; set; }
         public virtual DbSet<Property> Property { get; set; }
+    
+        public virtual ObjectResult<UserTaxonList> DiversityMobile_UserTaxonLists(string loginName)
+        {
+            var loginNameParameter = loginName != null ?
+                new ObjectParameter("LoginName", loginName) :
+                new ObjectParameter("LoginName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserTaxonList>("DiversityMobile_UserTaxonLists", loginNameParameter);
+        }
+    
+        public virtual ObjectResult<UserTerminology> DiversityMobile_UserTerminologies(string loginName)
+        {
+            var loginNameParameter = loginName != null ?
+                new ObjectParameter("LoginName", loginName) :
+                new ObjectParameter("LoginName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserTerminology>("DiversityMobile_UserTerminologies", loginNameParameter);
+        }
     }
 }

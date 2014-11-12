@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7afbaecafd7d49f782ad924b08866c28" Name="Collection">
+      <Diagram DiagramId="7afbaecafd7d49f782ad924b08866c28" Name="Collection" ZoomLevel="85">
         <EntityTypeShape EntityType="DiversityCollection.Analysis" Width="1.5" PointX="9.375" PointY="40.375" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.AnalysisResult" Width="1.5" PointX="11.625" PointY="44.875" IsExpanded="true" />
         <EntityTypeShape EntityType="DiversityCollection.Event" Width="2.625" PointX="0.75" PointY="18.625" IsExpanded="true" />

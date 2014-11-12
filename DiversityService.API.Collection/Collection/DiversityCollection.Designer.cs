@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Georg\Documents\Visual Studio 2013\Projects\DiversityAPI\DiversityService.API.Collection\Collection\DiversityCollection.edmx'. 
+﻿// T4 code generation is enabled for model 'G:\Documents\Visual Studio 2013\Projects\DiversityAPI\DiversityService.API.Collection\Collection\DiversityCollection.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

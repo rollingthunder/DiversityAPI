@@ -7,18 +7,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DiversityService.Mobile
+namespace DiversityService.Collection
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Terms_LebensraumTypen
+    public partial class UserTaxonList
     {
-        public int PropertyID { get; set; }
-        public string PropertyURI { get; set; }
+        public string DataBaseName { get; set; }
+        public Nullable<int> ListID { get; set; }
+        public Nullable<int> ProjectID { get; set; }
+        public string DataSource { get; set; }
         public string DisplayText { get; set; }
-        public string HierarchyCache { get; set; }
-        public int TermID { get; set; }
-        public Nullable<int> BroaderTermID { get; set; }
+        public string TaxonomicGroup { get; set; }
     }
 }

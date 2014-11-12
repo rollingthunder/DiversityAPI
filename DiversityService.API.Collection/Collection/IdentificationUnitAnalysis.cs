@@ -24,7 +24,6 @@ namespace DiversityService.Collection
         public string ResponsibleAgentURI { get; set; }
         public string AnalysisDate { get; set; }
         public Nullable<int> SpecimenPartID { get; set; }
-        public Nullable<int> ToolID { get; set; }
         public string Notes { get; set; }
         public System.Guid RowGUID { get; set; }
         public string ToolUsage { get; set; }

@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
+using System.Configuration;
 
 namespace DiversityService.API.WebHost
 {
@@ -42,9 +43,11 @@ namespace DiversityService.API.WebHost
             app.UseOAuthBearerTokens(OAuthOptions);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            // app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            var secret = ConfigurationManager.AppSettings["LiveClientSecret"];
+
+            app.UseMicrosoftAccountAuthentication(
+               clientId: "00000000480F4F1E",
+               clientSecret: secret);
 
             // app.UseTwitterAuthentication(
             //    consumerKey: "",

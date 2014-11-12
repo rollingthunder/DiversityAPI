@@ -2,6 +2,7 @@
 {
     using DiversityService.API.Model;
     using DiversityService.API.Services;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -12,15 +13,18 @@
 
     public class SeriesController : DiversityController
     {
-        private readonly ISeriesStore SeriesStore;
+        private readonly Lazy<ISeriesStore> _SeriesStore;
+
+        private ISeriesStore SeriesStore { get { return _SeriesStore.Value; } }
+
         private readonly IMappingService Mapper;
 
         public SeriesController(
-            ISeriesStore store,
+            Lazy<ISeriesStore> store,
             IMappingService mapper
             )
         {
-            this.SeriesStore = store;
+            this._SeriesStore = store;
             this.Mapper = mapper;
         }
 
@@ -58,7 +62,7 @@
                             where es.RowGUID == value.TransactionGuid
                             select es).SingleOrDefault();
 
-            if(existing != null)
+            if (existing != null)
             {
                 return SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing));
             }
@@ -69,9 +73,5 @@
 
             return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(series), series.Id);
         }
-
-        //public void Put(int id, [FromBody]EventSeries value)
-        //{
-        //}
     }
 }

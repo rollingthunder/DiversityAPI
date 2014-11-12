@@ -280,7 +280,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\MapperConfig.cs" />
-    <Compile Include="App_Start\NinjectModules\ConfigurationModule.cs" />
     <Compile Include="App_Start\NinjectModules\ControllerModule.cs" />
     <Compile Include="App_Start\NinjectModules\DependencyName.cs" />
     <Compile Include="App_Start\NinjectModules\ServiceModule.cs" />
@@ -328,28 +327,25 @@
     <Compile Include="Controllers\Relations.cs" />
     <Compile Include="Controllers\Routes.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
+    <Compile Include="Controllers\TaxaController.cs" />
     <Compile Include="Filters\PagingAttribute.cs" />
+    <Compile Include="Filters\SeriesSirenProvider.cs" />
+    <Compile Include="Filters\SirenResultFilter.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Filters\CollectionFilter.cs" />
     <Compile Include="Handler\CultureHandler.cs" />
     <Compile Include="Handler\RequireHttpsMessageHandler.cs" />
     <Compile Include="Migrations\201405212116370_InitialCreate.cs" />
     <Compile Include="Migrations\201405212116370_InitialCreate.Designer.cs">
       <DependentUpon>201405212116370_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201405282229141_BackendCredentials.cs" />
-    <Compile Include="Migrations\201405282229141_BackendCredentials.Designer.cs">
-      <DependentUpon>201405282229141_BackendCredentials.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201406191750523_CollectionId.cs" />
-    <Compile Include="Migrations\201406191750523_CollectionId.Designer.cs">
-      <DependentUpon>201406191750523_CollectionId.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BackendClaims.cs" />
     <Compile Include="Models\CollectionServer.Internal.cs" />
     <Compile Include="Models\Event.Validation.cs" />
     <Compile Include="Models\EventSeries.Validation.cs" />
@@ -362,11 +358,16 @@
     <Compile Include="Results\SeeOtherAtRouteResult.cs" />
     <Compile Include="Services\AutoMapperMappingService.cs" />
     <Compile Include="Services\CollectionContext.cs" />
-    <Compile Include="Services\ILinkFactory.cs" />
+    <Compile Include="Services\ConfigurationService.cs" />
+    <Compile Include="Services\ContextFactory.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IContext.cs" />
+    <Compile Include="Services\IContextFactory.cs" />
+    <Compile Include="Services\LinkFactory.cs" />
     <Compile Include="Services\IMappingService.cs" />
-    <Compile Include="Services\IStateFactory.cs" />
-    <Compile Include="Services\Repository.cs" />
+    <Compile Include="Services\Store.cs" />
     <Compile Include="Services\IRepository.cs" />
+    <Compile Include="Services\Taxa.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -478,12 +479,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201405212116370_InitialCreate.resx">
       <DependentUpon>201405212116370_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405282229141_BackendCredentials.resx">
-      <DependentUpon>201405282229141_BackendCredentials.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201406191750523_CollectionId.resx">
-      <DependentUpon>201406191750523_CollectionId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

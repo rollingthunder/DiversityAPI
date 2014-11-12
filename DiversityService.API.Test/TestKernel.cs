@@ -1,13 +1,19 @@
-﻿using Ninject;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DiversityService.API.Test
+﻿namespace DiversityService.API.Test
 {
-    class TestKernel : StandardKernel
+    using DiversityService.API.WebHost.Models;
+    using Microsoft.AspNet.Identity;
+    using Ninject;
+    using Ninject.Extensions.Factory;
+    using Ninject.MockingKernel.Moq;
+    using Ninject.Modules;
+
+    public class TestKernel : MoqMockingKernel
     {
+        public TestKernel()
+        {
+            //this.Load<FuncModule>();
+
+            this.Bind<IUserStore<ApplicationUser>>().To<TestUserStore>();
+        }
     }
 }

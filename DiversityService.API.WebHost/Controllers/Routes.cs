@@ -1,5 +1,4 @@
-﻿
-namespace DiversityService.API.Controllers
+﻿namespace DiversityService.API.Controllers
 {
     using DiversityService.API.Model;
     using System;
@@ -10,10 +9,9 @@ namespace DiversityService.API.Controllers
 
         // Default Route
         public const string DEFAULT_API = "DefaultApi";
+
         public const string PARAM_CONTROLLER = "controller";
         public const string PARAM_ID = "id";
-
-
 
         public const string PREFIX_DEFAULT_API = "api/";
 
@@ -41,7 +39,8 @@ namespace DiversityService.API.Controllers
                 controller = EVENT_CONTROLLER;
             }
 
-            if(controller == string.Empty) {
+            if (controller == string.Empty)
+            {
                 throw new InvalidOperationException("Cannot determine Route, unknown Entity Type");
             }
 

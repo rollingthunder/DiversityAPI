@@ -1,22 +1,17 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
-using System.Data.Entity;
 using System;
+using System.Data.Entity;
+using System.Diagnostics.Contracts;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DiversityService.API.WebHost.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
-        public string BackendUser { get; set; }
-
-        public string BackendPassword { get; set; }
-
-        public int CollectionId { get; set; }
-
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager, string authenticationType)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -26,18 +21,35 @@ namespace DiversityService.API.WebHost.Models
         }
     }
 
+    public static class IdentityUserClaimExtensions
+    {
+        public static IdentityUserClaim AddClaim(this IdentityUser This, Claim claim)
+        {
+            Contract.Requires<ArgumentNullException>(This != null, "This");
+            Contract.Requires<ArgumentNullException>(claim != null, "claim");
+
+            var userClaim = new IdentityUserClaim();
+
+            userClaim.UserId = This.Id;
+            userClaim.ClaimType = claim.Type;
+            userClaim.ClaimValue = claim.Value;
+
+            This.Claims.Add(userClaim);
+
+            return userClaim;
+        }
+    }
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
             : base("UserDB", throwIfV1Schema: false)
         {
         }
-        
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
-
-        
     }
 }

@@ -2,37 +2,36 @@
 {
     using DiversityService.API.Controllers;
     using DiversityService.API.Model;
+    using DiversityService.API.Results;
     using DiversityService.API.Services;
     using Moq;
+    using Ninject;
     using System;
-    using System.Threading.Tasks;
-    using Xunit;
-    using System.Web.Http.Results;
-    using System.Web.Http;
-    using System.Net;
     using System.Linq;
-    using DiversityService.API.Results;
+    using System.Net;
+    using System.Threading.Tasks;
+    using System.Web.Http;
+    using System.Web.Http.Results;
+    using Xunit;
 
     public class SeriesControllerTest
     {
+        private readonly TestKernel Kernel = new TestKernel();
         private readonly Mock<ISeriesStore> MockSeriesStore;
         private readonly Mock<IMappingService> MockMappingService;
         private readonly SeriesController Controller;
 
         public SeriesControllerTest()
         {
-            MockSeriesStore = new Mock<ISeriesStore>();
-            MockMappingService = new Mock<IMappingService>();
-            Controller = new SeriesController(
-                MockSeriesStore.Object,
-                MockMappingService.Object
-            );
+            MockSeriesStore = Kernel.GetMock<ISeriesStore>();
+            MockMappingService = Kernel.GetMock<IMappingService>();
+            Controller = Kernel.Get<SeriesController>();
         }
 
         [Fact]
         public async Task Returns_Series_with_matching_Id_on_GET()
         {
-            // Arrange     
+            // Arrange
             var collSeries = new Collection.EventSeries()
             {
                 Id = 1234
@@ -45,10 +44,10 @@
                 .Setup(x => x.Map<EventSeries>(collSeries))
                 .Returns(series);
 
-            // Act   
+            // Act
             var result = await Controller.Get(collSeries.Id) as OkNegotiatedContentResult<EventSeries>;
 
-            // Assert           
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(series, result.Content);
         }
@@ -56,16 +55,16 @@
         [Fact]
         public async Task Returns_Series_filtered_by_code_on_query()
         {
-            // Arrange            
+            // Arrange
             var matchCode = "match";
             var nonmatchCode = "non";
             var query = "atc";
 
-            var fakeCollSeries = new[] 
-            { 
-                new Collection.EventSeries() { Code = matchCode }, 
-                new Collection.EventSeries() { Code = nonmatchCode}, 
-                new Collection.EventSeries() { Code = matchCode}, 
+            var fakeCollSeries = new[]
+            {
+                new Collection.EventSeries() { Code = matchCode },
+                new Collection.EventSeries() { Code = nonmatchCode},
+                new Collection.EventSeries() { Code = matchCode},
                 new Collection.EventSeries() { Code = nonmatchCode}
             }.AsQueryable();
 
@@ -74,7 +73,8 @@
                 .Returns(Task.FromResult(fakeCollSeries));
             this.MockMappingService
                 .Setup(x => x.Project<Collection.EventSeries, EventSeries>(It.IsAny<IQueryable<Collection.EventSeries>>()))
-                .Returns((IQueryable<Collection.EventSeries> x) => {
+                .Returns((IQueryable<Collection.EventSeries> x) =>
+                {
                     return from cs in x
                            select new EventSeries() { Code = cs.Code };
                 });
@@ -90,23 +90,23 @@
         [Fact]
         public async Task Returns_404_for_nonexistent_Series_on_GET()
         {
-            // Arrange    
+            // Arrange
             int invalidId = 12345;
             MockSeriesStore
                 .Setup(x => x.FindAsync(invalidId))
-                .Returns(Task.FromResult<Collection.EventSeries>(null)); // Simulate no match             
+                .Returns(Task.FromResult<Collection.EventSeries>(null)); // Simulate no match
 
-            // Act    
+            // Act
             var result = await Controller.Get(invalidId) as NotFoundResult;
 
-            // Assert 
+            // Assert
             Assert.NotNull(result);
         }
 
         [Fact]
         public async Task Returns_all_series_for_unqualified_GET()
         {
-            // Arrange            
+            // Arrange
             var fakeCollSeries = (new[] { new Collection.EventSeries(), new Collection.EventSeries() }).AsQueryable();
             var fakeSeries = (new[] { new EventSeries(), new EventSeries() }).AsQueryable();
             var series = new EventSeries();
@@ -125,11 +125,10 @@
             Assert.DoesNotContain(result, null);
         }
 
-
         [Fact]
         public async Task Inserts_A_New_Series_on_POST()
         {
-            // Arrange 
+            // Arrange
             var id = TestHelper.RandomInt();
             var series = new EventSeriesBindingModel() { TransactionGuid = Guid.NewGuid() };
             var collSeries = new Collection.EventSeries() { RowGUID = series.TransactionGuid };
@@ -153,7 +152,7 @@
         [Fact]
         public async Task Returns_redirect_for_existing_TransactionGUID_on_POST()
         {
-            // Arrange 
+            // Arrange
             var id = TestHelper.RandomInt();
             var series = new EventSeriesBindingModel() { TransactionGuid = Guid.NewGuid() };
             var collSeries = new[] { new Collection.EventSeries() { Id = id, RowGUID = series.TransactionGuid } };
@@ -171,6 +170,5 @@
             Assert.Equal(Route.DEFAULT_API, result.RouteName);
             Assert.Equal(id, (int)result.RouteValues[Route.PARAM_ID]);
         }
-
     }
 }

@@ -9,7 +9,6 @@
     using System.Net;
     using System.Net.Http;
     using System.Web.Http;
-    using System.Web.Http.OData;
     using System.Text;
     using System.Web;
     using DiversityService.API.Services;

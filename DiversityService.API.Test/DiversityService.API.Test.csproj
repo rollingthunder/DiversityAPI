@@ -151,6 +151,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequireHttpsMessageHandlerTest.cs" />
     <Compile Include="Features\SeriesFeature.cs" />
+    <Compile Include="TestHandler.cs" />
+    <Compile Include="TestUserStore.cs" />
+    <Compile Include="Units\CollectionFilterTest.cs" />
+    <Compile Include="Units\SeriesSirenProviderTest.cs" />
+    <Compile Include="Units\SirenProviderTest.cs" />
+    <Compile Include="Units\SirenResultFilterTest.cs" />
     <Compile Include="TestHelper.cs" />
     <Compile Include="TestKernel.cs" />
     <Compile Include="Units\EventControllerTest.cs" />

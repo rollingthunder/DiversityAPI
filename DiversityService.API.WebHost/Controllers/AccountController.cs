@@ -1,7 +1,19 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using DiversityService.API.Model;
+    using DiversityService.API.WebHost;
+    using DiversityService.API.WebHost.Models;
+    using DiversityService.API.WebHost.Providers;
+    using DiversityService.API.WebHost.Results;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.Cookies;
+    using Microsoft.Owin.Security.OAuth;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Net.Http;
     using System.Security.Claims;
     using System.Security.Cryptography;
@@ -9,18 +21,6 @@
     using System.Web;
     using System.Web.Http;
     using System.Web.Http.ModelBinding;
-    using System.Linq;
-    using Microsoft.AspNet.Identity;
-    using Microsoft.AspNet.Identity.EntityFramework;
-    using Microsoft.AspNet.Identity.Owin;
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
-    using Microsoft.Owin.Security.OAuth;
-    using DiversityService.API.WebHost.Models;
-    using DiversityService.API.WebHost.Providers;
-    using DiversityService.API.WebHost.Results;
-    using DiversityService.API.Model;
-    using DiversityService.API.WebHost;
 
     [Authorize]
     [RoutePrefix("api/Account")]
@@ -39,7 +39,7 @@
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-            CollectionServers = collectionServers;       
+            CollectionServers = collectionServers;
         }
 
         public ApplicationUserManager UserManager
@@ -130,7 +130,7 @@
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -263,9 +263,9 @@
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -373,12 +373,13 @@
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
 
         [Route("Backend")]
+        [HttpPost]
         public async Task<IHttpActionResult> Backend(SetBackendBindingModel model)
         {
             if (!ModelState.IsValid)
@@ -388,43 +389,16 @@
 
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            user.BackendUser = model.BackendUser;
-            user.BackendPassword = model.BackendPassword;
+            var claim = new IdentityUserClaim();
 
             var result = await UserManager.UpdateAsync(user);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
             return Ok();
-        }
-
-        [Route("Collection")]
-        public async Task<IHttpActionResult> Collection([FromBody]int id)
-        {
-            try
-            {
-                var server = CollectionServers.Single(x => x.Id == id);
-
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-
-                user.CollectionId = id;
-
-                var result = await UserManager.UpdateAsync(user);
-
-                if (!result.Succeeded)
-                {
-                    return GetErrorResult(result);
-                }
-
-                return Ok();
-            }
-            catch(InvalidOperationException)
-            {
-                return NotFound();                
-            }
         }
 
         protected override void Dispose(bool disposing)
@@ -476,7 +450,9 @@
         private class ExternalLoginData
         {
             public string LoginProvider { get; set; }
+
             public string ProviderKey { get; set; }
+
             public string UserName { get; set; }
 
             public IList<Claim> GetClaims()
@@ -542,6 +518,6 @@
             }
         }
 
-        #endregion
+        #endregion Helpers
     }
 }

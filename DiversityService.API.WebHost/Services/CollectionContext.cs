@@ -5,11 +5,11 @@ using System.Web;
 
 namespace DiversityService.API.Services
 {
-    public class CollectionContext : Collection.Collection
+    public class CollectionContext : Collection.Collection, IContext
     {
-        public CollectionContext(string connectionString) : base(connectionString)
+        public CollectionContext(string connectionString)
+            : base(connectionString)
         {
-
         }
     }
 }

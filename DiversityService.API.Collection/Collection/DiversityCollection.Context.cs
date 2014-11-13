@@ -60,5 +60,11 @@ namespace DiversityService.Collection
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserTerminology>("DiversityMobile_UserTerminologies", loginNameParameter);
         }
+    
+        [DbFunction("Collection", "DiversityMobile_ProjectList")]
+        public virtual IQueryable<DiversityMobile_ProjectList_Result> DiversityMobile_ProjectList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DiversityMobile_ProjectList_Result>("[Collection].[DiversityMobile_ProjectList]()");
+        }
     }
 }

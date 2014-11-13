@@ -78,6 +78,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiversityCollection.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Collection\DiversityMobile_ProjectList_Result.cs">
+      <DependentUpon>DiversityCollection.tt</DependentUpon>
+    </Compile>
     <Compile Include="Collection\Event.cs">
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
@@ -121,7 +124,6 @@
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
     <Compile Include="Interfaces.cs" />
-    <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

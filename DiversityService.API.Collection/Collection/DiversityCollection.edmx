@@ -600,6 +600,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DiversityMobile_ProjectList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="ProjectID" Type="int" Nullable="false" />
+                <Property Name="DisplayText" Type="nvarchar" MaxLength="50" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
+        </Function>
         <Function Name="DiversityMobile_UserTaxonLists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LoginName" Type="nvarchar" Mode="In" />
         </Function>
@@ -1347,6 +1357,7 @@
           <FunctionImport Name="DiversityMobile_UserTerminologies" ReturnType="Collection(DiversityCollection.UserTerminology)">
             <Parameter Name="LoginName" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="DiversityMobile_ProjectList" IsComposable="true" ReturnType="Collection(DiversityCollection.DiversityMobile_ProjectList_Result)" />
         </EntityContainer>
         <EntityType Name="CollectionAgent">
           <Key>
@@ -1444,6 +1455,10 @@
         <ComplexType Name="UserTerminology">
           <Property Type="String" Name="DataBaseName" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="TerminologyID" Nullable="true" />
+          <Property Type="String" Name="DisplayText" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="DiversityMobile_ProjectList_Result">
+          <Property Type="Int32" Name="ProjectID" Nullable="false" />
           <Property Type="String" Name="DisplayText" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
@@ -1788,6 +1803,14 @@
               <ComplexTypeMapping TypeName="DiversityCollection.UserTerminology">
                 <ScalarProperty Name="DataBaseName" ColumnName="DataBaseName" />
                 <ScalarProperty Name="TerminologyID" ColumnName="TerminologyID" />
+                <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DiversityMobile_ProjectList" FunctionName="DiversityCollection.Store.DiversityMobile_ProjectList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DiversityCollection.DiversityMobile_ProjectList_Result">
+                <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
               </ComplexTypeMapping>
             </ResultMapping>

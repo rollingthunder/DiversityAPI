@@ -1,4 +1,4 @@
-﻿namespace DiversityService.API.WebHost.Handler
+﻿namespace DiversityService.API.Handler
 {
     using System;
     using System.Collections.Generic;
@@ -16,10 +16,10 @@
             if (request.RequestUri.Scheme != Uri.UriSchemeHttps)
             {
                 HttpResponseMessage forbiddenResponse = request.CreateResponse(HttpStatusCode.Forbidden);
-                forbiddenResponse.ReasonPhrase = "SSL Required"; 
+                forbiddenResponse.ReasonPhrase = "SSL Required";
                 return Task.FromResult<HttpResponseMessage>(forbiddenResponse);
             }
             return base.SendAsync(request, cancellationToken);
         }
-    } 
+    }
 }

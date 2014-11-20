@@ -345,6 +345,7 @@
     </Compile>
     <Compile Include="Filters\CollectionFilter.cs" />
     <Compile Include="Handler\CultureHandler.cs" />
+    <Compile Include="Handler\NinjectHandler.cs" />
     <Compile Include="Handler\RequireHttpsMessageHandler.cs" />
     <Compile Include="Migrations\201405212116370_InitialCreate.cs" />
     <Compile Include="Migrations\201405212116370_InitialCreate.Designer.cs">

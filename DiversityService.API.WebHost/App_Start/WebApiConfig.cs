@@ -1,5 +1,5 @@
 ﻿using DiversityService.API.Filters;
-using DiversityService.API.WebHost.Handler;
+using DiversityService.API.Handler;
 using Microsoft.Owin.Security.OAuth;
 using System.Net.Http;
 using System.Web.Http;
@@ -51,6 +51,8 @@ namespace DiversityService.API.WebHost
             config.MessageHandlers.Add(new RequireHttpsMessageHandler());
 
             config.MessageHandlers.Add(new CultureHandler());
+
+            config.MessageHandlers.Add(new NinjectHandler());
 
             config.Formatters.Add(new SirenJsonMediaTypeFormatter());
         }

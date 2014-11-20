@@ -1,6 +1,6 @@
 ﻿namespace DiversityService.API.Test
 {
-    using DiversityService.API.WebHost.Handler;
+    using DiversityService.API.Handler;
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;

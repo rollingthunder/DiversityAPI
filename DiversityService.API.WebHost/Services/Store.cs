@@ -3,67 +3,80 @@
     using DiversityService.Collection;
     using Ninject;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public class Store<T> : IStore<T, int> where T : class, DiversityService.API.Model.IIdentifiable
+    public class Store<TEntity, TKey> : IStore<TEntity, TKey> where TEntity : class
     {
-        public Store(Func<IContext> ContextFactory)
+        private readonly Collection context;
+        private readonly DbSet<TEntity> dbSet;
+
+        public Store(Collection context)
         {
-            _Context = new Lazy<CollectionContext>(() => ContextFactory() as CollectionContext);
+            this.context = context;
+            this.dbSet = context.Set<TEntity>();
         }
 
-        private Lazy<CollectionContext> _Context;
-
-        private CollectionContext Context
+        public virtual IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
         {
-            get
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
             {
-                return _Context.Value;
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            else
+            {
+                return query.ToList();
             }
         }
 
-        public async Task<IQueryable<T>> FindAsync()
+        public virtual TEntity GetByID(TKey id)
         {
-            return Context.Set<T>();
+            return dbSet.Find(id);
         }
 
-        public Task<T> FindAsync(int id)
+        public virtual void Insert(TEntity entity)
         {
-            return Context.Set<T>().FindAsync(id);
+            dbSet.Add(entity);
         }
 
-        public async Task InsertAsync(T item)
+        public virtual void Delete(TKey id)
         {
-            Context.Entry(item).State = EntityState.Added;
+            TEntity entityToDelete = dbSet.Find(id);
+            Delete(entityToDelete);
         }
 
-        public async Task UpdateAsync(T item)
+        public virtual void Delete(TEntity entityToDelete)
         {
-            Context.Set<T>().Attach(item); Context.Entry(item).State = EntityState.Modified;
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            var item = await Context.Set<T>().FindAsync(id);
-            Context.Set<T>().Remove(item);
-        }
-
-        public void Dispose()
-        {
-            if (_Context.IsValueCreated && Context != null)
+            if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
-                Context.Dispose();
+                dbSet.Attach(entityToDelete);
             }
+            dbSet.Remove(entityToDelete);
         }
-    }
 
-    public class SeriesStore : Store<EventSeries>, ISeriesStore
-    {
-        public SeriesStore(Func<CollectionContext> ContextFactory)
-            : base(ContextFactory)
+        public virtual void Update(TEntity entityToUpdate)
         {
+            dbSet.Attach(entityToUpdate);
+            context.Entry(entityToUpdate).State = EntityState.Modified;
         }
     }
 }

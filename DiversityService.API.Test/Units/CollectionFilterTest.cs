@@ -1,8 +1,9 @@
 ﻿namespace DiversityService.API.Test.Units
 {
+    using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using DiversityService.API.WebHost.Handler;
+    using Microsoft.Owin;
     using Moq;
     using Ninject;
     using System;
@@ -15,22 +16,21 @@
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http.Controllers;
+    using System.Web.Http.Filters;
     using System.Web.Http.Routing;
     using Xunit;
 
-    public class CollectionFilterTest
+    public class CollectionFilterTest : FilterTestBase<CollectionFilter>
     {
-        private TestKernel Kernel = new TestKernel();
-
-        private HttpRequestMessage Request = new HttpRequestMessage();
-        private HttpRequestContext RequestContext = new HttpRequestContext();
-        private HttpControllerContext ControllerContext;
-        private HttpActionContext ActionContext;
-
         private Mock<IConfigurationService> Configuration;
         private Mock<IContextFactory> ContextFactory;
+        private Mock<IProjectStore> ProjectStore;
 
-        private CollectionFilter Filter;
+        private const int COLLECTION_ID = 0;
+        private const int PROJECT_ID = 0;
+        private const string USER = "user";
+        private const string PASS = "pass";
+        private IContext Context;
 
         public CollectionFilterTest()
         {
@@ -38,6 +38,7 @@
 
             Configuration = Kernel.GetMock<IConfigurationService>();
             ContextFactory = Kernel.GetMock<IContextFactory>();
+            ProjectStore = Kernel.GetMock<IProjectStore>();
 
             Filter = Kernel.Get<CollectionFilter>();
         }
@@ -51,11 +52,12 @@
             await InvokeFilter();
 
             // Assert
+            Assert.False(ActionCalled());
             Assert.False(ActionContext.Response.IsSuccessStatusCode);
         }
 
         [Fact]
-        public async Task Rejects_Empty_RouteData()
+        public async Task Handles_Empty_RouteData()
         {
             // Arrange
 
@@ -66,7 +68,8 @@
             await InvokeFilter();
 
             // Assert
-            Assert.False(ActionContext.Response.IsSuccessStatusCode);
+            Assert.True(ActionCalled());
+            Assert.False(ContextSet());
         }
 
         [Fact]
@@ -84,6 +87,7 @@
             await InvokeFilter();
 
             // Assert
+            Assert.False(ActionCalled());
             Assert.False(ActionContext.Response.IsSuccessStatusCode);
         }
 
@@ -91,12 +95,13 @@
         public async Task Rejects_Unknown_Collection()
         {
             // Arrange
-            SetRouteData(0, 0);
+            SetRouteData(COLLECTION_ID, PROJECT_ID);
 
             // Act
             await InvokeFilter();
 
             // Assert
+            Assert.False(ActionCalled());
             Assert.False(ActionContext.Response.IsSuccessStatusCode);
         }
 
@@ -116,6 +121,7 @@
             await InvokeFilter();
 
             // Assert
+            Assert.False(ActionCalled());
             Assert.False(ActionContext.Response.IsSuccessStatusCode);
         }
 
@@ -123,29 +129,32 @@
         public async Task Rejects_Invalid_BackendCredentials()
         {
             // Arrange
-            SetRouteData(0, 0);
-            var servers = new[]{ new InternalCollectionServer() {
-                Id = 0,
-                Name = "Test"
-            } };
-            Configuration.Setup(x => x.GetCollectionServers())
-                .Returns(servers);
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID, PROJECT_ID);
             SetBackendCredentials("invalid", "user");
-            ContextFactory.Setup(x => x.CreateContextAsync(servers[0], "invalid", "user"))
-                .Returns(Task.FromResult<IContext>(null));
 
             // Act
             await InvokeFilter();
 
             // Assert
+            Assert.False(ActionCalled());
             Assert.False(ActionContext.Response.IsSuccessStatusCode);
         }
 
-        private void InitializeActionContext()
+        [Fact]
+        public async Task Creates_Context()
         {
-            RequestContext.Principal = new ClaimsPrincipal(new ClaimsIdentity());
-            ControllerContext = new HttpControllerContext() { Request = Request, RequestContext = RequestContext };
-            ActionContext = new HttpActionContext { ControllerContext = ControllerContext };
+            // Arrange
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID, PROJECT_ID);
+            SetBackendCredentials(USER, PASS);
+
+            // Act
+            await InvokeFilter();
+
+            // Assert
+            Assert.True(ContextSet());
+            Assert.True(ActionCalled());
         }
 
         private void SetRouteData(int collectionId, int projectId)
@@ -163,9 +172,40 @@
             identity.AddClaim(new BackendCredentialsClaim(user, password));
         }
 
-        private Task InvokeFilter()
+        private void SetValidCollectionAndProject()
         {
-            return Filter.OnActionExecutingAsync(ActionContext, CancellationToken.None);
+            var servers = new[]{ new InternalCollectionServer() {
+                Id = COLLECTION_ID,
+                Name = "Test"
+            } };
+            Configuration
+                .Setup(x => x.GetCollectionServers())
+                .Returns(servers);
+
+            var contextMock = Kernel.GetMock<IContext>();
+
+            ContextFactory
+                .Setup(x => x.CreateContextAsync(It.IsAny<InternalCollectionServer>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult<IContext>(null));
+
+            ContextFactory
+                .Setup(x => x.CreateContextAsync(servers[0], USER, PASS))
+                .Returns(Task.FromResult<IContext>(contextMock.Object));
+
+            Context = contextMock.Object;
+
+            ProjectStore
+                .Setup(x => x.IsValidProjectAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(false));
+
+            ProjectStore
+                .Setup(x => x.IsValidProjectAsync(PROJECT_ID))
+                .Returns(Task.FromResult(true));
+        }
+
+        private bool ContextSet()
+        {
+            return Request.GetCollectionContext() != null;
         }
     }
 }

@@ -42,6 +42,7 @@
     <Compile Include="Identification.cs" />
     <Compile Include="Interfaces.cs" />
     <Compile Include="Localization.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specimen.cs" />
     <Compile Include="TaxonList.cs" />

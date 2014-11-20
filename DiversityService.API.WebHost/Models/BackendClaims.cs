@@ -12,8 +12,6 @@
         public const string TYPE = "backend_credentials";
         private const char VALUE_SPLIT = ':';
 
-        private Claim _Claim;
-
         public readonly string User, Password;
 
         public BackendCredentialsClaim(string user, string password)

@@ -1,16 +1,15 @@
-﻿namespace DiversityService.API.WebHost.Handler
+﻿namespace DiversityService.API.Filters
 {
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using System;
-    using System.Collections.Generic;
+    using Ninject;
+    using Ninject.Web.Common;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Security.Claims;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
     using System.Web.Http.Routing;
@@ -19,6 +18,23 @@
     {
         public const string COLLECTION = "collection";
         public const string PROJECT = "project";
+    }
+
+    public static class CollectionRequestExtensions
+    {
+        private const string COLLECTION_CONTEXT_KEY = "coll_context";
+
+        public static IContext GetCollectionContext(this HttpRequestMessage request)
+        {
+            var requestContext = request.GetOwinContext();
+            return requestContext.Get<IContext>(COLLECTION_CONTEXT_KEY);
+        }
+
+        public static void SetCollectionContext(this HttpRequestMessage request, IContext ctx)
+        {
+            var requestContext = request.GetOwinContext();
+            requestContext.Set<IContext>(COLLECTION_CONTEXT_KEY, ctx);
+        }
     }
 
     public class CollectionFilter : ActionFilterAttribute
@@ -39,30 +55,33 @@
         {
             string User, Password;
             InternalCollectionServer Server;
-            int ProjectId;
 
-            ExtractBackendCredentials(actionContext, out User, out Password);
-
-            if (actionContext.Response != null)
-            {
-                return;
-            }
-
-            ExtractCollectionAndProject(actionContext, out Server, out ProjectId);
+            ExtractCollection(actionContext, out Server);
 
             if (actionContext.Response != null)
             {
                 return;
             }
 
-            var ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
-
-            if (ctx == null)
+            if (Server != null)
             {
-                SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Could not extablish connection to collection server using the given credentials");
-            }
+                ExtractBackendCredentials(actionContext, out User, out Password);
 
-            // TODO Validate ProjectId
+                if (actionContext.Response != null)
+                {
+                    return;
+                }
+
+                var ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
+
+                if (ctx == null)
+                {
+                    SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Invalid COllection Credentials");
+                    return;
+                }
+
+                actionContext.Request.SetCollectionContext(ctx);
+            }
 
             await base.OnActionExecutingAsync(actionContext, cancellationToken);
         }
@@ -111,13 +130,11 @@
             password = backendCredentials.Password;
         }
 
-        private void ExtractCollectionAndProject(
+        private void ExtractCollection(
             HttpActionContext actionContext,
-            out InternalCollectionServer server,
-            out int projectId)
+            out InternalCollectionServer server)
         {
             server = null;
-            projectId = int.MinValue;
 
             var request = actionContext.Request;
 
@@ -128,58 +145,25 @@
                 return;
             }
 
-            ExtractCollection(actionContext, routeData, ref server);
-            ExtractProjectId(actionContext, routeData, ref projectId);
-        }
-
-        private void ExtractCollection(
-            HttpActionContext actionContext,
-            IHttpRouteData routeData,
-            ref InternalCollectionServer server
-            )
-        {
-            if (!routeData.Values.ContainsKey(CollectionAPI.COLLECTION))
+            if (routeData.Values.ContainsKey(CollectionAPI.COLLECTION))
             {
-                SetErrorResponse(actionContext, HttpStatusCode.InternalServerError, "Required URL Component {collection} missing");
-                return;
-            }
+                var collection = routeData.Values[CollectionAPI.COLLECTION].ToString();
+                int collectionId;
 
-            var collection = routeData.Values[CollectionAPI.COLLECTION].ToString();
-            int collectionId;
+                if (!int.TryParse(collection, out collectionId))
+                {
+                    SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "URL Component {collection} must be an integer");
+                    return;
+                }
 
-            if (!int.TryParse(collection, out collectionId))
-            {
-                SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "URL Component {collection} must be an integer");
-                return;
-            }
+                var servers = Configuration.GetCollectionServers();
+                server = servers.FirstOrDefault(x => x.Id == collectionId);
 
-            var servers = Configuration.GetCollectionServers();
-            server = servers.FirstOrDefault(x => x.Id == collectionId);
-
-            if (server == null)
-            {
-                SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "Invalid Collection Server");
-                return;
-            }
-        }
-
-        private void ExtractProjectId(
-            HttpActionContext actionContext,
-            IHttpRouteData routeData,
-            ref int projectId)
-        {
-            if (!routeData.Values.ContainsKey(CollectionAPI.PROJECT))
-            {
-                SetErrorResponse(actionContext, HttpStatusCode.InternalServerError, "Required URL Components are missing");
-                return;
-            }
-
-            var project = routeData.Values[CollectionAPI.PROJECT].ToString();
-
-            if (!int.TryParse(project, out projectId))
-            {
-                SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "URL Component {project} must be an integer");
-                return;
+                if (server == null)
+                {
+                    SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "Invalid Collection Server");
+                    return;
+                }
             }
         }
 

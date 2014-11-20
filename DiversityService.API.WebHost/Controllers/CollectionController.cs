@@ -12,7 +12,7 @@
 
     public class CollectionController : ApiController
     {
-        private readonly IConfigurationService Configuration;
+        private new readonly IConfigurationService Configuration;
 
         public CollectionController(IConfigurationService config)
         {

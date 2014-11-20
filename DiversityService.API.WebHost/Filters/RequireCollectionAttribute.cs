@@ -22,7 +22,7 @@
             }
             else
             {
-                actionContext.Response = request.CreateErrorResponse(HttpStatusCode.NotFound, "Not Found");
+                actionContext.Response = request.CreateErrorResponse(HttpStatusCode.Forbidden, "Valid Backend Credentials Required");
             }
         }
     }

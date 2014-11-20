@@ -3,20 +3,12 @@
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using Microsoft.Owin;
     using Moq;
     using Ninject;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Security.Claims;
-    using System.Text;
-    using System.Threading;
     using System.Threading.Tasks;
-    using System.Web.Http.Controllers;
-    using System.Web.Http.Filters;
     using System.Web.Http.Routing;
     using Xunit;
 
@@ -53,7 +45,7 @@
 
             // Assert
             Assert.False(ActionCalled());
-            Assert.False(ActionContext.Response.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.InternalServerError, ActionContext.Response.StatusCode);
         }
 
         [Fact]
@@ -88,7 +80,7 @@
 
             // Assert
             Assert.False(ActionCalled());
-            Assert.False(ActionContext.Response.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, ActionContext.Response.StatusCode);
         }
 
         [Fact]

@@ -2,10 +2,8 @@
 {
     using DiversityService.API.WebHost.Models;
     using Microsoft.AspNet.Identity;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
 
     public class TestUserStore : IUserStore<ApplicationUser>

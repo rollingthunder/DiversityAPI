@@ -4,8 +4,6 @@
 //    using Xbehave;
 
 //    public class RetrieveSeries : SeriesFeature
-//    {       
-
-       
+//    {
 //    }
 //}

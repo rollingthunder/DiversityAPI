@@ -1,12 +1,8 @@
 ﻿namespace DiversityService.API.Test.Units
 {
     using DiversityService.API.Filters;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Controllers;
@@ -16,7 +12,7 @@
 
     public class ValidateModelFilterTest
     {
-        ValidateModelAttribute Filter;
+        private ValidateModelAttribute Filter;
 
         public ValidateModelFilterTest()
         {
@@ -32,7 +28,7 @@
             var controllerContext = new HttpControllerContext(configuration, routeData, request);
             var actionContext = new HttpActionContext { ControllerContext = controllerContext };
             return actionContext;
-        } 
+        }
 
         [Fact]
         public async Task Returns_BadRequest_For_Invalid_ModelState()
@@ -41,7 +37,7 @@
             var request = new HttpRequestMessage();
             var context = InitializeActionContext(request);
             context.ModelState.AddModelError("testerror", "Err");
-                
+
             // Act
             Filter.OnActionExecuting(context);
 

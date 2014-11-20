@@ -2,10 +2,7 @@
 {
     using DiversityService.API.WebHost.Models;
     using Microsoft.AspNet.Identity;
-    using Ninject;
-    using Ninject.Extensions.Factory;
     using Ninject.MockingKernel.Moq;
-    using Ninject.Modules;
 
     public class TestKernel : MoqMockingKernel
     {

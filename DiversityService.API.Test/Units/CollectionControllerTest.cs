@@ -1,20 +1,15 @@
 ﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Controllers;
-    using DiversityService.API.Services;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Xunit;
-    using Ninject;
-    using Moq;
     using DiversityService.API.Model;
+    using DiversityService.API.Services;
+    using Moq;
+    using System.Linq;
+    using Xunit;
 
     public class CollectionControllerTest : ControllerTestBase<CollectionController>
     {
-        Mock<IConfigurationService> Configuration;
+        private Mock<IConfigurationService> Configuration;
 
         public CollectionControllerTest()
         {
@@ -43,7 +38,7 @@
             // Assert
             Assert.Equal(servers.Length, publicServers.Count());
             Assert.True(
-                // Each server should surface 
+                // Each server should surface
                 // with the same ID
                 servers
                 .All(srv => publicServers.Any(x => x.Id == srv.Id))

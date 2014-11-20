@@ -3,10 +3,7 @@
     using DiversityService.API.Filters;
     using DiversityService.API.Services;
     using Ninject;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
+    using System.Net;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -28,7 +25,7 @@
 
             // Assert
             Assert.False(ActionCalled());
-            Assert.False(ActionContext.Response.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.Forbidden, ActionContext.Response.StatusCode);
         }
 
         [Fact]

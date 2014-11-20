@@ -2,12 +2,20 @@
 {
     using DiversityService.API.Controllers;
     using DiversityService.API.Filters;
-    using System;
+    using DiversityService.API.Services;
+    using Moq;
     using System.Linq;
     using Xunit;
 
-    public class ProjectControllerTest
+    public class ProjectControllerTest : ControllerTestBase<ProjectController>
     {
+        private Mock<IProjectStore> Projects;
+
+        public ProjectControllerTest()
+        {
+            Projects = Kernel.GetMock<IProjectStore>();
+        }
+
         [Fact]
         public void Requires_a_Collection()
         {
@@ -18,6 +26,17 @@
 
             // Assert
             Assert.True(hasCollectionFilter);
+        }
+
+        [Fact]
+        public void Returns_Projects_For_Collection()
+        {
+            // Arrange
+
+            InitController();
+            // Act
+            // Assert
+            Assert.True(false);
         }
     }
 }

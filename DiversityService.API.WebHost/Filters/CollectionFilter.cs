@@ -76,7 +76,7 @@
 
                 if (ctx == null)
                 {
-                    SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Invalid COllection Credentials");
+                    SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Invalid Collection Credentials");
                     return;
                 }
 

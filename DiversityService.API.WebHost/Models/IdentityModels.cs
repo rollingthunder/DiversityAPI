@@ -4,6 +4,7 @@ using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Data.Entity;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,6 +18,11 @@ namespace DiversityService.API.WebHost.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
             // Add custom user claims here
+            var identityClaims = from c in Claims
+                                 select new Claim(c.ClaimType, c.ClaimValue);
+
+            userIdentity.AddClaims(identityClaims);
+
             return userIdentity;
         }
     }

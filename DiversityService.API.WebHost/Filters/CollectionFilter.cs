@@ -2,8 +2,6 @@
 {
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using Ninject;
-    using Ninject.Web.Common;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -12,12 +10,12 @@
     using System.Threading.Tasks;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using System.Web.Http.Routing;
 
     public static class CollectionAPI
     {
         public const string COLLECTION = "collection";
         public const string PROJECT = "project";
+        public const string COLLECTION_PREFIX = "api/collection/{" + CollectionAPI.COLLECTION + "}/";
     }
 
     public class CollectionFilter : ActionFilterAttribute

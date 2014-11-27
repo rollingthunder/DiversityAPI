@@ -1,9 +1,8 @@
 ﻿using DiversityService.API.Filters;
 using DiversityService.API.Handler;
 using Microsoft.Owin.Security.OAuth;
-using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Dispatcher;
+using System.Web.Http.Filters;
 using WebApiContrib.Formatting.Siren.Client;
 
 namespace DiversityService.API.WebHost
@@ -25,14 +24,6 @@ namespace DiversityService.API.WebHost
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { controller = "ApiHome", id = RouteParameter.Optional });
-
-            var collectionApiHandler = config.DependencyResolver.GetService(typeof(CollectionFilter)) as CollectionFilter;
-
-            config.Routes.MapHttpRoute(
-                name: "CollectionApi",
-                routeTemplate: "api/collection/{" + CollectionAPI.COLLECTION + "}/project/{" + CollectionAPI.PROJECT + "}/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
         }
 
         public static void RegisterFilters(HttpConfiguration config)
@@ -45,8 +36,9 @@ namespace DiversityService.API.WebHost
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.Filters.Add(new AuthorizeAttribute());
             config.Filters.Add(new ValidateModelAttribute());
+            config.Filters.Add(config.DependencyResolver.GetService(typeof(CollectionFilter)) as IFilter);
             config.Filters.Add(new EnablePagingAttribute());
-            config.Filters.Add(new SirenResultAttribute());
+            // config.Filters.Add(new SirenResultAttribute());
 
             config.MessageHandlers.Add(new RequireHttpsMessageHandler());
 

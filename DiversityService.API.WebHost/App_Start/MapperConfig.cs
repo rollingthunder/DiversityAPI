@@ -10,6 +10,10 @@
         {
             MappingConfiguration.CreateMap<CollectionServerElement, InternalCollectionServer>();
 
+            MappingConfiguration.CreateMap<Collection.Project, Project>()
+                .ForMember(mem => mem.Id, map => map.MapFrom(x => x.ProjectID))
+                .ForMember(mem => mem.Name, map => map.MapFrom(x => x.DisplayText));
+
             // EventSeries
             MappingConfiguration.CreateMap<Collection.EventSeries, EventSeries>();
 

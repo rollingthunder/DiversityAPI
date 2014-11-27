@@ -11,7 +11,12 @@
 
     public class ContextFactory : IContextFactory
     {
-        private IKernel Kernel;
+        private readonly IKernel Kernel;
+
+        public ContextFactory(IKernel kernel)
+        {
+            Kernel = kernel;
+        }
 
         public async Task<IContext> CreateContextAsync(InternalCollectionServer server, string user, string password)
         {

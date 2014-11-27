@@ -14,6 +14,7 @@
         public CollectionControllerTest()
         {
             Configuration = Kernel.GetMock<IConfigurationService>();
+            InitController();
         }
 
         [Fact]
@@ -29,8 +30,6 @@
             Configuration
                 .Setup(x => x.GetCollectionServers())
                 .Returns(servers);
-
-            InitController();
 
             // Act
             var publicServers = Controller.Get();

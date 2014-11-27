@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Controllers
 {
     using DiversityService.API.Model;
+    using DiversityService.API.Services;
     using DiversityService.API.WebHost;
     using DiversityService.API.WebHost.Models;
     using DiversityService.API.WebHost.Providers;
@@ -13,7 +14,6 @@
     using Microsoft.Owin.Security.OAuth;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Net.Http;
     using System.Security.Claims;
     using System.Security.Cryptography;
@@ -28,19 +28,19 @@
     {
         private const string LocalLoginProvider = "Local";
         private const string CollectionIdClaim = "Collection";
-        private ApplicationUserManager _userManager;
-        private readonly IEnumerable<CollectionServer> CollectionServers;
+
+        private readonly IConfigurationService Configuration;
 
         public AccountController(
-            ApplicationUserManager userManager,
-            ISecureDataFormat<AuthenticationTicket> accessTokenFormat,
-            IEnumerable<CollectionServer> collectionServers
+            IConfigurationService configuration,
+            ISecureDataFormat<AuthenticationTicket> accessTokenFormat
             )
         {
-            UserManager = userManager;
+            Configuration = configuration;
             AccessTokenFormat = accessTokenFormat;
-            CollectionServers = collectionServers;
         }
+
+        private ApplicationUserManager _userManager;
 
         public ApplicationUserManager UserManager
         {
@@ -389,7 +389,9 @@
 
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
-            var claim = new IdentityUserClaim();
+            var claim = new BackendCredentialsClaim(model.BackendUser, model.BackendPassword);
+
+            user.AddClaim(claim);
 
             var result = await UserManager.UpdateAsync(user);
 

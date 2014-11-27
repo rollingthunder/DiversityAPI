@@ -11,8 +11,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    [Authorize]
     [RequireCollection]
+    [RoutePrefix(CollectionAPI.COLLECTION_PREFIX + "project")]
     public class ProjectController : ApiController
     {
         private IProjectStore ProjectStore
@@ -34,6 +34,7 @@
             Mapper = mapper;
         }
 
+        [Route]
         public async Task<IEnumerable<Project>> Get()
         {
             var projects = await ProjectStore.GetAsync();

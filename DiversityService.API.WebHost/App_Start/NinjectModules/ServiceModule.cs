@@ -24,6 +24,9 @@
     {
         public override void Load()
         {
+            //Bind<IKernel>()
+            //    .ToConstant(Kernel);
+
             Bind<ISecureDataFormat<AuthenticationTicket>>()
                 .ToMethod(_ => Startup.OAuthOptions.AccessTokenFormat)
                 .InSingletonScope();
@@ -39,17 +42,6 @@
             Bind<IConfigurationService>()
                 .To<ConfigurationService>()
                 .InSingletonScope();
-
-            Bind<IContext>()
-                .ToMethod(ctx =>
-                {
-                    var request = ctx.Kernel.Get<HttpRequestMessage>();
-                    if (request != null)
-                    {
-                        return request.GetCollectionContext();
-                    }
-                    return null;
-                }).InTransientScope();
 
             // Data Stores
             Bind<IProjectStore>()

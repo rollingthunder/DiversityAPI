@@ -7,23 +7,22 @@
     using Moq;
     using Ninject;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http.Results;
     using Xunit;
 
-    public class SeriesControllerTest
+    public class SeriesControllerTest : ControllerTestBase<SeriesController>
     {
-        private readonly TestKernel Kernel = new TestKernel();
         private readonly Mock<ISeriesStore> MockSeriesStore;
         private readonly Mock<IMappingService> MockMappingService;
-        private readonly SeriesController Controller;
 
         public SeriesControllerTest()
         {
             MockSeriesStore = Kernel.GetMock<ISeriesStore>();
             MockMappingService = Kernel.GetMock<IMappingService>();
-            Controller = Kernel.Get<SeriesController>();
+            InitController();
         }
 
         [Fact]
@@ -36,7 +35,7 @@
             };
             var series = new EventSeries() { Id = collSeries.Id };
             this.MockSeriesStore
-                .Setup(x => x.FindAsync(collSeries.Id))
+                .Setup(x => x.GetByIDAsync(collSeries.Id))
                 .Returns(Task.FromResult(collSeries));
             this.MockMappingService
                 .Setup(x => x.Map<EventSeries>(collSeries))
@@ -67,7 +66,8 @@
             }.AsQueryable();
 
             this.MockSeriesStore
-                .Setup(x => x.FindAsync())
+                // Called with defaults
+                .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(fakeCollSeries));
             this.MockMappingService
                 .Setup(x => x.Project<Collection.EventSeries, EventSeries>(It.IsAny<IQueryable<Collection.EventSeries>>()))
@@ -91,7 +91,7 @@
             // Arrange
             int invalidId = 12345;
             MockSeriesStore
-                .Setup(x => x.FindAsync(invalidId))
+                .Setup(x => x.GetByIDAsync(invalidId))
                 .Returns(Task.FromResult<Collection.EventSeries>(null)); // Simulate no match
 
             // Act
@@ -109,7 +109,7 @@
             var fakeSeries = (new[] { new EventSeries(), new EventSeries() }).AsQueryable();
             var series = new EventSeries();
             this.MockSeriesStore
-                .Setup(x => x.FindAsync())
+                .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(fakeCollSeries));
             this.MockMappingService
                 .Setup(x => x.Project<Collection.EventSeries, EventSeries>(fakeCollSeries))
@@ -156,8 +156,7 @@
             var collSeries = new[] { new Collection.EventSeries() { Id = id, RowGUID = series.TransactionGuid } };
 
             MockSeriesStore
-                .Setup(x => x.FindAsync())
-                .Returns(Task.FromResult(collSeries.AsQueryable()));
+                .SetupWithFakeData<ISeriesStore, Collection.EventSeries, int>(collSeries.AsQueryable());
 
             // Act
             var result = await Controller.Post(series) as SeeOtherAtRouteResult;

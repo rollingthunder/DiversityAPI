@@ -11,20 +11,17 @@
     using System.Web.Http.Results;
     using Xunit;
 
-    public class EventControllerTest
+    public class EventControllerTest : ControllerTestBase<EventController>
     {
         private readonly Mock<IEventStore> MockEventStore;
         private readonly Mock<IMappingService> MockMappingService;
-        private readonly EventController Controller;
 
         public EventControllerTest()
         {
-            MockEventStore = new Mock<IEventStore>();
-            MockMappingService = new Mock<IMappingService>();
-            Controller = new EventController(
-                MockEventStore.Object,
-                MockMappingService.Object
-            );
+            MockEventStore = Kernel.GetMock<IEventStore>();
+            MockMappingService = Kernel.GetMock<IMappingService>();
+
+            InitController();
         }
 
         [Fact]
@@ -37,7 +34,7 @@
             };
             var ev = new Event() { Id = colEvent.Id };
             this.MockEventStore
-                .Setup(x => x.FindAsync(colEvent.Id))
+                .Setup(x => x.GetByIDAsync(colEvent.Id))
                 .Returns(Task.FromResult(colEvent));
             this.MockMappingService
                 .Setup(x => x.Map<Event>(colEvent))
@@ -57,7 +54,7 @@
             // Arrange
             int invalidId = 12345;
             MockEventStore
-                .Setup(x => x.FindAsync(invalidId))
+                .Setup(x => x.GetByIDAsync(invalidId))
                 .Returns(Task.FromResult<Collection.Event>(null)); // Simulate no match
 
             // Act
@@ -75,7 +72,7 @@
             var fakeSeries = (new[] { new Event(), new Event() }).AsQueryable();
             var series = new Event();
             this.MockEventStore
-                .Setup(x => x.FindAsync())
+                .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(fakeCollSeries));
             this.MockMappingService
                 .Setup(x => x.Project<Collection.Event, Event>(fakeCollSeries))
@@ -119,11 +116,10 @@
             // Arrange
             var id = TestHelper.RandomInt();
             var series = new EventBindingModel() { TransactionGuid = Guid.NewGuid() };
-            var collSeries = new[] { new Collection.Event() { Id = id, RowGUID = series.TransactionGuid } };
+            var data = new[] { new Collection.Event() { Id = id, RowGUID = series.TransactionGuid } };
 
             MockEventStore
-                .Setup(x => x.FindAsync())
-                .Returns(Task.FromResult(collSeries.AsQueryable()));
+                .SetupWithFakeData<IEventStore, Collection.Event, int>(data.AsQueryable());
 
             // Act
             var result = await Controller.Post(series) as SeeOtherAtRouteResult;
@@ -152,7 +148,7 @@
                 new Collection.Event() { SeriesID = TestHelper.RandomInt() },
             };
             MockEventStore
-                .Setup(x => x.FindAsync())
+                .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(collEvents.AsQueryable()));
             MockMappingService
                 .Setup(x => x.Project<Collection.Event, Event>(It.IsAny<IQueryable<Collection.Event>>()))

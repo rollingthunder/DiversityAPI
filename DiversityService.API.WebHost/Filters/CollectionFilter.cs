@@ -20,23 +20,6 @@
         public const string PROJECT = "project";
     }
 
-    public static class CollectionRequestExtensions
-    {
-        private const string COLLECTION_CONTEXT_KEY = "coll_context";
-
-        public static IContext GetCollectionContext(this HttpRequestMessage request)
-        {
-            var requestContext = request.GetOwinContext();
-            return requestContext.Get<IContext>(COLLECTION_CONTEXT_KEY);
-        }
-
-        public static void SetCollectionContext(this HttpRequestMessage request, IContext ctx)
-        {
-            var requestContext = request.GetOwinContext();
-            requestContext.Set<IContext>(COLLECTION_CONTEXT_KEY, ctx);
-        }
-    }
-
     public class CollectionFilter : ActionFilterAttribute
     {
         private readonly IConfigurationService Configuration;

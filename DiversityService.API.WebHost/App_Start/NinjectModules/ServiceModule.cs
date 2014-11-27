@@ -56,8 +56,8 @@
                 .To<ProjectStore>()
                 .InRequestScope();
 
-            Bind<ISeriesStore>()
-                .To<SeriesStore>()
+            Bind(typeof(IStore<,>))
+                .To(typeof(Store<,>))
                 .InRequestScope();
         }
     }

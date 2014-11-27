@@ -11,7 +11,7 @@ namespace DiversityService.Collection
 {
     using System;
     
-    public partial class DiversityMobile_ProjectList_Result
+    public partial class Project
     {
         public int ProjectID { get; set; }
         public string DisplayText { get; set; }

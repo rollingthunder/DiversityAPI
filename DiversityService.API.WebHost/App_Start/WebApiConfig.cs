@@ -52,8 +52,6 @@ namespace DiversityService.API.WebHost
 
             config.MessageHandlers.Add(new CultureHandler());
 
-            config.MessageHandlers.Add(new NinjectHandler());
-
             config.Formatters.Add(new SirenJsonMediaTypeFormatter());
         }
     }

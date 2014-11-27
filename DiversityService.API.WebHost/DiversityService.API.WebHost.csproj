@@ -366,6 +366,7 @@
     <Compile Include="Results\SeeOtherAtRouteResult.cs" />
     <Compile Include="Services\AutoMapperMappingService.cs" />
     <Compile Include="Services\CollectionContext.cs" />
+    <Compile Include="Services\CollectionContextExtensions.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
     <Compile Include="Services\ContextFactory.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
@@ -375,7 +376,7 @@
     <Compile Include="Services\IMappingService.cs" />
     <Compile Include="Services\ProjectStore.cs" />
     <Compile Include="Services\Store.cs" />
-    <Compile Include="Services\IRepository.cs" />
+    <Compile Include="Services\IStore.cs" />
     <Compile Include="Services\Taxa.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

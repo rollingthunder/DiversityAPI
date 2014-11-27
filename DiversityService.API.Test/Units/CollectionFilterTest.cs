@@ -185,14 +185,6 @@
                 .Returns(Task.FromResult<IContext>(contextMock.Object));
 
             Context = contextMock.Object;
-
-            ProjectStore
-                .Setup(x => x.IsValidProjectAsync(It.IsAny<int>()))
-                .Returns(Task.FromResult(false));
-
-            ProjectStore
-                .Setup(x => x.IsValidProjectAsync(PROJECT_ID))
-                .Returns(Task.FromResult(true));
         }
 
         private bool ContextSet()

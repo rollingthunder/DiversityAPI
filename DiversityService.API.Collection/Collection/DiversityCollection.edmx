@@ -1357,7 +1357,7 @@
           <FunctionImport Name="DiversityMobile_UserTerminologies" ReturnType="Collection(DiversityCollection.UserTerminology)">
             <Parameter Name="LoginName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="DiversityMobile_ProjectList" IsComposable="true" ReturnType="Collection(DiversityCollection.DiversityMobile_ProjectList_Result)" />
+          <FunctionImport Name="DiversityMobile_ProjectList" IsComposable="true" ReturnType="Collection(DiversityCollection.Project)" />
         </EntityContainer>
         <EntityType Name="CollectionAgent">
           <Key>
@@ -1457,7 +1457,7 @@
           <Property Type="Int32" Name="TerminologyID" Nullable="true" />
           <Property Type="String" Name="DisplayText" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="DiversityMobile_ProjectList_Result">
+        <ComplexType Name="Project">
           <Property Type="Int32" Name="ProjectID" Nullable="false" />
           <Property Type="String" Name="DisplayText" Nullable="true" MaxLength="50" />
         </ComplexType>
@@ -1809,7 +1809,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DiversityMobile_ProjectList" FunctionName="DiversityCollection.Store.DiversityMobile_ProjectList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DiversityCollection.DiversityMobile_ProjectList_Result">
+              <ComplexTypeMapping TypeName="DiversityCollection.Project">
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
               </ComplexTypeMapping>

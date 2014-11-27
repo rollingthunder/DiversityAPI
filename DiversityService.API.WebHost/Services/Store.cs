@@ -1,13 +1,45 @@
 ﻿namespace DiversityService.API.Services
 {
     using DiversityService.Collection;
-    using Ninject;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+
+    public static class StoreComponents
+    {
+        public static async Task<IEnumerable<TEntity>> Get<TEntity>(
+            IQueryable<TEntity> query,
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IQueryable<TEntity>> restrict = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
+        {
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (restrict != null)
+            {
+                query = restrict(query);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return await query.ToListAsync();
+        }
+    }
 
     public class Store<TEntity, TKey> : IStore<TEntity, TKey> where TEntity : class
     {
@@ -20,51 +52,34 @@
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(
+           Expression<Func<TEntity, bool>> filter = null,
+           Func<IQueryable<TEntity>, IQueryable<TEntity>> restrict = null,
+           Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+           string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
 
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
+            return await StoreComponents.Get(query, filter, restrict, orderBy, includeProperties);
         }
 
-        public virtual TEntity GetByID(TKey id)
+        public virtual Task<TEntity> GetByIDAsync(TKey id)
         {
-            return dbSet.Find(id);
+            return dbSet.FindAsync(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual async Task InsertAsync(TEntity entity)
         {
             dbSet.Add(entity);
         }
 
-        public virtual void Delete(TKey id)
+        public virtual async Task DeleteAsync(TKey id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
+            TEntity entityToDelete = await dbSet.FindAsync(id);
+            await DeleteAsync(entityToDelete);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public virtual async Task DeleteAsync(TEntity entityToDelete)
         {
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
@@ -73,10 +88,15 @@
             dbSet.Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public virtual async Task UpdateAsync(TEntity entityToUpdate)
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public async Task<IQueryable<TEntity>> GetQueryableAsync()
+        {
+            return dbSet;
         }
     }
 }

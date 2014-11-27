@@ -62,9 +62,9 @@ namespace DiversityService.Collection
         }
     
         [DbFunction("Collection", "DiversityMobile_ProjectList")]
-        public virtual IQueryable<DiversityMobile_ProjectList_Result> DiversityMobile_ProjectList()
+        public virtual IQueryable<Project> DiversityMobile_ProjectList()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DiversityMobile_ProjectList_Result>("[Collection].[DiversityMobile_ProjectList]()");
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Project>("[Collection].[DiversityMobile_ProjectList]()");
         }
     }
 }

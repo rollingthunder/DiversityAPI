@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
@@ -28,15 +29,14 @@
             this.Mapper = mapper;
         }
 
-        public async Task<IQueryable<EventSeries>> Get(string query = null)
+        public async Task<IEnumerable<EventSeries>> Get(string query = null)
         {
-            var seriesQuery = await SeriesStore.FindAsync();
+            var seriesQuery = await SeriesStore.GetQueryableAsync();
 
             if (!string.IsNullOrEmpty(query))
             {
-                seriesQuery = from series in seriesQuery
-                              where series.Code.Contains(query)
-                              select series;
+                seriesQuery = seriesQuery
+                .Where(x => x.Code.Contains(query));
             }
 
             return Mapper.Project<Collection.EventSeries, EventSeries>(seriesQuery);
@@ -44,7 +44,7 @@
 
         public async Task<IHttpActionResult> Get(int id)
         {
-            var series = await SeriesStore.FindAsync(id);
+            var series = await SeriesStore.GetByIDAsync(id);
 
             if (series == null)
             {
@@ -58,13 +58,11 @@
 
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
-            var existing = (from es in await SeriesStore.FindAsync()
-                            where es.RowGUID == value.TransactionGuid
-                            select es).SingleOrDefault();
+            var existing = await RedirectToExisting(SeriesStore, value.TransactionGuid);
 
             if (existing != null)
             {
-                return SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing));
+                return existing;
             }
 
             var series = Mapper.Map<Collection.EventSeries>(value);

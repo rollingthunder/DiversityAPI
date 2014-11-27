@@ -1,53 +1,59 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.API.Model;
+    using DiversityService.Collection;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Diagnostics.Contracts;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using System.Web;
 
-    public interface IProjectStore
+    public interface IProjectStore : IReadOnlyStore<Project, int>
     {
-        Task<bool> IsValidProjectAsync(int projectId);
-
-        Task<IEnumerable<Project>> GetProjectsAsync();
     }
 
     public class ProjectStore : IProjectStore
     {
-        private readonly CollectionContext Context;
-        private readonly IMappingService Mapper;
+        private readonly Collection Context;
 
         public ProjectStore(
-            IContext context,
-            IMappingService mapper
+            Collection context
             )
         {
-            Contract.Requires<ArgumentException>(context is CollectionContext);
-            Contract.Requires<ArgumentNullException>(mapper != null);
-
-            Context = context as CollectionContext;
-            Mapper = mapper;
+            Context = context;
         }
 
-        public Task<bool> IsValidProjectAsync(int projectId)
+        public async Task<IEnumerable<Project>> GetAsync(
+            Expression<Func<Project, bool>> filter = null,
+            Func<IQueryable<Project>, IQueryable<Project>> restrict = null,
+            Func<IQueryable<Project>, IOrderedQueryable<Project>> orderBy = null,
+            string includeProperties = "")
         {
-            return (from project in Context.DiversityMobile_ProjectList()
-                    where project.ProjectID == projectId
-                    select project).AnyAsync();
+            var query = await GetQueryableAsync();
+
+            return await StoreComponents.Get(
+                query,
+                filter,
+                restrict,
+                orderBy,
+                includeProperties
+            );
         }
 
-        public async Task<IEnumerable<Project>> GetProjectsAsync()
+        public async Task<Project> GetByIDAsync(int id)
         {
-            var projects = await Context
-                .DiversityMobile_ProjectList()
-                .ToListAsync();
+            var query = await GetAsync(
+                x => x.ProjectID == id
+                );
+            return query.FirstOrDefault();
+        }
 
-            return from project in projects
-                   select Mapper.Map<Project>(project);
+        public async Task<IQueryable<Project>> GetQueryableAsync()
+        {
+            return Context
+                .DiversityMobile_ProjectList();
         }
     }
 }

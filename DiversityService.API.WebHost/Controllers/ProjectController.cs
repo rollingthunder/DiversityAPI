@@ -15,18 +15,30 @@
     [RequireCollection]
     public class ProjectController : ApiController
     {
-        private readonly IProjectStore ProjectStore;
-
-        public ProjectController(
-            IProjectStore projectStore
-            )
+        private IProjectStore ProjectStore
         {
-            ProjectStore = projectStore;
+            get
+            {
+                var ctx = Request.GetCollectionContext();
+
+                return ctx.Projects;
+            }
         }
 
-        public Task<IEnumerable<Project>> Get()
+        private readonly IMappingService Mapper;
+
+        public ProjectController(
+            IMappingService mapper
+            )
         {
-            return ProjectStore.GetProjectsAsync();
+            Mapper = mapper;
+        }
+
+        public async Task<IEnumerable<Project>> Get()
+        {
+            var projects = await ProjectStore.GetAsync();
+
+            return Mapper.Map<IEnumerable<Project>>(projects);
         }
     }
 }

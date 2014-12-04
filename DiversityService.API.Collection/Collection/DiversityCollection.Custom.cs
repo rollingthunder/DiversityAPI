@@ -226,6 +226,8 @@
 
     public partial class Collection
     {
+        public int? ProjectId { get; set; }
+
         public Collection(string cstring)
             : base(cstring)
         {

@@ -2,6 +2,7 @@
 using Ninject.Parameters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Web;
 
@@ -19,10 +20,25 @@ namespace DiversityService.API.Services
             Collection.Collection context
             )
         {
+            Contract.Requires<ArgumentNullException>(kernel != null);
+            Contract.Requires<ArgumentNullException>(context != null);
+
             Kernel = kernel;
             Context = context;
 
             _Projects = LazyWithContext<IProjectStore>();
+        }
+
+        public int? ProjectId
+        {
+            get
+            {
+                return Context.ProjectId;
+            }
+            set
+            {
+                Context.ProjectId = value;
+            }
         }
 
         private Lazy<IProjectStore> _Projects;

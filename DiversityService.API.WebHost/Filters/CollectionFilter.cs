@@ -15,7 +15,8 @@
     {
         public const string COLLECTION = "collection";
         public const string PROJECT = "project";
-        public const string COLLECTION_PREFIX = "api/collection/{" + CollectionAPI.COLLECTION + "}/";
+        public const string COLLECTION_PREFIX = "api/collection/{" + CollectionAPI.COLLECTION + ":int}/";
+        public const string COLLECTION_PROJECT_PREFIX = COLLECTION_PREFIX + "project/{" + CollectionAPI.PROJECT + ":int}/";
     }
 
     public class CollectionFilter : ActionFilterAttribute
@@ -58,6 +59,13 @@
                 if (ctx == null)
                 {
                     SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Invalid Collection Credentials");
+                    return;
+                }
+
+                await ExtractProject(actionContext, ctx);
+
+                if (actionContext.Response != null)
+                {
                     return;
                 }
 
@@ -142,9 +150,39 @@
 
                 if (server == null)
                 {
-                    SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "Invalid Collection Server");
+                    SetErrorResponse(actionContext, HttpStatusCode.NotFound, string.Format("Collection Server with id {0} not found", collection));
                     return;
                 }
+            }
+        }
+
+        private async Task ExtractProject(
+            HttpActionContext actionContext,
+            IContext collectionContext)
+        {
+            var request = actionContext.Request;
+
+            var routeData = request.GetRouteData();
+            if (routeData.Values.ContainsKey(CollectionAPI.PROJECT))
+            {
+                var project = routeData.Values[CollectionAPI.PROJECT].ToString();
+                int projectId;
+
+                if (!int.TryParse(project, out projectId))
+                {
+                    SetErrorResponse(actionContext, HttpStatusCode.BadRequest, "URL Component {project} must be an integer");
+                    return;
+                }
+
+                var dbProject = await collectionContext.Projects.GetByIDAsync(projectId);
+
+                if (dbProject == null)
+                {
+                    SetErrorResponse(actionContext, HttpStatusCode.NotFound, string.Format("Project with id {0} not found", project));
+                    return;
+                }
+
+                collectionContext.ProjectId = projectId;
             }
         }
 

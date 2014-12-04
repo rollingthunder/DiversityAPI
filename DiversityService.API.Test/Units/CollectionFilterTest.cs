@@ -31,6 +31,9 @@
             Configuration = Kernel.GetMock<IConfigurationService>();
             ContextFactory = Kernel.GetMock<IContextFactory>();
             ProjectStore = Kernel.GetMock<IProjectStore>();
+            ProjectStore
+                .Setup(x => x.GetByIDAsync(It.IsAny<int>()))
+                .ReturnsAsync(null);
 
             Filter = Kernel.Get<CollectionFilter>();
         }
@@ -94,11 +97,11 @@
 
             // Assert
             Assert.False(ActionCalled());
-            Assert.False(ActionContext.Response.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.NotFound, ActionContext.Response.StatusCode);
         }
 
         [Fact]
-        public async Task Rejects_No_BackendCredentials()
+        public async Task Rejects_Collection_But_No_BackendCredentials()
         {
             // Arrange
             SetRouteData(0, 0);
@@ -118,7 +121,7 @@
         }
 
         [Fact]
-        public async Task Rejects_Invalid_BackendCredentials()
+        public async Task Rejects_Collection_But_Invalid_BackendCredentials()
         {
             // Arrange
             SetValidCollectionAndProject();
@@ -131,6 +134,54 @@
             // Assert
             Assert.False(ActionCalled());
             Assert.False(ActionContext.Response.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task Does_Not_Set_Project_Without_An_Id()
+        {
+            // Arrange
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID);
+            SetBackendCredentials(USER, PASS);
+
+            // Act
+            await InvokeFilter();
+
+            // Assert
+            var ctx = Request.GetCollectionContext();
+            Assert.Null(ctx.ProjectId);
+        }
+
+        [Fact]
+        public async Task Sets_Project_With_An_Id()
+        {
+            // Arrange
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID, PROJECT_ID);
+            SetBackendCredentials(USER, PASS);
+
+            // Act
+            await InvokeFilter();
+
+            // Assert
+            var ctx = Request.GetCollectionContext();
+            Assert.NotNull(ctx.ProjectId);
+        }
+
+        [Fact]
+        public async Task Rejects_Invalid_ProjectId()
+        {
+            // Arrange
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID, 10000);
+            SetBackendCredentials(USER, PASS);
+
+            // Act
+            await InvokeFilter();
+
+            // Assert
+            Assert.False(ActionCalled());
+            Assert.Equal(HttpStatusCode.NotFound, ActionContext.Response.StatusCode);
         }
 
         [Fact]
@@ -149,11 +200,14 @@
             Assert.True(ActionCalled());
         }
 
-        private void SetRouteData(int collectionId, int projectId)
+        private void SetRouteData(int collectionId, int? projectId = null)
         {
             var routeValues = new HttpRouteValueDictionary();
             routeValues[CollectionAPI.COLLECTION] = collectionId.ToString();
-            routeValues[CollectionAPI.PROJECT] = projectId.ToString();
+            if (projectId.HasValue)
+            {
+                routeValues[CollectionAPI.PROJECT] = projectId.ToString();
+            }
             var routeData = new HttpRouteData(new HttpRoute(), routeValues);
             Request.SetRouteData(routeData);
         }
@@ -183,6 +237,16 @@
             ContextFactory
                 .Setup(x => x.CreateContextAsync(servers[0], USER, PASS))
                 .Returns(Task.FromResult<IContext>(contextMock.Object));
+
+            contextMock.SetupProperty(x => x.ProjectId);
+
+            contextMock
+                .Setup(x => x.Projects)
+                .Returns(ProjectStore.Object);
+
+            ProjectStore
+                .Setup(x => x.GetByIDAsync(PROJECT_ID))
+                .ReturnsAsync(new Collection.Project() { DisplayText = "Test", ProjectID = PROJECT_ID });
 
             Context = contextMock.Object;
         }

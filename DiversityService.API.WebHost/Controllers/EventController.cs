@@ -1,30 +1,31 @@
 ﻿namespace DiversityService.API.Controllers
 {
     using AutoMapper;
-    using AutoMapper.QueryableExtensions;
+    using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Http;
 
+    [CollectionAPI("event")]
     public class EventController : DiversityController
     {
-        private readonly IEventStore EventStore;
         private readonly IMappingService Mapper;
 
+        private IEventStore EventStore
+        {
+            get
+            {
+                return Request.GetCollectionContext().Events;
+            }
+        }
+
         public EventController(
-            IEventStore repo,
+
             IMappingService mapper
             )
         {
-            this.EventStore = repo;
             this.Mapper = mapper;
         }
 

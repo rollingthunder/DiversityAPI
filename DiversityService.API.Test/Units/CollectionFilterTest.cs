@@ -12,7 +12,7 @@
     using System.Web.Http.Routing;
     using Xunit;
 
-    public class CollectionFilterTest : FilterTestBase<CollectionFilter>
+    public class CollectionFilterTest : FilterTestBase<CollectionContextFilter>
     {
         private Mock<IConfigurationService> Configuration;
         private Mock<IContextFactory> ContextFactory;
@@ -35,7 +35,7 @@
                 .Setup(x => x.GetByIDAsync(It.IsAny<int>()))
                 .ReturnsAsync(null);
 
-            Filter = Kernel.Get<CollectionFilter>();
+            Filter = Kernel.Get<CollectionContextFilter>();
         }
 
         [Fact]

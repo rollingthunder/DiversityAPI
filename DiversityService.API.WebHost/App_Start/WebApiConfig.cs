@@ -19,11 +19,6 @@ namespace DiversityService.API.WebHost
         {
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { controller = "ApiHome", id = RouteParameter.Optional });
         }
 
         public static void RegisterFilters(HttpConfiguration config)
@@ -36,7 +31,7 @@ namespace DiversityService.API.WebHost
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.Filters.Add(new AuthorizeAttribute());
             config.Filters.Add(new ValidateModelAttribute());
-            config.Filters.Add(config.DependencyResolver.GetService(typeof(CollectionFilter)) as IFilter);
+            config.Filters.Add(config.DependencyResolver.GetService(typeof(CollectionContextFilter)) as IFilter);
             config.Filters.Add(new EnablePagingAttribute());
             // config.Filters.Add(new SirenResultAttribute());
 

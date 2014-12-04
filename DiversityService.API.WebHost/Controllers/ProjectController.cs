@@ -11,8 +11,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    [RequireCollection]
-    [RoutePrefix(CollectionAPI.COLLECTION_PREFIX + "project")]
+    [CollectionAPI("project")]
     public class ProjectController : ApiController
     {
         private IProjectStore ProjectStore
@@ -40,6 +39,16 @@
             var projects = await ProjectStore.GetAsync();
 
             return Mapper.Map<IEnumerable<Project>>(projects);
+        }
+
+        [Route(CollectionAPI.PROJECT_TEMPLATE)]
+        public async Task<Project> GetById(int project)
+        {
+            var projects = await Get();
+
+            return projects
+                .Where(x => x.Id == project)
+                .FirstOrDefault();
         }
     }
 }

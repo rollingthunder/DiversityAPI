@@ -335,15 +335,16 @@
     <Compile Include="Controllers\Routes.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Controllers\TaxaController.cs" />
+    <Compile Include="Filters\ProjectFilter.cs" />
     <Compile Include="Filters\PagingAttribute.cs" />
-    <Compile Include="Filters\RequireCollectionAttribute.cs" />
+    <Compile Include="Filters\CollectionFilter.cs" />
     <Compile Include="Filters\SeriesSirenProvider.cs" />
     <Compile Include="Filters\SirenResultFilter.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Filters\CollectionFilter.cs" />
+    <Compile Include="Filters\CollectionContextFilter.cs" />
     <Compile Include="Handler\CultureHandler.cs" />
     <Compile Include="Handler\RequireHttpsMessageHandler.cs" />
     <Compile Include="Migrations\201405212116370_InitialCreate.cs" />

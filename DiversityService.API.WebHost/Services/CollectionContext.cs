@@ -27,6 +27,7 @@ namespace DiversityService.API.Services
             Context = context;
 
             _Projects = LazyWithContext<IProjectStore>();
+            _Events = LazyWithContext<IEventStore>();
         }
 
         public int? ProjectId
@@ -46,6 +47,13 @@ namespace DiversityService.API.Services
         public IProjectStore Projects
         {
             get { return _Projects.Value; }
+        }
+
+        private Lazy<IEventStore> _Events;
+
+        public IEventStore Events
+        {
+            get { return _Events.Value; }
         }
 
         private Lazy<T> LazyWithContext<T>()

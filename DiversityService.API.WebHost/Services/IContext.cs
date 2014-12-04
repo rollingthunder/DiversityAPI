@@ -7,5 +7,7 @@ namespace DiversityService.API.Services
         int? ProjectId { get; set; }
 
         IProjectStore Projects { get; }
+
+        IEventStore Events { get; }
     }
 }

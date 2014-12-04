@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
     using System;
@@ -8,6 +9,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    [CollectionAPI("series")]
     public class SeriesController : DiversityController
     {
         private readonly Lazy<ISeriesStore> _SeriesStore;

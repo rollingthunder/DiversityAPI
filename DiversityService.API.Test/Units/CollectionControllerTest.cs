@@ -43,5 +43,26 @@
                 .All(srv => publicServers.Any(x => x.Id == srv.Id))
             );
         }
+
+        [Fact]
+        public void Returns_Servers_By_Id()
+        {
+            // Arrange
+            var servers = new[] {
+                new InternalCollectionServer() { Id = 0, Name = "Server0" },
+                new InternalCollectionServer() { Id = 1, Name = "Server1" },
+                new InternalCollectionServer() { Id = 2, Name = "Server2" }
+            };
+
+            Configuration
+                .Setup(x => x.GetCollectionServers())
+                .Returns(servers);
+
+            // Act
+            var server = Controller.GetById(0);
+
+            // Assert
+            Assert.Equal(0, server.Id);
+        }
     }
 }

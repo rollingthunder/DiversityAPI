@@ -7,13 +7,13 @@
     using System.Threading.Tasks;
     using Xunit;
 
-    public class RequireCollectionAttributeTest : FilterTestBase<RequireCollectionAttribute>
+    public class RequireCollectionAttributeTest : FilterTestBase<CollectionAPIAttribute>
     {
         public RequireCollectionAttributeTest()
         {
             InitializeActionContext();
 
-            Filter = Kernel.Get<RequireCollectionAttribute>();
+            Filter = Kernel.Get<CollectionAPIAttribute>();
         }
 
         [Fact]

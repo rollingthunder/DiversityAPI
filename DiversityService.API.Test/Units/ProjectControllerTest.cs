@@ -30,7 +30,7 @@
             // Arrange
 
             // Act
-            var hasCollectionFilter = (typeof(ProjectController).GetCustomAttributes(typeof(RequireCollectionAttribute), true)).Any();
+            var hasCollectionFilter = (typeof(ProjectController).GetCustomAttributes(typeof(CollectionAPIAttribute), true)).Any();
 
             // Assert
             Assert.True(hasCollectionFilter);
@@ -73,6 +73,38 @@
                projects
                .All(p => publicProjects.Any(x => x.Id == p.Id))
            );
+        }
+
+        [Fact]
+        public async Task Returns_A_Project_By_Id()
+        {
+            // Arrange
+            var dbProjects = new[] {
+                new Collection.Project(){ProjectID = 0, DisplayText = "P1"},
+                new Collection.Project(){ProjectID = 1, DisplayText = "P2"},
+                new Collection.Project(){ProjectID = 2, DisplayText = "P3"},
+            };
+
+            var projects = new[] {
+                new Project() {Id = 0, Name = "P1" },
+                new Project() {Id = 1, Name = "P2" },
+                new Project() {Id = 2, Name = "P3" },
+            };
+
+            Projects
+                .SetupWithFakeData<IProjectStore, Collection.Project, int>(dbProjects.AsQueryable());
+
+            IEnumerable<Collection.Project> mapped = Enumerable.Empty<Collection.Project>();
+            Mapper
+                .Setup(x => x.Map<IEnumerable<Project>>(It.IsAny<IEnumerable<Collection.Project>>()))
+                .Callback((object x) => mapped = x as IEnumerable<Collection.Project>)
+                .Returns(projects);
+
+            // Act
+            var project = await Controller.GetById(0);
+
+            // Assert
+            Assert.Equal(0, project.Id);
         }
     }
 }

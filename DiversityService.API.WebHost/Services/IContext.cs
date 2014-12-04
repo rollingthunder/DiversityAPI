@@ -8,6 +8,8 @@ namespace DiversityService.API.Services
 
         IProjectStore Projects { get; }
 
-        IEventStore Events { get; }
+        IStore<Collection.Event, int> Events { get; }
+
+        IStore<Collection.EventSeries, int> Series { get; }
     }
 }

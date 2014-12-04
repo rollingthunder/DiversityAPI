@@ -13,12 +13,12 @@
 
     public class EventControllerTest : ControllerTestBase<EventController>
     {
-        private readonly Mock<IEventStore> MockEventStore;
+        private readonly Mock<IStore<Collection.Event, int>> MockEventStore;
         private readonly Mock<IMappingService> MockMappingService;
 
         public EventControllerTest()
         {
-            MockEventStore = Kernel.GetMock<IEventStore>();
+            MockEventStore = Kernel.GetMock<IStore<Collection.Event, int>>();
             MockMappingService = Kernel.GetMock<IMappingService>();
 
             InitController();
@@ -87,7 +87,7 @@
         }
 
         [Fact]
-        public async Task Inserts_A_New_Series_on_POST()
+        public async Task Inserts_A_New_Event_on_POST()
         {
             // Arrange
             var id = TestHelper.RandomInt();
@@ -119,7 +119,7 @@
             var data = new[] { new Collection.Event() { Id = id, RowGUID = series.TransactionGuid } };
 
             MockEventStore
-                .SetupWithFakeData<IEventStore, Collection.Event, int>(data.AsQueryable());
+                .SetupWithFakeData<IStore<Collection.Event, int>, Collection.Event, int>(data.AsQueryable());
 
             // Act
             var result = await Controller.Post(series) as SeeOtherAtRouteResult;

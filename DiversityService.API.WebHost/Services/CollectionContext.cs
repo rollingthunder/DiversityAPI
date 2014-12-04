@@ -27,7 +27,8 @@ namespace DiversityService.API.Services
             Context = context;
 
             _Projects = LazyWithContext<IProjectStore>();
-            _Events = LazyWithContext<IEventStore>();
+            _Events = LazyWithContext<IStore<Collection.Event, int>>();
+            _Series = LazyWithContext<IStore<Collection.EventSeries, int>>();
         }
 
         public int? ProjectId
@@ -49,11 +50,18 @@ namespace DiversityService.API.Services
             get { return _Projects.Value; }
         }
 
-        private Lazy<IEventStore> _Events;
+        private Lazy<IStore<Collection.Event, int>> _Events;
 
-        public IEventStore Events
+        public IStore<Collection.Event, int> Events
         {
             get { return _Events.Value; }
+        }
+
+        private Lazy<IStore<Collection.EventSeries, int>> _Series;
+
+        public IStore<Collection.EventSeries, int> Series
+        {
+            get { return _Series.Value; }
         }
 
         private Lazy<T> LazyWithContext<T>()

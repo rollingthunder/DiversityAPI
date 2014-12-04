@@ -13,7 +13,7 @@
     {
         private readonly IMappingService Mapper;
 
-        private IEventStore EventStore
+        private IStore<Collection.Event, int> EventStore
         {
             get
             {
@@ -29,7 +29,7 @@
             this.Mapper = mapper;
         }
 
-        // GET: api/Event
+        [Route]
         public async Task<IQueryable<Event>> Get()
         {
             var allEvents = await EventStore.GetQueryableAsync();
@@ -37,7 +37,7 @@
             return Mapper.Project<Collection.Event, Event>(allEvents);
         }
 
-        // GET: api/Event/5
+        [Route]
         public async Task<IHttpActionResult> Get(int id)
         {
             var ev = await EventStore.GetByIDAsync(id);
@@ -52,7 +52,7 @@
             return Ok(dto);
         }
 
-        // POST: api/Event
+        [Route]
         public async Task<IHttpActionResult> Post(EventBindingModel value)
         {
             var existing = await RedirectToExisting(EventStore, value.TransactionGuid);

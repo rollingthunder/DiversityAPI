@@ -17,6 +17,8 @@
             Controller = Kernel.Get<T>();
 
             Controller.Request = new HttpRequestMessage();
+
+            CreateCollectionContext();
         }
 
         protected Mock<IContext> CreateCollectionContext()
@@ -25,6 +27,12 @@
 
             mock.SetupGet(x => x.Projects)
                 .Returns(Kernel.GetMock<IProjectStore>().Object);
+
+            mock.SetupGet(x => x.Series)
+               .Returns(Kernel.GetMock<IStore<Collection.EventSeries, int>>().Object);
+
+            mock.SetupGet(x => x.Events)
+               .Returns(Kernel.GetMock<IStore<Collection.Event, int>>().Object);
 
             Controller.Request.SetOwinContext(new OwinContext());
             Controller.Request.SetCollectionContext(mock.Object);

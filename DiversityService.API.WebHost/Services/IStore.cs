@@ -30,8 +30,4 @@
 
         Task UpdateAsync(TEntity entityToUpdate);
     }
-
-    public interface ISeriesStore : IStore<Collection.EventSeries, int> { }
-
-    public interface IEventStore : IStore<Collection.Event, int> { }
 }

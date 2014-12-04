@@ -12,18 +12,20 @@
     [CollectionAPI("series")]
     public class SeriesController : DiversityController
     {
-        private readonly Lazy<ISeriesStore> _SeriesStore;
-
-        private ISeriesStore SeriesStore { get { return _SeriesStore.Value; } }
-
         private readonly IMappingService Mapper;
 
+        private IStore<Collection.EventSeries, int> SeriesStore
+        {
+            get
+            {
+                return Request.GetCollectionContext().Series;
+            }
+        }
+
         public SeriesController(
-            Lazy<ISeriesStore> store,
             IMappingService mapper
             )
         {
-            this._SeriesStore = store;
             this.Mapper = mapper;
         }
 

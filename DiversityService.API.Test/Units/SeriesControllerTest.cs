@@ -15,12 +15,12 @@
 
     public class SeriesControllerTest : ControllerTestBase<SeriesController>
     {
-        private readonly Mock<ISeriesStore> MockSeriesStore;
+        private readonly Mock<IStore<Collection.EventSeries, int>> MockSeriesStore;
         private readonly Mock<IMappingService> MockMappingService;
 
         public SeriesControllerTest()
         {
-            MockSeriesStore = Kernel.GetMock<ISeriesStore>();
+            MockSeriesStore = Kernel.GetMock<IStore<Collection.EventSeries, int>>();
             MockMappingService = Kernel.GetMock<IMappingService>();
             InitController();
         }
@@ -156,7 +156,7 @@
             var collSeries = new[] { new Collection.EventSeries() { Id = id, RowGUID = series.TransactionGuid } };
 
             MockSeriesStore
-                .SetupWithFakeData<ISeriesStore, Collection.EventSeries, int>(collSeries.AsQueryable());
+                .SetupWithFakeData<IStore<Collection.EventSeries, int>, Collection.EventSeries, int>(collSeries.AsQueryable());
 
             // Act
             var result = await Controller.Post(series) as SeeOtherAtRouteResult;

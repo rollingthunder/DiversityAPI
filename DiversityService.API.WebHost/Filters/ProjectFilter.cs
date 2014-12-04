@@ -5,9 +5,9 @@
     using System.Net.Http;
     using System.Web.Http.Controllers;
 
-    public class ProjectAttribute : CollectionAPIAttribute
+    public class ProjectAPIAttribute : CollectionAPIAttribute
     {
-        public ProjectAttribute(string routePrefix)
+        public ProjectAPIAttribute(string routePrefix)
             : base(string.Format("{0}/{1}", CollectionAPI.PROJECT_PREFIX, routePrefix))
         {
         }

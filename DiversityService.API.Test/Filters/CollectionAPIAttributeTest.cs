@@ -1,4 +1,4 @@
-﻿namespace DiversityService.API.Test.Units
+﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Filters;
     using DiversityService.API.Services;
@@ -13,7 +13,7 @@
         {
             InitializeActionContext();
 
-            Filter = Kernel.Get<CollectionAPIAttribute>();
+            Filter = new CollectionAPIAttribute("");
         }
 
         [Fact]

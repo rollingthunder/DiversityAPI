@@ -161,6 +161,7 @@
     <Compile Include="ControllerTestBase.cs" />
     <Compile Include="DelegatingHandlerExtensions.cs" />
     <Compile Include="Features\Series\RetrieveSeries.cs" />
+    <Compile Include="Filters\PagingResultTest.cs" />
     <Compile Include="Filters\ProjectAPIAttributeTest.cs" />
     <Compile Include="FilterTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

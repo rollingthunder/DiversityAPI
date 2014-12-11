@@ -29,17 +29,19 @@
             this.Mapper = mapper;
         }
 
-        public async Task<IEnumerable<EventSeries>> Get(string query = null)
+        public async Task<IHttpActionResult> Get(string code = null)
         {
-            var seriesQuery = await SeriesStore.GetQueryableAsync();
+            var query = await SeriesStore.GetQueryableAsync();
 
-            if (!string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(code))
             {
-                seriesQuery = seriesQuery
-                .Where(x => x.Code.Contains(query));
+                query = query
+                    .Where(x => x.Code.Contains(code));
             }
 
-            return Mapper.Project<Collection.EventSeries, EventSeries>(seriesQuery);
+            var mapped = Mapper.Project<Collection.EventSeries, EventSeries>(query);
+
+            return Paged(mapped);
         }
 
         public async Task<IHttpActionResult> Get(int id)

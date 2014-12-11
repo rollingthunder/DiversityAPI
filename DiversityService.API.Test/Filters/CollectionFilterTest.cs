@@ -44,7 +44,7 @@
             // Arrange
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -60,7 +60,7 @@
             Request.SetRouteData(routeData);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.True(ActionCalled());
@@ -79,7 +79,7 @@
             Request.SetRouteData(routeData);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -93,7 +93,7 @@
             SetRouteData(COLLECTION_ID, PROJECT_ID);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -113,7 +113,7 @@
                 .Returns(servers);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -129,7 +129,7 @@
             SetBackendCredentials("invalid", "user");
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -145,7 +145,7 @@
             SetBackendCredentials(USER, PASS);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             var ctx = Request.GetCollectionContext();
@@ -161,7 +161,7 @@
             SetBackendCredentials(USER, PASS);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             var ctx = Request.GetCollectionContext();
@@ -177,7 +177,7 @@
             SetBackendCredentials(USER, PASS);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -193,7 +193,7 @@
             SetBackendCredentials(USER, PASS);
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.True(ContextSet());

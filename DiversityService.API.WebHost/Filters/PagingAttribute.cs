@@ -7,20 +7,6 @@
     using System.Web;
     using System.Web.Http.Filters;
 
-    public class PageDescriptor
-    {
-        public uint skip { get; set; }
-
-        public uint take { get; set; }
-    }
-
-    public class PagedResult<T>
-    {
-        public PageDescriptor Page { get; set; }
-
-        public IEnumerable<T> Contents { get; set; }
-    }
-
     public class EnablePagingAttribute : ActionFilterAttribute
     {
         private uint _MaxPage = 20;
@@ -39,22 +25,8 @@
                 var contentValue = (actionExecutedContext.Response.Content as ObjectContent).Value;
                 if (contentValue is IQueryable)
                 {
-                    PageDescriptor descriptor;
-                    if (actionExecutedContext.Request.RequestUri.TryReadQueryAs<PageDescriptor>(out descriptor))
-                    {
-                        if (descriptor.take > MaxPage)
-                        {
-                            descriptor.take = MaxPage;
-                        }
-                        PageResult(actionExecutedContext, contentValue as IQueryable, descriptor);
-                    }
                 }
             }
-        }
-
-        private void PageResult(HttpActionExecutedContext ctx, IQueryable result, PageDescriptor desc)
-        {
-            
         }
     }
 }

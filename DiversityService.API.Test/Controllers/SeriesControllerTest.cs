@@ -78,11 +78,11 @@
                 });
 
             // Act
-            var result = await Controller.Get(query);
+            var result = await Controller.Get(query) as PagingResult<EventSeries>;
 
             // Assert
-            Assert.True(result.All(x => x.Code == matchCode), "Query returned a non-matching result");
-            Assert.Equal(2, result.Count());
+            Assert.True(result.Content.All(x => x.Code == matchCode), "Query returned a non-matching result");
+            Assert.Equal(2, result.Content.Count());
         }
 
         [Fact]
@@ -116,10 +116,10 @@
                 .Returns(fakeSeries);
 
             // Act
-            var result = await Controller.Get();
+            var result = await Controller.Get() as PagingResult<EventSeries>;
 
             // Assert
-            Assert.Equal(fakeSeries.Count(), result.Count());
+            Assert.Equal(fakeSeries.Count(), result.Content.Count());
             Assert.DoesNotContain(result, null);
         }
 

@@ -30,11 +30,13 @@
         }
 
         [Route]
-        public async Task<IQueryable<Event>> Get()
+        public async Task<IHttpActionResult> Get()
         {
             var allEvents = await EventStore.GetQueryableAsync();
 
-            return Mapper.Project<Collection.Event, Event>(allEvents);
+            var query = Mapper.Project<Collection.Event, Event>(allEvents);
+
+            return Paged(query);
         }
 
         [Route]
@@ -71,15 +73,17 @@
 
         [Route(Route.PREFIX_SERIES + "{seriesId}/events", Name = "EventsForSeries")]
         [HttpGet]
-        public async Task<IQueryable<Event>> EventsForSeries(int? seriesId)
+        public async Task<IHttpActionResult> EventsForSeries(int? seriesId)
         {
             var allEvents = await EventStore.GetQueryableAsync();
 
-            var query = from ev in allEvents
-                        where ev.SeriesID == seriesId
-                        select ev;
+            var eventsForSeries = from ev in allEvents
+                                  where ev.SeriesID == seriesId
+                                  select ev;
 
-            return Mapper.Project<Collection.Event, Event>(query);
+            var query = Mapper.Project<Collection.Event, Event>(eventsForSeries);
+
+            return Paged(query);
         }
     }
 }

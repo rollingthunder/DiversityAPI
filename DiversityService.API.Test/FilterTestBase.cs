@@ -17,7 +17,7 @@
 
         protected T Filter;
 
-        protected Task InvokeFilter()
+        protected Task ActionExecuting()
         {
             return Filter.OnActionExecutingAsync(ActionContext, CancellationToken.None);
         }

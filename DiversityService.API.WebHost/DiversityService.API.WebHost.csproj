@@ -364,6 +364,7 @@
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Results\JsonHomeResult.cs" />
+    <Compile Include="Results\PagingResult.cs" />
     <Compile Include="Results\SeeOtherAtRouteResult.cs" />
     <Compile Include="Services\AutoMapperMappingService.cs" />
     <Compile Include="Services\CollectionContext.cs" />

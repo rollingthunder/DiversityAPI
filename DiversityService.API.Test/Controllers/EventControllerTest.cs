@@ -79,10 +79,10 @@
                 .Returns(fakeSeries);
 
             // Act
-            var result = await Controller.Get();
+            var result = await Controller.Get() as PagingResult<Event>;
 
             // Assert
-            Assert.Equal(fakeSeries.Count(), result.Count());
+            Assert.Equal(fakeSeries.Count(), result.Content.Count());
             Assert.DoesNotContain(result, null);
         }
 
@@ -156,12 +156,12 @@
                                                                select new Event() { SeriesId = ev.SeriesID });
 
             // Act
-            var result = await Controller.EventsForSeries(seriesId);
+            var result = await Controller.EventsForSeries(seriesId) as PagingResult<Event>;
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(4, result.Count());
-            Assert.True(result.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");
+            Assert.Equal(4, result.Content.Count());
+            Assert.True(result.Content.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");
         }
     }
 }

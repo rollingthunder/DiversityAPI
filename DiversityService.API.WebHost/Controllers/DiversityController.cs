@@ -5,6 +5,7 @@
     using DiversityService.API.Services;
     using System;
     using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Routing;
@@ -14,6 +15,11 @@
         protected SeeOtherAtRouteResult SeeOtherAtRoute(string routeName, object routeValues)
         {
             return new SeeOtherAtRouteResult(routeName, new HttpRouteValueDictionary(routeValues), this);
+        }
+
+        protected PagingResult<T> Paged<T>(IQueryable<T> content)
+        {
+            return new PagingResult<T>(HttpStatusCode.OK, content, this);
         }
 
         protected async Task<SeeOtherAtRouteResult> RedirectToExisting<T, TKey>(IStore<T, TKey> This, Guid rowGuid)

@@ -21,7 +21,7 @@
         {
             // Arrange
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -36,7 +36,7 @@
                 .SetCollectionContext(Kernel.Get<IContext>());
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.False(ActionCalled());
@@ -57,7 +57,7 @@
                 .SetCollectionContext(Kernel.Get<IContext>());
 
             // Act
-            await InvokeFilter();
+            await ActionExecuting();
 
             // Assert
             Assert.True(ActionCalled());

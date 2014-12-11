@@ -16,12 +16,10 @@
     public class SeriesControllerTest : ControllerTestBase<SeriesController>
     {
         private readonly Mock<IStore<Collection.EventSeries, int>> MockSeriesStore;
-        private readonly Mock<IMappingService> MockMappingService;
 
         public SeriesControllerTest()
         {
             MockSeriesStore = Kernel.GetMock<IStore<Collection.EventSeries, int>>();
-            MockMappingService = Kernel.GetMock<IMappingService>();
             InitController();
         }
 
@@ -33,20 +31,16 @@
             {
                 Id = 1234
             };
-            var series = new EventSeries() { Id = collSeries.Id };
             this.MockSeriesStore
                 .Setup(x => x.GetByIDAsync(collSeries.Id))
                 .Returns(Task.FromResult(collSeries));
-            this.MockMappingService
-                .Setup(x => x.Map<EventSeries>(collSeries))
-                .Returns(series);
 
             // Act
             var result = await Controller.Get(collSeries.Id) as OkNegotiatedContentResult<EventSeries>;
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(series, result.Content);
+            Assert.Equal(collSeries.Id, result.Content.Id);
         }
 
         [Fact]
@@ -59,29 +53,25 @@
 
             var fakeCollSeries = new[]
             {
-                new Collection.EventSeries() { Code = matchCode },
-                new Collection.EventSeries() { Code = nonmatchCode},
-                new Collection.EventSeries() { Code = matchCode},
-                new Collection.EventSeries() { Code = nonmatchCode}
+                new Collection.EventSeries() { Code = matchCode, Id = 0},
+                new Collection.EventSeries() { Code = nonmatchCode, Id = 4},
+                new Collection.EventSeries() { Code = matchCode, Id = 2},
+                new Collection.EventSeries() { Code = nonmatchCode, Id = 1}
             }.AsQueryable();
 
             this.MockSeriesStore
                 // Called with defaults
                 .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(fakeCollSeries));
-            this.MockMappingService
-                .Setup(x => x.Project<Collection.EventSeries, EventSeries>(It.IsAny<IQueryable<Collection.EventSeries>>()))
-                .Returns((IQueryable<Collection.EventSeries> x) =>
-                {
-                    return from cs in x
-                           select new EventSeries() { Code = cs.Code };
-                });
 
             // Act
             var result = await Controller.Get(query) as PagingResult<EventSeries>;
+            var content = result.Content.ToList();
 
             // Assert
             Assert.True(result.Content.All(x => x.Code == matchCode), "Query returned a non-matching result");
+            // result is ordered by id
+            Assert.Equal(content.OrderBy(x => x.Id), content);
             Assert.Equal(2, result.Content.Count());
         }
 
@@ -111,16 +101,16 @@
             this.MockSeriesStore
                 .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(fakeCollSeries));
-            this.MockMappingService
-                .Setup(x => x.Project<Collection.EventSeries, EventSeries>(fakeCollSeries))
-                .Returns(fakeSeries);
 
             // Act
             var result = await Controller.Get() as PagingResult<EventSeries>;
+            var content = result.Content.ToList();
 
             // Assert
             Assert.Equal(fakeSeries.Count(), result.Content.Count());
-            Assert.DoesNotContain(result, null);
+            // result is ordered by id
+            Assert.Equal(content.OrderBy(x => x.Id), content);
+            Assert.DoesNotContain(null, result.Content);
         }
 
         [Fact]
@@ -130,10 +120,6 @@
             var id = TestHelper.RandomInt();
             var series = new EventSeriesBindingModel() { TransactionGuid = Guid.NewGuid() };
             var collSeries = new Collection.EventSeries() { RowGUID = series.TransactionGuid };
-
-            MockMappingService
-                .Setup(x => x.Map<Collection.EventSeries>(series))
-                .Returns(collSeries);
 
             MockSeriesStore.Setup(x => x.InsertAsync(collSeries))
                 .Callback(() => collSeries.Id = id)

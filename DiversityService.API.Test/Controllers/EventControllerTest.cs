@@ -14,12 +14,10 @@
     public class EventControllerTest : ControllerTestBase<EventController>
     {
         private readonly Mock<IStore<Collection.Event, int>> MockEventStore;
-        private readonly Mock<IMappingService> MockMappingService;
 
         public EventControllerTest()
         {
             MockEventStore = Kernel.GetMock<IStore<Collection.Event, int>>();
-            MockMappingService = Kernel.GetMock<IMappingService>();
 
             InitController();
         }
@@ -32,20 +30,16 @@
             {
                 Id = 1234
             };
-            var ev = new Event() { Id = colEvent.Id };
             this.MockEventStore
                 .Setup(x => x.GetByIDAsync(colEvent.Id))
                 .Returns(Task.FromResult(colEvent));
-            this.MockMappingService
-                .Setup(x => x.Map<Event>(colEvent))
-                .Returns(ev);
 
             // Act
             var result = await Controller.Get(colEvent.Id) as OkNegotiatedContentResult<Event>;
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(ev, result.Content);
+            Assert.Equal(colEvent.Id, result.Content.Id);
         }
 
         [Fact]
@@ -68,22 +62,24 @@
         public async Task Returns_all_events_for_unqualified_GET()
         {
             // Arrange
-            var fakeCollSeries = (new[] { new Collection.Event(), new Collection.Event() }).AsQueryable();
-            var fakeSeries = (new[] { new Event(), new Event() }).AsQueryable();
+            var fakeCollSeries = new[] {
+                new Collection.Event() { Id = 4},
+                new Collection.Event() { Id = 3}
+            };
             var series = new Event();
             this.MockEventStore
                 .Setup(x => x.GetQueryableAsync())
-                .Returns(Task.FromResult(fakeCollSeries));
-            this.MockMappingService
-                .Setup(x => x.Project<Collection.Event, Event>(fakeCollSeries))
-                .Returns(fakeSeries);
+                .Returns(Task.FromResult(fakeCollSeries.AsQueryable()));
 
             // Act
             var result = await Controller.Get() as PagingResult<Event>;
+            var content = result.Content.ToList();
 
             // Assert
-            Assert.Equal(fakeSeries.Count(), result.Content.Count());
-            Assert.DoesNotContain(result, null);
+            Assert.Equal(fakeCollSeries.Count(), content.Count());
+            // returns ordered by id
+            Assert.Equal(content.OrderBy(x => x.Id), content);
+            Assert.DoesNotContain(null, content);
         }
 
         [Fact]
@@ -93,10 +89,6 @@
             var id = TestHelper.RandomInt();
             var series = new EventBindingModel() { TransactionGuid = Guid.NewGuid() };
             var collSeries = new Collection.Event() { RowGUID = series.TransactionGuid };
-
-            MockMappingService
-                .Setup(x => x.Map<Collection.Event>(series))
-                .Returns(collSeries);
 
             MockEventStore.Setup(x => x.InsertAsync(collSeries))
                 .Callback(() => collSeries.Id = id)
@@ -150,18 +142,17 @@
             MockEventStore
                 .Setup(x => x.GetQueryableAsync())
                 .Returns(Task.FromResult(collEvents.AsQueryable()));
-            MockMappingService
-                .Setup(x => x.Project<Collection.Event, Event>(It.IsAny<IQueryable<Collection.Event>>()))
-                .Returns((IQueryable<Collection.Event> evs) => from ev in evs
-                                                               select new Event() { SeriesId = ev.SeriesID });
 
             // Act
             var result = await Controller.EventsForSeries(seriesId) as PagingResult<Event>;
+            var content = result.Content.ToList();
 
             // Assert
             Assert.NotNull(result);
             Assert.Equal(4, result.Content.Count());
-            Assert.True(result.Content.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");
+            // returns ordered by id
+            Assert.Equal(content.OrderBy(x => x.Id), content);
+            Assert.True(content.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");
         }
     }
 }

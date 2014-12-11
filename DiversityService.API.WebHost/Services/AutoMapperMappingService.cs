@@ -8,14 +8,21 @@
 
     public class AutoMapperMappingService : IMappingService
     {
+        private readonly IMappingEngine Engine;
+
+        public AutoMapperMappingService(IMappingEngine mapper)
+        {
+            Engine = mapper;
+        }
+
         public TDestination Map<TDestination>(object source)
         {
-            return Mapper.Map<TDestination>(source);
+            return Engine.Map<TDestination>(source);
         }
 
         public IQueryable<TDestination> Project<TSource, TDestination>(IQueryable<TSource> sourceQuery)
         {
-            return sourceQuery.Project<TSource>().To<TDestination>();
+            return sourceQuery.Project<TSource>(Engine).To<TDestination>();
         }
     }
 }

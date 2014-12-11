@@ -288,6 +288,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\MapperConfig.cs" />
+    <Compile Include="App_Start\NinjectModules\MapperModule.cs" />
     <Compile Include="App_Start\NinjectModules\ServiceModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -336,7 +337,6 @@
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Controllers\TaxaController.cs" />
     <Compile Include="Filters\ProjectFilter.cs" />
-    <Compile Include="Filters\PagingAttribute.cs" />
     <Compile Include="Filters\CollectionFilter.cs" />
     <Compile Include="Filters\SeriesSirenProvider.cs" />
     <Compile Include="Filters\SirenResultFilter.cs" />

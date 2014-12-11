@@ -34,6 +34,8 @@
         {
             var allEvents = await EventStore.GetQueryableAsync();
 
+            allEvents = allEvents.OrderBy(x => x.Id);
+
             var query = Mapper.Project<Collection.Event, Event>(allEvents);
 
             return Paged(query);

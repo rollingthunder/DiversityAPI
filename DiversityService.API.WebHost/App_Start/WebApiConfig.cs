@@ -32,7 +32,6 @@ namespace DiversityService.API.WebHost
             config.Filters.Add(new AuthorizeAttribute());
             config.Filters.Add(new ValidateModelAttribute());
             config.Filters.Add(config.DependencyResolver.GetService(typeof(CollectionContextFilter)) as IFilter);
-            config.Filters.Add(new EnablePagingAttribute());
             // config.Filters.Add(new SirenResultAttribute());
 
             config.MessageHandlers.Add(new RequireHttpsMessageHandler());

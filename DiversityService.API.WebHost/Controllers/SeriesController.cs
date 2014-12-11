@@ -29,9 +29,12 @@
             this.Mapper = mapper;
         }
 
+        [Route]
         public async Task<IHttpActionResult> Get(string code = null)
         {
             var query = await SeriesStore.GetQueryableAsync();
+
+            query = query.OrderBy(x => x.Id);
 
             if (!string.IsNullOrEmpty(code))
             {
@@ -44,6 +47,7 @@
             return Paged(mapped);
         }
 
+        [Route]
         public async Task<IHttpActionResult> Get(int id)
         {
             var series = await SeriesStore.GetByIDAsync(id);
@@ -58,6 +62,7 @@
             return Ok(dto);
         }
 
+        [Route]
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
             var existing = await RedirectToExisting(SeriesStore, value.TransactionGuid);

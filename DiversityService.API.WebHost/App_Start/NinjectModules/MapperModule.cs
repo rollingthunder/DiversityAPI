@@ -20,30 +20,18 @@
     using System.Security.Principal;
     using System.Web.Http.Controllers;
 
-    public class ServiceModule : NinjectModule
+    public class MapperModule : NinjectModule
     {
         public override void Load()
         {
-            Bind<ISecureDataFormat<AuthenticationTicket>>()
-                .ToMethod(_ => Startup.OAuthOptions.AccessTokenFormat)
+            Mapper.Initialize(MapperConfig.Configure);
+
+            Bind<IMappingEngine>()
+                .ToConstant(Mapper.Engine);
+
+            Bind<IMappingService>()
+                .To<AutoMapperMappingService>()
                 .InSingletonScope();
-
-            Bind<IContextFactory>()
-                .To<ContextFactory>()
-                .InSingletonScope();
-
-            Bind<IConfigurationService>()
-                .To<ConfigurationService>()
-                .InSingletonScope();
-
-            // Data Stores
-            Bind<IProjectStore>()
-                .To<ProjectStore>()
-                .InRequestScope();
-
-            Bind(typeof(IStore<,>))
-                .To(typeof(Store<,>))
-                .InRequestScope();
         }
     }
 }

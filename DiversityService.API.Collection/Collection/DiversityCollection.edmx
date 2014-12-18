@@ -763,7 +763,7 @@
           <Property Name="LocalityDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="HabitatDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TransactionGUID" Type="Guid" Nullable="false" />
+          <Property Name="TransactionGuid" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Series" Relationship="Self.FK_CollectionEvent_CollectionEventSeries" FromRole="CollectionEvent" ToRole="CollectionEventSeries" />
           <NavigationProperty Name="Images" Relationship="Self.FK_CollectionEventImage_CollectionEvent" FromRole="CollectionEvent" ToRole="CollectionEventImage" />
           <NavigationProperty Name="Properties" Relationship="Self.FK_CollectionEventProperty_CollectionEvent" FromRole="CollectionEvent" ToRole="CollectionEventProperty" />
@@ -826,7 +826,7 @@
           <Property Name="Geography" Type="Geography" />
           <Property Name="StartDateUTC" Type="DateTime" Precision="3" />
           <Property Name="EndDateUTC" Type="DateTime" Precision="3" />
-          <Property Name="TransactionGUID" Type="Guid" Nullable="false" />
+          <Property Name="TransactionGuid" Type="Guid" Nullable="false" />
           <NavigationProperty Name="Events" Relationship="Self.FK_CollectionEvent_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEvent" />
           <NavigationProperty Name="Images" Relationship="Self.FK_CollectionEventSeriesImage_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEventSeriesImage" />
           <Property Name="ParentID" Type="Int32" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
@@ -892,7 +892,7 @@
           <Property Name="ExternalDatasourceID" Type="Int32" />
           <Property Name="ExternalIdentifier" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="xx_IsAvailable" Type="Boolean" Nullable="false" />
-          <Property Name="TransactionGUID" Type="Guid" Nullable="false" />
+          <Property Name="TransactionGuid" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CollectionEvent" Relationship="Self.FK_CollectionSpecimen_CollectionEvent" FromRole="CollectionSpecimen" ToRole="CollectionEvent" />
           <NavigationProperty Name="CollectionSpecimenImage" Relationship="Self.FK_CollectionSpecimenImage_CollectionSpecimen" FromRole="CollectionSpecimen" ToRole="CollectionSpecimenImage" />
           <NavigationProperty Name="IdentificationUnit" Relationship="Self.FK_IdentificationUnit_CollectionSpecimen" FromRole="CollectionSpecimen" ToRole="IdentificationUnit" />
@@ -988,7 +988,7 @@
           <Property Name="xx_SpecimenPartID" Type="Int32" />
           <Property Name="xx_NewUnitID" Type="Int32" />
           <Property Name="xx_AlteUnitID" Type="Int32" />
-          <Property Name="TransactionGUID" Type="Guid" Nullable="false" />
+          <Property Name="TransactionGuid" Type="Guid" Nullable="false" />
           <Property Name="HierarchyCache" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="ParentUnitID" Type="Int32" />
           <NavigationProperty Name="CollectionSpecimen" Relationship="Self.FK_IdentificationUnit_CollectionSpecimen" FromRole="IdentificationUnit" ToRole="CollectionSpecimen" />
@@ -1510,7 +1510,7 @@
                 <ScalarProperty Name="LocalityDescription" ColumnName="LocalityDescription" />
                 <ScalarProperty Name="HabitatDescription" ColumnName="HabitatDescription" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="TransactionGUID" ColumnName="RowGUID" />
+                <ScalarProperty Name="TransactionGuid" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1566,7 +1566,7 @@
                 <ScalarProperty Name="Geography" ColumnName="Geography" />
                 <ScalarProperty Name="StartDateUTC" ColumnName="DateStart" />
                 <ScalarProperty Name="EndDateUTC" ColumnName="DateEnd" />
-                <ScalarProperty Name="TransactionGUID" ColumnName="RowGUID" />
+                <ScalarProperty Name="TransactionGuid" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1626,7 +1626,7 @@
                 <ScalarProperty Name="ExternalDatasourceID" ColumnName="ExternalDatasourceID" />
                 <ScalarProperty Name="ExternalIdentifier" ColumnName="ExternalIdentifier" />
                 <ScalarProperty Name="xx_IsAvailable" ColumnName="xx_IsAvailable" />
-                <ScalarProperty Name="TransactionGUID" ColumnName="RowGUID" />
+                <ScalarProperty Name="TransactionGuid" ColumnName="RowGUID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1714,7 +1714,7 @@
                 <ScalarProperty Name="xx_SpecimenPartID" ColumnName="xx_SpecimenPartID" />
                 <ScalarProperty Name="xx_NewUnitID" ColumnName="xx_NewUnitID" />
                 <ScalarProperty Name="xx_AlteUnitID" ColumnName="xx_AlteUnitID" />
-                <ScalarProperty Name="TransactionGUID" ColumnName="RowGUID" />
+                <ScalarProperty Name="TransactionGuid" ColumnName="RowGUID" />
                 <ScalarProperty Name="HierarchyCache" ColumnName="HierarchyCache" />
                 <ScalarProperty Name="ParentUnitID" ColumnName="ParentUnitID" />
               </MappingFragment>

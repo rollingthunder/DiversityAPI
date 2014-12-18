@@ -36,7 +36,7 @@
         }
 
         [Route]
-        public async Task<IHttpActionResult> Get(string code = null)
+        public async Task<IHttpActionResult> Get(string code)
         {
             var query = await Store.GetQueryableAsync();
 

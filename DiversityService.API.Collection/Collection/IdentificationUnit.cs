@@ -49,7 +49,7 @@ namespace DiversityService.Collection
         public Nullable<int> xx_SpecimenPartID { get; set; }
         public Nullable<int> xx_NewUnitID { get; set; }
         public Nullable<int> xx_AlteUnitID { get; set; }
-        public System.Guid RowGUID { get; set; }
+        public System.Guid TransactionGuid { get; set; }
         public string HierarchyCache { get; set; }
         public Nullable<int> ParentUnitID { get; set; }
     

@@ -27,7 +27,7 @@ namespace DiversityService.Collection
         public System.Data.Entity.Spatial.DbGeography Geography { get; set; }
         public Nullable<System.DateTime> StartDateUTC { get; set; }
         public Nullable<System.DateTime> EndDateUTC { get; set; }
-        public System.Guid RowGUID { get; set; }
+        public System.Guid TransactionGuid { get; set; }
         private Nullable<int> ParentID { get; set; }
         public Nullable<System.DateTime> DateCache { get; set; }
     

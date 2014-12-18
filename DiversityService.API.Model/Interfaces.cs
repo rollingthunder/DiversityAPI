@@ -2,7 +2,12 @@
 {
     using System;
 
-    public interface ITransactedModel
+    public interface IIdentifiable
+    {
+        int Id { get; set; }
+    }
+
+    public interface IGuidIdentifiable
     {
         Guid TransactionGuid { get; set; }
     }

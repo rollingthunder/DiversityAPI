@@ -2,9 +2,9 @@
 {
     using System;
 
-    public class EventSeriesCommon
+    public class EventSeries : IIdentifiable
     {
-        public Nullable<int> Id { get; set; }
+        public int Id { get; set; }
 
         public string Description { get; set; }
 
@@ -20,9 +20,7 @@
         }
     }
 
-    public class EventSeries : EventSeriesCommon { }
-
-    public class EventSeriesUpload : EventSeriesCommon, ITransactedModel
+    public class EventSeriesUpload : EventSeries, IGuidIdentifiable
     {
         public Guid TransactionGuid { get; set; }
     }

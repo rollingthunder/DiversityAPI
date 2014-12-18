@@ -57,6 +57,11 @@
             return string.Format("https://{0}", Guid.NewGuid());
         }
 
+        internal static void SetupWithFakeData<T, TKey>(this Mock<IStore<T, TKey>> This, IQueryable<T> data, Func<T, object> keySelector = null)
+        {
+            SetupWithFakeData<IStore<T, TKey>, T, TKey>(This, data, keySelector);
+        }
+
         internal static void SetupWithFakeData<TStore, T, TKey>(this Mock<TStore> This, IQueryable<T> data, Func<T, object> keySelector = null)
             where TStore : class, IReadOnlyStore<T, TKey>
         {
@@ -97,6 +102,13 @@
             This
                 .Setup(x => x.GetQueryableAsync())
                 .ReturnsAsync(data);
+        }
+
+        internal static void SetupInsert<T, TKey>(this Mock<IStore<T, TKey>> This, Action<T> keySetter)
+        {
+            This.Setup(x => x.InsertAsync(It.IsAny<T>()))
+                .Callback(keySetter)
+                .Returns(Task.FromResult<object>(null));
         }
     }
 }

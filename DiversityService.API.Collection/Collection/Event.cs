@@ -30,7 +30,7 @@ namespace DiversityService.Collection
         public string LocalityDescription { get; set; }
         public string HabitatDescription { get; set; }
         public string Notes { get; set; }
-        public System.Guid RowGUID { get; set; }
+        public System.Guid TransactionGuid { get; set; }
         public int Version { get; set; }
         private string CollectionTime { get; set; }
         private string CollectionDateCategory { get; set; }

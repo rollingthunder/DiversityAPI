@@ -50,7 +50,7 @@ namespace DiversityService.Collection
         public Nullable<int> ExternalDatasourceID { get; set; }
         public string ExternalIdentifier { get; set; }
         public bool xx_IsAvailable { get; set; }
-        public System.Guid RowGUID { get; set; }
+        public System.Guid TransactionGuid { get; set; }
     
         public virtual Event CollectionEvent { get; set; }
         public virtual ICollection<SpecimenImage> CollectionSpecimenImage { get; set; }

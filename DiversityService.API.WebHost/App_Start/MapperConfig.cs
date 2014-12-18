@@ -17,21 +17,14 @@
             // EventSeries
             MappingConfiguration.CreateMap<Collection.EventSeries, EventSeries>();
 
-            MappingConfiguration.CreateMap<EventSeriesCommon, Collection.EventSeries>()
-                .Include<EventSeriesBindingModel, Collection.EventSeries>()
-                .Include<EventSeries, Collection.EventSeries>();
-            MappingConfiguration.CreateMap<EventSeriesBindingModel, Collection.EventSeries>()
-                .ForMember(es => es.RowGUID, map => map.MapFrom(es => es.TransactionGuid));
-            MappingConfiguration.CreateMap<EventSeries, Collection.EventSeries>();
+            MappingConfiguration.CreateMap<EventSeries, Collection.EventSeries>()
+                .Include<EventSeriesBindingModel, Collection.EventSeries>();
 
             // Event
             MappingConfiguration.CreateMap<Collection.Event, Event>();
 
             MappingConfiguration.CreateMap<Event, Collection.Event>()
                 .Include<EventBindingModel, Collection.Event>();
-            MappingConfiguration.CreateMap<EventBindingModel, Collection.Event>()
-                .ForMember(es => es.RowGUID, map => map.MapFrom(es => es.TransactionGuid));
-            MappingConfiguration.CreateMap<Event, Collection.Event>();
         }
     }
 }

@@ -8,8 +8,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    [CollectionAPI("event")]
-    public class EventController : DiversityController
+    [CollectionAPI(Route.EVENT_CONTROLLER)]
+    public class EventController : DiversityController, IFieldDataController<EventBindingModel>
     {
         private readonly IMappingService Mapper;
 
@@ -41,7 +41,7 @@
             return Paged(query);
         }
 
-        [Route]
+        [Route("{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
             var ev = await EventStore.GetByIDAsync(id);
@@ -73,7 +73,14 @@
             return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(newEvent), newEvent.Id);
         }
 
-        [Route(Route.PREFIX_SERIES + "{seriesId}/events", Name = "EventsForSeries")]
+        [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.SERIES_CONTROLLER + "/noseries/events")]
+        [HttpGet]
+        public Task<IHttpActionResult> EventsForNullSeries()
+        {
+            return EventsForSeries(null);
+        }
+
+        [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.SERIES_CONTROLLER + "/{seriesId:int}/events")]
         [HttpGet]
         public async Task<IHttpActionResult> EventsForSeries(int? seriesId)
         {
@@ -81,6 +88,7 @@
 
             var eventsForSeries = from ev in allEvents
                                   where ev.SeriesID == seriesId
+                                  orderby ev.Id
                                   select ev;
 
             var query = Mapper.Project<Collection.Event, Event>(eventsForSeries);

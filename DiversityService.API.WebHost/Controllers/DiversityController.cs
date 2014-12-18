@@ -26,7 +26,7 @@
              where T : IGuidIdentifiable, IIdentifiable
         {
             var existingRows = await This.GetAsync(
-                x => x.RowGUID == rowGuid
+                x => x.TransactionGuid == rowGuid
                 );
             var existing = existingRows.SingleOrDefault();
 

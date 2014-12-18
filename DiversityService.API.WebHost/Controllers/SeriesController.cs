@@ -10,11 +10,11 @@
     using System.Web.Http;
 
     [CollectionAPI("series")]
-    public class SeriesController : DiversityController
+    public class SeriesController : DiversityController, IFieldDataController<EventSeriesBindingModel>
     {
         private readonly IMappingService Mapper;
 
-        private IStore<Collection.EventSeries, int> SeriesStore
+        private IStore<Collection.EventSeries, int> Store
         {
             get
             {
@@ -30,9 +30,15 @@
         }
 
         [Route]
+        public Task<IHttpActionResult> Get()
+        {
+            return Get(null);
+        }
+
+        [Route]
         public async Task<IHttpActionResult> Get(string code = null)
         {
-            var query = await SeriesStore.GetQueryableAsync();
+            var query = await Store.GetQueryableAsync();
 
             query = query.OrderBy(x => x.Id);
 
@@ -47,10 +53,10 @@
             return Paged(mapped);
         }
 
-        [Route]
+        [Route("{id}")]
         public async Task<IHttpActionResult> Get(int id)
         {
-            var series = await SeriesStore.GetByIDAsync(id);
+            var series = await Store.GetByIDAsync(id);
 
             if (series == null)
             {
@@ -65,7 +71,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
-            var existing = await RedirectToExisting(SeriesStore, value.TransactionGuid);
+            var existing = await RedirectToExisting(Store, value.TransactionGuid);
 
             if (existing != null)
             {
@@ -74,7 +80,7 @@
 
             var series = Mapper.Map<Collection.EventSeries>(value);
 
-            await SeriesStore.InsertAsync(series);
+            await Store.InsertAsync(series);
 
             return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(series), series.Id);
         }

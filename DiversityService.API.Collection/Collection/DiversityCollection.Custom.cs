@@ -113,7 +113,7 @@
         }
     }
 
-    public partial class Specimen : IIdentifiable
+    public partial class Specimen : IIdentifiable, IGuidIdentifiable
     {
         public const string DATECATEGORY_COLLECTIONDATE = "collection date";
 
@@ -151,7 +151,7 @@
         }
     }
 
-    public partial class IdentificationUnit : IIdentifiable
+    public partial class IdentificationUnit : IIdentifiable, IGuidIdentifiable
     {
     }
 

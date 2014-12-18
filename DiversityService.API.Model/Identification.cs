@@ -18,7 +18,7 @@ namespace DiversityService.API.Model
         public int Id { get; set; }        
     }
 
-    public class IdentificationUpload: IdentificationCommon, ITransactedModel
+    public class IdentificationUpload: IdentificationCommon, IGuidIdentifiable
     {
         public Guid TransactionGuid { get; set; }
     }

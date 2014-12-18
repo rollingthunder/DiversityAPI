@@ -34,6 +34,9 @@
             mock.SetupGet(x => x.Events)
                .Returns(Kernel.GetMock<IStore<Collection.Event, int>>().Object);
 
+            mock.SetupGet(x => x.Specimen)
+               .Returns(Kernel.GetMock<IStore<Collection.Specimen, int>>().Object);
+
             Controller.Request.SetOwinContext(new OwinContext());
             Controller.Request.SetCollectionContext(mock.Object);
 

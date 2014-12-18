@@ -11,5 +11,7 @@ namespace DiversityService.API.Services
         IStore<Collection.Event, int> Events { get; }
 
         IStore<Collection.EventSeries, int> Series { get; }
+
+        IStore<Collection.Specimen, int> Specimen { get; }
     }
 }

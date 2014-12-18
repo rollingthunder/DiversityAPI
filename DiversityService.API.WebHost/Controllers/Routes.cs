@@ -21,6 +21,8 @@
         public const string EVENT_CONTROLLER = "event";
         public const string PREFIX_EVENT = PREFIX_DEFAULT_API + EVENT_CONTROLLER + "/";
 
+        public const string SPECIMEN_CONTROLLER = "specimen";
+
         public static object GetById<T>(T entity) where T : IIdentifiable
         {
             return GetById<T>(entity.Id);
@@ -30,6 +32,7 @@
         {
             var controller = string.Empty;
 
+            // TODO Replace if/else chain
             if (typeof(T) == typeof(EventSeries) || typeof(T) == typeof(Collection.EventSeries))
             {
                 controller = SERIES_CONTROLLER;
@@ -37,6 +40,10 @@
             else if (typeof(T) == typeof(Event) || typeof(T) == typeof(Collection.Event))
             {
                 controller = EVENT_CONTROLLER;
+            }
+            else if (typeof(T) == typeof(Specimen) || typeof(T) == typeof(Collection.Specimen))
+            {
+                controller = SPECIMEN_CONTROLLER;
             }
 
             if (controller == string.Empty)

@@ -25,6 +25,12 @@
 
             MappingConfiguration.CreateMap<Event, Collection.Event>()
                 .Include<EventBindingModel, Collection.Event>();
+
+            // Specimen
+            MappingConfiguration.CreateMap<Collection.Specimen, Specimen>();
+
+            MappingConfiguration.CreateMap<Specimen, Collection.Specimen>()
+                .Include<SpecimenBindingModel, Collection.Specimen>();
         }
     }
 }

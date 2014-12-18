@@ -158,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AsyncTestQueryable.cs" />
+    <Compile Include="Controllers\SpecimenControllerTest.cs" />
     <Compile Include="Controllers\FieldDataControllerTest.cs" />
     <Compile Include="ControllerTestBase.cs" />
     <Compile Include="DelegatingHandlerExtensions.cs" />

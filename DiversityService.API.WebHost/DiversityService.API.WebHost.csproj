@@ -328,6 +328,7 @@
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\DiversityController.cs" />
     <Compile Include="Controllers\IFieldDataController.cs" />
+    <Compile Include="Controllers\SpecimenController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MultimediaController.cs" />

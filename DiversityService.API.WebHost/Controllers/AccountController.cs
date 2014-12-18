@@ -29,7 +29,7 @@
         private const string LocalLoginProvider = "Local";
         private const string CollectionIdClaim = "Collection";
 
-        private readonly IConfigurationService Configuration;
+        private new readonly IConfigurationService Configuration;
 
         public AccountController(
             IConfigurationService configuration,

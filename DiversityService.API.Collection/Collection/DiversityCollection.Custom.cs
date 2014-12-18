@@ -117,36 +117,33 @@
     {
         public const string DATECATEGORY_COLLECTIONDATE = "collection date";
 
-        public DateTime? CollectionDate
+        public DateTime? GetCollectionDate()
         {
-            get
+            if (AccessionYear.HasValue && AccessionMonth.HasValue && AccessionDay.HasValue)
             {
-                if (AccessionYear.HasValue && AccessionMonth.HasValue && AccessionDay.HasValue)
-                {
-                    return new DateTime(AccessionYear.Value, AccessionMonth.Value, AccessionDay.Value);
-                }
-
-                return null;
+                return new DateTime(AccessionYear.Value, AccessionMonth.Value, AccessionDay.Value);
             }
 
-            set
+            return null;
+        }
+
+        public void SetCollectionDate(DateTime? value)
+        {
+            if (value.HasValue)
             {
-                if (value.HasValue)
-                {
-                    AccessionYear = (Int16?)value.Value.Year;
-                    AccessionMonth = (byte?)value.Value.Month;
-                    AccessionDay = (byte?)value.Value.Day;
-                    AccessionDate = value.Value.Date;
-                    AccessionDateCategory = DATECATEGORY_COLLECTIONDATE;
-                }
-                else
-                {
-                    AccessionYear = null;
-                    AccessionMonth = null;
-                    AccessionDay = null;
-                    AccessionDate = null;
-                    AccessionDateCategory = null;
-                }
+                AccessionYear = (Int16?)value.Value.Year;
+                AccessionMonth = (byte?)value.Value.Month;
+                AccessionDay = (byte?)value.Value.Day;
+                AccessionDate = value.Value.Date;
+                AccessionDateCategory = DATECATEGORY_COLLECTIONDATE;
+            }
+            else
+            {
+                AccessionYear = null;
+                AccessionMonth = null;
+                AccessionDay = null;
+                AccessionDate = null;
+                AccessionDateCategory = null;
             }
         }
     }

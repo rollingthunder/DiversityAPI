@@ -27,10 +27,13 @@
                 .Include<EventBindingModel, Collection.Event>();
 
             // Specimen
-            MappingConfiguration.CreateMap<Collection.Specimen, Specimen>();
+            MappingConfiguration.CreateMap<Collection.Specimen, Specimen>()
+                .ForMember(x => x.CollectionDate, map => map.MapFrom(y => y.GetCollectionDate()));
 
             MappingConfiguration.CreateMap<Specimen, Collection.Specimen>()
-                .Include<SpecimenBindingModel, Collection.Specimen>();
+                .Include<SpecimenBindingModel, Collection.Specimen>()
+                .ForSourceMember(x => x.CollectionDate, map => map.Ignore())
+                .AfterMap((dto, entity) => entity.SetCollectionDate(dto.CollectionDate));
         }
     }
 }

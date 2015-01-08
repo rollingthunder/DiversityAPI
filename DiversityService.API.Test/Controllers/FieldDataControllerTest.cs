@@ -14,7 +14,7 @@
     using System.Web.Http.Results;
     using Xunit;
 
-    public class FieldDataControllerTest<TController, TEntity, TDto, TUpload> : ControllerTestBase<TController>
+    public abstract class FieldDataControllerTest<TController, TEntity, TDto, TUpload> : ControllerTestBase<TController>
         where TController : ApiController, IFieldDataController<TUpload>
         where TEntity : class, IIdentifiable, IGuidIdentifiable, new()
         where TDto : class, IIdentifiable, new()
@@ -80,14 +80,14 @@
                 .SetupWithFakeData<IStore<TEntity, int>, TEntity, int>(fakeEntities.AsQueryable());
 
             // Act
-            var result = await Controller.Get() as PagingResult<TDto>;
-            var content = result.Content.ToList();
+            var result = await Controller.Get() as IQueryResult<TDto>;
+            var content = result.Query.ToList();
 
             // Assert
-            Assert.Equal(fakeEntities.Count(), result.Content.Count());
+            Assert.Equal(fakeEntities.Count(), result.Query.Count());
             // result is ordered by id
             Assert.Equal(content.OrderBy(x => x.Id), content);
-            Assert.DoesNotContain(null, result.Content);
+            Assert.DoesNotContain(null, result.Query);
         }
 
         [Fact]

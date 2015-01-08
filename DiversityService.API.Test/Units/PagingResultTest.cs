@@ -26,7 +26,7 @@
             Request = new HttpRequestMessage();
         }
 
-        private PagingResult<T> CreateResult<T>(IQueryable<T> content)
+        private PagingResult<T> CreateResult<T>(IOrderedQueryable<T> content)
         {
             return new PagingResult<T>(
                 HttpStatusCode.OK,
@@ -46,11 +46,11 @@
             Request.RequestUri = null;
 
             // Act
-            Result = CreateResult(data.AsQueryable());
+            Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Content.Count());
-            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DEFAULT_TAKE), Result.Content);
+            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DEFAULT_TAKE), Result.Query);
         }
 
         [Fact]
@@ -62,11 +62,11 @@
             SetPageQuery(null, null);
 
             // Act
-            Result = CreateResult(data.AsQueryable());
+            Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Content.Count());
-            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DEFAULT_TAKE), Result.Content);
+            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DEFAULT_TAKE), Result.Query);
         }
 
         [Fact]
@@ -78,11 +78,11 @@
             SetPageQuery(null, 10);
 
             // Act
-            Result = CreateResult(data.AsQueryable());
+            Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Content.Count());
-            Assert.Equal(Enumerable.Range(10, (int)PagingResult<int>.DEFAULT_TAKE), Result.Content);
+            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(10, (int)PagingResult<int>.DEFAULT_TAKE), Result.Query);
         }
 
         [Fact]
@@ -94,11 +94,11 @@
             SetPageQuery(1000, null);
 
             // Act
-            Result = CreateResult(data.AsQueryable());
+            Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.MAX_TAKE, (uint)Result.Content.Count());
-            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.MAX_TAKE), Result.Content);
+            Assert.Equal(PagingResult<int>.MAX_TAKE, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.MAX_TAKE), Result.Query);
         }
 
         private void SetPageQuery(uint? take, uint? skip)

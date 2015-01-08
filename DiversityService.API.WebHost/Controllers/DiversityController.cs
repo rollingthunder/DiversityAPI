@@ -12,18 +12,46 @@
 
     public abstract class DiversityController : ApiController
     {
+        private readonly IMappingService Mapper;
+
+        public DiversityController(IMappingService mapper)
+        {
+            Mapper = mapper;
+        }
+
+        protected MappedSingleResult<TEntity, T> Mapped<TEntity, T>(TEntity entity)
+        {
+            return new MappedSingleResult<TEntity, T>(Mapper, this, entity);
+        }
+
+        protected MappedQueryResult<TEntity, T> Mapped<TEntity, T>(IQueryResult<TEntity> innerResult)
+        {
+            return Mapped<TEntity, T>(innerResult.Query);
+        }
+
+        protected MappedQueryResult<TEntity, T> Mapped<TEntity, T>(IQueryable<TEntity> query)
+        {
+            return new MappedQueryResult<TEntity, T>(Mapper, this, query);
+        }
+
+        protected MappedQueryResult<TEntity, T> PagedAndMapped<TEntity, T>(IOrderedQueryable<TEntity> query)
+        {
+            return Mapped<TEntity, T>(Paged(query));
+        }
+
         protected SeeOtherAtRouteResult SeeOtherAtRoute(string routeName, object routeValues)
         {
             return new SeeOtherAtRouteResult(routeName, new HttpRouteValueDictionary(routeValues), this);
         }
 
-        protected PagingResult<T> Paged<T>(IQueryable<T> content)
+        protected PagingResult<T> Paged<T>(IOrderedQueryable<T> query)
         {
-            return new PagingResult<T>(HttpStatusCode.OK, content, this);
+            return new PagingResult<T>(HttpStatusCode.OK, query, this);
         }
 
         protected async Task<SeeOtherAtRouteResult> RedirectToExisting<T, TKey>(IStore<T, TKey> This, Guid rowGuid)
-             where T : IGuidIdentifiable, IIdentifiable
+            // class constraint avoids cast to interface which is incompatible with LINQ to Entities
+            where T : class, IGuidIdentifiable, IIdentifiable
         {
             var existingRows = await This.GetAsync(
                 x => x.TransactionGuid == rowGuid

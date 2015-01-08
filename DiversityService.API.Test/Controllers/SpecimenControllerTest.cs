@@ -37,12 +37,12 @@
                 .SetupWithFakeData(collEvents.AsQueryable());
 
             // Act
-            var result = await Controller.SpecimenForEvent(eventId) as PagingResult<Specimen>;
-            var content = result.Content.ToList();
+            var result = await Controller.SpecimenForEvent(eventId) as IQueryResult<Specimen>;
+            var content = result.Query.ToList();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(4, result.Content.Count());
+            Assert.Equal(4, result.Query.Count());
             // returns ordered by id
             Assert.Equal(content.OrderBy(x => x.Id), content);
             Assert.True(content.All(x => x.EventId == eventId), "Result Contained Specimen not associated with the given parent");

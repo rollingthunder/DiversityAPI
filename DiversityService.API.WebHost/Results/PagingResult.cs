@@ -12,8 +12,12 @@
     using System.Web.Http;
     using System.Web.Http.Results;
 
-    public class PagingResult<T> : NegotiatedContentResult<IQueryable<T>>
+    public class PagingResult<T> : IQueryResult<T>
     {
+        private readonly Lazy<NegotiatedContentResult<IQueryable<T>>> InnerResult;
+
+        public IQueryable<T> Query { get; private set; }
+
         public class PageDescriptor
         {
             public uint? skip { get; set; }
@@ -25,17 +29,26 @@
         public const uint DEFAULT_TAKE = 20;
         public const uint MAX_TAKE = 50;
 
-        public PagingResult(HttpStatusCode statusCode, IQueryable<T> content, ApiController controller)
-            : base(statusCode, PageContent(content, controller.Request), controller)
+        public PagingResult(HttpStatusCode statusCode, IOrderedQueryable<T> content, ApiController controller)
+            : this(statusCode, content,
+            controller.Configuration.Services.GetContentNegotiator(),
+            controller.Request,
+            controller.Configuration.Formatters
+            )
         {
         }
 
-        public PagingResult(HttpStatusCode statusCode, IQueryable<T> content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
-            : base(statusCode, PageContent(content, request), contentNegotiator, request, formatters)
+        public PagingResult(HttpStatusCode statusCode, IOrderedQueryable<T> content, IContentNegotiator negotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
         {
+            Query = PageContent(content, request);
+
+            InnerResult = new Lazy<NegotiatedContentResult<IQueryable<T>>>(() =>
+            {
+                return new NegotiatedContentResult<IQueryable<T>>(statusCode, Query, negotiator, request, formatters);
+            });
         }
 
-        private static IQueryable<T> PageContent(IQueryable<T> content, HttpRequestMessage request)
+        private static IQueryable<T> PageContent(IOrderedQueryable<T> content, HttpRequestMessage request)
         {
             PageDescriptor descriptor = new PageDescriptor();
             if (request != null && request.RequestUri != null)
@@ -51,6 +64,11 @@
             return content
                 .Skip((int)(descriptor.skip ?? DEFAULT_SKIP))
                 .Take((int)(descriptor.take ?? DEFAULT_TAKE));
+        }
+
+        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            return InnerResult.Value.ExecuteAsync(cancellationToken);
         }
     }
 }

@@ -25,6 +25,7 @@
         public SeriesController(
             IMappingService mapper
             )
+            : base(mapper)
         {
             this.Mapper = mapper;
         }
@@ -38,19 +39,17 @@
         [Route]
         public async Task<IHttpActionResult> Get(string code)
         {
-            var query = await Store.GetQueryableAsync();
-
-            query = query.OrderBy(x => x.Id);
+            var allSeries = await Store.GetQueryableAsync();
 
             if (!string.IsNullOrEmpty(code))
             {
-                query = query
+                allSeries = allSeries
                     .Where(x => x.Code.Contains(code));
             }
 
-            var mapped = Mapper.Project<Collection.EventSeries, EventSeries>(query);
+            var query = allSeries.OrderBy(x => x.Id);
 
-            return Paged(mapped);
+            return PagedAndMapped<Collection.EventSeries, EventSeries>(query);
         }
 
         [Route("{id}")]

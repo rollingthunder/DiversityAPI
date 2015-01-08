@@ -37,12 +37,12 @@
                 .SetupWithFakeData(collEvents.AsQueryable());
 
             // Act
-            var result = await Controller.EventsForSeries(seriesId) as PagingResult<Event>;
-            var content = result.Content.ToList();
+            var result = await Controller.EventsForSeries(seriesId) as IQueryResult<Event>;
+            var content = result.Query.ToList();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(4, result.Content.Count());
+            Assert.Equal(4, result.Query.Count());
             // returns ordered by id
             Assert.Equal(content.OrderBy(x => x.Id), content);
             Assert.True(content.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");
@@ -68,12 +68,12 @@
                 .SetupWithFakeData(collEvents.AsQueryable());
 
             // Act
-            var result = await Controller.EventsForNullSeries() as PagingResult<Event>;
-            var content = result.Content.ToList();
+            var result = await Controller.EventsForNullSeries() as IQueryResult<Event>;
+            var content = result.Query.ToList();
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(4, result.Content.Count());
+            Assert.Equal(4, result.Query.Count());
             // returns ordered by id
             Assert.Equal(content.OrderBy(x => x.Id), content);
             Assert.True(content.All(x => x.SeriesId == seriesId), "Result Contained Event not associated with the given series");

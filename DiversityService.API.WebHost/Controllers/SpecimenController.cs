@@ -22,9 +22,9 @@
         }
 
         public SpecimenController(
-
             IMappingService mapper
             )
+            : base(mapper)
         {
             this.Mapper = mapper;
         }
@@ -34,11 +34,9 @@
         {
             var all = await Store.GetQueryableAsync();
 
-            all = all.OrderBy(x => x.Id);
+            var query = all.OrderBy(x => x.Id);
 
-            var query = Mapper.Project<Collection.Specimen, Specimen>(all);
-
-            return Paged(query);
+            return PagedAndMapped<Collection.Specimen, Specimen>(query);
         }
 
         [Route("{id}")]
@@ -84,9 +82,7 @@
                                    orderby x.Id
                                    select x;
 
-            var query = Mapper.Project<Collection.Specimen, Specimen>(specimenForEvent);
-
-            return Paged(query);
+            return PagedAndMapped<Collection.Specimen, Specimen>(specimenForEvent);
         }
     }
 }

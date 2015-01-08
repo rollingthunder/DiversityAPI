@@ -41,6 +41,8 @@
             string User, Password;
             InternalCollectionServer Server;
 
+            IContext ctx;
+
             ExtractCollection(actionContext, out Server);
 
             if (actionContext.Response != null)
@@ -57,7 +59,7 @@
                     return;
                 }
 
-                var ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
+                ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
 
                 if (ctx == null)
                 {
@@ -75,7 +77,19 @@
                 actionContext.Request.SetCollectionContext(ctx);
             }
 
-            await base.OnActionExecutingAsync(actionContext, cancellationToken);
+            try
+            {
+                await base.OnActionExecutingAsync(actionContext, cancellationToken);
+            }
+            catch
+            {
+                if (ctx != null)
+                {
+                    ctx.Dispose();
+                }
+
+                throw;
+            }
         }
 
         private void ExtractBackendCredentials(

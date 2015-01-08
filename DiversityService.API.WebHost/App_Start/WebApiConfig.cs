@@ -1,12 +1,20 @@
 ﻿using DiversityService.API.Filters;
 using DiversityService.API.Handler;
 using Microsoft.Owin.Security.OAuth;
+using Owin;
 using System.Web.Http;
 using System.Web.Http.Filters;
 using WebApiContrib.Formatting.Siren.Client;
 
 namespace DiversityService.API.WebHost
 {
+    public partial class Startup
+    {
+        public void ConfigureWebApi(IAppBuilder app)
+        {
+        }
+    }
+
     public static class WebApiConfig
     {
         public static void Register(HttpConfiguration config)

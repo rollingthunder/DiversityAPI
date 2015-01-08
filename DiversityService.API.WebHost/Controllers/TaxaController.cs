@@ -19,6 +19,7 @@ namespace DiversityService.API.Controllers
             Lazy<ITaxa> Taxa,
             IMappingService Mapping
             )
+            : base(Mapping)
         {
             this._Taxa = Taxa;
             this.Mapping = Mapping;

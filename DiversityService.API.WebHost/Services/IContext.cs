@@ -1,9 +1,13 @@
 ﻿using DiversityService.API.Model;
+using System;
+using System.Threading.Tasks;
 
 namespace DiversityService.API.Services
 {
-    public interface IContext
+    public interface IContext : IDisposable
     {
+        Task SubmitAsync();
+
         int? ProjectId { get; set; }
 
         IProjectStore Projects { get; }

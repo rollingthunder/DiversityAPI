@@ -5,8 +5,9 @@
     using Moq;
     using Ninject;
     using System.Net.Http;
+    using System.Net.Http.Formatting;
     using System.Web.Http;
-    using System.Web.Http.Controllers;
+    using WebApiContrib.IoC.Ninject;
 
     public class ControllerTestBase<T> : TestBase where T : ApiController
     {
@@ -15,6 +16,14 @@
         protected void InitController()
         {
             Controller = Kernel.Get<T>();
+
+            Kernel.Bind<IContentNegotiator>()
+                .ToConstant(new DefaultContentNegotiator());
+
+            Controller.Configuration = new HttpConfiguration()
+            {
+                DependencyResolver = new NinjectResolver(Kernel)
+            };
 
             Controller.Request = new HttpRequestMessage();
 

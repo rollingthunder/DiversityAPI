@@ -39,14 +39,14 @@
                 .SetupWithFakeData<IStore<Collection.EventSeries, int>, Collection.EventSeries, int>(fakeCollSeries);
 
             // Act
-            var result = await Controller.Get(query) as PagingResult<EventSeries>;
-            var content = result.Content.ToList();
+            var result = await Controller.Get(query) as IQueryResult<EventSeries>;
+            var content = result.Query.ToList();
 
             // Assert
-            Assert.True(result.Content.All(x => x.Code == matchCode), "Query returned a non-matching result");
+            Assert.True(result.Query.All(x => x.Code == matchCode), "Query returned a non-matching result");
             // result is ordered by id
             Assert.Equal(content.OrderBy(x => x.Id), content);
-            Assert.Equal(2, result.Content.Count());
+            Assert.Equal(2, result.Query.Count());
         }
     }
 }

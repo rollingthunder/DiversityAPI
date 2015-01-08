@@ -22,9 +22,9 @@
         }
 
         public EventController(
-
             IMappingService mapper
             )
+            : base(mapper)
         {
             this.Mapper = mapper;
         }
@@ -34,11 +34,9 @@
         {
             var allEvents = await EventStore.GetQueryableAsync();
 
-            allEvents = allEvents.OrderBy(x => x.Id);
+            var query = allEvents.OrderBy(x => x.Id);
 
-            var query = Mapper.Project<Collection.Event, Event>(allEvents);
-
-            return Paged(query);
+            return PagedAndMapped<Collection.Event, Event>(query);
         }
 
         [Route("{id}")]
@@ -91,9 +89,7 @@
                                   orderby ev.Id
                                   select ev;
 
-            var query = Mapper.Project<Collection.Event, Event>(eventsForSeries);
-
-            return Paged(query);
+            return PagedAndMapped<Collection.Event, Event>(eventsForSeries);
         }
     }
 }

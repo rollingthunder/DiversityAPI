@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
+    using DiversityService.API.Model;
     using DiversityService.Collection;
     using System;
     using System.Collections.Generic;
@@ -65,12 +66,18 @@
 
         public virtual Task<TEntity> GetByIDAsync(TKey id)
         {
+            if (typeof(ICompositeKey).IsAssignableFrom(typeof(TKey)))
+            {
+                var key = id as ICompositeKey;
+                return dbSet.FindAsync(key.Values());
+            }
             return dbSet.FindAsync(id);
         }
 
         public virtual async Task InsertAsync(TEntity entity)
         {
             dbSet.Add(entity);
+            await context.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync(TKey id)
@@ -86,12 +93,14 @@
                 dbSet.Attach(entityToDelete);
             }
             dbSet.Remove(entityToDelete);
+            await context.SaveChangesAsync();
         }
 
         public virtual async Task UpdateAsync(TEntity entityToUpdate)
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+            await context.SaveChangesAsync();
         }
 
         public async Task<IQueryable<TEntity>> GetQueryableAsync()

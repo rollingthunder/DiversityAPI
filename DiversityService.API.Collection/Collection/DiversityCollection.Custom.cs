@@ -150,6 +150,42 @@
 
     public partial class IdentificationUnit : IIdentifiable, IGuidIdentifiable
     {
+        public IdentificationUnitKey CompositeKey()
+        {
+            return new IdentificationUnitKey()
+            {
+                IdentificationUnitId = Id,
+                SpecimenId = SpecimenId
+            };
+        }
+    }
+
+    public struct IdentificationUnitKey : ICompositeKey
+    {
+        public int SpecimenId;
+        public int IdentificationUnitId;
+
+        public object[] Values()
+        {
+            return new object[]{
+                SpecimenId,
+                IdentificationUnitId
+            };
+        }
+    }
+
+    public struct IdentificationKey : ICompositeKey
+    {
+        public int IdentificationUnitId;
+        public int IdentificationId;
+
+        public object[] Values()
+        {
+            return new object[]{
+                IdentificationUnitId,
+                IdentificationId
+            };
+        }
     }
 
     public static class EntityHelper

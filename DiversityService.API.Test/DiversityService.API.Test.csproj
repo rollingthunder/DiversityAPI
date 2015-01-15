@@ -187,6 +187,7 @@
     <Compile Include="Controllers\EventControllerTest.cs" />
     <Compile Include="Controllers\SeriesControllerTest.cs" />
     <Compile Include="Filters\ValidateModelFilterTest.cs" />
+    <Compile Include="Units\StoreTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

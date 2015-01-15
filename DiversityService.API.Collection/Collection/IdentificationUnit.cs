@@ -24,7 +24,7 @@ namespace DiversityService.Collection
             this.IdentificationUnitGeoAnalysis = new HashSet<IdentificationUnitGeoAnalysis>();
         }
     
-        public int CollectionSpecimenID { get; set; }
+        public int SpecimenId { get; set; }
         public int Id { get; set; }
         public string LastIdentificationCache { get; set; }
         public string FamilyCache { get; set; }

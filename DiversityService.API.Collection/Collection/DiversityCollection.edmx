@@ -960,10 +960,10 @@
         </EntityType>
         <EntityType Name="IdentificationUnit">
           <Key>
-            <PropertyRef Name="CollectionSpecimenID" />
+            <PropertyRef Name="SpecimenId" />
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="CollectionSpecimenID" Type="Int32" Nullable="false" />
+          <Property Name="SpecimenId" Type="Int32" Nullable="false" />
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LastIdentificationCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FamilyCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -1163,7 +1163,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1172,7 +1172,7 @@
           <End Role="CollectionSpecimenImage" Type="DiversityCollection.SpecimenImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CollectionSpecimenImage">
@@ -1188,7 +1188,7 @@
           <End Role="Identification" Type="Self.Identification" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Identification">
@@ -1202,11 +1202,11 @@
           <End Role="IdentificationUnit1" Type="Self.IdentificationUnit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnit1">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="RelatedUnitID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1216,11 +1216,11 @@
           <End Role="IdentificationUnit1" Type="Self.IdentificationUnit" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnit1">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="ParentUnitID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1230,7 +1230,7 @@
           <End Role="IdentificationUnitAnalysis" Type="Self.IdentificationUnitAnalysis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnitAnalysis">
@@ -1246,7 +1246,7 @@
           <End Role="IdentificationUnitGeoAnalysis" Type="Self.IdentificationUnitGeoAnalysis" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenId" />
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnitGeoAnalysis">
@@ -1689,7 +1689,7 @@
           <EntitySetMapping Name="IdentificationUnit">
             <EntityTypeMapping TypeName="DiversityCollection.IdentificationUnit">
               <MappingFragment StoreEntitySet="IdentificationUnit">
-                <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
+                <ScalarProperty Name="SpecimenId" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="Id" ColumnName="IdentificationUnitID" />
                 <ScalarProperty Name="LastIdentificationCache" ColumnName="LastIdentificationCache" />
                 <ScalarProperty Name="FamilyCache" ColumnName="FamilyCache" />

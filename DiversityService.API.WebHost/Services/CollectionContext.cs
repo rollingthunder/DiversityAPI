@@ -1,23 +1,25 @@
-﻿using Ninject;
-using Ninject.Parameters;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Web;
-
-namespace DiversityService.API.Services
+﻿namespace DiversityService.API.Services
 {
+    using DiversityService.Collection;
+    using Ninject;
+    using Ninject.Parameters;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.Contracts;
+    using System.Linq;
+    using System.Web;
+
     public class CollectionContext : IContext
     {
         public const string CONTEXT_ARGUMENT = "context";
 
         private readonly IKernel Kernel;
-        private readonly Collection.Collection Context;
+        private readonly Collection Context;
+        private readonly IDictionary<Type, object> StoreCache;
 
         public CollectionContext(
             IKernel kernel,
-            Collection.Collection context
+            Collection context
             )
         {
             Contract.Requires<ArgumentNullException>(kernel != null);
@@ -25,11 +27,7 @@ namespace DiversityService.API.Services
 
             Kernel = kernel;
             Context = context;
-
-            _Projects = LazyWithContext<IProjectStore>();
-            _Events = LazyWithContext<IStore<Collection.Event, int>>();
-            _Series = LazyWithContext<IStore<Collection.EventSeries, int>>();
-            _Specimen = LazyWithContext<IStore<Collection.Specimen, int>>();
+            StoreCache = new Dictionary<Type, object>();
         }
 
         public int? ProjectId
@@ -44,39 +42,54 @@ namespace DiversityService.API.Services
             }
         }
 
-        private Lazy<IProjectStore> _Projects;
-
         public IProjectStore Projects
         {
-            get { return _Projects.Value; }
+            get { return LazyWithContext<IProjectStore>(); }
         }
 
-        private Lazy<IStore<Collection.Event, int>> _Events;
-
-        public IStore<Collection.Event, int> Events
+        public IStore<Event, int> Events
         {
-            get { return _Events.Value; }
+            get { return LazyWithContext<IStore<Event, int>>(); }
         }
 
-        private Lazy<IStore<Collection.EventSeries, int>> _Series;
-
-        public IStore<Collection.EventSeries, int> Series
+        public IStore<EventSeries, int> Series
         {
-            get { return _Series.Value; }
+            get { return LazyWithContext<IStore<EventSeries, int>>(); }
         }
 
-        private Lazy<IStore<Collection.Specimen, int>> _Specimen;
-
-        public IStore<Collection.Specimen, int> Specimen
+        public IStore<Specimen, int> Specimen
         {
-            get { return _Specimen.Value; }
+            get { return LazyWithContext<IStore<Specimen, int>>(); }
         }
 
-        private Lazy<T> LazyWithContext<T>()
+        public IStore<IdentificationUnit, IdentificationUnitKey> IdentificationUnits
         {
-            return new Lazy<T>(() =>
-                Kernel.Get<T>(new ConstructorArgument(CONTEXT_ARGUMENT, Context))
-                );
+            get { return LazyWithContext<IStore<IdentificationUnit, IdentificationUnitKey>>(); }
+        }
+
+        public IStore<Identification, IdentificationKey> Identifications
+        {
+            get { return LazyWithContext<IStore<Identification, IdentificationKey>>(); }
+        }
+
+        private T LazyWithContext<T>()
+            where T : class
+        {
+            var key = typeof(T);
+            object value;
+
+            if (!StoreCache.TryGetValue(key, out value))
+            {
+                value = Kernel.Get<T>(new ConstructorArgument(CONTEXT_ARGUMENT, Context));
+                StoreCache.Add(key, value);
+            }
+
+            return (T)value;
+        }
+
+        public void Dispose()
+        {
+            Context.Dispose();
         }
     }
 }

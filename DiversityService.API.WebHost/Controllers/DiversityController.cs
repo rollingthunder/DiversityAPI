@@ -12,7 +12,7 @@
 
     public abstract class DiversityController : ApiController
     {
-        private readonly IMappingService Mapper;
+        protected readonly IMappingService Mapper;
 
         public DiversityController(IMappingService mapper)
         {
@@ -49,7 +49,7 @@
             return new PagingResult<T>(HttpStatusCode.OK, query, this);
         }
 
-        protected async Task<SeeOtherAtRouteResult> RedirectToExisting<T, TKey>(IStore<T, TKey> This, Guid rowGuid)
+        protected async Task<SeeOtherAtRouteResult> RedirectToExisting<T, TKey>(IStore<T, TKey> This, Guid rowGuid, string routeName)
             // class constraint avoids cast to interface which is incompatible with LINQ to Entities
             where T : class, IGuidIdentifiable, IIdentifiable
         {
@@ -60,7 +60,7 @@
 
             if (existing != null)
             {
-                return SeeOtherAtRoute(Route.DEFAULT_API, Route.GetById(existing));
+                return SeeOtherAtRoute(routeName, Route.GetById(existing));
             }
             return null;
         }

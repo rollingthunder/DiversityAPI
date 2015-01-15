@@ -20,20 +20,35 @@
             MappingConfiguration.CreateMap<EventSeries, Collection.EventSeries>()
                 .Include<EventSeriesBindingModel, Collection.EventSeries>();
 
+            MappingConfiguration.CreateMap<EventSeriesBindingModel, Collection.EventSeries>();
+
             // Event
             MappingConfiguration.CreateMap<Collection.Event, Event>();
 
             MappingConfiguration.CreateMap<Event, Collection.Event>()
                 .Include<EventBindingModel, Collection.Event>();
 
+            MappingConfiguration.CreateMap<EventBindingModel, Collection.Event>();
+
             // Specimen
             MappingConfiguration.CreateMap<Collection.Specimen, Specimen>()
-                .ForMember(x => x.CollectionDate, map => map.MapFrom(y => y.GetCollectionDate()));
+                .ForMember(x => x.CollectionDate, map => map.Ignore())
+                .AfterMap((entity, dto) => dto.CollectionDate = entity.GetCollectionDate());
 
             MappingConfiguration.CreateMap<Specimen, Collection.Specimen>()
-                .Include<SpecimenBindingModel, Collection.Specimen>()
                 .ForSourceMember(x => x.CollectionDate, map => map.Ignore())
-                .AfterMap((dto, entity) => entity.SetCollectionDate(dto.CollectionDate));
+                .AfterMap((dto, entity) => entity.SetCollectionDate(dto.CollectionDate))
+                .Include<SpecimenBindingModel, Collection.Specimen>();
+
+            MappingConfiguration.CreateMap<SpecimenBindingModel, Collection.Specimen>();
+
+            // Identification
+            MappingConfiguration.CreateMap<Collection.IdentificationUnit, Identification>();
+
+            MappingConfiguration.CreateMap<Identification, Collection.IdentificationUnit>()
+                .Include<IdentificationBindingModel, Collection.IdentificationUnit>();
+
+            MappingConfiguration.CreateMap<IdentificationBindingModel, Collection.IdentificationUnit>();
         }
     }
 }

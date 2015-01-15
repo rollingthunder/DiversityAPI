@@ -7,8 +7,15 @@
     {
         public const string DOCUMENTATION_BASE = "https://api.snsb.info/";
 
-        // Default Route
-        public const string DEFAULT_API = "DefaultApi";
+        public const string SERIES_BYID = "SeriesById";
+
+        public const string EVENT_BYID = "EventById";
+
+        public const string SPECIMEN_BYID = "SpecimenById";
+
+        public const string IDENTIFICATION_BYID = "IdentificationById";
+
+        public const string IDENTIFICATION_CONTROLLER = "identification";
 
         public const string PARAM_CONTROLLER = "controller";
         public const string PARAM_ID = "id";
@@ -30,30 +37,8 @@
 
         public static object GetById<T>(int id)
         {
-            var controller = string.Empty;
-
-            // TODO Replace if/else chain
-            if (typeof(T) == typeof(EventSeries) || typeof(T) == typeof(Collection.EventSeries))
-            {
-                controller = SERIES_CONTROLLER;
-            }
-            else if (typeof(T) == typeof(Event) || typeof(T) == typeof(Collection.Event))
-            {
-                controller = EVENT_CONTROLLER;
-            }
-            else if (typeof(T) == typeof(Specimen) || typeof(T) == typeof(Collection.Specimen))
-            {
-                controller = SPECIMEN_CONTROLLER;
-            }
-
-            if (controller == string.Empty)
-            {
-                throw new InvalidOperationException("Cannot determine Route, unknown Entity Type");
-            }
-
             return new
             {
-                controller = controller,
                 id = id
             };
         }

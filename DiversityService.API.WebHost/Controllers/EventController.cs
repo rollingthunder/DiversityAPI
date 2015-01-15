@@ -39,7 +39,7 @@
             return PagedAndMapped<Collection.Event, Event>(query);
         }
 
-        [Route("{id}")]
+        [Route("{id}", Name = Route.EVENT_BYID)]
         public async Task<IHttpActionResult> Get(int id)
         {
             var ev = await EventStore.GetByIDAsync(id);
@@ -57,7 +57,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(EventBindingModel value)
         {
-            var existing = await RedirectToExisting(EventStore, value.TransactionGuid);
+            var existing = await RedirectToExisting(EventStore, value.TransactionGuid, Route.EVENT_BYID);
 
             if (existing != null)
             {
@@ -68,7 +68,9 @@
 
             await EventStore.InsertAsync(newEvent);
 
-            return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(newEvent), newEvent.Id);
+            var dto = Mapper.Map<Event>(newEvent);
+
+            return CreatedAtRoute(Route.EVENT_BYID, Route.GetById(newEvent), dto);
         }
 
         [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.SERIES_CONTROLLER + "/noseries/events")]

@@ -57,7 +57,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(SpecimenBindingModel value)
         {
-            var existing = await RedirectToExisting(Store, value.TransactionGuid);
+            var existing = await RedirectToExisting(Store, value.TransactionGuid, Route.SPECIMEN_BYID);
 
             if (existing != null)
             {
@@ -68,7 +68,9 @@
 
             await Store.InsertAsync(newEntity);
 
-            return CreatedAtRoute(Route.DEFAULT_API, Route.GetById(newEntity), newEntity.Id);
+            var dto = Mapper.Map<Specimen>(newEntity);
+
+            return CreatedAtRoute(Route.SERIES_BYID, Route.GetById(newEntity), dto);
         }
 
         [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.EVENT_CONTROLLER + "/{id:int}/specimen")]

@@ -101,11 +101,11 @@
                 .SetupInsert(x => x.Id = id);
 
             // Act
-            var result = await Controller.Post(series) as CreatedAtRouteNegotiatedContentResult<int>;
+            var result = await Controller.Post(series) as CreatedAtRouteNegotiatedContentResult<TDto>;
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(id, result.Content);
+            Assert.Equal(id, result.Content.Id);
         }
 
         [Fact]
@@ -125,7 +125,7 @@
             // Assert
             MockStore.Verify(x => x.InsertAsync(It.IsAny<TEntity>()), Times.Never());
             Assert.NotNull(result);
-            Assert.Equal(Route.DEFAULT_API, result.RouteName);
+            Assert.Contains("ById", result.RouteName);
             Assert.Equal(id, (int)result.RouteValues[Route.PARAM_ID]);
         }
     }

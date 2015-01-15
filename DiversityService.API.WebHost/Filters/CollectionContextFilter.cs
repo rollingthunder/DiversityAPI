@@ -41,7 +41,7 @@
             string User, Password;
             InternalCollectionServer Server;
 
-            IContext ctx;
+            IContext ctx = null;
 
             ExtractCollection(actionContext, out Server);
 

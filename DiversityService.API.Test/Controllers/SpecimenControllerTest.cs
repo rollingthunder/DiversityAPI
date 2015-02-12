@@ -11,7 +11,7 @@
     using System.Web.Http.Results;
     using Xunit;
 
-    public class SpecimenControllerTest : FieldDataControllerTest<SpecimenController, Collection.Specimen, Specimen, SpecimenBindingModel>
+    public class SpecimenControllerTest : CRUDControllerTest<SpecimenController, Collection.Specimen, Specimen, SpecimenBindingModel>
     {
         public SpecimenControllerTest()
         {

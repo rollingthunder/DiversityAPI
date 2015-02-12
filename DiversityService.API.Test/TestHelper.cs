@@ -1,9 +1,12 @@
 ﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Model;
+    using DiversityService.API.Results;
     using DiversityService.API.Services;
     using Moq;
+    using Moq.Language.Flow;
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -14,6 +17,22 @@
 
     internal static class TestHelper
     {
+        public static void ReturnsInOrder<T, TResult>(
+            this ISetup<T, TResult> setup,
+            params object[] results) where T : class
+        {
+            var queue = new Queue(results);
+            setup.Returns(() =>
+            {
+                var result = queue.Dequeue();
+                if (result is Exception)
+                {
+                    throw result as Exception;
+                }
+                return (TResult)result;
+            });
+        }
+
         private static Random rnd = new Random();
 
         public static int RandomInt()
@@ -57,12 +76,20 @@
             return string.Format("https://{0}", Guid.NewGuid());
         }
 
-        internal static void SetupWithFakeData<T, TKey>(this Mock<IStore<T, TKey>> This, IQueryable<T> data, Func<T, object> keySelector = null)
+        internal static Mock<IStore<T, TKey>> SetupWithFakeData<T, TKey>(this Mock<IStore<T, TKey>> This, IQueryable<T> data, Func<T, object> keySelector = null)
         {
-            SetupWithFakeData<IStore<T, TKey>, T, TKey>(This, data, keySelector);
+            return SetupWithFakeData<IStore<T, TKey>, T, TKey>(This, data, keySelector);
         }
 
-        internal static void SetupWithFakeData<TStore, T, TKey>(this Mock<TStore> This, IQueryable<T> data, Func<T, object> keySelector = null)
+        private static Type implementedInterfaceType(Type type, Type ifType)
+        {
+            return (from iface in type.GetInterfaces()
+                    where iface.IsGenericType && iface.GetGenericTypeDefinition() == ifType
+                    select iface).FirstOrDefault();
+        }
+
+        internal static Mock<TStore> SetupWithFakeData<TStore, T, TKey>(this Mock<TStore> This, IQueryable<T> data, Func<T, object> keySelector = null)
+
             where TStore : class, IReadOnlyStore<T, TKey>
         {
             This
@@ -77,6 +104,18 @@
                         filter = filter ?? (x => true);
                         return Task.FromResult(data.Where(filter).ToList().AsEnumerable());
                     });
+
+            if (keySelector == null)
+            {
+                var ifType = implementedInterfaceType(typeof(T), typeof(ICompositeIdentifiable<>));
+
+                if (ifType != null)
+                {
+                    var keyGetter = ifType.GetMethod("CompositeKey");
+
+                    keySelector = x => (keyGetter.Invoke(x, null));
+                }
+            }
 
             if (keySelector == null && typeof(IIdentifiable).IsAssignableFrom(typeof(T)))
             {
@@ -102,6 +141,8 @@
             This
                 .Setup(x => x.GetQueryableAsync())
                 .ReturnsAsync(data);
+
+            return This;
         }
 
         internal static void SetupInsert<T, TKey>(this Mock<IStore<T, TKey>> This, Action<T> keySetter)
@@ -109,6 +150,35 @@
             This.Setup(x => x.InsertAsync(It.IsAny<T>()))
                 .Callback(keySetter)
                 .Returns(Task.FromResult<object>(null));
+        }
+
+        internal static T[] GenerateN<T>(Func<T> generator, int n)
+        {
+            var res = new T[n];
+
+            for (int i = 0; i < n; i++)
+            {
+                res[i] = generator();
+            }
+
+            return res;
+        }
+
+        internal static T NestedResult<T>(IHttpActionResult result)
+            where T : class
+        {
+            if (result is T)
+            {
+                return result as T;
+            }
+
+            var chained = result as IChainedResult;
+            if (chained != null)
+            {
+                return NestedResult<T>(chained.InnerResult);
+            }
+
+            return default(T);
         }
     }
 }

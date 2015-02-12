@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.Collection
 {
     using DiversityService.API.Model;
+    using NodaTime;
     using System;
     using System.Collections;
     using System.Data.Entity;
@@ -117,24 +118,24 @@
     {
         public const string DATECATEGORY_COLLECTIONDATE = "collection date";
 
-        public DateTime? GetCollectionDate()
+        public LocalDate? GetCollectionDate()
         {
             if (AccessionYear.HasValue && AccessionMonth.HasValue && AccessionDay.HasValue)
             {
-                return new DateTime(AccessionYear.Value, AccessionMonth.Value, AccessionDay.Value);
+                return new LocalDate(AccessionYear.Value, AccessionMonth.Value, AccessionDay.Value);
             }
 
             return null;
         }
 
-        public void SetCollectionDate(DateTime? value)
+        public void SetCollectionDate(LocalDate? value)
         {
             if (value.HasValue)
             {
                 AccessionYear = (Int16?)value.Value.Year;
                 AccessionMonth = (byte?)value.Value.Month;
                 AccessionDay = (byte?)value.Value.Day;
-                AccessionDate = value.Value.Date;
+                AccessionDate = value.Value.AtMidnight().ToDateTimeUnspecified();
                 AccessionDateCategory = DATECATEGORY_COLLECTIONDATE;
             }
             else
@@ -148,7 +149,7 @@
         }
     }
 
-    public partial class IdentificationUnit : IIdentifiable, IGuidIdentifiable
+    public partial class IdentificationUnit : IIdentifiable, IGuidIdentifiable, ICompositeIdentifiable<IdentificationUnitKey>
     {
         public IdentificationUnitKey CompositeKey()
         {
@@ -160,7 +161,7 @@
         }
     }
 
-    public struct IdentificationUnitKey : ICompositeKey
+    public struct IdentificationUnitKey : ICompositeKey, IEquatable<IdentificationUnitKey>
     {
         public int SpecimenId;
         public int IdentificationUnitId;
@@ -172,16 +173,84 @@
                 IdentificationUnitId
             };
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is IdentificationUnitKey)
+            {
+                return this.Equals((IdentificationUnitKey)obj);
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return ((this.SpecimenId * 251) + this.IdentificationUnitId);
+        }
+
+        public bool Equals(IdentificationUnitKey other)
+        {
+            return SpecimenId == other.SpecimenId &&
+                   IdentificationUnitId == other.IdentificationUnitId;
+        }
+    }
+
+    public partial class Identification : IGuidIdentifiable, ICompositeIdentifiable<IdentificationKey>
+    {
+        public const string DATECATEGORY_ACTUAL = "actual";
+
+        public LocalDate? GetCollectionDate()
+        {
+            if (IdentificationYear.HasValue && IdentificationMonth.HasValue && IdentificationDay.HasValue)
+            {
+                return new LocalDate(IdentificationYear.Value, IdentificationMonth.Value, IdentificationDay.Value);
+            }
+
+            return null;
+        }
+
+        public void SetCollectionDate(LocalDate? value)
+        {
+            if (value.HasValue)
+            {
+                IdentificationYear = (Int16?)value.Value.Year;
+                IdentificationMonth = (byte?)value.Value.Month;
+                IdentificationDay = (byte?)value.Value.Day;
+                IdentificationDate = value.Value.AtMidnight().ToDateTimeUnspecified();
+                IdentificationDateCategory = DATECATEGORY_ACTUAL;
+            }
+            else
+            {
+                IdentificationYear = null;
+                IdentificationMonth = null;
+                IdentificationDay = null;
+                IdentificationDate = null;
+                IdentificationDateCategory = null;
+            }
+        }
+
+        public IdentificationKey CompositeKey()
+        {
+            return new IdentificationKey()
+            {
+                SpecimenId = SpecimenID,
+                IdentificationUnitId = IdentificationUnitID,
+                IdentificationId = Id
+            };
+        }
     }
 
     public struct IdentificationKey : ICompositeKey
     {
+        public int SpecimenId;
         public int IdentificationUnitId;
         public int IdentificationId;
 
         public object[] Values()
         {
             return new object[]{
+                SpecimenId,
                 IdentificationUnitId,
                 IdentificationId
             };

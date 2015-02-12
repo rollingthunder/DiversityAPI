@@ -34,6 +34,15 @@
         {
             var mock = Kernel.GetMock<IContext>();
 
+            // Transaction
+
+            var transaction = Kernel.GetMock<ITransaction>();
+
+            mock.Setup(x => x.BeginTransaction())
+                .Returns(transaction.Object);
+
+            // Stores
+
             mock.SetupGet(x => x.Projects)
                 .Returns(Kernel.GetMock<IProjectStore>().Object);
 
@@ -45,6 +54,14 @@
 
             mock.SetupGet(x => x.Specimen)
                .Returns(Kernel.GetMock<IStore<Collection.Specimen, int>>().Object);
+
+            mock.SetupGet(x => x.IdentificationUnits)
+               .Returns(Kernel.GetMock<IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey>>().Object);
+
+            mock.SetupGet(x => x.Identifications)
+               .Returns(Kernel.GetMock<IStore<Collection.Identification, Collection.IdentificationKey>>().Object);
+
+            // Set Request Context
 
             Controller.Request.SetOwinContext(new OwinContext());
             Controller.Request.SetCollectionContext(mock.Object);

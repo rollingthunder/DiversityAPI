@@ -14,7 +14,7 @@
     using System.Web.Http.Results;
     using Xunit;
 
-    public abstract class FieldDataControllerTest<TController, TEntity, TDto, TUpload> : ControllerTestBase<TController>
+    public abstract class CRUDControllerTest<TController, TEntity, TDto, TUpload> : ControllerTestBase<TController>
         where TController : ApiController, IFieldDataController<TUpload>
         where TEntity : class, IIdentifiable, IGuidIdentifiable, new()
         where TDto : class, IIdentifiable, new()
@@ -22,7 +22,7 @@
     {
         protected readonly Mock<IStore<TEntity, int>> MockStore;
 
-        public FieldDataControllerTest()
+        public CRUDControllerTest()
         {
             MockStore = Kernel.GetMock<IStore<TEntity, int>>();
             InitController();

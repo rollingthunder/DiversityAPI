@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Model
 {
+    using NodaTime;
     using System;
 
     public class Specimen : IIdentifiable
@@ -10,7 +11,7 @@
 
         public string AccessionNumber { get; set; }
 
-        public DateTime? CollectionDate { get; set; }
+        public LocalDate? CollectionDate { get; set; }
     }
 
     public class SpecimenUpload : Specimen, IGuidIdentifiable

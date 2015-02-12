@@ -171,6 +171,12 @@
     <Reference Include="Ninject.Web.WebApi">
       <HintPath>..\packages\Ninject.Web.WebApi.3.2.1.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="NodaTime">
+      <HintPath>..\packages\NodaTime.1.3.0\lib\net35-Client\NodaTime.dll</HintPath>
+    </Reference>
+    <Reference Include="NodaTime.Serialization.JsonNet">
+      <HintPath>..\packages\NodaTime.Serialization.JsonNet.1.3.0\lib\net35-Client\NodaTime.Serialization.JsonNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite">
@@ -333,6 +339,7 @@
     <Compile Include="Controllers\ApiHomeController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\DiversityController.cs" />
+    <Compile Include="Controllers\IdentificationController.cs" />
     <Compile Include="Controllers\IFieldDataController.cs" />
     <Compile Include="Controllers\SpecimenController.cs" />
     <Compile Include="Controllers\EventController.cs" />
@@ -367,10 +374,12 @@
     <Compile Include="Models\Event.Validation.cs" />
     <Compile Include="Models\EventSeries.Validation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Identification.Validation.cs" />
     <Compile Include="Models\Specimen.Validation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
+    <Compile Include="Results\IChainedResult.cs" />
     <Compile Include="Results\IQueryResult.cs" />
     <Compile Include="Results\JsonHomeResult.cs" />
     <Compile Include="Results\MappedResult.cs" />
@@ -386,6 +395,7 @@
     <Compile Include="Services\IContextFactory.cs" />
     <Compile Include="Services\LinkFactory.cs" />
     <Compile Include="Services\IMappingService.cs" />
+    <Compile Include="Services\LocalizationMapper.cs" />
     <Compile Include="Services\ProjectStore.cs" />
     <Compile Include="Services\Store.cs" />
     <Compile Include="Services\IStore.cs" />

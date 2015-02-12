@@ -5,9 +5,44 @@
     using Ninject.Parameters;
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Web;
+
+    internal class CollectionTransaction : ITransaction
+    {
+        private readonly DbContextTransaction Inner;
+
+        private bool _IsClosed;
+
+        public bool IsClosed
+        {
+            get
+            {
+                return _IsClosed;
+            }
+        }
+
+        public CollectionTransaction(DbContextTransaction inner)
+        {
+            Inner = inner;
+            _IsClosed = false;
+        }
+
+        public void Commit()
+        {
+            Inner.Commit();
+            _IsClosed = true;
+        }
+
+        public void Dispose()
+        {
+            Inner.Rollback();
+            Inner.Dispose();
+            _IsClosed = true;
+        }
+    }
 
     public class CollectionContext : IContext
     {
@@ -16,6 +51,8 @@
         private readonly IKernel Kernel;
         private readonly Collection Context;
         private readonly IDictionary<Type, object> StoreCache;
+
+        private CollectionTransaction CurrentTransaction;
 
         public CollectionContext(
             IKernel kernel,
@@ -90,6 +127,18 @@
         public void Dispose()
         {
             Context.Dispose();
+        }
+
+        public ITransaction BeginTransaction()
+        {
+            if (CurrentTransaction != null && !CurrentTransaction.IsClosed)
+            {
+                throw new InvalidOperationException("Cannot open transaction, while there is still an open one");
+            }
+
+            CurrentTransaction = new CollectionTransaction(Context.Database.BeginTransaction());
+
+            return CurrentTransaction;
         }
     }
 }

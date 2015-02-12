@@ -12,9 +12,10 @@
         object[] Values();
     }
 
-    public interface ICompositeIdentifiable
+    public interface ICompositeIdentifiable<TKey>
+        where TKey : ICompositeKey
     {
-        ICompositeKey CompositeKey();
+        TKey CompositeKey();
     }
 
     public interface IGuidIdentifiable

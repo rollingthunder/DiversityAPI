@@ -13,7 +13,7 @@
     using System.Web.Http.Results;
     using Xunit;
 
-    public class SeriesControllerTest : FieldDataControllerTest<SeriesController, Collection.EventSeries, EventSeries, EventSeriesBindingModel>
+    public class SeriesControllerTest : CRUDControllerTest<SeriesController, Collection.EventSeries, EventSeries, EventSeriesBindingModel>
     {
         public SeriesControllerTest()
         {

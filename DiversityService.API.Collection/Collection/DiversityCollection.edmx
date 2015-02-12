@@ -929,13 +929,13 @@
         </EntityType>
         <EntityType Name="Identification">
           <Key>
-            <PropertyRef Name="CollectionSpecimenID" />
+            <PropertyRef Name="SpecimenID" />
             <PropertyRef Name="IdentificationUnitID" />
-            <PropertyRef Name="IdentificationSequence" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Name="CollectionSpecimenID" Type="Int32" Nullable="false" />
+          <Property Name="SpecimenID" Type="Int32" Nullable="false" />
           <Property Name="IdentificationUnitID" Type="Int32" Nullable="false" />
-          <Property Name="IdentificationSequence" Type="Int16" Nullable="false" />
+          <Property Name="Id" Type="Int16" Nullable="false" />
           <Property Name="IdentificationDate" Type="DateTime" Precision="3" />
           <Property Name="IdentificationDay" Type="Byte" />
           <Property Name="IdentificationMonth" Type="Byte" />
@@ -954,7 +954,7 @@
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="RowGUID" Type="Guid" Nullable="false" />
+          <Property Name="TransactionGuid" Type="Guid" Nullable="false" />
           <Property Name="ReferenceDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="IdentificationUnit" Relationship="Self.FK_Identification_IdentificationUnit" FromRole="Identification" ToRole="IdentificationUnit" />
         </EntityType>
@@ -970,7 +970,7 @@
           <Property Name="OrderCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TaxonomicGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OnlyObserved" Type="Boolean" />
-          <Property Name="RelatedUnitID" Type="Int32" />
+          <Property Name="RelatedUnitId" Type="Int32" />
           <Property Name="RelationType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ColonisedSubstratePart" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LifeStage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -1192,7 +1192,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Identification">
-              <PropertyRef Name="CollectionSpecimenID" />
+              <PropertyRef Name="SpecimenID" />
               <PropertyRef Name="IdentificationUnitID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1207,7 +1207,7 @@
             </Principal>
             <Dependent Role="IdentificationUnit1">
               <PropertyRef Name="SpecimenId" />
-              <PropertyRef Name="RelatedUnitID" />
+              <PropertyRef Name="RelatedUnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1660,9 +1660,9 @@
           <EntitySetMapping Name="Identification">
             <EntityTypeMapping TypeName="DiversityCollection.Identification">
               <MappingFragment StoreEntitySet="Identification">
-                <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
+                <ScalarProperty Name="SpecimenID" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="IdentificationUnitID" ColumnName="IdentificationUnitID" />
-                <ScalarProperty Name="IdentificationSequence" ColumnName="IdentificationSequence" />
+                <ScalarProperty Name="Id" ColumnName="IdentificationSequence" />
                 <ScalarProperty Name="IdentificationDate" ColumnName="IdentificationDate" />
                 <ScalarProperty Name="IdentificationDay" ColumnName="IdentificationDay" />
                 <ScalarProperty Name="IdentificationMonth" ColumnName="IdentificationMonth" />
@@ -1681,7 +1681,7 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ResponsibleName" ColumnName="ResponsibleName" />
                 <ScalarProperty Name="ResponsibleAgentURI" ColumnName="ResponsibleAgentURI" />
-                <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
+                <ScalarProperty Name="TransactionGuid" ColumnName="RowGUID" />
                 <ScalarProperty Name="ReferenceDetails" ColumnName="ReferenceDetails" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1696,7 +1696,7 @@
                 <ScalarProperty Name="OrderCache" ColumnName="OrderCache" />
                 <ScalarProperty Name="TaxonomicGroup" ColumnName="TaxonomicGroup" />
                 <ScalarProperty Name="OnlyObserved" ColumnName="OnlyObserved" />
-                <ScalarProperty Name="RelatedUnitID" ColumnName="RelatedUnitID" />
+                <ScalarProperty Name="RelatedUnitId" ColumnName="RelatedUnitID" />
                 <ScalarProperty Name="RelationType" ColumnName="RelationType" />
                 <ScalarProperty Name="ColonisedSubstratePart" ColumnName="ColonisedSubstratePart" />
                 <ScalarProperty Name="LifeStage" ColumnName="LifeStage" />

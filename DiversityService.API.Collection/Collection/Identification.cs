@@ -14,9 +14,9 @@ namespace DiversityService.Collection
     
     public partial class Identification
     {
-        public int CollectionSpecimenID { get; set; }
+        public int SpecimenID { get; set; }
         public int IdentificationUnitID { get; set; }
-        public short IdentificationSequence { get; set; }
+        public short Id { get; set; }
         public Nullable<System.DateTime> IdentificationDate { get; set; }
         public Nullable<byte> IdentificationDay { get; set; }
         public Nullable<byte> IdentificationMonth { get; set; }
@@ -35,7 +35,7 @@ namespace DiversityService.Collection
         public string Notes { get; set; }
         public string ResponsibleName { get; set; }
         public string ResponsibleAgentURI { get; set; }
-        public System.Guid RowGUID { get; set; }
+        public System.Guid TransactionGuid { get; set; }
         public string ReferenceDetails { get; set; }
     
         public virtual IdentificationUnit IdentificationUnit { get; set; }

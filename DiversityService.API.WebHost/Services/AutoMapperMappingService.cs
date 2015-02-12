@@ -8,7 +8,7 @@
 
     public class AutoMapperMappingService : IMappingService
     {
-        private readonly IMappingEngine Engine;
+        public readonly IMappingEngine Engine;
 
         public AutoMapperMappingService(IMappingEngine mapper)
         {

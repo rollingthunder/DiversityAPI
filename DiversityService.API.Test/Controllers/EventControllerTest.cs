@@ -11,7 +11,7 @@
     using System.Web.Http.Results;
     using Xunit;
 
-    public class EventControllerTest : FieldDataControllerTest<EventController, Collection.Event, Event, EventBindingModel>
+    public class EventControllerTest : CRUDControllerTest<EventController, Collection.Event, Event, EventBindingModel>
     {
         public EventControllerTest()
         {

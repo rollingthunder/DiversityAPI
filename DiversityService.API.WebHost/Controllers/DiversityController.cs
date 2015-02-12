@@ -26,7 +26,7 @@
 
         protected MappedQueryResult<TEntity, T> Mapped<TEntity, T>(IQueryResult<TEntity> innerResult)
         {
-            return Mapped<TEntity, T>(innerResult.Query);
+            return new MappedQueryResult<TEntity, T>(Mapper, this, innerResult);
         }
 
         protected MappedQueryResult<TEntity, T> Mapped<TEntity, T>(IQueryable<TEntity> query)

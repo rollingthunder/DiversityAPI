@@ -1,21 +1,30 @@
-﻿using DiversityService.API.Model;
-using System;
-using System.Threading.Tasks;
-
-namespace DiversityService.API.Services
+﻿namespace DiversityService.API.Services
 {
+    using DiversityService.Collection;
+    using System;
+    using System.Threading.Tasks;
+
+    public interface ITransaction : IDisposable
+    {
+        void Commit();
+    }
+
     public interface IContext : IDisposable
     {
-        Task SubmitAsync();
-
         int? ProjectId { get; set; }
 
         IProjectStore Projects { get; }
 
-        IStore<Collection.Event, int> Events { get; }
+        IStore<Event, int> Events { get; }
 
-        IStore<Collection.EventSeries, int> Series { get; }
+        IStore<EventSeries, int> Series { get; }
 
-        IStore<Collection.Specimen, int> Specimen { get; }
+        IStore<Specimen, int> Specimen { get; }
+
+        IStore<IdentificationUnit, IdentificationUnitKey> IdentificationUnits { get; }
+
+        IStore<Identification, IdentificationKey> Identifications { get; }
+
+        ITransaction BeginTransaction();
     }
 }

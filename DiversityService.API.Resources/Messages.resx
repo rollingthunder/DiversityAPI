@@ -141,9 +141,6 @@
   <data name="Series_NotFound" xml:space="preserve">
     <value>There is no series with this id.</value>
   </data>
-  <data name="Specimen_FutureDate" xml:space="preserve">
-    <value>The Specimen CollectionDate lies in the Future.</value>
-  </data>
   <data name="Specimen_NoCollectionDate" xml:space="preserve">
     <value>The CollectionDate is a required Member.</value>
   </data>
@@ -155,5 +152,11 @@
   </data>
   <data name="Event_NoTimeStamp" xml:space="preserve">
     <value>The Event TimeStamp is missing.</value>
+  </data>
+  <data name="Identification_NoUri" xml:space="preserve">
+    <value>The Identification URI may not be empty.</value>
+  </data>
+  <data name="Identification_PartialRelation" xml:space="preserve">
+    <value>Must specify both RelationType and RelatedId or neither.</value>
   </data>
 </root>

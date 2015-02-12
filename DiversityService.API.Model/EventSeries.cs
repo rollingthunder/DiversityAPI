@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Model
 {
     using System;
+    using System.Collections.Generic;
 
     public class EventSeries : IIdentifiable
     {
@@ -13,6 +14,8 @@
         public Nullable<DateTime> StartDateUTC { get; set; }
 
         public Nullable<DateTime> EndDateUTC { get; set; }
+
+        public IEnumerable<Localization> Tour { get; set; }
 
         public override string ToString()
         {

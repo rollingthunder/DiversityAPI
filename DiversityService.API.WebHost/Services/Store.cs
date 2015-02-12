@@ -66,7 +66,7 @@
 
         public virtual Task<TEntity> GetByIDAsync(TKey id)
         {
-            if (typeof(ICompositeKey).IsAssignableFrom(typeof(TKey)))
+            if (typeof(ICompositeKey).IsAssignableFrom(typeof(TKey)) && id != null)
             {
                 var key = id as ICompositeKey;
                 return dbSet.FindAsync(key.Values());

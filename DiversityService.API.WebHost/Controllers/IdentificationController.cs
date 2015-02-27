@@ -44,6 +44,14 @@
             return Request.GetCollectionContext().BeginTransaction();
         }
 
+        private AgentInfo AgentInfo
+        {
+            get
+            {
+                return Request.GetAgentInfo();
+            }
+        }
+
         public IdentificationController(
             IMappingEngine mapper
             )
@@ -112,6 +120,8 @@
 
                 newID.IdentificationCategory = IDENTIFICATION_CATEGORY_ACTUAL;
                 newID.Notes = DEFAULT_NOTES;
+                newID.ResponsibleName = AgentInfo.Name;
+                newID.ResponsibleAgentURI = AgentInfo.Uri;
 
                 await IDStore.InsertAsync(newID);
 
@@ -122,8 +132,8 @@
                 newIUGAN.Geography = dto.Localization.ToGeography();
                 newIUGAN.Notes = DEFAULT_NOTES;
 
-                // newIUGAN.ResponsibleName =
-                // newIUGAN.ResponsibleAgentURI =
+                newIUGAN.ResponsibleName = AgentInfo.Name;
+                newIUGAN.ResponsibleAgentURI = AgentInfo.Uri;
 
                 await IUGANStore.InsertAsync(newIUGAN);
 

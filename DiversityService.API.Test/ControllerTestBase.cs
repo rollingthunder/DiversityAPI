@@ -72,6 +72,13 @@
             Controller.Request.SetOwinContext(octx);
             Controller.Request.SetCollectionContext(mock.Object);
 
+            var agent = new AgentInfo()
+            {
+                Name = "Test, U.",
+                Uri = "testuri..."
+            };
+            Controller.Request.SetAgentInfo(agent);
+
             return mock;
         }
     }

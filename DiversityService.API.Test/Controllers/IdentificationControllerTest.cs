@@ -399,6 +399,8 @@
             public async Task SetsResponsableInfoOnTheID()
             {
                 // Arrange
+
+                // AgentInfo is set in Test Base Constructor
                 var sid = 1;
                 var fakeEntities =
                     Enumerable.Empty<Collection.IdentificationUnit>()
@@ -453,6 +455,39 @@
                 // Assert
                 MockIUGANStore
                     .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => !string.IsNullOrWhiteSpace(y.Notes))));
+            }
+
+            [Fact]
+            public async Task SetsResponsableInfoOnTheIUGAN()
+            {
+                // Arrange
+
+                // AgentInfo is set in Test Base Constructor
+                var sid = 1;
+                var fakeEntities =
+                    Enumerable.Empty<Collection.IdentificationUnit>()
+                    .ToArray();
+
+                var expected = IdentificationTestHelper.FakeUnit(sid);
+
+                var upload = new IdentificationBindingModel()
+                {
+                    TransactionGuid = expected.TransactionGuid,
+                    Uri = "testuri",
+                    SpecimenId = sid,
+                    TaxonomicGroup = "plant",
+                    Name = "testident",
+                    Localization = null
+                };
+
+                // Act
+                var result = await Controller.Post(sid, upload);
+
+                // Assert
+                MockIUGANStore
+                   .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => !string.IsNullOrWhiteSpace(y.ResponsibleName))));
+                MockIUGANStore
+                   .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => !string.IsNullOrWhiteSpace(y.ResponsibleAgentURI))));
             }
 
             [Fact]

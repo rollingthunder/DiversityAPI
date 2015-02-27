@@ -1,4 +1,5 @@
-﻿using DiversityService.API.Model;
+﻿using AutoMapper;
+using DiversityService.API.Model;
 using DiversityService.API.Services;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ namespace DiversityService.API.Controllers
 
         private ITaxa Taxa { get { return _Taxa.Value; } }
 
-        private readonly IMappingService Mapping;
+        private readonly IMappingEngine Mapping;
 
         public TaxaController(
             Lazy<ITaxa> Taxa,
-            IMappingService Mapping
+            IMappingEngine Mapping
             )
             : base(Mapping)
         {

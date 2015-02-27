@@ -25,6 +25,8 @@
 
         IStore<Identification, IdentificationKey> Identifications { get; }
 
+        IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey> IdentificationGeoAnalyses { get; }
+
         ITransaction BeginTransaction();
     }
 }

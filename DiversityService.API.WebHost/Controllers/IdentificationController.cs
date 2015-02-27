@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
@@ -11,6 +12,9 @@
     [CollectionAPI(Route.SPECIMEN_CONTROLLER + "/{sid:int}/" + Route.IDENTIFICATION_CONTROLLER)]
     public class IdentificationController : DiversityController
     {
+        private const string DEFAULT_NOTES = "Created by DiversityMobile";
+        private const string IDENTIFICATION_CATEGORY_ACTUAL = "actual";
+
         private IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey> IUStore
         {
             get
@@ -27,13 +31,21 @@
             }
         }
 
+        private IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey> IUGANStore
+        {
+            get
+            {
+                return Request.GetCollectionContext().IdentificationGeoAnalyses;
+            }
+        }
+
         private ITransaction BeginTransaction()
         {
             return Request.GetCollectionContext().BeginTransaction();
         }
 
         public IdentificationController(
-            IMappingService mapper
+            IMappingEngine mapper
             )
             : base(mapper)
         {
@@ -88,20 +100,32 @@
                 var newIU = Mapper.Map<Collection.IdentificationUnit>(value);
 
                 newIU.SpecimenId = sid;
+                newIU.LastIdentificationCache = value.Name;
 
                 await IUStore.InsertAsync(newIU);
 
-                dto = Mapper.Map<Identification>(newIU);
+                dto = Mapper.Map<Collection.IdentificationUnit, Identification>(newIU, value);
 
                 // Identification
 
                 var newID = Mapper.Map<Collection.Identification>(dto); // From dto to get the db generated Id
 
+                newID.IdentificationCategory = IDENTIFICATION_CATEGORY_ACTUAL;
+                newID.Notes = DEFAULT_NOTES;
+
                 await IDStore.InsertAsync(newID);
 
                 // IdentificationUnitGeoAnalysis
 
-                // TODO
+                var newIUGAN = Mapper.Map<Collection.IdentificationUnitGeoAnalysis>(dto);
+
+                newIUGAN.Geography = dto.Localization.ToGeography();
+                newIUGAN.Notes = DEFAULT_NOTES;
+
+                // newIUGAN.ResponsibleName =
+                // newIUGAN.ResponsibleAgentURI =
+
+                await IUGANStore.InsertAsync(newIUGAN);
 
                 transaction.Commit();
             }

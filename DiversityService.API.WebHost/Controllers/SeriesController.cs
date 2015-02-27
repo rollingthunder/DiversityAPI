@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
@@ -21,7 +22,7 @@
         }
 
         public SeriesController(
-            IMappingService mapper
+            IMappingEngine mapper
             )
             : base(mapper)
         {

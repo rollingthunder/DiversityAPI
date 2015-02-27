@@ -35,7 +35,7 @@ namespace DiversityService.Collection
         public string Notes { get; set; }
         public string ResponsibleName { get; set; }
         public string ResponsibleAgentURI { get; set; }
-        public System.Guid TransactionGuid { get; set; }
+        public System.Guid RowGUID { get; set; }
         public string ReferenceDetails { get; set; }
     
         public virtual IdentificationUnit IdentificationUnit { get; set; }

@@ -23,6 +23,11 @@
 
         public bool Equals(Localization other)
         {
+            if (other == null)
+            {
+                return false;
+            }
+
             return this.Longitude == other.Longitude
                 && this.Latitude == other.Latitude
                 && this.Altitude == other.Altitude;

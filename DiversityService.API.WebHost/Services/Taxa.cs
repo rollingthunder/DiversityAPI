@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
+    using AutoMapper;
     using DiversityService.API.WebHost.Models;
     using DiversityService.Collection;
     using System;
@@ -16,12 +17,12 @@
 
     public class TaxonService : ITaxa
     {
-        private readonly IMappingService Mapping;
+        private readonly IMappingEngine Mapping;
         private readonly CollectionContext Collection;
         private readonly ApplicationUser User;
 
         public TaxonService(
-            IMappingService Mapping,
+            IMappingEngine Mapping,
             CollectionContext Collection,
             ApplicationUser user
             )

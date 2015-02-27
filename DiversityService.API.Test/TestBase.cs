@@ -12,6 +12,8 @@
 
         static TestBase()
         {
+            // MappingService is not really mockable
+            // So we will use the real one for testing
             var mapperConfig = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
             MapperConfig.Configure(mapperConfig);
             Engine = new AutoMapper.MappingEngine(mapperConfig);
@@ -21,12 +23,9 @@
 
         public TestBase()
         {
-            // MappingService is not really mockable
-            // So we will use the real one for testing
             Kernel
-                .Bind<IMappingService>()
-                .To<AutoMapperMappingService>()
-                .WithConstructorArgument<IMappingEngine>(Engine);
+                .Bind<IMappingEngine>()
+                .ToConstant<IMappingEngine>(Engine);
         }
     }
 }

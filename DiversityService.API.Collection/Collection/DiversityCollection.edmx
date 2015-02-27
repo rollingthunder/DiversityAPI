@@ -954,7 +954,7 @@
           <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="ResponsibleAgentURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="TransactionGuid" Type="Guid" Nullable="false" />
+          <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <Property Name="ReferenceDetails" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="IdentificationUnit" Relationship="Self.FK_Identification_IdentificationUnit" FromRole="Identification" ToRole="IdentificationUnit" />
         </EntityType>
@@ -970,7 +970,7 @@
           <Property Name="OrderCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TaxonomicGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="OnlyObserved" Type="Boolean" />
-          <Property Name="RelatedUnitId" Type="Int32" />
+          <Property Name="RelatedId" Type="Int32" />
           <Property Name="RelationType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ColonisedSubstratePart" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="LifeStage" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -1026,12 +1026,12 @@
         </EntityType>
         <EntityType Name="IdentificationUnitGeoAnalysis">
           <Key>
-            <PropertyRef Name="CollectionSpecimenID" />
-            <PropertyRef Name="IdentificationUnitID" />
+            <PropertyRef Name="SpecimenId" />
+            <PropertyRef Name="IdentificationUnitId" />
             <PropertyRef Name="AnalysisDate" />
           </Key>
-          <Property Name="CollectionSpecimenID" Type="Int32" Nullable="false" />
-          <Property Name="IdentificationUnitID" Type="Int32" Nullable="false" />
+          <Property Name="SpecimenId" Type="Int32" Nullable="false" />
+          <Property Name="IdentificationUnitId" Type="Int32" Nullable="false" />
           <Property Name="AnalysisDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Geography" Type="Geography" />
           <Property Name="Geometry" Type="Geometry" />
@@ -1207,7 +1207,7 @@
             </Principal>
             <Dependent Role="IdentificationUnit1">
               <PropertyRef Name="SpecimenId" />
-              <PropertyRef Name="RelatedUnitId" />
+              <PropertyRef Name="RelatedId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1250,8 +1250,8 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="IdentificationUnitGeoAnalysis">
-              <PropertyRef Name="CollectionSpecimenID" />
-              <PropertyRef Name="IdentificationUnitID" />
+              <PropertyRef Name="SpecimenId" />
+              <PropertyRef Name="IdentificationUnitId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1681,7 +1681,7 @@
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="ResponsibleName" ColumnName="ResponsibleName" />
                 <ScalarProperty Name="ResponsibleAgentURI" ColumnName="ResponsibleAgentURI" />
-                <ScalarProperty Name="TransactionGuid" ColumnName="RowGUID" />
+                <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="ReferenceDetails" ColumnName="ReferenceDetails" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1696,7 +1696,7 @@
                 <ScalarProperty Name="OrderCache" ColumnName="OrderCache" />
                 <ScalarProperty Name="TaxonomicGroup" ColumnName="TaxonomicGroup" />
                 <ScalarProperty Name="OnlyObserved" ColumnName="OnlyObserved" />
-                <ScalarProperty Name="RelatedUnitId" ColumnName="RelatedUnitID" />
+                <ScalarProperty Name="RelatedId" ColumnName="RelatedUnitID" />
                 <ScalarProperty Name="RelationType" ColumnName="RelationType" />
                 <ScalarProperty Name="ColonisedSubstratePart" ColumnName="ColonisedSubstratePart" />
                 <ScalarProperty Name="LifeStage" ColumnName="LifeStage" />
@@ -1742,8 +1742,8 @@
           <EntitySetMapping Name="IdentificationUnitGeoAnalysis">
             <EntityTypeMapping TypeName="DiversityCollection.IdentificationUnitGeoAnalysis">
               <MappingFragment StoreEntitySet="IdentificationUnitGeoAnalysis">
-                <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
-                <ScalarProperty Name="IdentificationUnitID" ColumnName="IdentificationUnitID" />
+                <ScalarProperty Name="SpecimenId" ColumnName="CollectionSpecimenID" />
+                <ScalarProperty Name="IdentificationUnitId" ColumnName="IdentificationUnitID" />
                 <ScalarProperty Name="AnalysisDate" ColumnName="AnalysisDate" />
                 <ScalarProperty Name="Geography" ColumnName="Geography" />
                 <ScalarProperty Name="Geometry" ColumnName="Geometry" />

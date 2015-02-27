@@ -109,6 +109,11 @@
             get { return LazyWithContext<IStore<Identification, IdentificationKey>>(); }
         }
 
+        public IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey> IdentificationGeoAnalyses
+        {
+            get { return LazyWithContext<IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey>>(); }
+        }
+
         private T LazyWithContext<T>()
             where T : class
         {

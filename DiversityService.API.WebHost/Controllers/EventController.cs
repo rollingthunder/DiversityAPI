@@ -11,7 +11,7 @@
     [CollectionAPI(Route.EVENT_CONTROLLER)]
     public class EventController : DiversityController, IFieldDataController<EventBindingModel>
     {
-        private readonly IMappingService Mapper;
+        private readonly IMappingEngine Mapper;
 
         private IStore<Collection.Event, int> EventStore
         {
@@ -22,7 +22,7 @@
         }
 
         public EventController(
-            IMappingService mapper
+            IMappingEngine mapper
             )
             : base(mapper)
         {

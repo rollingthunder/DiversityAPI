@@ -1,5 +1,7 @@
 ﻿namespace DiversityService.API.Results
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using DiversityService.API.Services;
     using System;
     using System.Diagnostics.Contracts;
@@ -14,11 +16,11 @@
     {
         private readonly Lazy<OkNegotiatedContentResult<T>> InnerResult;
 
-        public readonly IMappingService Mapper;
+        public readonly IMappingEngine Mapper;
         public readonly ApiController Controller;
         public readonly TEntity Entity;
 
-        public MappedSingleResult(IMappingService mapper, ApiController controller, TEntity entity)
+        public MappedSingleResult(IMappingEngine mapper, ApiController controller, TEntity entity)
         {
             Mapper = mapper;
             Controller = controller;
@@ -47,7 +49,7 @@
         private readonly Lazy<IHttpActionResult> InnerResult;
         private readonly Lazy<IQueryable<T>> MappedQuery;
 
-        private readonly IMappingService Mapper;
+        private readonly IMappingEngine Mapper;
         private readonly ApiController Controller;
         private readonly IQueryable<TEntity> SourceQuery;
 
@@ -56,18 +58,18 @@
             get { return MappedQuery.Value; }
         }
 
-        private MappedQueryResult(IMappingService mapper, ApiController controller)
+        private MappedQueryResult(IMappingEngine mapper, ApiController controller)
         {
             Mapper = mapper;
             Controller = controller;
         }
 
-        public MappedQueryResult(IMappingService mapper, ApiController controller, IQueryable<TEntity> source)
+        public MappedQueryResult(IMappingEngine mapper, ApiController controller, IQueryable<TEntity> source)
             : this(mapper, controller)
         {
             SourceQuery = source;
 
-            MappedQuery = new Lazy<IQueryable<T>>(() => Mapper.Project<TEntity, T>(SourceQuery));
+            MappedQuery = new Lazy<IQueryable<T>>(() => SourceQuery.Project(Mapper).To<T>());
 
             InnerResult = new Lazy<IHttpActionResult>(() =>
             {
@@ -75,7 +77,7 @@
             });
         }
 
-        public MappedQueryResult(IMappingService mapper, ApiController controller, IHttpActionResult innerResult)
+        public MappedQueryResult(IMappingEngine mapper, ApiController controller, IHttpActionResult innerResult)
             : this(mapper, controller)
         {
             Contract.Requires<ArgumentException>(innerResult is IQueryResult<TEntity>);
@@ -83,7 +85,7 @@
             var queryresult = innerResult as IQueryResult<TEntity>;
             SourceQuery = queryresult.Query;
 
-            MappedQuery = new Lazy<IQueryable<T>>(() => Mapper.Project<TEntity, T>(SourceQuery));
+            MappedQuery = new Lazy<IQueryable<T>>(() => SourceQuery.Project(Mapper).To<T>());
 
             InnerResult = new Lazy<IHttpActionResult>(() => innerResult);
         }

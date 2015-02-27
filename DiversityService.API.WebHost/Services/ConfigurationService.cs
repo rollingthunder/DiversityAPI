@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
+    using AutoMapper;
     using DiversityService.API.Model;
     using DiversityService.API.WebHost;
     using System;
@@ -11,10 +12,10 @@
     public class ConfigurationService : IConfigurationService
     {
         private readonly Lazy<IEnumerable<InternalCollectionServer>> Servers;
-        private readonly IMappingService Mapper;
+        private readonly IMappingEngine Mapper;
 
         public ConfigurationService(
-            IMappingService mapper
+            IMappingEngine mapper
             )
         {
             Mapper = mapper;

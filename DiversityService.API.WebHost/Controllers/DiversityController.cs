@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using AutoMapper;
     using DiversityService.API.Model;
     using DiversityService.API.Results;
     using DiversityService.API.Services;
@@ -12,9 +13,9 @@
 
     public abstract class DiversityController : ApiController
     {
-        protected readonly IMappingService Mapper;
+        protected readonly IMappingEngine Mapper;
 
-        public DiversityController(IMappingService mapper)
+        public DiversityController(IMappingEngine mapper)
         {
             Mapper = mapper;
         }

@@ -11,7 +11,7 @@
     [CollectionAPI(Route.SPECIMEN_CONTROLLER)]
     public class SpecimenController : DiversityController, IFieldDataController<SpecimenBindingModel>
     {
-        private readonly IMappingService Mapper;
+        private readonly IMappingEngine Mapper;
 
         private IStore<Collection.Specimen, int> Store
         {
@@ -22,7 +22,7 @@
         }
 
         public SpecimenController(
-            IMappingService mapper
+            IMappingEngine mapper
             )
             : base(mapper)
         {

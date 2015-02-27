@@ -35,6 +35,31 @@
 
         private static Random rnd = new Random();
 
+        public static IEnumerable<Localization> RandomTour()
+        {
+            var count = rnd.Next(0, 20);
+
+            return Enumerable
+                .Repeat(0, count)
+                .Select(_ => RandomLocalization())
+                .ToList();
+        }
+
+        public static Localization RandomLocalization()
+        {
+            return new Localization()
+            {
+                Altitude = (RandomInt() > 0) ? RandomDouble() : null as double?,
+                Latitude = RandomDouble(),
+                Longitude = RandomDouble()
+            };
+        }
+
+        public static double RandomDouble()
+        {
+            return rnd.NextDouble();
+        }
+
         public static int RandomInt()
         {
             return rnd.Next();

@@ -385,7 +385,6 @@
     <Compile Include="Results\MappedResult.cs" />
     <Compile Include="Results\PagingResult.cs" />
     <Compile Include="Results\SeeOtherAtRouteResult.cs" />
-    <Compile Include="Services\AutoMapperMappingService.cs" />
     <Compile Include="Services\CollectionContext.cs" />
     <Compile Include="Services\CollectionContextExtensions.cs" />
     <Compile Include="Services\ConfigurationService.cs" />
@@ -394,7 +393,6 @@
     <Compile Include="Services\IContext.cs" />
     <Compile Include="Services\IContextFactory.cs" />
     <Compile Include="Services\LinkFactory.cs" />
-    <Compile Include="Services\IMappingService.cs" />
     <Compile Include="Services\LocalizationMapper.cs" />
     <Compile Include="Services\ProjectStore.cs" />
     <Compile Include="Services\Store.cs" />

@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Test
 {
+    using AutoMapper;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
     using Ninject;
@@ -14,22 +15,25 @@
 
     public class MappingTest : TestBase
     {
-        protected readonly AutoMapperMappingService Mapper;
+        protected readonly IMappingEngine Mapper;
 
         public MappingTest()
         {
-            Mapper = (AutoMapperMappingService)Kernel.Get<IMappingService>();
+            Mapper = Kernel.Get<IMappingEngine>();
         }
 
-        [Fact]
-        public void ConfiguratonValid()
+        public class Configuration : MappingTest
         {
-            // Arrange
+            [Fact]
+            public void ConfigurationValid()
+            {
+                // Arrange
 
-            // Act
+                // Act
 
-            // Assert
-            Mapper.Engine.ConfigurationProvider.AssertConfigurationIsValid();
+                // Assert
+                Mapper.ConfigurationProvider.AssertConfigurationIsValid();
+            }
         }
 
         public class MapEventSeries : MappingTest
@@ -43,7 +47,7 @@
                     Code = "seriesCode",
                     Description = "seriesDescription",
                     EndDateUTC = DateTime.UtcNow,
-                    // TODO Geography =
+                    Geography = TestHelper.RandomTour().ToGeography(),
                     Id = 10101,
                     StartDateUTC = DateTime.UtcNow.Subtract(TimeSpan.FromDays(3)),
                     // TransactionGuid = Guid.NewGuid()
@@ -58,28 +62,9 @@
                 Assert.Equal(es.EndDateUTC, dto.EndDateUTC);
                 Assert.Equal(es.Id, dto.Id);
                 Assert.Equal(es.StartDateUTC, dto.StartDateUTC);
-            }
 
-            [Fact]
-            public void ToLocalization()
-            {
-                // Arrange
-                var es = new Collection.EventSeries()
-                {
-                    Code = "seriesCode",
-                    Description = "seriesDescription",
-                    EndDateUTC = DateTime.UtcNow,
-                    // TODO Geography =
-                    Id = 10101,
-                    StartDateUTC = DateTime.UtcNow.Subtract(TimeSpan.FromDays(3)),
-                    // TransactionGuid = Guid.NewGuid()
-                };
-
-                // Act
-                var dto = Mapper.Map<EventSeries>(es);
-
-                // Assert
-                Assert.True(false);
+                // Not part of the mapping
+                Assert.Null(dto.Tour);
             }
 
             [Fact]
@@ -124,7 +109,7 @@
                     // ColonisedSubstratePart
                     Id = 1098293,
                     //OnlyObserved = true,
-                    RelatedUnitId = 1234,
+                    RelatedId = 1234,
                     RelationType = "growingon",
                     SpecimenId = 12435,
                     TaxonomicGroup = "homini",
@@ -138,16 +123,14 @@
                 // Assert
                 // TODO Assert.Equal(id.Circumstances, dto.Circumstances);
                 Assert.Equal(iu.Id, dto.Id);
-                Assert.Equal(iu.RelatedUnitId, dto.RelatedId);
+                Assert.Equal(iu.RelatedId, dto.RelatedId);
                 Assert.Equal(iu.RelationType, dto.RelationType);
                 Assert.Equal(iu.SpecimenId, dto.SpecimenId);
                 Assert.Equal(iu.TaxonomicGroup, dto.TaxonomicGroup);
 
-                Assert.Null(dto.Localization); // not part of mapping
-                Assert.Null(dto.Name); // not part of mapping
-                Assert.Null(dto.RelatedId); // not part of mapping
-                Assert.Null(dto.RelationType); // not part of mapping
-                Assert.Null(dto.TaxonomicGroup); // not part of mapping
+                // not part of mapping
+                Assert.Null(dto.Localization);
+                Assert.Null(dto.Name);
             }
 
             [Fact]
@@ -176,7 +159,7 @@
                     ResponsibleName = "testperson",
                     SpecimenID = TestHelper.RandomInt(),
                     TaxonomicName = "testplant",
-                    TransactionGuid = Guid.NewGuid(),
+                    RowGUID = Guid.NewGuid(),
                     //TypeNotes
                     //TypeStatus
                     //VernacularTerm
@@ -209,10 +192,10 @@
                 var iugan = new Collection.IdentificationUnitGeoAnalysis()
                 {
                     AnalysisDate = DateTime.UtcNow,
-                    CollectionSpecimenID = TestHelper.RandomInt(),
+                    SpecimenId = TestHelper.RandomInt(),
                     Geography = geo,
                     // Geometry
-                    IdentificationUnitID = TestHelper.RandomInt(),
+                    IdentificationUnitId = TestHelper.RandomInt(),
                     //Notes
                     //ResponsibleAgentURI,
                     //ResponsibleName,
@@ -223,43 +206,124 @@
                 var dto = Mapper.Map<Identification>(iugan);
 
                 // Assert
-                Assert.Equal(iugan.CollectionSpecimenID, dto.SpecimenId);
+                // Assert.Equal(iugan.CollectionSpecimenID, dto.SpecimenId);
                 Assert.NotNull(dto.Localization);
                 Assert.Equal(geo.Latitude.Value, dto.Localization.Latitude);
                 Assert.Equal(geo.Longitude.Value, dto.Localization.Longitude);
                 Assert.Equal(geo.Elevation.Value, dto.Localization.Altitude);
-                Assert.Equal(iugan.IdentificationUnitID, dto.Id);
+                Assert.Equal(iugan.IdentificationUnitId, dto.Id);
 
-                Assert.Null(dto.Date); // Not part of mapping
+                // Not part of mapping
+                Assert.Equal(default(LocalDate), dto.Date);
+                Assert.Null(dto.Name);
+                Assert.Null(dto.RelatedId);
+                Assert.Null(dto.RelationType);
+                Assert.Null(dto.TaxonomicGroup);
+                Assert.Null(dto.Uri);
             }
 
             [Fact]
-            public void FromDTO()
+            public void IUFromDTO()
             {
                 // Arrange
-                var dto = new EventSeriesBindingModel()
+                var dto = new IdentificationBindingModel()
                 {
-                    Code = "seriesCode",
-                    Description = "seriesDescription",
-                    EndDateUTC = DateTime.UtcNow,
-                    Id = 10101,
-                    StartDateUTC = DateTime.UtcNow.Subtract(TimeSpan.FromDays(3)),
+                    Date = new LocalDate(),
+                    Id = TestHelper.RandomInt(),
+                    Localization = TestHelper.RandomLocalization(),
+                    Name = "testid",
+                    RelatedId = TestHelper.RandomInt(),
+                    RelationType = "child",
+                    SpecimenId = TestHelper.RandomInt(),
+                    TaxonomicGroup = "plant",
+                    Uri = "someuri",
 
                     // BindingModel
                     TransactionGuid = Guid.NewGuid()
                 };
 
                 // Act
-                var entity = Mapper.Map<Collection.EventSeries>(dto);
+                var entity = Mapper.Map<Collection.IdentificationUnit>(dto);
 
                 // Assert
-                Assert.Equal(dto.Code, entity.Code);
-                Assert.Equal(dto.Description, entity.Description);
-                Assert.Equal(dto.EndDateUTC, entity.EndDateUTC);
                 Assert.Equal(dto.Id, entity.Id);
-                Assert.Equal(dto.StartDateUTC, entity.StartDateUTC);
-
+                Assert.Equal(dto.RelatedId, entity.RelatedId);
+                Assert.Equal(dto.RelationType, entity.RelationType);
+                Assert.Equal(dto.SpecimenId, entity.SpecimenId);
+                Assert.Equal(dto.TaxonomicGroup, entity.TaxonomicGroup);
                 Assert.Equal(dto.TransactionGuid, entity.TransactionGuid);
+            }
+
+            [Fact]
+            public void IDFromDTO()
+            {
+                // Arrange
+                var dto = new IdentificationBindingModel()
+                {
+                    Date = new LocalDate(),
+                    Id = TestHelper.RandomInt(),
+                    Localization = TestHelper.RandomLocalization(),
+                    Name = "testid",
+                    RelatedId = TestHelper.RandomInt(),
+                    RelationType = "child",
+                    SpecimenId = TestHelper.RandomInt(),
+                    TaxonomicGroup = "plant",
+                    Uri = "someuri",
+
+                    // BindingModel
+                    TransactionGuid = Guid.NewGuid()
+                };
+
+                // Act
+                var entity = Mapper.Map<Collection.Identification>(dto);
+
+                // Assert
+                Assert.Equal(dto.Id, entity.IdentificationUnitID);
+                Assert.Equal(dto.Uri, entity.NameURI);
+                Assert.Equal(dto.SpecimenId, entity.SpecimenID);
+                Assert.Equal(dto.Name, entity.TaxonomicName);
+
+                Assert.NotEqual(dto.TransactionGuid, entity.RowGUID);
+                Assert.NotEqual(Guid.Empty, entity.RowGUID);
+            }
+
+            [Fact]
+            public void IUGANFromDTO()
+            {
+                // Arrange
+                var dto = new IdentificationBindingModel()
+                {
+                    Date = new LocalDate(),
+                    Id = TestHelper.RandomInt(),
+                    Localization = TestHelper.RandomLocalization(),
+                    Name = "testid",
+                    RelatedId = TestHelper.RandomInt(),
+                    RelationType = "child",
+                    SpecimenId = TestHelper.RandomInt(),
+                    TaxonomicGroup = "plant",
+                    Uri = "someuri",
+
+                    // BindingModel
+                    TransactionGuid = Guid.NewGuid()
+                };
+
+                // Act
+                var entity = Mapper.Map<Collection.IdentificationUnitGeoAnalysis>(dto);
+
+                // Assert
+                var analysisDate = entity.AnalysisDate;
+                Assert.Equal(dto.Date, new LocalDate(analysisDate.Year, analysisDate.Month, analysisDate.Day));
+                Assert.Equal(dto.Localization, entity.Geography.ToLocalization());
+                Assert.Equal(dto.Id, entity.IdentificationUnitId);
+                Assert.Equal(dto.SpecimenId, entity.SpecimenId);
+
+                Assert.NotEqual(dto.TransactionGuid, entity.RowGUID);
+                Assert.NotEqual(Guid.Empty, entity.RowGUID);
+
+                // Not part of the mapping
+                Assert.Null(entity.Notes);
+                Assert.Null(entity.ResponsibleAgentURI);
+                Assert.Null(entity.ResponsibleName);
             }
         }
 
@@ -301,6 +365,37 @@
 
                 // Assert
                 Assert.Equal(pts, tour);
+            }
+        }
+
+        public class ToGeography
+        {
+            [Fact]
+            public void Single()
+            {
+                // Arrange
+                var point = TestHelper.RandomLocalization();
+
+                // Act
+                var geo = point.ToGeography();
+                var geopoint = geo.ToLocalization();
+
+                // Assert
+                Assert.Equal(point, geopoint);
+            }
+
+            [Fact]
+            public void Multi()
+            {
+                // Arrange
+                var line = TestHelper.RandomTour();
+
+                // Act
+                var geo = line.ToGeography();
+                var geopoints = geo.ToTour();
+
+                // Assert
+                Assert.Equal(line, geopoints);
             }
         }
     }

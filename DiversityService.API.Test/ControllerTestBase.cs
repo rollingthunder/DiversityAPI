@@ -61,6 +61,9 @@
             mock.SetupGet(x => x.Identifications)
                .Returns(Kernel.GetMock<IStore<Collection.Identification, Collection.IdentificationKey>>().Object);
 
+            mock.SetupGet(x => x.IdentificationGeoAnalyses)
+               .Returns(Kernel.GetMock<IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey>>().Object);
+
             // Set Request Context
 
             Controller.Request.SetOwinContext(new OwinContext());

@@ -196,9 +196,14 @@
         }
     }
 
-    public partial class Identification : IGuidIdentifiable, ICompositeIdentifiable<IdentificationKey>
+    public partial class Identification : ICompositeIdentifiable<IdentificationKey>
     {
         public const string DATECATEGORY_ACTUAL = "actual";
+
+        public Identification()
+        {
+            RowGUID = Guid.NewGuid();
+        }
 
         public LocalDate? GetCollectionDate()
         {
@@ -253,6 +258,40 @@
                 SpecimenId,
                 IdentificationUnitId,
                 IdentificationId
+            };
+        }
+    }
+
+    public partial class IdentificationUnitGeoAnalysis : ICompositeIdentifiable<IdentificationGeoKey>
+    {
+        public IdentificationUnitGeoAnalysis()
+        {
+            RowGUID = Guid.NewGuid();
+        }
+
+        public IdentificationGeoKey CompositeKey()
+        {
+            return new IdentificationGeoKey()
+            {
+                SpecimenId = SpecimenId,
+                IdentificationUnitId = IdentificationUnitId,
+                AnalysisDate = AnalysisDate
+            };
+        }
+    }
+
+    public struct IdentificationGeoKey : ICompositeKey
+    {
+        public int SpecimenId;
+        public int IdentificationUnitId;
+        public DateTime AnalysisDate;
+
+        public object[] Values()
+        {
+            return new object[]{
+                SpecimenId,
+                IdentificationUnitId,
+                AnalysisDate
             };
         }
     }

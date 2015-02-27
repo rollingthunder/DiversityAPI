@@ -14,8 +14,8 @@ namespace DiversityService.Collection
     
     public partial class IdentificationUnitGeoAnalysis
     {
-        public int CollectionSpecimenID { get; set; }
-        public int IdentificationUnitID { get; set; }
+        public int SpecimenId { get; set; }
+        public int IdentificationUnitId { get; set; }
         public System.DateTime AnalysisDate { get; set; }
         public System.Data.Entity.Spatial.DbGeography Geography { get; set; }
         public System.Data.Entity.Spatial.DbGeometry Geometry { get; set; }

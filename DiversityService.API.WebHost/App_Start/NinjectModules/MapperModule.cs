@@ -28,10 +28,6 @@
 
             Bind<IMappingEngine>()
                 .ToConstant(Mapper.Engine);
-
-            Bind<IMappingService>()
-                .To<AutoMapperMappingService>()
-                .InSingletonScope();
         }
     }
 }

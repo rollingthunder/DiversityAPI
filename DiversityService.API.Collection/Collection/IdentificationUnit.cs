@@ -31,7 +31,7 @@ namespace DiversityService.Collection
         public string OrderCache { get; set; }
         public string TaxonomicGroup { get; set; }
         public Nullable<bool> OnlyObserved { get; set; }
-        public Nullable<int> RelatedUnitId { get; set; }
+        public Nullable<int> RelatedId { get; set; }
         public string RelationType { get; set; }
         public string ColonisedSubstratePart { get; set; }
         public string LifeStage { get; set; }

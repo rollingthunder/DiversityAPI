@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
@@ -24,10 +25,10 @@
             }
         }
 
-        private readonly IMappingService Mapper;
+        private readonly IMappingEngine Mapper;
 
         public ProjectController(
-            IMappingService mapper
+            IMappingEngine mapper
             )
         {
             Mapper = mapper;

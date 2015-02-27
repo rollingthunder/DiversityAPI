@@ -63,11 +63,13 @@
         protected readonly Mock<ITransaction> MockTransaction;
         protected readonly Mock<IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey>> MockIUStore;
         protected readonly Mock<IStore<Collection.Identification, Collection.IdentificationKey>> MockIDStore;
+        protected readonly Mock<IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey>> MockIUGANStore;
 
         public IdentificationControllerTest()
         {
             MockIUStore = Kernel.GetMock<IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey>>();
             MockIDStore = Kernel.GetMock<IStore<Collection.Identification, Collection.IdentificationKey>>();
+            MockIUGANStore = Kernel.GetMock<IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey>>();
             InitController();
             MockContext = Kernel.GetMock<IContext>();
             MockTransaction = Kernel.GetMock<ITransaction>();
@@ -307,20 +309,26 @@
                     .Callback(() => { insertIDId = callId++; })
                     .Returns(Task.FromResult(0));
 
+                MockIUGANStore
+                    .Setup(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => y.IdentificationUnitId == expected.Id)))
+                    .Callback(() => { insertIUGANId = callId++; })
+                    .Returns(Task.FromResult(0));
+
                 // Act
                 var result = await Controller.Post(sid, upload);
 
                 // Assert
-
                 MockIUStore
                     .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnit>(y => y.SpecimenId == expected.SpecimenId)), Times.Once(), "IU not inserted");
                 MockIDStore
                     .Verify(x => x.InsertAsync(It.Is<Collection.Identification>(y => y.SpecimenID == expected.SpecimenId && y.IdentificationUnitID == expected.Id)), Times.Once(), "ID not inserted");
+                MockIUGANStore
+                    .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => y.SpecimenId == expected.SpecimenId && y.IdentificationUnitId == expected.Id)), Times.Once(), "IUGAN not inserted");
 
                 Assert.True(commitId < disposeId, "transaction not committed");
 
                 Assert.True(
-                    new[] { insertIUId, insertIDId, /*insertIUGANId*/ }
+                    new[] { insertIUId, insertIDId, insertIUGANId }
                     .All(x => x < commitId && x > beginId)
                     , "insert not covered by transaction");
 
@@ -328,25 +336,157 @@
             }
 
             [Fact]
-            public async Task PersistsTheLocalization()
+            public async Task SetsIdentCacheOnTheIU()
             {
                 // Arrange
                 var sid = 1;
                 var fakeEntities =
-                    Enumerable.Range(0, 6)
-                    .Select(_ => IdentificationTestHelper.FakeUnit(sid))
+                    Enumerable.Empty<Collection.IdentificationUnit>()
                     .ToArray();
-                var expected = fakeEntities.First();
 
-                this.MockIUStore
-                    .SetupWithFakeData(fakeEntities.AsQueryable());
+                var expected = IdentificationTestHelper.FakeUnit(sid);
+
+                var upload = new IdentificationBindingModel()
+                {
+                    TransactionGuid = expected.TransactionGuid,
+                    Uri = "testuri",
+                    SpecimenId = sid,
+                    TaxonomicGroup = "plant",
+                    Name = "testident",
+                    Localization = null
+                };
 
                 // Act
-                var result = await Controller.Get(sid, expected.Id) as OkNegotiatedContentResult<Identification>;
+                var result = await Controller.Post(sid, upload);
 
                 // Assert
-                Assert.False(true);
-                Assert.Equal(expected.Id, result.Content.Id);
+                MockIUStore
+                    .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnit>(y => !string.IsNullOrWhiteSpace(y.LastIdentificationCache))));
+            }
+
+            [Fact]
+            public async Task SetsCustomFieldsOnTheID()
+            {
+                // Arrange
+                var sid = 1;
+                var fakeEntities =
+                    Enumerable.Empty<Collection.IdentificationUnit>()
+                    .ToArray();
+
+                var expected = IdentificationTestHelper.FakeUnit(sid);
+
+                var upload = new IdentificationBindingModel()
+                {
+                    TransactionGuid = expected.TransactionGuid,
+                    Uri = "testuri",
+                    SpecimenId = sid,
+                    TaxonomicGroup = "plant",
+                    Name = "testident",
+                    Localization = null
+                };
+
+                // Act
+                var result = await Controller.Post(sid, upload);
+
+                // Assert
+                MockIDStore
+                    .Verify(x => x.InsertAsync(It.Is<Collection.Identification>(y => !string.IsNullOrWhiteSpace(y.IdentificationCategory))));
+                MockIDStore
+                    .Verify(x => x.InsertAsync(It.Is<Collection.Identification>(y => !string.IsNullOrWhiteSpace(y.Notes))));
+            }
+
+            [Fact]
+            public async Task SetsResponsableInfoOnTheID()
+            {
+                // Arrange
+                var sid = 1;
+                var fakeEntities =
+                    Enumerable.Empty<Collection.IdentificationUnit>()
+                    .ToArray();
+
+                var expected = IdentificationTestHelper.FakeUnit(sid);
+
+                var upload = new IdentificationBindingModel()
+                {
+                    TransactionGuid = expected.TransactionGuid,
+                    Uri = "testuri",
+                    SpecimenId = sid,
+                    TaxonomicGroup = "plant",
+                    Name = "testident",
+                    Localization = null
+                };
+
+                // Act
+                var result = await Controller.Post(sid, upload);
+
+                // Assert
+                MockIDStore
+                   .Verify(x => x.InsertAsync(It.Is<Collection.Identification>(y => !string.IsNullOrWhiteSpace(y.ResponsibleName))));
+                MockIDStore
+                   .Verify(x => x.InsertAsync(It.Is<Collection.Identification>(y => !string.IsNullOrWhiteSpace(y.ResponsibleAgentURI))));
+            }
+
+            [Fact]
+            public async Task SetsANoteOnTheIUGAN()
+            {
+                // Arrange
+                var sid = 1;
+                var fakeEntities =
+                    Enumerable.Empty<Collection.IdentificationUnit>()
+                    .ToArray();
+
+                var expected = IdentificationTestHelper.FakeUnit(sid);
+
+                var upload = new IdentificationBindingModel()
+                {
+                    TransactionGuid = expected.TransactionGuid,
+                    Uri = "testuri",
+                    SpecimenId = sid,
+                    TaxonomicGroup = "plant",
+                    Name = "testident",
+                    Localization = null
+                };
+
+                // Act
+                var result = await Controller.Post(sid, upload);
+
+                // Assert
+                MockIUGANStore
+                    .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => !string.IsNullOrWhiteSpace(y.Notes))));
+            }
+
+            [Fact]
+            public async Task SetsTheGeographyOnTheIUGAN()
+            {
+                // Arrange
+                var sid = 1;
+                var fakeEntities =
+                    Enumerable.Empty<Collection.IdentificationUnit>()
+                    .ToArray();
+
+                var expected = IdentificationTestHelper.FakeUnit(sid);
+
+                var upload = new IdentificationBindingModel()
+                {
+                    TransactionGuid = expected.TransactionGuid,
+                    Uri = "testuri",
+                    SpecimenId = sid,
+                    TaxonomicGroup = "plant",
+                    Name = "testident",
+                    Localization = new Localization()
+                    {
+                        Altitude = 120.0,
+                        Latitude = 74.1,
+                        Longitude = 34.1
+                    }
+                };
+
+                // Act
+                var result = await Controller.Post(sid, upload);
+
+                // Assert
+                MockIUGANStore
+                    .Verify(x => x.InsertAsync(It.Is<Collection.IdentificationUnitGeoAnalysis>(y => upload.Localization.Equals(y.Geography.ToLocalization()))));
             }
         }
     }

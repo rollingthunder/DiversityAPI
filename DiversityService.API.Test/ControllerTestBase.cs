@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Test
 {
+    using DiversityService.API.Model;
     using DiversityService.API.Services;
     using Microsoft.Owin;
     using Moq;
@@ -66,7 +67,9 @@
 
             // Set Request Context
 
-            Controller.Request.SetOwinContext(new OwinContext());
+            var octx = new OwinContext();
+
+            Controller.Request.SetOwinContext(octx);
             Controller.Request.SetCollectionContext(mock.Object);
 
             return mock;

@@ -39,6 +39,7 @@
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             string User, Password;
+            AgentInfo Agent;
             InternalCollectionServer Server;
 
             IContext ctx = null;
@@ -50,9 +51,18 @@
                 return;
             }
 
+            ClaimsIdentity identity;
+            ExtractClaims(actionContext, out identity);
+
+            if (actionContext.Response != null)
+            {
+                return;
+            }
+
+            // Backend Login Claims, if necessary
             if (Server != null)
             {
-                ExtractBackendCredentials(actionContext, out User, out Password);
+                ExtractBackendCredentials(actionContext, identity, out User, out Password);
 
                 if (actionContext.Response != null)
                 {
@@ -77,6 +87,21 @@
                 actionContext.Request.SetCollectionContext(ctx);
             }
 
+            // Agent Claims
+            {
+                ExtractAgentInfo(actionContext, identity, out Agent);
+
+                if (actionContext.Response != null)
+                {
+                    return;
+                }
+
+                if (Agent != null)
+                {
+                    actionContext.Request.SetAgentInfo(Agent);
+                }
+            }
+
             try
             {
                 await base.OnActionExecutingAsync(actionContext, cancellationToken);
@@ -92,13 +117,11 @@
             }
         }
 
-        private void ExtractBackendCredentials(
+        private void ExtractClaims(
             HttpActionContext actionContext,
-            out string username,
-            out string password)
+            out ClaimsIdentity identity)
         {
-            username = null;
-            password = null;
+            identity = null;
 
             var requestContext = actionContext.RequestContext;
 
@@ -118,12 +141,22 @@
                 return;
             }
 
-            var identity = principal.Identity as ClaimsIdentity;
+            identity = principal.Identity as ClaimsIdentity;
             if (identity == null)
             {
                 SetErrorResponse(actionContext, HttpStatusCode.InternalServerError, "No claims available for current identity");
                 return;
             }
+        }
+
+        private void ExtractBackendCredentials(
+            HttpActionContext actionContext,
+            ClaimsIdentity identity,
+            out string user,
+            out string password)
+        {
+            user = null;
+            password = null;
 
             var backendCredentials = identity.GetBackendCredentialsClaim();
             if (backendCredentials == null)
@@ -132,8 +165,30 @@
                 return;
             }
 
-            username = backendCredentials.User;
+            user = backendCredentials.User;
             password = backendCredentials.Password;
+        }
+
+        private void ExtractAgentInfo(
+            HttpActionContext actionContext,
+            ClaimsIdentity identity,
+            out AgentInfo info)
+        {
+            info = null;
+
+            var nameClaim = identity.FindFirst(AgentNameClaim.TYPE);
+            var uriClaim = identity.FindFirst(AgentUriClaim.TYPE);
+
+            if (nameClaim == null || uriClaim == null)
+            {
+                SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "No AgentInfo set");
+            }
+
+            info = new AgentInfo()
+            {
+                Name = nameClaim.Value,
+                Uri = uriClaim.Value
+            };
         }
 
         private void ExtractCollection(
@@ -154,6 +209,7 @@
             if (routeData.Values.ContainsKey(CollectionAPI.COLLECTION))
             {
                 var collection = routeData.Values[CollectionAPI.COLLECTION].ToString();
+
                 int collectionId;
 
                 if (!int.TryParse(collection, out collectionId))

@@ -22,6 +22,8 @@
         private const int PROJECT_ID = 0;
         private const string USER = "user";
         private const string PASS = "pass";
+        private const string AGENT_NAME = "Test, U.";
+        private const string AGENT_URI = "http://snsb.info/agents/test_u";
         private IContext Context;
 
         public CollectionFilterTest()
@@ -200,10 +202,33 @@
             Assert.True(ActionCalled());
         }
 
-        private void SetRouteData(int collectionId, int? projectId = null)
+        [Fact]
+        public async Task Creates_AgentInfo()
+        {
+            // Arrange
+            SetRouteData(null, null);
+            SetAgentInfoClaims(AGENT_NAME, AGENT_URI);
+
+            // Act
+            await ActionExecuting();
+
+            // Assert
+            Assert.True(ActionCalled());
+            var info = Request.GetAgentInfo();
+            Assert.NotNull(info);
+            Assert.Equal(AGENT_NAME, info.Name);
+            Assert.Equal(AGENT_URI, info.Uri);
+        }
+
+        private void SetRouteData(int? collectionId, int? projectId = null)
         {
             var routeValues = new HttpRouteValueDictionary();
-            routeValues[CollectionAPI.COLLECTION] = collectionId.ToString();
+
+            if (collectionId.HasValue)
+            {
+                routeValues[CollectionAPI.COLLECTION] = collectionId.ToString();
+            }
+
             if (projectId.HasValue)
             {
                 routeValues[CollectionAPI.PROJECT] = projectId.ToString();
@@ -216,6 +241,20 @@
         {
             var identity = RequestContext.Principal.Identity as ClaimsIdentity;
             identity.AddClaim(new BackendCredentialsClaim(user, password));
+        }
+
+        private void SetAgentInfoClaims(string name, string uri)
+        {
+            var identity = RequestContext.Principal.Identity as ClaimsIdentity;
+            if (name != null)
+            {
+                identity.AddClaim(new AgentNameClaim(name));
+            }
+
+            if (uri != null)
+            {
+                identity.AddClaim(new AgentUriClaim(uri));
+            }
         }
 
         private void SetValidCollectionAndProject()

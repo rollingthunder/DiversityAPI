@@ -10,14 +10,6 @@
     using System.Linq;
     using System.Text;
 
-    public class LMapper : ITypeConverter<DbGeography, Localization>
-    {
-        public Localization Convert(ResolutionContext context)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public static class LocalizationMapper
     {
         public static Localization ToLocalization(this DbGeography geo)

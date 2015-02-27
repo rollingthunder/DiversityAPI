@@ -51,54 +51,57 @@
                 return;
             }
 
-            ClaimsIdentity identity;
-            ExtractClaims(actionContext, out identity);
-
-            if (actionContext.Response != null)
-            {
-                return;
-            }
-
-            // Backend Login Claims, if necessary
+            // Only require Identification if we are connecting to a collection
             if (Server != null)
             {
-                ExtractBackendCredentials(actionContext, identity, out User, out Password);
+                ClaimsIdentity identity;
+                ExtractClaims(actionContext, out identity);
 
                 if (actionContext.Response != null)
                 {
                     return;
                 }
 
-                ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
-
-                if (ctx == null)
+                // Backend Login Claims
                 {
-                    SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Invalid Collection Credentials");
-                    return;
+                    ExtractBackendCredentials(actionContext, identity, out User, out Password);
+
+                    if (actionContext.Response != null)
+                    {
+                        return;
+                    }
+
+                    ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
+
+                    if (ctx == null)
+                    {
+                        SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "Invalid Collection Credentials");
+                        return;
+                    }
+
+                    await ExtractProject(actionContext, ctx);
+
+                    if (actionContext.Response != null)
+                    {
+                        return;
+                    }
+
+                    actionContext.Request.SetCollectionContext(ctx);
                 }
 
-                await ExtractProject(actionContext, ctx);
-
-                if (actionContext.Response != null)
+                // Agent Claims
                 {
-                    return;
-                }
+                    ExtractAgentInfo(actionContext, identity, out Agent);
 
-                actionContext.Request.SetCollectionContext(ctx);
-            }
+                    if (actionContext.Response != null)
+                    {
+                        return;
+                    }
 
-            // Agent Claims
-            {
-                ExtractAgentInfo(actionContext, identity, out Agent);
-
-                if (actionContext.Response != null)
-                {
-                    return;
-                }
-
-                if (Agent != null)
-                {
-                    actionContext.Request.SetAgentInfo(Agent);
+                    if (Agent != null)
+                    {
+                        actionContext.Request.SetAgentInfo(Agent);
+                    }
                 }
             }
 
@@ -170,7 +173,7 @@
         }
 
         private void ExtractAgentInfo(
-            HttpActionContext actionContext,
+            HttpActionContext _,
             ClaimsIdentity identity,
             out AgentInfo info)
         {
@@ -179,16 +182,15 @@
             var nameClaim = identity.FindFirst(AgentNameClaim.TYPE);
             var uriClaim = identity.FindFirst(AgentUriClaim.TYPE);
 
-            if (nameClaim == null || uriClaim == null)
+            // AgentInfo is optional, don't fail.
+            if (nameClaim != null && uriClaim != null)
             {
-                SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "No AgentInfo set");
+                info = new AgentInfo()
+                {
+                    Name = nameClaim.Value,
+                    Uri = uriClaim.Value
+                };
             }
-
-            info = new AgentInfo()
-            {
-                Name = nameClaim.Value,
-                Uri = uriClaim.Value
-            };
         }
 
         private void ExtractCollection(

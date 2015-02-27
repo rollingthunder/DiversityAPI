@@ -206,7 +206,9 @@
         public async Task Creates_AgentInfo()
         {
             // Arrange
-            SetRouteData(null, null);
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID, PROJECT_ID);
+            SetBackendCredentials(USER, PASS);
             SetAgentInfoClaims(AGENT_NAME, AGENT_URI);
 
             // Act

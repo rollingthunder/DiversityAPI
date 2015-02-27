@@ -97,7 +97,7 @@
                 return existing;
             }
 
-            Identification dto = null;
+            Identification dto = value;
 
             using (var transaction = BeginTransaction())
             {
@@ -112,11 +112,11 @@
 
                 await IUStore.InsertAsync(newIU);
 
-                dto = Mapper.Map<Collection.IdentificationUnit, Identification>(newIU, value);
+                dto.Id = newIU.Id;
 
                 // Identification
 
-                var newID = Mapper.Map<Collection.Identification>(dto); // From dto to get the db generated Id
+                var newID = Mapper.Map<Collection.Identification>(dto);
 
                 newID.IdentificationCategory = IDENTIFICATION_CATEGORY_ACTUAL;
                 newID.Notes = DEFAULT_NOTES;
@@ -131,7 +131,6 @@
 
                 newIUGAN.Geography = dto.Localization.ToGeography();
                 newIUGAN.Notes = DEFAULT_NOTES;
-
                 newIUGAN.ResponsibleName = AgentInfo.Name;
                 newIUGAN.ResponsibleAgentURI = AgentInfo.Uri;
 

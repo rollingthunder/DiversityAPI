@@ -1,28 +1,32 @@
-﻿using AutoMapper;
-using DiversityService.API.Model;
-using DiversityService.API.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace DiversityService.API.Controllers
+﻿namespace DiversityService.API.Controllers
 {
+    using AutoMapper;
+    using DiversityService.API.Filters;
+    using DiversityService.API.Model;
+    using DiversityService.API.Services;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+
+    [ProjectAPI(Route.TAXA_CONTROLLER)]
     public class TaxaController : DiversityController
     {
-        private readonly Lazy<ITaxa> _Taxa;
-
-        private ITaxa Taxa { get { return _Taxa.Value; } }
+        private ITaxa Taxa
+        {
+            get
+            {
+                return Request.GetCollectionContext().Taxa;
+            }
+        }
 
         private readonly IMappingEngine Mapping;
 
         public TaxaController(
-            Lazy<ITaxa> Taxa,
             IMappingEngine Mapping
             )
             : base(Mapping)
         {
-            this._Taxa = Taxa;
             this.Mapping = Mapping;
         }
 

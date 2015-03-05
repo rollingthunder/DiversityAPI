@@ -27,6 +27,8 @@
 
         IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey> IdentificationGeoAnalyses { get; }
 
+        ITaxa Taxa { get; }
+
         ITransaction BeginTransaction();
     }
 }

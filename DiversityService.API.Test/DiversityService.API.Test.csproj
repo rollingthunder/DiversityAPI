@@ -171,6 +171,7 @@
     <Compile Include="Controllers\IdentificationControllerTest.cs" />
     <Compile Include="Controllers\SpecimenControllerTest.cs" />
     <Compile Include="Controllers\CRUDControllerTest.cs" />
+    <Compile Include="Controllers\TaxaControllerTest.cs" />
     <Compile Include="ControllerTestBase.cs" />
     <Compile Include="DelegatingHandlerExtensions.cs" />
     <Compile Include="Features\Series\RetrieveSeries.cs" />

@@ -10,29 +10,23 @@
 
     public interface ITaxa
     {
-        IEnumerable<TaxonListForProject> GetTaxonLists(int projectId);
+        IEnumerable<TaxonListForProject> GetTaxonLists(string userName);
 
         //IQueryable<TaxonName> GetTaxaForList(TaxonListForProject list);
     }
 
     public class TaxonService : ITaxa
     {
-        private readonly IMappingEngine Mapping;
-        private readonly CollectionContext Collection;
-        private readonly ApplicationUser User;
+        private readonly Collection Context;
 
         public TaxonService(
-            IMappingEngine Mapping,
-            CollectionContext Collection,
-            ApplicationUser user
+            Collection context
             )
         {
-            this.Mapping = Mapping;
-            this.Collection = Collection;
-            this.User = user;
+            this.Context = context;
         }
 
-        public IEnumerable<TaxonListForProject> GetTaxonLists(int projectId)
+        public IEnumerable<TaxonListForProject> GetTaxonLists(string userName)
         {
             return null;
 

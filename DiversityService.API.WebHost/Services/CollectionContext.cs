@@ -114,6 +114,11 @@
             get { return LazyWithContext<IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey>>(); }
         }
 
+        public ITaxa Taxa
+        {
+            get { return LazyWithContext<ITaxa>(); }
+        }
+
         private T LazyWithContext<T>()
             where T : class
         {

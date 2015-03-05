@@ -44,6 +44,9 @@
             Bind(typeof(IStore<,>))
                 .To(typeof(Store<,>))
                 .InRequestScope();
+
+            Bind<ITaxa>()
+                .To<TaxonService>();
         }
     }
 }

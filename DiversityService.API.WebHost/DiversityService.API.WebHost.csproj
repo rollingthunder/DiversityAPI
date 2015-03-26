@@ -351,6 +351,7 @@
     <Compile Include="Controllers\Routes.cs" />
     <Compile Include="Controllers\SeriesController.cs" />
     <Compile Include="Controllers\TaxaController.cs" />
+    <Compile Include="Controllers\TermsController.cs" />
     <Compile Include="Filters\ProjectFilter.cs" />
     <Compile Include="Filters\CollectionFilter.cs" />
     <Compile Include="Filters\SeriesSirenProvider.cs" />

@@ -32,9 +32,11 @@
 
         public IEnumerable<TaxonList> Get(int projectId)
         {
-            return from projectList in Taxa.GetTaxonLists(projectId)
-                   where projectList.ProjectId == projectId
-                   select Mapping.Map<TaxonList>(projectList);
+            //return from projectList in Taxa.GetTaxonLists(projectId)
+            //       where projectList.ProjectId == projectId
+            //       select Mapping.Map<TaxonList>(projectList);
+
+            return null;
         }
     }
 }

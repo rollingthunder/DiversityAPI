@@ -6,8 +6,9 @@
     {
         private const string USER = "Test";
         private const string PASSWORD = "Pass";
+        private const string TOKEN = "{arstarstarsnthiarensh}";
 
-        private DiversityAPI Client = new DiversityAPI(USER, PASSWORD);
+        private DiversityAPI Client = new DiversityAPI(TOKEN);
 
         [Fact]
         public void CanSetupClient()

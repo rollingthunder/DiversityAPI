@@ -28,10 +28,12 @@
         public const string EVENT_CONTROLLER = "event";
         public const string PREFIX_EVENT = PREFIX_DEFAULT_API + EVENT_CONTROLLER + "/";
 
+        public const string SPECIMEN_CONTROLLER = "specimen";
+
         public const string TAXA_CONTROLLER = "taxa";
         public const string PREFIX_TAXA = PREFIX_DEFAULT_API + TAXA_CONTROLLER + "/";
 
-        public const string SPECIMEN_CONTROLLER = "specimen";
+        public const string TERMS_CONTROLLER = "taxa";
 
         public static object GetById<T>(T entity) where T : IIdentifiable
         {

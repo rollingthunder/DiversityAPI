@@ -4,11 +4,11 @@
 
     public class DiversityAPI
     {
-        private readonly string User;
-        private readonly string Password;
+        private string Token;
 
-        public DiversityAPI(string user, string password)
+        public DiversityAPI(string access_token)
         {
+            Token = access_token;
         }
     }
 }

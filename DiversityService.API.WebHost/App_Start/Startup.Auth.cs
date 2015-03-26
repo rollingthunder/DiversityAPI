@@ -43,7 +43,7 @@ namespace DiversityService.API.WebHost
             app.UseOAuthBearerTokens(OAuthOptions);
 
             // Uncomment the following lines to enable logging in with third party login providers
-            var secret = ConfigurationManager.AppSettings["LiveClientSecret"];
+            var secret = ConfigurationManager.AppSettings["LiveClientSecret"] ?? "0000000000000000";
 
             app.UseMicrosoftAccountAuthentication(
                clientId: "00000000480F4F1E",

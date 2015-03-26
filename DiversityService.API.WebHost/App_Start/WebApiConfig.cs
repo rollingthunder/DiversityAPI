@@ -12,6 +12,11 @@ namespace DiversityService.API.WebHost
     {
         public void ConfigureWebApi(IAppBuilder app)
         {
+            var config = new HttpConfiguration();
+
+            WebApiConfig.Register(config);
+
+            app.UseWebApi(config);
         }
     }
 

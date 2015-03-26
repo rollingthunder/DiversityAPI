@@ -20,7 +20,7 @@
             using (var server = TestServer.Create<Startup>())
             {
                 // Act
-                var response = await server.HttpClient.GetAsync("/ExternalLogins");
+                var response = await server.HttpClient.GetAsync("/api/Account/ExternalLogins");
 
                 // Assert
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);

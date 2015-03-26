@@ -5,10 +5,10 @@
     using Microsoft.Owin;
     using Moq;
     using Ninject;
+    using Ninject.Web.WebApi;
     using System.Net.Http;
     using System.Net.Http.Formatting;
     using System.Web.Http;
-    using WebApiContrib.IoC.Ninject;
 
     public class ControllerTestBase<T> : TestBase where T : ApiController
     {
@@ -23,7 +23,7 @@
 
             Controller.Configuration = new HttpConfiguration()
             {
-                DependencyResolver = new NinjectResolver(Kernel)
+                DependencyResolver = new NinjectDependencyResolver(Kernel)
             };
 
             Controller.Request = new HttpRequestMessage();

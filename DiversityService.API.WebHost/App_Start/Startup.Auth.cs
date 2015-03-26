@@ -48,20 +48,6 @@ namespace DiversityService.API.WebHost
             app.UseMicrosoftAccountAuthentication(
                clientId: "00000000480F4F1E",
                clientSecret: secret);
-
-            // app.UseTwitterAuthentication(
-            //    consumerKey: "",
-            //    consumerSecret: "");
-
-            // app.UseFacebookAuthentication(
-            //    appId: "",
-            //    appSecret: "");
-
-            // app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            // {
-            //    ClientId = "",
-            //    ClientSecret = ""
-            // });
         }
     }
 }

@@ -1,30 +1,45 @@
 ﻿using DiversityService.API.Filters;
 using DiversityService.API.Handler;
 using Microsoft.Owin.Security.OAuth;
+using Ninject;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
 using Owin;
+using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Filters;
-using WebApiContrib.Formatting.Siren.Client;
 
 namespace DiversityService.API.WebHost
 {
     public partial class Startup
     {
+        private IKernel CreateKernel()
+        {
+            var kernel = new StandardKernel();
+
+            kernel.Load(Assembly.GetExecutingAssembly());
+
+            return kernel;
+        }
+
         public void ConfigureWebApi(IAppBuilder app)
         {
+            var kernel = CreateKernel();
+
             var config = new HttpConfiguration();
 
-            WebApiConfig.Register(config);
+            WebApiConfig.Register(kernel, config);
 
-            app.UseWebApi(config);
+            app.UseNinjectMiddleware(() => kernel)
+               .UseNinjectWebApi(config);
         }
     }
 
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Register(IKernel kernel, HttpConfiguration config)
         {
-            RegisterFilters(config);
+            RegisterFilters(kernel, config);
             RegisterRoutes(config);
         }
 
@@ -34,7 +49,7 @@ namespace DiversityService.API.WebHost
             config.MapHttpAttributeRoutes();
         }
 
-        public static void RegisterFilters(HttpConfiguration config)
+        public static void RegisterFilters(IKernel kernel, HttpConfiguration config)
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
@@ -44,14 +59,12 @@ namespace DiversityService.API.WebHost
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             config.Filters.Add(new AuthorizeAttribute());
             config.Filters.Add(new ValidateModelAttribute());
-            config.Filters.Add(config.DependencyResolver.GetService(typeof(CollectionContextFilter)) as IFilter);
+            config.Filters.Add(kernel.Get<CollectionContextFilter>());
             // config.Filters.Add(new SirenResultAttribute());
 
             config.MessageHandlers.Add(new RequireHttpsMessageHandler());
 
             config.MessageHandlers.Add(new CultureHandler());
-
-            config.Formatters.Add(new SirenJsonMediaTypeFormatter());
         }
     }
 }

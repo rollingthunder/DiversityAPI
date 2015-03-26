@@ -10,7 +10,6 @@
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Ninject;
-    using Ninject.Extensions.Factory;
     using Ninject.Modules;
     using Ninject.Web.Common;
     using System.Collections.Generic;

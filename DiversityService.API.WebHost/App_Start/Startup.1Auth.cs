@@ -25,7 +25,6 @@ namespace DiversityService.API.WebHost
 
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Configure the application for OAuth based flow
@@ -42,12 +41,14 @@ namespace DiversityService.API.WebHost
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            var secret = ConfigurationManager.AppSettings["LiveClientSecret"] ?? "0000000000000000";
+            // Retrieve Client Id and Secret from AppSettings
+            // If there are none, use the Test Application
+            var clientId = ConfigurationManager.AppSettings["LiveClientId"] ?? "000000004C0FE46A";
+            var clientSecret = ConfigurationManager.AppSettings["LiveClientSecret"] ?? "EarX-Ngmov1EebwO2Ia9CyLkvI9VJMhk";
 
             app.UseMicrosoftAccountAuthentication(
-               clientId: "00000000480F4F1E",
-               clientSecret: secret);
+               clientId: clientId,
+               clientSecret: clientSecret);
         }
     }
 }

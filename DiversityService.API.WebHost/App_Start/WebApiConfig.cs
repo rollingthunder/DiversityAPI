@@ -11,30 +11,6 @@ using System.Web.Http.Filters;
 
 namespace DiversityService.API.WebHost
 {
-    public partial class Startup
-    {
-        private IKernel CreateKernel()
-        {
-            var kernel = new StandardKernel();
-
-            kernel.Load(Assembly.GetExecutingAssembly());
-
-            return kernel;
-        }
-
-        public void ConfigureWebApi(IAppBuilder app)
-        {
-            var kernel = CreateKernel();
-
-            var config = new HttpConfiguration();
-
-            WebApiConfig.Register(kernel, config);
-
-            app.UseNinjectMiddleware(() => kernel)
-               .UseNinjectWebApi(config);
-        }
-    }
-
     public static class WebApiConfig
     {
         public static void Register(IKernel kernel, HttpConfiguration config)

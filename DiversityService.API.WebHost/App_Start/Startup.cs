@@ -5,9 +5,19 @@
 
     public partial class Startup
     {
-        public void Configuration(IAppBuilder app)
+        public virtual void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            ConfigureNinject(app);
+            ConfigureWebApi(app);
+        }
+    }
+
+    public partial class TestStartup : Startup
+    {
+        public override void Configuration(IAppBuilder app)
+        {
+            ConfigureTestAuth(app);
             ConfigureNinject(app);
             ConfigureWebApi(app);
         }

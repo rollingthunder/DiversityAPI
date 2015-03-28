@@ -51,4 +51,11 @@ namespace DiversityService.API.WebHost
                clientSecret: clientSecret);
         }
     }
+
+    public partial class TestStartup
+    {
+        public void ConfigureTestAuth(IAppBuilder app)
+        {
+        }
+    }
 }

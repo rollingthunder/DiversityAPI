@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
     using DiversityService.API.WebHost;
@@ -24,7 +25,7 @@
     using System.Web.Http.ModelBinding;
 
     [Authorize]
-    [RoutePrefix("api/Account")]
+    [RoutePrefix(Route.PREFIX_DEFAULT_API + Route.ACCOUNT_CONTROLLER)]
     public class AccountController : ApiController
     {
         private const string LocalLoginProvider = "Local";

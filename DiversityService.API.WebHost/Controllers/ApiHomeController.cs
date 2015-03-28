@@ -10,8 +10,10 @@
     using Tavis;
     using Tavis.Home;
     using Tavis.IANA;
+    using Tavis.UriTemplates;
 
     [AllowAnonymous]
+    [RoutePrefix("Home")]
     public class ApiHomeController : ApiController
     {
         private readonly HomeDocument Document;
@@ -20,13 +22,20 @@
         {
             Document = new HomeDocument();
 
+            // Account
+            var account = new Link()
+            {
+                Relation = Relations.ACCOUNT,
+                Target = new Uri(Route.PREFIX_ACCOUNT, UriKind.Relative)
+            };
+            Document.AddResource(account);
+
             // Series
             var series = new Link()
             {
-                Relation = Relations.SERIES_SINGLE,                
-                Target = new Uri("series/{id}", UriKind.Relative)
+                Relation = Relations.SERIES_SINGLE,
+                Template = new UriTemplate("series/{id}"),
             };
-            series.SetParameter("id", "", Parameters.SERIES_ID);
 
             var allowedMethods = new AllowHint();
             allowedMethods.AddMethod(HttpMethod.Get);
@@ -36,6 +45,8 @@
             Document.AddResource(series);
         }
 
+        [HttpGet]
+        [Route]
         public IHttpActionResult Get()
         {
             return Home(Document);

@@ -1,4 +1,4 @@
-﻿namespace DiversityService.API.Client.Test
+﻿namespace DiversityService.API.Client
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +7,7 @@
     using System.Net;
     using System.Net.Http;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
 
     internal static class CookieContainerExtensions
@@ -36,6 +37,30 @@
             {
                 request.Headers.TryAddWithoutValidation("Cookie", cookieHeader);
             }
+        }
+    }
+
+    /// <summary>
+    /// Simple Handler that implements Cookie functionality
+    /// for the client.
+    /// Sets new cookies from incoming replies and adds applicable cookies to
+    /// outgoing requests.
+    /// </summary>
+    public class CookieHandler : DelegatingHandler
+    {
+        public CookieContainer Container { get; private set; }
+
+        public CookieHandler(CookieContainer container = null)
+        {
+            Container = container ?? new CookieContainer();
+        }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            this.Container.ApplyCookies(request);
+            var response = await base.SendAsync(request, cancellationToken);
+            this.Container.SetCookies(response);
+            return response;
         }
     }
 }

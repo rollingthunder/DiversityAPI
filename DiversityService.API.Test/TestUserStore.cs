@@ -8,7 +8,7 @@
 
     public class TestUserStore : IUserStore<ApplicationUser>
     {
-        private HashSet<ApplicationUser> Users = new HashSet<ApplicationUser>();
+        public readonly HashSet<ApplicationUser> Users = new HashSet<ApplicationUser>();
 
         public async Task CreateAsync(ApplicationUser user)
         {
@@ -32,6 +32,8 @@
 
         public async Task UpdateAsync(ApplicationUser user)
         {
+            Users.Remove(user);
+            Users.Add(user);
         }
 
         public void Dispose()

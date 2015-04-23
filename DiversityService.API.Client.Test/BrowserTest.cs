@@ -10,12 +10,12 @@
 
     public class BrowserTest
     {
-        private TestServer API;
+        private TestAPI API;
         private APIBrowser Browser;
 
         public BrowserTest()
         {
-            API = TestAPI.Create();
+            API = new TestAPI();
             Browser = new APIBrowser(API.HttpClient);
         }
 
@@ -36,7 +36,7 @@
             await Browser.InitializeAsync();
 
             // Act
-            var accUri = await Browser.GetAccountUri();
+            var accUri = await Browser.GetAccountUriAsync();
 
             // Assert
             Assert.NotNull(accUri);

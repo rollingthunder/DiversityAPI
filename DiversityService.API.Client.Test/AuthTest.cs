@@ -32,7 +32,7 @@
         }
 
         [Fact]
-        public async Task CanAuthenticate()
+        public async Task CanAuthenticateManually()
         {
             // Arrange
             using (var server = TestServer.Create<Startup>())
@@ -90,6 +90,51 @@
                 // Assert
                 Assert.Equal(HttpStatusCode.Found, loginResponse.StatusCode);
                 Assert.NotNull(loginResponse.Headers.Location.Fragment);
+            }
+        }
+
+        [Fact]
+        public async Task CanAuthenticateWithTheClient()
+        {
+            // Arrange
+            using (var server = TestServer.Create<Startup>())
+            {
+                var baseAddress = new Uri("https://diversityapi.de:44301");
+                server.BaseAddress = baseAddress;
+
+                var client = new APIAuthentication(baseAddress, server.Handler);
+
+                // Act
+                var msUri = await client.GetLoginUriAsync();
+
+                // Simulate User logging in
+                Selenium.Navigate().GoToUrl(msUri);
+
+                var userDiv = Selenium.FindElement(By.Id("idDiv_PWD_UsernameTb"));
+                var user = userDiv.FindElement(By.TagName("input"));
+                var passwordDiv = Selenium.FindElement(By.Id("idDiv_PWD_PasswordTb"));
+                var password = passwordDiv.FindElement(By.TagName("input"));
+                var submit = Selenium.FindElement(By.Id("idSIButton9"));
+
+                user.SendKeys("diversityapi@outlook.com");
+                password.SendKeys("jh4ROvh5m6jfTVW8");
+                submit.Click();
+
+                try
+                {
+                    var yesBtn = Selenium.FindElement(By.Id("idBtn_Accept"));
+                    yesBtn.Click();
+                }
+                catch (NoSuchElementException)
+                {
+                    // already accepted ?
+                }
+                // End Simulate User logging in
+
+                var token = await client.AuthenticateReturnURLAsync(Selenium.Url);
+
+                // Assert
+                Assert.NotNull(token);
             }
         }
     }

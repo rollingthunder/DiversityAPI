@@ -1,5 +1,7 @@
 ﻿namespace DiversityService.API.Client
 {
+    using Newtonsoft.Json.Linq;
+    using Splat;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
@@ -8,7 +10,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class APIAuthentication
+    public class APIAuthentication : IEnableLogger
     {
         public const string PROVIDER_NAME_MICROSOFT = "Microsoft";
 
@@ -20,7 +22,13 @@
 
         public APIAuthentication(Uri baseAddress, HttpMessageHandler handler = null)
         {
-            Client = new HttpClient()
+            handler = handler ?? new HttpClientHandler();
+
+            // Do not use Cookie functionality from HttpClientHandler
+            // because we want to be able to work with any (test) Handler passed in.
+            handler = new CookieHandler() { InnerHandler = handler };
+
+            Client = new HttpClient(handler)
             {
                 BaseAddress = baseAddress
             };
@@ -28,9 +36,52 @@
 
         public async Task<string> GetLoginUriAsync(string providerName = PROVIDER_NAME_MICROSOFT)
         {
-            var loginsResponse = Client.GetAsync(URI_EXTERNAL_LOGINS);
+            try
+            {
+                var loginsResponse = await Client.GetAsync(URI_EXTERNAL_LOGINS);
 
-            return "";
+                var logins = await loginsResponse.Content.ReadAsAsync<JArray>();
+
+                var url = (from login in logins
+                           where login["Name"].ToString() == providerName
+                           select login["Url"].ToString())
+                        .FirstOrDefault();
+
+                if (url == null)
+                {
+                    return null;
+                }
+
+                var redirect = await Client.GetAsync(url);
+
+                return redirect.Headers.Location.AbsoluteUri;
+            }
+            catch (Exception ex)
+            {
+                this.Log().ErrorException("GetLoginUriAsync", ex);
+            }
+
+            return null;
+        }
+
+        public async Task<string> AuthenticateReturnURLAsync(string returnUrl)
+        {
+            try
+            {
+                var externalSigninResponse = await Client.GetAsync(returnUrl);
+
+                var signinUri = externalSigninResponse.Headers.Location.AbsoluteUri;
+
+                var signinResponse = await Client.GetAsync(signinUri);
+
+                return signinResponse.Headers.Location.Fragment;
+            }
+            catch (Exception ex)
+            {
+                this.Log().ErrorException("AuthenticateReturnURLAsync", ex);
+            }
+
+            return null;
         }
     }
 }

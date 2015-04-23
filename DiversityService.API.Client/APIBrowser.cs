@@ -36,7 +36,7 @@
             Home = HomeDocument.Parse(await homeResponse.Content.ReadAsStreamAsync());
         }
 
-        public async Task<Uri> GetAccountUri()
+        public async Task<Uri> GetAccountUriAsync()
         {
             RequireInitialized();
 

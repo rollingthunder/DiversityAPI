@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.WebHost
 {
     using Microsoft.Owin;
+    using Ninject;
     using Owin;
 
     public partial class Startup
@@ -15,6 +16,12 @@
 
     public partial class TestStartup : Startup
     {
+        public IKernel Kernel
+        {
+            get { return base.Kernel; }
+            set { base.Kernel = value; }
+        }
+
         public override void Configuration(IAppBuilder app)
         {
             ConfigureTestAuth(app);

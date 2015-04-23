@@ -8,20 +8,13 @@
 
     public partial class Startup
     {
-        private IKernel Kernel;
-
-        private IKernel CreateKernel()
-        {
-            var kernel = new StandardKernel();
-
-            kernel.Load(Assembly.GetExecutingAssembly());
-
-            return kernel;
-        }
+        protected IKernel Kernel;
 
         public void ConfigureNinject(IAppBuilder app)
         {
-            Kernel = CreateKernel();
+            Kernel = Kernel ?? new StandardKernel();
+
+            Kernel.Load(Assembly.GetExecutingAssembly());
 
             app.UseNinjectMiddleware(() => Kernel);
         }

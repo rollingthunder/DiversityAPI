@@ -3,18 +3,29 @@ using DiversityService.API.WebHost.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.DataHandler;
+using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
+using System.Collections;
 using System.Configuration;
+using System.Security.Claims;
 
 namespace DiversityService.API.WebHost
 {
     public partial class Startup
     {
-        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+        public static readonly string PublicClientId = "self";
 
-        public static string PublicClientId { get; private set; }
+        public static readonly OAuthAuthorizationServerOptions OAuthOptions = new OAuthAuthorizationServerOptions
+        {
+            TokenEndpointPath = new PathString("/Token"),
+            Provider = new ApplicationOAuthProvider(PublicClientId),
+            AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+            AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+            AllowInsecureHttp = false
+        };
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
@@ -26,17 +37,6 @@ namespace DiversityService.API.WebHost
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
-
-            // Configure the application for OAuth based flow
-            PublicClientId = "self";
-            OAuthOptions = new OAuthAuthorizationServerOptions
-            {
-                TokenEndpointPath = new PathString("/Token"),
-                Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
-                AllowInsecureHttp = false
-            };
 
             // Enable the application to use bearer tokens to authenticate users
             app.UseOAuthBearerTokens(OAuthOptions);
@@ -54,8 +54,41 @@ namespace DiversityService.API.WebHost
 
     public partial class TestStartup
     {
+        public const string AuthorizationToken = "arstarosidenasrtoienastrei";
+
+        public const string TestUserName = "test@user.com";
+
         public void ConfigureTestAuth(IAppBuilder app)
         {
+            // Default Data Fomat from Katana
+            // Necessary to satisfy IOC
+            IDataProtector dataProtecter = app.CreateDataProtector(
+                    typeof(OAuthAuthorizationServerMiddleware).Namespace,
+                    "Access_Token", "v1");
+            OAuthOptions.AccessTokenFormat = new TicketDataFormat(dataProtecter);
+
+            app.Use(async (ctx, next) =>
+            {
+                var req = ctx.Request;
+                var auth = req.Headers.Get("Authorization");
+                if (auth != null && auth.ToLower() == string.Format("bearer {0}", AuthorizationToken))
+                {
+                    var identity = CreateTestIdentity();
+
+                    ctx.Authentication.SignIn(identity);
+
+                    req.Headers.Remove("Authorization");
+                }
+
+                await next();
+            });
+        }
+
+        public static ClaimsIdentity CreateTestIdentity()
+        {
+            return new ClaimsIdentity(new Claim[]
+            {
+            }, OAuthDefaults.AuthenticationType);
         }
     }
 }

@@ -30,12 +30,8 @@
             this.Mapping = Mapping;
         }
 
-        public IEnumerable<TaxonList> Get(int projectId)
+        public IEnumerable<TaxonList> Get()
         {
-            //return from projectList in Taxa.GetTaxonLists(projectId)
-            //       where projectList.ProjectId == projectId
-            //       select Mapping.Map<TaxonList>(projectList);
-
             return null;
         }
     }

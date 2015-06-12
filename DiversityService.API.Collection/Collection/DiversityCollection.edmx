@@ -717,7 +717,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DiversityCollection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
+      <Schema Namespace="Collection" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation">
         <EntityType Name="Analysis">
           <Key>
             <PropertyRef Name="AnalysisID" />
@@ -814,7 +814,7 @@
           <Property Name="AverageValueCache" Type="Double" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
           <NavigationProperty Name="CollectionEvent" Relationship="Self.FK_CollectionEventProperty_CollectionEvent" FromRole="CollectionEventProperty" ToRole="CollectionEvent" />
-          <NavigationProperty Name="Property" Relationship="DiversityCollection.FK_CollectionEventDescriptor_Descriptor" FromRole="EventProperty" ToRole="Property" />
+          <NavigationProperty Name="Property" Relationship="Collection.FK_CollectionEventDescriptor_Descriptor" FromRole="EventProperty" ToRole="Property" />
         </EntityType>
         <EntityType Name="EventSeries">
           <Key>
@@ -830,8 +830,8 @@
           <NavigationProperty Name="Events" Relationship="Self.FK_CollectionEvent_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEvent" />
           <NavigationProperty Name="Images" Relationship="Self.FK_CollectionEventSeriesImage_CollectionEventSeries" FromRole="CollectionEventSeries" ToRole="CollectionEventSeriesImage" />
           <Property Name="ParentID" Type="Int32" a:GetterAccess="Private" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
-          <NavigationProperty Name="Children" Relationship="DiversityCollection.EventSeriesEventSeries" FromRole="EventSeries" ToRole="ChildSeries" />
-          <NavigationProperty Name="Parent" Relationship="DiversityCollection.EventSeriesEventSeries" FromRole="ChildSeries" ToRole="EventSeries" />
+          <NavigationProperty Name="Children" Relationship="Collection.EventSeriesEventSeries" FromRole="EventSeries" ToRole="ChildSeries" />
+          <NavigationProperty Name="Parent" Relationship="Collection.EventSeriesEventSeries" FromRole="ChildSeries" ToRole="EventSeries" />
           <Property Name="DateCache" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="EventSeriesImage">
@@ -896,7 +896,7 @@
           <NavigationProperty Name="CollectionEvent" Relationship="Self.FK_CollectionSpecimen_CollectionEvent" FromRole="CollectionSpecimen" ToRole="CollectionEvent" />
           <NavigationProperty Name="CollectionSpecimenImage" Relationship="Self.FK_CollectionSpecimenImage_CollectionSpecimen" FromRole="CollectionSpecimen" ToRole="CollectionSpecimenImage" />
           <NavigationProperty Name="IdentificationUnit" Relationship="Self.FK_IdentificationUnit_CollectionSpecimen" FromRole="CollectionSpecimen" ToRole="IdentificationUnit" />
-          <NavigationProperty Name="CollectionAgent" Relationship="DiversityCollection.FK_CollectionAgent_CollectionSpecimen" FromRole="Specimen" ToRole="CollectionAgent" />
+          <NavigationProperty Name="CollectionAgent" Relationship="Collection.FK_CollectionAgent_CollectionSpecimen" FromRole="Specimen" ToRole="CollectionAgent" />
         </EntityType>
         <EntityType Name="SpecimenImage">
           <Key>
@@ -1078,8 +1078,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CollectionEvent_CollectionEventSeries">
-          <End Role="CollectionEventSeries" Type="DiversityCollection.EventSeries" Multiplicity="0..1" />
-          <End Role="CollectionEvent" Type="DiversityCollection.Event" Multiplicity="*" />
+          <End Role="CollectionEventSeries" Type="Collection.EventSeries" Multiplicity="0..1" />
+          <End Role="CollectionEvent" Type="Collection.Event" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionEventSeries">
               <PropertyRef Name="Id" />
@@ -1090,10 +1090,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CollectionEventImage_CollectionEvent">
-          <End Role="CollectionEvent" Type="DiversityCollection.Event" Multiplicity="1">
+          <End Role="CollectionEvent" Type="Collection.Event" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="CollectionEventImage" Type="DiversityCollection.EventImage" Multiplicity="*" />
+          <End Role="CollectionEventImage" Type="Collection.EventImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionEvent">
               <PropertyRef Name="Id" />
@@ -1104,8 +1104,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CollectionEventProperty_CollectionEvent">
-          <End Role="CollectionEvent" Type="DiversityCollection.Event" Multiplicity="1" />
-          <End Role="CollectionEventProperty" Type="DiversityCollection.EventProperty" Multiplicity="*" />
+          <End Role="CollectionEvent" Type="Collection.Event" Multiplicity="1" />
+          <End Role="CollectionEventProperty" Type="Collection.EventProperty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionEvent">
               <PropertyRef Name="Id" />
@@ -1116,8 +1116,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CollectionSpecimen_CollectionEvent">
-          <End Role="CollectionEvent" Type="DiversityCollection.Event" Multiplicity="0..1" />
-          <End Role="CollectionSpecimen" Type="DiversityCollection.Specimen" Multiplicity="*" />
+          <End Role="CollectionEvent" Type="Collection.Event" Multiplicity="0..1" />
+          <End Role="CollectionSpecimen" Type="Collection.Specimen" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionEvent">
               <PropertyRef Name="Id" />
@@ -1128,8 +1128,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CollectionEventSeriesImage_CollectionEventSeries">
-          <End Role="CollectionEventSeries" Type="DiversityCollection.EventSeries" Multiplicity="1" />
-          <End Role="CollectionEventSeriesImage" Type="DiversityCollection.EventSeriesImage" Multiplicity="*" />
+          <End Role="CollectionEventSeries" Type="Collection.EventSeries" Multiplicity="1" />
+          <End Role="CollectionEventSeriesImage" Type="Collection.EventSeriesImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionEventSeries">
               <PropertyRef Name="Id" />
@@ -1140,10 +1140,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CollectionSpecimenImage_CollectionSpecimen">
-          <End Role="CollectionSpecimen" Type="DiversityCollection.Specimen" Multiplicity="1">
+          <End Role="CollectionSpecimen" Type="Collection.Specimen" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="CollectionSpecimenImage" Type="DiversityCollection.SpecimenImage" Multiplicity="*" />
+          <End Role="CollectionSpecimenImage" Type="Collection.SpecimenImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CollectionSpecimen">
               <PropertyRef Name="Id" />
@@ -1154,7 +1154,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IdentificationUnit_CollectionSpecimen">
-          <End Role="CollectionSpecimen" Type="DiversityCollection.Specimen" Multiplicity="1">
+          <End Role="CollectionSpecimen" Type="Collection.Specimen" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="IdentificationUnit" Type="Self.IdentificationUnit" Multiplicity="*" />
@@ -1169,7 +1169,7 @@
         </Association>
         <Association Name="FK_CollectionSpecimenImage_IdentificationUnit">
           <End Role="IdentificationUnit" Type="Self.IdentificationUnit" Multiplicity="0..1" />
-          <End Role="CollectionSpecimenImage" Type="DiversityCollection.SpecimenImage" Multiplicity="*" />
+          <End Role="CollectionSpecimenImage" Type="Collection.SpecimenImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IdentificationUnit">
               <PropertyRef Name="SpecimenId" />
@@ -1255,16 +1255,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Collection" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DiversityCollection" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Analysis" EntityType="Self.Analysis" />
           <EntitySet Name="AnalysisResult" EntityType="Self.AnalysisResult" />
-          <EntitySet Name="CollectionEvent" EntityType="DiversityCollection.Event" />
-          <EntitySet Name="CollectionEventImage" EntityType="DiversityCollection.EventImage" />
-          <EntitySet Name="CollectionEventProperty" EntityType="DiversityCollection.EventProperty" />
-          <EntitySet Name="EventSeries" EntityType="DiversityCollection.EventSeries" />
-          <EntitySet Name="CollectionEventSeriesImage" EntityType="DiversityCollection.EventSeriesImage" />
-          <EntitySet Name="CollectionSpecimen" EntityType="DiversityCollection.Specimen" />
-          <EntitySet Name="CollectionSpecimenImage" EntityType="DiversityCollection.SpecimenImage" />
+          <EntitySet Name="CollectionEvent" EntityType="Collection.Event" />
+          <EntitySet Name="CollectionEventImage" EntityType="Collection.EventImage" />
+          <EntitySet Name="CollectionEventProperty" EntityType="Collection.EventProperty" />
+          <EntitySet Name="EventSeries" EntityType="Collection.EventSeries" />
+          <EntitySet Name="CollectionEventSeriesImage" EntityType="Collection.EventSeriesImage" />
+          <EntitySet Name="CollectionSpecimen" EntityType="Collection.Specimen" />
+          <EntitySet Name="CollectionSpecimenImage" EntityType="Collection.SpecimenImage" />
           <EntitySet Name="Identification" EntityType="Self.Identification" />
           <EntitySet Name="IdentificationUnit" EntityType="Self.IdentificationUnit" />
           <EntitySet Name="IdentificationUnitAnalysis" EntityType="Self.IdentificationUnitAnalysis" />
@@ -1333,31 +1333,31 @@
             <End Role="IdentificationUnit" EntitySet="IdentificationUnit" />
             <End Role="IdentificationUnitGeoAnalysis" EntitySet="IdentificationUnitGeoAnalysis" />
           </AssociationSet>
-          <EntitySet Name="CollectionAgent" EntityType="DiversityCollection.CollectionAgent" />
-          <AssociationSet Name="FK_CollectionAgent_CollectionSpecimen" Association="DiversityCollection.FK_CollectionAgent_CollectionSpecimen">
+          <EntitySet Name="CollectionAgent" EntityType="Collection.CollectionAgent" />
+          <AssociationSet Name="FK_CollectionAgent_CollectionSpecimen" Association="Collection.FK_CollectionAgent_CollectionSpecimen">
             <End Role="Specimen" EntitySet="CollectionSpecimen" />
             <End Role="CollectionAgent" EntitySet="CollectionAgent" />
           </AssociationSet>
-          <EntitySet Name="Property" EntityType="DiversityCollection.Property" />
-          <AssociationSet Name="FK_CollectionEventDescriptor_Descriptor" Association="DiversityCollection.FK_CollectionEventDescriptor_Descriptor">
+          <EntitySet Name="Property" EntityType="Collection.Property" />
+          <AssociationSet Name="FK_CollectionEventDescriptor_Descriptor" Association="Collection.FK_CollectionEventDescriptor_Descriptor">
             <End Role="Property" EntitySet="Property" />
             <End Role="EventProperty" EntitySet="CollectionEventProperty" />
           </AssociationSet>
-          <AssociationSet Name="FK_Descriptor_Descriptor" Association="DiversityCollection.FK_Descriptor_Descriptor">
+          <AssociationSet Name="FK_Descriptor_Descriptor" Association="Collection.FK_Descriptor_Descriptor">
             <End Role="Property" EntitySet="Property" />
             <End Role="Property1" EntitySet="Property" />
           </AssociationSet>
-          <AssociationSet Name="EventSeriesEventSeries" Association="DiversityCollection.EventSeriesEventSeries">
+          <AssociationSet Name="EventSeriesEventSeries" Association="Collection.EventSeriesEventSeries">
             <End Role="EventSeries" EntitySet="EventSeries" />
             <End Role="ChildSeries" EntitySet="EventSeries" />
           </AssociationSet>
-          <FunctionImport Name="DiversityMobile_UserTaxonLists" ReturnType="Collection(DiversityCollection.UserTaxonList)">
+          <FunctionImport Name="DiversityMobile_UserTaxonLists" ReturnType="Collection(Collection.UserTaxonList)">
             <Parameter Name="LoginName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="DiversityMobile_UserTerminologies" ReturnType="Collection(DiversityCollection.UserTerminology)">
+          <FunctionImport Name="DiversityMobile_UserTerminologies" ReturnType="Collection(Collection.UserTerminology)">
             <Parameter Name="LoginName" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="DiversityMobile_ProjectList" IsComposable="true" ReturnType="Collection(DiversityCollection.Project)" />
+          <FunctionImport Name="DiversityMobile_ProjectList" IsComposable="true" ReturnType="Collection(Collection.Project)" />
         </EntityContainer>
         <EntityType Name="CollectionAgent">
           <Key>
@@ -1373,13 +1373,13 @@
           <Property Name="DataWithholdingReason" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="xx_IsAvailable" Type="Boolean" Nullable="false" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="CollectionSpecimen" Relationship="DiversityCollection.FK_CollectionAgent_CollectionSpecimen" FromRole="CollectionAgent" ToRole="Specimen" />
+          <NavigationProperty Name="CollectionSpecimen" Relationship="Collection.FK_CollectionAgent_CollectionSpecimen" FromRole="CollectionAgent" ToRole="Specimen" />
         </EntityType>
         <Association Name="FK_CollectionAgent_CollectionSpecimen">
-          <End Type="DiversityCollection.Specimen" Role="Specimen" Multiplicity="1">
+          <End Type="Collection.Specimen" Role="Specimen" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="DiversityCollection.CollectionAgent" Role="CollectionAgent" Multiplicity="*" />
+          <End Type="Collection.CollectionAgent" Role="CollectionAgent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Specimen">
               <PropertyRef Name="Id" />
@@ -1404,13 +1404,13 @@
           <Property Name="DisplayOrder" Type="Int16" />
           <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="RowGUID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="CollectionEventProperty" Relationship="DiversityCollection.FK_CollectionEventDescriptor_Descriptor" FromRole="Property" ToRole="EventProperty" />
-          <NavigationProperty Name="Property1" Relationship="DiversityCollection.FK_Descriptor_Descriptor" FromRole="Property" ToRole="Property1" />
-          <NavigationProperty Name="Property2" Relationship="DiversityCollection.FK_Descriptor_Descriptor" FromRole="Property1" ToRole="Property" />
+          <NavigationProperty Name="CollectionEventProperty" Relationship="Collection.FK_CollectionEventDescriptor_Descriptor" FromRole="Property" ToRole="EventProperty" />
+          <NavigationProperty Name="Property1" Relationship="Collection.FK_Descriptor_Descriptor" FromRole="Property" ToRole="Property1" />
+          <NavigationProperty Name="Property2" Relationship="Collection.FK_Descriptor_Descriptor" FromRole="Property1" ToRole="Property" />
         </EntityType>
         <Association Name="FK_CollectionEventDescriptor_Descriptor">
-          <End Type="DiversityCollection.Property" Role="Property" Multiplicity="1" />
-          <End Type="DiversityCollection.EventProperty" Role="EventProperty" Multiplicity="*" />
+          <End Type="Collection.Property" Role="Property" Multiplicity="1" />
+          <End Type="Collection.EventProperty" Role="EventProperty" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
               <PropertyRef Name="PropertyID" />
@@ -1421,8 +1421,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Descriptor_Descriptor">
-          <End Type="DiversityCollection.Property" Role="Property" Multiplicity="0..1" />
-          <End Type="DiversityCollection.Property" Role="Property1" Multiplicity="*" />
+          <End Type="Collection.Property" Role="Property" Multiplicity="0..1" />
+          <End Type="Collection.Property" Role="Property1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Property">
               <PropertyRef Name="PropertyID" />
@@ -1433,8 +1433,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="EventSeriesEventSeries">
-          <End Type="DiversityCollection.EventSeries" Role="EventSeries" Multiplicity="0..1" />
-          <End Type="DiversityCollection.EventSeries" Role="ChildSeries" Multiplicity="*" />
+          <End Type="Collection.EventSeries" Role="EventSeries" Multiplicity="0..1" />
+          <End Type="Collection.EventSeries" Role="ChildSeries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EventSeries">
               <PropertyRef Name="Id" />
@@ -1466,9 +1466,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DiversityCollectionStoreContainer" CdmEntityContainer="Collection">
+        <EntityContainerMapping StorageEntityContainer="DiversityCollectionStoreContainer" CdmEntityContainer="DiversityCollection">
           <EntitySetMapping Name="Analysis">
-            <EntityTypeMapping TypeName="DiversityCollection.Analysis">
+            <EntityTypeMapping TypeName="Collection.Analysis">
               <MappingFragment StoreEntitySet="Analysis">
                 <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
                 <ScalarProperty Name="AnalysisParentID" ColumnName="AnalysisParentID" />
@@ -1483,7 +1483,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="AnalysisResult">
-            <EntityTypeMapping TypeName="DiversityCollection.AnalysisResult">
+            <EntityTypeMapping TypeName="Collection.AnalysisResult">
               <MappingFragment StoreEntitySet="AnalysisResult">
                 <ScalarProperty Name="AnalysisID" ColumnName="AnalysisID" />
                 <ScalarProperty Name="AnalysisResult1" ColumnName="AnalysisResult" />
@@ -1496,7 +1496,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionEvent">
-            <EntityTypeMapping TypeName="DiversityCollection.Event">
+            <EntityTypeMapping TypeName="Collection.Event">
               <MappingFragment StoreEntitySet="CollectionEvent">
                 <ScalarProperty Name="CollectionTime" ColumnName="CollectionTime" />
                 <ScalarProperty Name="CollectionDateCategory" ColumnName="CollectionDateCategory" />
@@ -1515,7 +1515,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionEventImage">
-            <EntityTypeMapping TypeName="DiversityCollection.EventImage">
+            <EntityTypeMapping TypeName="Collection.EventImage">
               <MappingFragment StoreEntitySet="CollectionEventImage">
                 <ScalarProperty Name="CollectionEventID" ColumnName="CollectionEventID" />
                 <ScalarProperty Name="URI" ColumnName="URI" />
@@ -1539,7 +1539,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionEventProperty">
-            <EntityTypeMapping TypeName="DiversityCollection.EventProperty">
+            <EntityTypeMapping TypeName="Collection.EventProperty">
               <MappingFragment StoreEntitySet="CollectionEventProperty">
                 <ScalarProperty Name="CollectionEventID" ColumnName="CollectionEventID" />
                 <ScalarProperty Name="PropertyID" ColumnName="PropertyID" />
@@ -1556,7 +1556,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EventSeries">
-            <EntityTypeMapping TypeName="DiversityCollection.EventSeries">
+            <EntityTypeMapping TypeName="Collection.EventSeries">
               <MappingFragment StoreEntitySet="CollectionEventSeries">
                 <ScalarProperty Name="DateCache" ColumnName="DateCache" />
                 <ScalarProperty Name="ParentID" ColumnName="SeriesParentID" />
@@ -1571,7 +1571,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionEventSeriesImage">
-            <EntityTypeMapping TypeName="DiversityCollection.EventSeriesImage">
+            <EntityTypeMapping TypeName="Collection.EventSeriesImage">
               <MappingFragment StoreEntitySet="CollectionEventSeriesImage">
                 <ScalarProperty Name="SeriesID" ColumnName="SeriesID" />
                 <ScalarProperty Name="URI" ColumnName="URI" />
@@ -1595,7 +1595,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionSpecimen">
-            <EntityTypeMapping TypeName="DiversityCollection.Specimen">
+            <EntityTypeMapping TypeName="Collection.Specimen">
               <MappingFragment StoreEntitySet="CollectionSpecimen">
                 <ScalarProperty Name="Id" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
@@ -1631,7 +1631,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionSpecimenImage">
-            <EntityTypeMapping TypeName="DiversityCollection.SpecimenImage">
+            <EntityTypeMapping TypeName="Collection.SpecimenImage">
               <MappingFragment StoreEntitySet="CollectionSpecimenImage">
                 <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="URI" ColumnName="URI" />
@@ -1658,7 +1658,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Identification">
-            <EntityTypeMapping TypeName="DiversityCollection.Identification">
+            <EntityTypeMapping TypeName="Collection.Identification">
               <MappingFragment StoreEntitySet="Identification">
                 <ScalarProperty Name="SpecimenID" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="IdentificationUnitID" ColumnName="IdentificationUnitID" />
@@ -1687,7 +1687,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="IdentificationUnit">
-            <EntityTypeMapping TypeName="DiversityCollection.IdentificationUnit">
+            <EntityTypeMapping TypeName="Collection.IdentificationUnit">
               <MappingFragment StoreEntitySet="IdentificationUnit">
                 <ScalarProperty Name="SpecimenId" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="Id" ColumnName="IdentificationUnitID" />
@@ -1721,7 +1721,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="IdentificationUnitAnalysis">
-            <EntityTypeMapping TypeName="DiversityCollection.IdentificationUnitAnalysis">
+            <EntityTypeMapping TypeName="Collection.IdentificationUnitAnalysis">
               <MappingFragment StoreEntitySet="IdentificationUnitAnalysis">
                 <ScalarProperty Name="CollectionSpecimenID" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="IdentificationUnitID" ColumnName="IdentificationUnitID" />
@@ -1740,7 +1740,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="IdentificationUnitGeoAnalysis">
-            <EntityTypeMapping TypeName="DiversityCollection.IdentificationUnitGeoAnalysis">
+            <EntityTypeMapping TypeName="Collection.IdentificationUnitGeoAnalysis">
               <MappingFragment StoreEntitySet="IdentificationUnitGeoAnalysis">
                 <ScalarProperty Name="SpecimenId" ColumnName="CollectionSpecimenID" />
                 <ScalarProperty Name="IdentificationUnitId" ColumnName="IdentificationUnitID" />
@@ -1755,7 +1755,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CollectionAgent">
-            <EntityTypeMapping TypeName="DiversityCollection.CollectionAgent">
+            <EntityTypeMapping TypeName="Collection.CollectionAgent">
               <MappingFragment StoreEntitySet="CollectionAgent">
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="xx_IsAvailable" ColumnName="xx_IsAvailable" />
@@ -1770,7 +1770,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Property">
-            <EntityTypeMapping TypeName="DiversityCollection.Property">
+            <EntityTypeMapping TypeName="Collection.Property">
               <MappingFragment StoreEntitySet="Property">
                 <ScalarProperty Name="RowGUID" ColumnName="RowGUID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1788,7 +1788,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="DiversityMobile_UserTaxonLists" FunctionName="DiversityCollection.Store.DiversityMobile_UserTaxonLists">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DiversityCollection.UserTaxonList">
+              <ComplexTypeMapping TypeName="Collection.UserTaxonList">
                 <ScalarProperty Name="DataBaseName" ColumnName="DataBaseName" />
                 <ScalarProperty Name="ListID" ColumnName="ListID" />
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
@@ -1800,7 +1800,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DiversityMobile_UserTerminologies" FunctionName="DiversityCollection.Store.DiversityMobile_UserTerminologies">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DiversityCollection.UserTerminology">
+              <ComplexTypeMapping TypeName="Collection.UserTerminology">
                 <ScalarProperty Name="DataBaseName" ColumnName="DataBaseName" />
                 <ScalarProperty Name="TerminologyID" ColumnName="TerminologyID" />
                 <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
@@ -1809,7 +1809,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="DiversityMobile_ProjectList" FunctionName="DiversityCollection.Store.DiversityMobile_ProjectList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DiversityCollection.Project">
+              <ComplexTypeMapping TypeName="Collection.Project">
                 <ScalarProperty Name="ProjectID" ColumnName="ProjectID" />
                 <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />
               </ComplexTypeMapping>

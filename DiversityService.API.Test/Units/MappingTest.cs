@@ -12,6 +12,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     public class MappingTest : TestBase
     {

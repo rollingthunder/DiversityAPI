@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Collection = DiversityService.DB.Collection;
 
     [CollectionAPI(Route.EVENT_CONTROLLER)]
     public class EventController : DiversityController, IFieldDataController<EventBindingModel>

@@ -7,7 +7,7 @@
     <ProjectGuid>{49E502EF-2918-4098-AFC4-4461BE012684}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DiversityService</RootNamespace>
+    <RootNamespace>DiversityService.DB</RootNamespace>
     <AssemblyName>DiversityService.Collection</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -109,6 +109,7 @@
     <Compile Include="Collection\CollectionAgent.cs">
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
+    <Compile Include="Collection\Custom.cs" />
     <Compile Include="Collection\DiversityCollection.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -119,7 +120,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
-    <Compile Include="Collection\DiversityCollection.Custom.cs" />
     <Compile Include="Collection\DiversityCollection.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,25 +173,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="Collection\DiversityCollection.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DiversityCollection.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
-    <None Include="Collection\DiversityCollection.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DiversityCollection.Context.cs</LastGenOutput>
-      <DependentUpon>DiversityCollection.edmx</DependentUpon>
-    </None>
     <None Include="Collection\DiversityCollection.edmx.diagram">
       <DependentUpon>DiversityCollection.edmx</DependentUpon>
-    </None>
-    <None Include="Collection\DiversityCollection.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DiversityCollection.edmx</DependentUpon>
-      <LastGenOutput>DiversityCollection.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -200,12 +188,24 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Collection\DataModelTransform.xslt" />
+    <Content Include="Collection\DiversityCollection.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DiversityCollection.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Collection\DiversityCollection.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DiversityCollection.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DiversityService.API.Model\DiversityService.API.Model.csproj">
       <Project>{0bdd8e4f-945e-4124-a914-c7ff50ea4e3c}</Project>
       <Name>DiversityService.API.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Module\" />
+    <Folder Include="TaxonNames\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

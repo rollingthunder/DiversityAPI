@@ -1,6 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.Collection;
+    using DiversityService.DB.Collection;
     using System;
     using System.Threading.Tasks;
 

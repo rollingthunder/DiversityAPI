@@ -12,6 +12,7 @@
     using System.Threading.Tasks;
     using System.Web.Http.Results;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     public class SeriesControllerTest : CRUDControllerTest<SeriesController, Collection.EventSeries, EventSeries, EventSeriesBindingModel>
     {

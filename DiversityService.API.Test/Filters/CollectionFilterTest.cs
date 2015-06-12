@@ -11,6 +11,7 @@
     using System.Threading.Tasks;
     using System.Web.Http.Routing;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     public class CollectionFilterTest : FilterTestBase<CollectionContextFilter>
     {

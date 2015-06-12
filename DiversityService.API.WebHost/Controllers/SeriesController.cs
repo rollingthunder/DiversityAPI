@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Collection = DiversityService.DB.Collection;
 
     [CollectionAPI("series")]
     public class SeriesController : DiversityController, IFieldDataController<EventSeriesBindingModel>

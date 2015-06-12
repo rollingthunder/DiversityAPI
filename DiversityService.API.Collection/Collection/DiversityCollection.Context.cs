@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DiversityService.Collection
+namespace DiversityService.DB.Collection
 {
     using System;
     using System.Data.Entity;
@@ -15,10 +15,10 @@ namespace DiversityService.Collection
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class Collection : DbContext
+    public partial class DiversityCollection : DbContext
     {
-        public Collection()
-            : base("name=Collection")
+        public DiversityCollection()
+            : base("name=DiversityCollection")
         {
         }
     
@@ -61,10 +61,10 @@ namespace DiversityService.Collection
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserTerminology>("DiversityMobile_UserTerminologies", loginNameParameter);
         }
     
-        [DbFunction("Collection", "DiversityMobile_ProjectList")]
+        [DbFunction("DiversityCollection", "DiversityMobile_ProjectList")]
         public virtual IQueryable<Project> DiversityMobile_ProjectList()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Project>("[Collection].[DiversityMobile_ProjectList]()");
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Project>("[DiversityCollection].[DiversityMobile_ProjectList]()");
         }
     }
 }

@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using System.Web.Http.Results;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     public class EventControllerTest : CRUDControllerTest<EventController, Collection.Event, Event, EventBindingModel>
     {

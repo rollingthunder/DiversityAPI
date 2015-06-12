@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Collection = DiversityService.DB.Collection;
 
     [CollectionAPI(Route.SPECIMEN_CONTROLLER)]
     public class SpecimenController : DiversityController, IFieldDataController<SpecimenBindingModel>

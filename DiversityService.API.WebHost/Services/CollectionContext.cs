@@ -1,6 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.Collection;
+    using DiversityService.DB.Collection;
     using Ninject;
     using Ninject.Parameters;
     using System;
@@ -49,14 +49,14 @@
         public const string CONTEXT_ARGUMENT = "context";
 
         private readonly IKernel Kernel;
-        private readonly Collection Context;
+        private readonly DiversityCollection Context;
         private readonly IDictionary<Type, object> StoreCache;
 
         private CollectionTransaction CurrentTransaction;
 
         public CollectionContext(
             IKernel kernel,
-            Collection context
+            DiversityCollection context
             )
         {
             Contract.Requires<ArgumentNullException>(kernel != null);

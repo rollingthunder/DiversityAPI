@@ -8,6 +8,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using Collection = DiversityService.DB.Collection;
 
     [CollectionAPI(Route.SPECIMEN_CONTROLLER + "/{sid:int}/" + Route.IDENTIFICATION_CONTROLLER)]
     public class IdentificationController : DiversityController

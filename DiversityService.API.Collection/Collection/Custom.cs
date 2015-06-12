@@ -1,4 +1,4 @@
-﻿namespace DiversityService.Collection
+﻿namespace DiversityService.DB.Collection
 {
     using DiversityService.API.Model;
     using NodaTime;
@@ -365,11 +365,11 @@
         }
     }
 
-    public partial class Collection
+    public partial class DiversityCollection
     {
         public int? ProjectId { get; set; }
 
-        public Collection(string cstring)
+        public DiversityCollection(string cstring)
             : base(cstring)
         {
             ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized += EntityHelper.ObjectMaterialized;
@@ -378,12 +378,14 @@
         }
     }
 
-    public class TaxonListForProject
+    public class TaxonList
     {
         public int Id { get; set; }
 
-        public int ProjectId { get; set; }
-
         public string Name { get; set; }
+
+        public string TaxonGroup { get; set; }
+
+        public string Catalog { get; set; }
     }
 }

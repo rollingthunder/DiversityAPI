@@ -13,6 +13,7 @@
     using System.Web.Http;
     using System.Web.Http.Results;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     internal static class IdentificationTestHelper
     {

@@ -9,6 +9,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     public class ProjectControllerTest : ControllerTestBase<ProjectController>
     {

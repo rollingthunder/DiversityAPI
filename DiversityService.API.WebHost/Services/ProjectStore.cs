@@ -1,6 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.Collection;
+    using DiversityService.DB.Collection;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -16,10 +16,10 @@
 
     public class ProjectStore : IProjectStore
     {
-        private readonly Collection Context;
+        private readonly DiversityCollection Context;
 
         public ProjectStore(
-            Collection context
+            DiversityCollection context
             )
         {
             Context = context;

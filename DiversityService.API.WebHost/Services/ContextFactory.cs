@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Services
 {
     using DiversityService.API.Model;
+    using DiversityService.DB.Collection;
     using Ninject;
     using System;
     using System.Collections.Generic;
@@ -22,7 +23,7 @@
         {
             try
             {
-                var ctx = new Collection.Collection(GetConnectionString(server, user, password));
+                var ctx = new DiversityCollection(GetConnectionString(server, user, password));
 
                 // Force immediate connection to validate settings
                 await ctx.Database.Connection.OpenAsync();

@@ -1,7 +1,7 @@
 ﻿namespace DiversityService.API.Services
 {
     using DiversityService.API.Model;
-    using DiversityService.Collection;
+    using DiversityService.DB.Collection;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -44,10 +44,10 @@
 
     public class Store<TEntity, TKey> : IStore<TEntity, TKey> where TEntity : class
     {
-        private readonly Collection context;
+        private readonly DiversityCollection context;
         private readonly DbSet<TEntity> dbSet;
 
-        public Store(Collection context)
+        public Store(DiversityCollection context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DiversityService.Collection
+namespace DiversityService.DB.Collection
 {
     using System;
     

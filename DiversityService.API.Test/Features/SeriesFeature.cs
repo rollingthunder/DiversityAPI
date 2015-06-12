@@ -20,17 +20,17 @@
 
 //    public class SeriesFeature
 //    {
-//        private readonly Mock<IStore<Collection.EventSeries>> MockSeriesStore;
+//        private readonly Mock<IStore<DiversityCollection.EventSeries>> MockSeriesStore;
 //        private readonly Mock<IMappingService> MockMapping;
 
 //        private readonly HttpRequestMessage Request;
 //        private readonly HttpClient Client;
 
-//        private readonly IEnumerable<Collection.EventSeries> FakeSeries;
+//        private readonly IEnumerable<DiversityCollection.EventSeries> FakeSeries;
 
 //        public SeriesFeature()
 //        {
-//            this.MockSeriesStore = new Mock<IStore<Collection.EventSeries>>();
+//            this.MockSeriesStore = new Mock<IStore<DiversityCollection.EventSeries>>();
 
 //            this.MockMapping = new Mock<IMappingService>();
 
@@ -46,14 +46,14 @@
 //            Client = new HttpClient(server);
 //        }
 
-//        private IEnumerable<Collection.EventSeries> GetFakeSeries()
+//        private IEnumerable<DiversityCollection.EventSeries> GetFakeSeries()
 //        {
 //            return new[] {
-//                new Collection.EventSeries() {
+//                new DiversityCollection.EventSeries() {
 //                    Id = 1,
 
 //                },
-//                new Collection.EventSeries() {
+//                new DiversityCollection.EventSeries() {
 //                    Id = 2
 //                }
 //            };

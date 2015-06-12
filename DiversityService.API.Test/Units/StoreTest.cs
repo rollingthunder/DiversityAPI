@@ -1,7 +1,7 @@
 ﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Services;
-    using DiversityService.Collection;
+    using DiversityService.DB.Collection;
     using Moq;
     using System;
     using System.Collections.Generic;
@@ -14,7 +14,7 @@
 
     public class StoreTest : TestBase
     {
-        private Mock<Collection> Context;
+        private Mock<DiversityCollection> Context;
         private Mock<DbSet<Event>> SimpleKeySet;
         private Mock<DbSet<IdentificationUnit>> CompositeKeySet;
 
@@ -26,7 +26,7 @@
             SimpleKeySet = new Mock<DbSet<Event>>();
             CompositeKeySet = new Mock<DbSet<IdentificationUnit>>();
 
-            Context = new Mock<Collection>();
+            Context = new Mock<DiversityCollection>();
             Context.Setup(x => x.Set<Event>())
                 .Returns(SimpleKeySet.Object);
             Context.Setup(x => x.Set<IdentificationUnit>())

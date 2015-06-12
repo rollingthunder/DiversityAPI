@@ -10,6 +10,7 @@
     using System.Threading.Tasks;
     using System.Web.Http.Results;
     using Xunit;
+    using Collection = DiversityService.DB.Collection;
 
     public class SpecimenControllerTest : CRUDControllerTest<SpecimenController, Collection.Specimen, Specimen, SpecimenBindingModel>
     {

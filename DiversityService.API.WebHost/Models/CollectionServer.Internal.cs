@@ -13,7 +13,17 @@ namespace DiversityService.API.Model
 
         [JsonIgnore]
         public int Port { get; set; }
+
         [JsonIgnore]
         public string Catalog { get; set; }
+    }
+
+    public class CollectionServerLogin : InternalCollectionServer
+    {
+        [JsonIgnore]
+        public string User { get; set; }
+
+        [JsonIgnore]
+        public string Password { get; set; }
     }
 }

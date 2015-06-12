@@ -9,7 +9,7 @@
     public class RequireHttpsMessageHandlerTest
     {
         [Fact]
-        public async Task Returns_Forbidden_If_Request_Is_Not_Over_HTTPS()
+        public async Task Returns_Redirect_If_Request_Is_Not_Over_HTTPS()
         {
             // Arange
             var request = new HttpRequestMessage(
@@ -19,7 +19,7 @@
             // Act
             var response = await requireHtttpsMessageHandler.InvokeAsync(request);
             // Assert
-            Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+            Assert.Equal(HttpStatusCode.Redirect, response.StatusCode);
         }
 
         [Fact]

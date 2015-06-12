@@ -10,12 +10,24 @@
     {
         protected IKernel Kernel;
 
+        public void InitializeKernelIfNecessary(IKernel useKernel = null, bool testing = false)
+        {
+            if (Kernel == null)
+            {
+                Kernel = useKernel ?? new StandardKernel();
+
+                if (!testing)
+                {
+                    Kernel.Load<ServiceModule>();
+                }
+
+                Kernel.Load<MapperModule>();
+            }
+        }
+
         public void ConfigureNinject(IAppBuilder app)
         {
-            Kernel = Kernel ?? new StandardKernel();
-
-            Kernel.Load(Assembly.GetExecutingAssembly());
-
+            InitializeKernelIfNecessary();
             app.UseNinjectMiddleware(() => Kernel);
         }
     }

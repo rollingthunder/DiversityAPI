@@ -8,6 +8,15 @@ namespace DiversityService.API.WebHost
 {
     public class CollectionServerConfigurationSection : ConfigurationSection
     {
+        [ConfigurationProperty("publicServers")]
+        public PublicServersElement PublicServers
+        {
+            get
+            {
+                return (PublicServersElement)this["publicServers"];
+            }
+        }
+
         [ConfigurationProperty("servers", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(ServersCollection),
             AddItemName = "add",
@@ -21,14 +30,34 @@ namespace DiversityService.API.WebHost
                     (ServersCollection)base["servers"];
                 return urlsCollection;
             }
-        }   
+        }
+    }
+
+    public class PublicServersElement : ConfigurationElement
+    {
+        [ConfigurationProperty("taxa")]
+        public ServerLoginElement Taxa
+        {
+            get
+            {
+                return (ServerLoginElement)this["taxa"];
+            }
+        }
+
+        [ConfigurationProperty("terms")]
+        public ServerLoginCatalogElement Terms
+        {
+            get
+            {
+                return (ServerLoginCatalogElement)this["terms"];
+            }
+        }
     }
 
     public class ServersCollection : ConfigurationElementCollection
     {
         public ServersCollection()
         {
-        
         }
 
         public override ConfigurationElementCollectionType CollectionType
@@ -82,6 +111,7 @@ namespace DiversityService.API.WebHost
         {
             BaseAdd(url);
         }
+
         protected override void BaseAdd(ConfigurationElement element)
         {
             BaseAdd(element, false);
@@ -108,8 +138,75 @@ namespace DiversityService.API.WebHost
             BaseClear();
         }
     }
-    
-    public class CollectionServerElement : ConfigurationElement
+
+    public class ServerElement : ConfigurationElement
+    {
+        [ConfigurationProperty("address", DefaultValue = "127.0.0.1", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
+        public string Address
+        {
+            get
+            { return (string)this["address"]; }
+            set
+            { this["address"] = value; }
+        }
+
+        [ConfigurationProperty("port", DefaultValue = "1433", IsRequired = true)]
+        [IntegerValidator(MinValue = 1024, MaxValue = Int32.MaxValue)]
+        public int Port
+        {
+            get
+            {
+                return (int)this["port"];
+            }
+            set
+            {
+                this["port"] = value;
+            }
+        }
+    }
+
+    public class ServerLoginElement : ServerElement
+    {
+        [ConfigurationProperty("user", DefaultValue = "anon", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
+        public string User
+        {
+            get
+            { return (string)this["user"]; }
+            set
+            { this["user"] = value; }
+        }
+
+        [ConfigurationProperty("password", DefaultValue = "opensesame", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "", MinLength = 1, MaxLength = 60)]
+        public string Password
+        {
+            get
+            {
+                return (string)this["password"];
+            }
+            set
+            {
+                this["password"] = value;
+            }
+        }
+    }
+
+    public class ServerLoginCatalogElement : ServerLoginElement
+    {
+        [ConfigurationProperty("catalog", DefaultValue = "DiversityCollection_Test", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
+        public string Catalog
+        {
+            get
+            { return (string)this["catalog"]; }
+            set
+            { this["catalog"] = value; }
+        }
+    }
+
+    public class CollectionServerElement : ServerElement
     {
         [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true)]
         [IntegerValidator(MinValue = 0, MaxValue = Int32.MaxValue)]
@@ -136,30 +233,6 @@ namespace DiversityService.API.WebHost
             set
             {
                 this["name"] = value;
-            }
-        }
-
-        [ConfigurationProperty("address", DefaultValue = "127.0.0.1", IsRequired =true)]
-        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
-        public string Address
-        {
-            get
-            { return (string)this["address"]; }
-            set
-            { this["address"] = value; }
-        }
-
-        [ConfigurationProperty("port", DefaultValue="1433", IsRequired=true)]
-        [IntegerValidator(MinValue=1024, MaxValue=Int32.MaxValue)]
-        public int Port
-        {
-            get
-            {
-                return (int)this["port"];
-            }
-            set
-            {
-                this["port"] = value;
             }
         }
 

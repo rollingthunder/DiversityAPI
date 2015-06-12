@@ -11,7 +11,7 @@
 
     public class ConfigurationService : IConfigurationService
     {
-        private readonly Lazy<IEnumerable<InternalCollectionServer>> Servers;
+        private readonly Lazy<CollectionServerConfigurationSection> Section;
         private readonly IMappingEngine Mapper;
 
         public ConfigurationService(
@@ -20,18 +20,58 @@
         {
             Mapper = mapper;
 
-            Servers = new Lazy<IEnumerable<InternalCollectionServer>>(LoadCollectionServers);
+            Section = new Lazy<CollectionServerConfigurationSection>(() =>
+            {
+                return (CollectionServerConfigurationSection)ConfigurationManager.GetSection("collectionServers");
+            });
         }
+
+        #region IConfigurationService
+
+        private IEnumerable<InternalCollectionServer> _Servers;
 
         public IEnumerable<InternalCollectionServer> GetCollectionServers()
         {
-            return Servers.Value;
+            LoadConfigurationIfNecessary();
+
+            return _Servers;
+        }
+
+        private CollectionServerLogin _PublicTaxa;
+
+        public CollectionServerLogin GetPublicTaxa()
+        {
+            LoadConfigurationIfNecessary();
+            return _PublicTaxa;
+        }
+
+        private CollectionServerLogin _ScientificTerms;
+
+        public CollectionServerLogin GetScientificTerms()
+        {
+            LoadConfigurationIfNecessary();
+            return _ScientificTerms;
+        }
+
+        #endregion IConfigurationService
+
+        private void LoadConfigurationIfNecessary()
+        {
+            if (Section.IsValueCreated)
+            {
+                return;
+            }
+
+            var section = Section.Value;
+
+            _PublicTaxa = Mapper.Map<CollectionServerLogin>(section.PublicServers.Taxa);
+            _ScientificTerms = Mapper.Map<CollectionServerLogin>(section.PublicServers.Terms);
+            _Servers = LoadCollectionServers();
         }
 
         private IEnumerable<InternalCollectionServer> LoadCollectionServers()
         {
-            var serverSection = (CollectionServerConfigurationSection)ConfigurationManager.GetSection("collectionServers");
-            var collectionServers = serverSection.Servers.Cast<CollectionServerElement>()
+            var collectionServers = Section.Value.Servers.Cast<CollectionServerElement>()
                 .Select(Mapper.Map<InternalCollectionServer>)
                 .ToList();
 

@@ -15,7 +15,7 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    internal static class TestHelper
+    public static class TestHelper
     {
         public static void ReturnsInOrder<T, TResult>(
             this ISetup<T, TResult> setup,
@@ -101,7 +101,7 @@
             return string.Format("https://{0}", Guid.NewGuid());
         }
 
-        internal static Mock<IStore<T, TKey>> SetupWithFakeData<T, TKey>(this Mock<IStore<T, TKey>> This, IQueryable<T> data, Func<T, object> keySelector = null)
+        public static Mock<IStore<T, TKey>> SetupWithFakeData<T, TKey>(this Mock<IStore<T, TKey>> This, IQueryable<T> data, Func<T, object> keySelector = null)
         {
             return SetupWithFakeData<IStore<T, TKey>, T, TKey>(This, data, keySelector);
         }
@@ -113,7 +113,7 @@
                     select iface).FirstOrDefault();
         }
 
-        internal static Mock<TStore> SetupWithFakeData<TStore, T, TKey>(this Mock<TStore> This, IQueryable<T> data, Func<T, object> keySelector = null)
+        public static Mock<TStore> SetupWithFakeData<TStore, T, TKey>(this Mock<TStore> This, IQueryable<T> data, Func<T, object> keySelector = null)
 
             where TStore : class, IReadOnlyStore<T, TKey>
         {

@@ -257,7 +257,6 @@
     <Compile Include="App_Start\Startup.2Ninject.cs" />
     <Compile Include="App_Start\Startup.3WebApi.cs" />
     <Compile Include="App_Start\Startup.1Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CollectionServerConfigurationSection.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiHomeController.cs" />
@@ -400,8 +399,6 @@
           <DevelopmentServerPort>58194</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>https://localhost:44301/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>https://diversityapi.de:44301/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

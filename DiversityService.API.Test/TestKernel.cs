@@ -8,6 +8,7 @@
     {
         public TestKernel()
         {
+            this.MockRepository.DefaultValue = Moq.DefaultValue.Empty;
             //this.Load<FuncModule>();
 
             this.Bind<IUserStore<ApplicationUser>>().To<TestUserStore>();

@@ -19,14 +19,22 @@
         public IKernel Kernel
         {
             get { return base.Kernel; }
-            set { base.Kernel = value; }
+        }
+
+        public TestStartup()
+        {
+        }
+
+        public TestStartup(IKernel kernel)
+        {
+            InitializeKernelIfNecessary(kernel, testing: true);
         }
 
         public override void Configuration(IAppBuilder app)
         {
             ConfigureTestAuth(app);
             ConfigureNinject(app);
-            ConfigureWebApi(app);
+            ConfigureWebApi(app, testing: true);
         }
     }
 }

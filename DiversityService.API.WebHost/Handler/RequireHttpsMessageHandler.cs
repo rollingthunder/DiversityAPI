@@ -15,9 +15,15 @@
         {
             if (request.RequestUri.Scheme != Uri.UriSchemeHttps)
             {
-                HttpResponseMessage forbiddenResponse = request.CreateResponse(HttpStatusCode.Forbidden);
-                forbiddenResponse.ReasonPhrase = "SSL Required";
-                return Task.FromResult<HttpResponseMessage>(forbiddenResponse);
+                HttpResponseMessage response = request.CreateResponse(HttpStatusCode.Redirect);
+
+                var uri = request.RequestUri.AbsoluteUri;
+                var uriNoScheme = uri.Split(new[] { ':' }, 2).Last();
+                var httpsUri = string.Format("https:{0}", uriNoScheme);
+
+                response.Headers.Location = new Uri(httpsUri);
+                response.ReasonPhrase = "SSL Required";
+                return Task.FromResult<HttpResponseMessage>(response);
             }
             return base.SendAsync(request, cancellationToken);
         }

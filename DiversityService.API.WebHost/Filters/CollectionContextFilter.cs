@@ -140,7 +140,7 @@
                 || principal.Identity == null
                 || !principal.Identity.IsAuthenticated)
             {
-                SetErrorResponse(actionContext, HttpStatusCode.Unauthorized, "Unauthorized");
+                SetErrorResponse(actionContext, HttpStatusCode.Unauthorized, "Unauthorized Request");
                 return;
             }
 

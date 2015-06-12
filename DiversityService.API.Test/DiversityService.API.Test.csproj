@@ -162,6 +162,8 @@
     <Compile Include="DelegatingHandlerExtensions.cs" />
     <Compile Include="Features\Series\RetrieveSeries.cs" />
     <Compile Include="Filters\SirenResultFilterTest.cs" />
+    <Compile Include="Mocks\Mocks.cs" />
+    <Compile Include="Mocks\TestData.cs" />
     <Compile Include="Units\MappingTest.cs" />
     <Compile Include="Units\PagingResultTest.cs" />
     <Compile Include="Filters\ProjectAPIAttributeTest.cs" />

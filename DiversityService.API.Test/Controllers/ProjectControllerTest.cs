@@ -19,7 +19,7 @@
         {
             Projects = Kernel.GetMock<IProjectStore>();
             InitController();
-            CollectionContext = CreateCollectionContext();
+            CollectionContext = Mocks.SetupContext(Kernel);
         }
 
         [Fact]

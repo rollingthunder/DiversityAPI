@@ -1,4 +1,5 @@
-﻿using DiversityService.API.WebHost.Models;
+﻿using DiversityService.API.Model;
+using DiversityService.API.WebHost.Models;
 using DiversityService.API.WebHost.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
@@ -57,6 +58,8 @@ namespace DiversityService.API.WebHost
         public const string AuthorizationToken = "arstarosidenasrtoienastrei";
 
         public const string TestUserName = "test@user.com";
+        public const string TestBackendUser = "Test";
+        public const string TestBackendPass = "Pass";
 
         public void ConfigureTestAuth(IAppBuilder app)
         {
@@ -75,7 +78,7 @@ namespace DiversityService.API.WebHost
                 {
                     var identity = CreateTestIdentity();
 
-                    ctx.Authentication.SignIn(identity);
+                    ctx.Authentication.User = new ClaimsPrincipal(new[] { identity });
 
                     req.Headers.Remove("Authorization");
                 }
@@ -88,6 +91,8 @@ namespace DiversityService.API.WebHost
         {
             return new ClaimsIdentity(new Claim[]
             {
+                new Claim(ClaimTypes.Name, TestUserName),
+                new BackendCredentialsClaim(TestBackendUser, TestBackendPass)
             }, OAuthDefaults.AuthenticationType);
         }
     }

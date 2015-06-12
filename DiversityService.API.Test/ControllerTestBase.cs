@@ -28,42 +28,7 @@
 
             Controller.Request = new HttpRequestMessage();
 
-            CreateCollectionContext();
-        }
-
-        protected Mock<IContext> CreateCollectionContext()
-        {
-            var mock = Kernel.GetMock<IContext>();
-
-            // Transaction
-
-            var transaction = Kernel.GetMock<ITransaction>();
-
-            mock.Setup(x => x.BeginTransaction())
-                .Returns(transaction.Object);
-
-            // Stores
-
-            mock.SetupGet(x => x.Projects)
-                .Returns(Kernel.GetMock<IProjectStore>().Object);
-
-            mock.SetupGet(x => x.Series)
-               .Returns(Kernel.GetMock<IStore<Collection.EventSeries, int>>().Object);
-
-            mock.SetupGet(x => x.Events)
-               .Returns(Kernel.GetMock<IStore<Collection.Event, int>>().Object);
-
-            mock.SetupGet(x => x.Specimen)
-               .Returns(Kernel.GetMock<IStore<Collection.Specimen, int>>().Object);
-
-            mock.SetupGet(x => x.IdentificationUnits)
-               .Returns(Kernel.GetMock<IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey>>().Object);
-
-            mock.SetupGet(x => x.Identifications)
-               .Returns(Kernel.GetMock<IStore<Collection.Identification, Collection.IdentificationKey>>().Object);
-
-            mock.SetupGet(x => x.IdentificationGeoAnalyses)
-               .Returns(Kernel.GetMock<IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey>>().Object);
+            var mock = Mocks.SetupContext(Kernel);
 
             // Set Request Context
 
@@ -78,8 +43,6 @@
                 Uri = "testuri..."
             };
             Controller.Request.SetAgentInfo(agent);
-
-            return mock;
         }
     }
 }

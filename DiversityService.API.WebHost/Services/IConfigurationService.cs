@@ -10,5 +10,9 @@
     public interface IConfigurationService
     {
         IEnumerable<InternalCollectionServer> GetCollectionServers();
+
+        CollectionServerLogin GetPublicTaxa();
+
+        CollectionServerLogin GetScientificTerms();
     }
 }

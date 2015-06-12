@@ -13,22 +13,41 @@
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
 
-    public class AuthTest : IDisposable
+    public class AuthTest
     {
-        private IWebDriver Selenium;
-
-        public AuthTest()
+        private string PerformMSLogin(string msUri)
         {
-            Selenium = new FirefoxDriver();
-        }
+            using (var Selenium = new FirefoxDriver())
+            {
+                Selenium.Navigate().GoToUrl(msUri);
 
-        public void Dispose()
-        {
-            Selenium.Dispose();
+                var userDiv = Selenium.FindElement(By.Id("idDiv_PWD_UsernameTb"));
+                var user = userDiv.FindElement(By.TagName("input"));
+                var passwordDiv = Selenium.FindElement(By.Id("idDiv_PWD_PasswordTb"));
+                var password = passwordDiv.FindElement(By.TagName("input"));
+                var submit = Selenium.FindElement(By.Id("idSIButton9"));
+
+                user.SendKeys("diversityapi@outlook.com");
+                password.SendKeys("jh4ROvh5m6jfTVW8");
+                submit.Click();
+
+                try
+                {
+                    var yesBtn = Selenium.FindElement(By.Id("idBtn_Accept"));
+                    yesBtn.Click();
+                }
+                catch (NoSuchElementException)
+                {
+                    // already accepted ?
+                }
+
+                return Selenium.Url;
+            }
         }
 
         [Fact]
@@ -57,29 +76,7 @@
 
                 var msUri = redirect.Headers.Location.AbsoluteUri;
 
-                Selenium.Navigate().GoToUrl(msUri);
-
-                var userDiv = Selenium.FindElement(By.Id("idDiv_PWD_UsernameTb"));
-                var user = userDiv.FindElement(By.TagName("input"));
-                var passwordDiv = Selenium.FindElement(By.Id("idDiv_PWD_PasswordTb"));
-                var password = passwordDiv.FindElement(By.TagName("input"));
-                var submit = Selenium.FindElement(By.Id("idSIButton9"));
-
-                user.SendKeys("diversityapi@outlook.com");
-                password.SendKeys("jh4ROvh5m6jfTVW8");
-                submit.Click();
-
-                try
-                {
-                    var yesBtn = Selenium.FindElement(By.Id("idBtn_Accept"));
-                    yesBtn.Click();
-                }
-                catch (NoSuchElementException)
-                {
-                    // already accepted ?
-                }
-
-                var returnUri = Selenium.Url.Replace(baseAddress, "");
+                var returnUri = PerformMSLogin(msUri);
 
                 var signinResponse = await serverClient.GetAsync(returnUri);
 
@@ -107,35 +104,31 @@
                 // Act
                 var msUri = await client.GetLoginUriAsync();
 
-                // Simulate User logging in
-                Selenium.Navigate().GoToUrl(msUri);
+                var returnUri = PerformMSLogin(msUri);
 
-                var userDiv = Selenium.FindElement(By.Id("idDiv_PWD_UsernameTb"));
-                var user = userDiv.FindElement(By.TagName("input"));
-                var passwordDiv = Selenium.FindElement(By.Id("idDiv_PWD_PasswordTb"));
-                var password = passwordDiv.FindElement(By.TagName("input"));
-                var submit = Selenium.FindElement(By.Id("idSIButton9"));
-
-                user.SendKeys("diversityapi@outlook.com");
-                password.SendKeys("jh4ROvh5m6jfTVW8");
-                submit.Click();
-
-                try
-                {
-                    var yesBtn = Selenium.FindElement(By.Id("idBtn_Accept"));
-                    yesBtn.Click();
-                }
-                catch (NoSuchElementException)
-                {
-                    // already accepted ?
-                }
-                // End Simulate User logging in
-
-                var token = await client.AuthenticateReturnURLAsync(Selenium.Url);
+                var token = await client.AuthenticateReturnURLAsync(returnUri);
 
                 // Assert
                 Assert.NotNull(token);
             }
+        }
+
+        [Fact]
+        public async Task CanAuthenticateUsingTestAuthentication()
+        {
+            // Arrange
+            var api = new TestAPI("/Account/UserInfo");
+
+            // Act
+            var authenticatingHandler = new AuthenticationHandler(api.Server.Handler, async () => TestStartup.AuthorizationToken);
+            var authenticatedClient = new HttpClient(authenticatingHandler) { BaseAddress = api.Server.BaseAddress };
+            authenticatedClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer");
+            authenticatedClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 1.0));
+            var response = await authenticatedClient.GetAsync("");
+
+            // Assert
+            Assert.True(response.IsSuccessStatusCode, response.ReasonPhrase);
+            Assert.NotEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
     }
 }

@@ -3,6 +3,7 @@
     using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
     using DiversityService.DB.Collection;
+    using DiversityService.DB.Services;
     using Ninject;
     using System;
     using System.Collections.Generic;
@@ -24,7 +25,7 @@
         {
             try
             {
-                var ctx = new DiversityCollection(GetConnectionString(server));
+                var ctx = DbContextHelpers.CreateCollection(server);
 
                 // Force immediate connection to validate settings
                 await ctx.Database.Connection.OpenAsync();
@@ -39,18 +40,6 @@
                 // TODO Log
                 return null;
             }
-        }
-
-        private static string GetConnectionString(CollectionServerLogin server)
-        {
-            return string.Format(
-                ConfigurationManager.ConnectionStrings["Collection"].ConnectionString,
-                server.Address,
-                server.Port,
-                server.Catalog,
-                server.User,
-                server.Password
-            );
         }
     }
 }

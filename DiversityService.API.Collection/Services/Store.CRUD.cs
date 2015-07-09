@@ -10,39 +10,6 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    public static class StoreComponents
-    {
-        public static async Task<IEnumerable<TEntity>> Get<TEntity>(
-            IQueryable<TEntity> query,
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IQueryable<TEntity>> restrict = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
-        {
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-
-            if (restrict != null)
-            {
-                query = restrict(query);
-            }
-
-            if (orderBy != null)
-            {
-                query = orderBy(query);
-            }
-
-            return await query.ToListAsync();
-        }
-    }
-
     public class Store<TEntity, TKey> : IStore<TEntity, TKey> where TEntity : class
     {
         private readonly DiversityCollection context;
@@ -62,7 +29,7 @@
         {
             IQueryable<TEntity> query = dbSet;
 
-            return await StoreComponents.Get(query, filter, restrict, orderBy, includeProperties);
+            return await Store.Get(query, filter, restrict, orderBy, includeProperties);
         }
 
         public virtual Task<TEntity> GetByIDAsync(TKey id)

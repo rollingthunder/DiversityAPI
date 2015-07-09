@@ -33,7 +33,7 @@
         {
             var query = await GetQueryableAsync();
 
-            return await StoreComponents.Get(
+            return await Store.Get(
                 query,
                 filter,
                 restrict,

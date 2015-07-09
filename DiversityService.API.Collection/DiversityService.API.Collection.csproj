@@ -170,6 +170,7 @@
     <Compile Include="Collection\UserTerminology.cs">
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
+    <Compile Include="Module\Custom.cs" />
     <Compile Include="Module\DiversityModule.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,13 +181,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DiversityModule.tt</DependentUpon>
     </Compile>
-    <Compile Include="Module\DiversityModule.Designer.cs">
+    <Compile Include="Module\Module.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DiversityModule.edmx</DependentUpon>
+      <DependentUpon>Module.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CRUDStore.cs" />
+    <Compile Include="Services\DbContextHelpers.cs" />
+    <Compile Include="Services\Store.Project.cs" />
+    <Compile Include="Services\Store.Common.cs" />
+    <Compile Include="Services\Store.CRUD.cs" />
+    <Compile Include="Services\Taxa.cs" />
+    <Compile Include="TaxonNames\Custom.cs" />
     <Compile Include="TaxonNames\DiversityMobile_TaxonListsForUser_Result.cs">
       <DependentUpon>DiversityTaxonNames.tt</DependentUpon>
     </Compile>
@@ -218,12 +224,12 @@
     <None Include="Collection\DiversityCollection.edmx.diagram">
       <DependentUpon>DiversityCollection.edmx</DependentUpon>
     </None>
-    <EntityDeploy Include="Module\DiversityModule.edmx">
+    <EntityDeploy Include="Module\Module.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DiversityModule.Designer.cs</LastGenOutput>
+      <LastGenOutput>Module.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Module\DiversityModule.edmx.diagram">
-      <DependentUpon>DiversityModule.edmx</DependentUpon>
+    <None Include="Module\Module.edmx.diagram">
+      <DependentUpon>Module.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <EntityDeploy Include="TaxonNames\DiversityTaxonNames.edmx">
@@ -249,12 +255,12 @@
     </Content>
     <Content Include="Module\DiversityModule.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DiversityModule.edmx</DependentUpon>
+      <DependentUpon>Module.edmx</DependentUpon>
       <LastGenOutput>DiversityModule.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Module\DiversityModule.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DiversityModule.edmx</DependentUpon>
+      <DependentUpon>Module.edmx</DependentUpon>
       <LastGenOutput>DiversityModule.cs</LastGenOutput>
     </Content>
     <Content Include="TaxonNames\DiversityTaxonNames.Context.tt">

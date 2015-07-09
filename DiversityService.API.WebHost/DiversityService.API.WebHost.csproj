@@ -379,7 +379,6 @@
     <Compile Include="Services\InsightsLogging.cs" />
     <Compile Include="Services\LinkFactory.cs" />
     <Compile Include="Services\LocalizationMapper.cs" />
-    <Compile Include="Services\ProjectStore.cs" />
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>

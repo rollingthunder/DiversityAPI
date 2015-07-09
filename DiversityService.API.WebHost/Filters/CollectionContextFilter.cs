@@ -39,13 +39,12 @@
 
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            string User, Password;
             AgentInfo Agent;
-            InternalCollectionServer Server;
+            CollectionServerLogin Login;
 
             IContext ctx = null;
 
-            ExtractCollection(actionContext, out Server);
+            ExtractCollection(actionContext, out Login);
 
             if (actionContext.Response != null)
             {
@@ -53,7 +52,7 @@
             }
 
             // Only require Identification if we are connecting to a collection
-            if (Server != null)
+            if (Login != null)
             {
                 ClaimsIdentity identity;
                 ExtractClaims(actionContext, out identity);
@@ -65,14 +64,14 @@
 
                 // Backend Login Claims
                 {
-                    ExtractBackendCredentials(actionContext, identity, out User, out Password);
+                    ExtractBackendCredentials(actionContext, identity, Login);
 
                     if (actionContext.Response != null)
                     {
                         return;
                     }
 
-                    ctx = await ContextFactory.CreateContextAsync(Server, User, Password);
+                    ctx = await ContextFactory.CreateContextAsync(Login);
 
                     if (ctx == null)
                     {
@@ -87,6 +86,7 @@
                         return;
                     }
 
+                    actionContext.Request.SetBackendCredentials(Login);
                     actionContext.Request.SetCollectionContext(ctx);
                 }
 
@@ -156,12 +156,8 @@
         private void ExtractBackendCredentials(
             HttpActionContext actionContext,
             ClaimsIdentity identity,
-            out string user,
-            out string password)
+            CollectionServerLogin login)
         {
-            user = null;
-            password = null;
-
             var backendCredentials = identity.GetBackendCredentialsClaim();
             if (backendCredentials == null)
             {
@@ -169,8 +165,8 @@
                 return;
             }
 
-            user = backendCredentials.User;
-            password = backendCredentials.Password;
+            login.User = backendCredentials.User;
+            login.Password = backendCredentials.Password;
         }
 
         private void ExtractAgentInfo(
@@ -196,9 +192,9 @@
 
         private void ExtractCollection(
             HttpActionContext actionContext,
-            out InternalCollectionServer server)
+            out CollectionServerLogin login)
         {
-            server = null;
+            login = null;
 
             var request = actionContext.Request;
 
@@ -222,13 +218,21 @@
                 }
 
                 var servers = Configuration.GetCollectionServers();
-                server = servers.FirstOrDefault(x => x.Id == collectionId);
+                var server = servers.FirstOrDefault(x => x.Id == collectionId);
 
                 if (server == null)
                 {
                     SetErrorResponse(actionContext, HttpStatusCode.NotFound, string.Format("Collection Server with id {0} not found", collection));
                     return;
                 }
+
+                // Copy over the information from the known server
+                login = new CollectionServerLogin();
+                login.Id = server.Id;
+                login.Name = server.Name;
+                login.Address = server.Address;
+                login.Catalog = server.Catalog;
+                login.Port = server.Port;
             }
         }
 

@@ -28,6 +28,20 @@
         private const string AGENT_URI = "http://snsb.info/agents/test_u";
         private IContext Context;
 
+        private readonly InternalCollectionServer[] Servers = new[]{
+            new InternalCollectionServer() {
+                Id = COLLECTION_ID,
+                Name = "Test"
+            } };
+
+        private readonly CollectionServerLogin ExpectedLogin = new CollectionServerLogin()
+        {
+            Id = COLLECTION_ID,
+            Name = "Test",
+            User = USER,
+            Password = PASS
+        };
+
         public CollectionFilterTest()
         {
             InitializeActionContext();
@@ -94,7 +108,7 @@
         public async Task Rejects_Unknown_Collection()
         {
             // Arrange
-            SetRouteData(COLLECTION_ID, PROJECT_ID);
+            SetRouteData(COLLECTION_ID + 1, PROJECT_ID);
 
             // Act
             await ActionExecuting();
@@ -205,6 +219,23 @@
         }
 
         [Fact]
+        public async Task Sets_Backend_Login()
+        {
+            // Arrange
+            SetValidCollectionAndProject();
+            SetRouteData(COLLECTION_ID, PROJECT_ID);
+            SetBackendCredentials(USER, PASS);
+
+            // Act
+            await ActionExecuting();
+
+            // Assert
+            Assert.True(ActionCalled());
+            var creds = Request.GetBackendCredentials();
+            Assert.Equal(ExpectedLogin, creds);
+        }
+
+        [Fact]
         public async Task Creates_AgentInfo()
         {
             // Arrange
@@ -263,22 +294,18 @@
 
         private void SetValidCollectionAndProject()
         {
-            var servers = new[]{ new InternalCollectionServer() {
-                Id = COLLECTION_ID,
-                Name = "Test"
-            } };
             Configuration
                 .Setup(x => x.GetCollectionServers())
-                .Returns(servers);
+                .Returns(Servers);
 
             var contextMock = Kernel.GetMock<IContext>();
 
             ContextFactory
-                .Setup(x => x.CreateContextAsync(It.IsAny<InternalCollectionServer>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(x => x.CreateContextAsync(It.IsAny<CollectionServerLogin>()))
                 .Returns(Task.FromResult<IContext>(null));
 
             ContextFactory
-                .Setup(x => x.CreateContextAsync(servers[0], USER, PASS))
+                .Setup(x => x.CreateContextAsync(It.Is<CollectionServerLogin>(l => ExpectedLogin.Equals(l))))
                 .Returns(Task.FromResult<IContext>(contextMock.Object));
 
             contextMock.SetupProperty(x => x.ProjectId);

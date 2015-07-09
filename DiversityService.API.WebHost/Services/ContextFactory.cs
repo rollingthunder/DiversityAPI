@@ -20,11 +20,11 @@
             Kernel = kernel;
         }
 
-        public async Task<IContext> CreateContextAsync(InternalCollectionServer server, string user, string password)
+        public async Task<IContext> CreateContextAsync(CollectionServerLogin server)
         {
             try
             {
-                var ctx = new DiversityCollection(GetConnectionString(server, user, password));
+                var ctx = new DiversityCollection(GetConnectionString(server));
 
                 // Force immediate connection to validate settings
                 await ctx.Database.Connection.OpenAsync();
@@ -41,15 +41,15 @@
             }
         }
 
-        private static string GetConnectionString(InternalCollectionServer server, string user, string password)
+        private static string GetConnectionString(CollectionServerLogin server)
         {
             return string.Format(
                 ConfigurationManager.ConnectionStrings["Collection"].ConnectionString,
                 server.Address,
                 server.Port,
                 server.Catalog,
-                user,
-                password
+                server.User,
+                server.Password
             );
         }
     }

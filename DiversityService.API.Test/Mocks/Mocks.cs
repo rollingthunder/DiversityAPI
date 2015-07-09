@@ -105,8 +105,8 @@
                 .GetMock<IContextFactory>();
             var ctxMock = Kernel
                 .GetMock<IContext>();
-
-            factoryMock.Setup(f => f.CreateContextAsync(It.IsIn(Data.Servers ?? Enumerable.Empty<InternalCollectionServer>()), It.IsAny<string>(), It.IsAny<string>()))
+            var servers = Data.Servers ?? Enumerable.Empty<InternalCollectionServer>();
+            factoryMock.Setup(f => f.CreateContextAsync(It.Is<CollectionServerLogin>(l => servers.Any(s => s.Equals(l)))))
                 .Returns(Task.FromResult(ctxMock.Object));
 
             return factoryMock;
@@ -164,6 +164,19 @@
                .Returns(Kernel.GetMock<IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey>>().Object);
 
             return mock;
+        }
+
+        public static Mock<IDiscoverDBModules> ModuleDiscovery(IKernel Kernel, CollectionServerLogin login,
+            IEnumerable<DBModule> Modules)
+        {
+            var Discovery = Kernel.GetMock<IDiscoverDBModules>();
+
+            Discovery.SetReturnsDefault<IEnumerable<DBModule>>(null);
+
+            Discovery.Setup(x => x.DiscoverModules(It.Is<CollectionServerLogin>(l => login.Equals(l))))
+                .ReturnsAsync(Modules);
+
+            return Discovery;
         }
     }
 }

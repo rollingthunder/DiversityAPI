@@ -8,7 +8,12 @@
 
     public class TestUserStore : IUserStore<ApplicationUser>
     {
-        public readonly HashSet<ApplicationUser> Users = new HashSet<ApplicationUser>();
+        public readonly HashSet<ApplicationUser> Users;
+
+        public TestUserStore(IEnumerable<ApplicationUser> users = null)
+        {
+            Users = new HashSet<ApplicationUser>(users ?? Enumerable.Empty<ApplicationUser>());
+        }
 
         public async Task CreateAsync(ApplicationUser user)
         {

@@ -26,7 +26,7 @@ namespace DiversityService.DB.Collection
         public Nullable<double> AverageValueCache { get; set; }
         public System.Guid RowGUID { get; set; }
     
-        public virtual Event CollectionEvent { get; set; }
-        public virtual Property Property { get; set; }
+        public Event CollectionEvent { get; set; }
+        public Property Property { get; set; }
     }
 }

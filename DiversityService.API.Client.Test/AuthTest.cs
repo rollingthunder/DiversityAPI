@@ -50,7 +50,7 @@
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Takes too long")]
         public async Task CanAuthenticateManually()
         {
             // Arrange
@@ -90,7 +90,7 @@
             }
         }
 
-        [Fact]
+        [Fact(Skip = "Takes too long")]
         public async Task CanAuthenticateWithTheClient()
         {
             // Arrange
@@ -123,7 +123,6 @@
             var authenticatingHandler = new AuthenticationHandler(api.Server.Handler, async () => TestStartup.AuthorizationToken);
             var authenticatedClient = new HttpClient(authenticatingHandler) { BaseAddress = api.Server.BaseAddress };
             authenticatedClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer");
-            authenticatedClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*", 1.0));
             var response = await authenticatedClient.GetAsync("");
 
             // Assert

@@ -24,6 +24,6 @@ namespace DiversityService.DB.Collection
         public string Notes { get; set; }
         public System.Guid RowGUID { get; set; }
     
-        public virtual IdentificationUnit IdentificationUnit { get; set; }
+        public IdentificationUnit IdentificationUnit { get; set; }
     }
 }

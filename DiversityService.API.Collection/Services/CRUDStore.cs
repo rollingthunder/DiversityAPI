@@ -1,5 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
+    using DiversityService.API;
     using DiversityService.API.Model;
     using DiversityService.DB.Collection;
     using System;

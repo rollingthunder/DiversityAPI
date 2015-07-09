@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Filters
 {
     using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
     using DiversityService.API.Services;
     using System.Linq;
     using System.Net;

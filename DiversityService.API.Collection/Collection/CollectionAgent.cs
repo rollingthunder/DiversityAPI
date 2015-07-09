@@ -24,6 +24,6 @@ namespace DiversityService.DB.Collection
         public bool xx_IsAvailable { get; set; }
         public System.Guid RowGUID { get; set; }
     
-        public virtual Specimen CollectionSpecimen { get; set; }
+        public Specimen CollectionSpecimen { get; set; }
     }
 }

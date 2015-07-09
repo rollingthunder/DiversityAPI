@@ -32,8 +32,8 @@ namespace DiversityService.DB.Collection
         public string Description { get; set; }
         public System.Guid RowGUID { get; set; }
     
-        public virtual ICollection<EventProperty> CollectionEventProperty { get; set; }
-        public virtual ICollection<Property> Property1 { get; set; }
-        public virtual Property Property2 { get; set; }
+        public ICollection<EventProperty> CollectionEventProperty { get; set; }
+        public ICollection<Property> Property1 { get; set; }
+        public Property Property2 { get; set; }
     }
 }

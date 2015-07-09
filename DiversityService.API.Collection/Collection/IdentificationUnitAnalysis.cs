@@ -28,7 +28,7 @@ namespace DiversityService.DB.Collection
         public System.Guid RowGUID { get; set; }
         public string ToolUsage { get; set; }
     
-        public virtual Analysis Analysis { get; set; }
-        public virtual IdentificationUnit IdentificationUnit { get; set; }
+        public Analysis Analysis { get; set; }
+        public IdentificationUnit IdentificationUnit { get; set; }
     }
 }

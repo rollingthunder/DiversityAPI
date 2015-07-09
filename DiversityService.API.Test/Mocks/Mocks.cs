@@ -1,10 +1,14 @@
 ﻿namespace DiversityService.API.Test
 {
+    using DiversityService.API.Controllers;
     using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
     using DiversityService.API.Services;
+    using DiversityService.API.WebHost;
+    using DiversityService.API.WebHost.Models;
+    using Microsoft.AspNet.Identity;
     using Moq;
-    using Ninject.MockingKernel;
-    using Ninject.MockingKernel.Moq;
+    using Ninject;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -12,55 +16,81 @@
     using System.Threading.Tasks;
     using Collection = DiversityService.DB.Collection;
 
-    public static class Mocks
+    public static class SetupMocks
     {
-        public static void SetupMocks(this MoqMockingKernel Kernel, TestData data)
+        public static Mock<T> GetMock<T>(this IKernel Kernel) where T : class
         {
-            if (data.Servers != null)
+            var obj = Kernel.TryGet<T>();
+
+            if (obj != default(T))
             {
-                SetupServers(Kernel, data.Servers);
+                try
+                {
+                    return Mock.Get(obj);
+                }
+                catch (ArgumentException ex)
+                {
+                    throw new InvalidOperationException("Service Instance is not mocked.", ex);
+                }
             }
+            else
+            {
+                var mock = new Mock<T>();
 
-            SetupContext(Kernel);
-            SetupContextFactory(Kernel);
+                mock.DefaultValue = DefaultValue.Empty;
 
-            SetupStores(Kernel, data);
+                Kernel
+                    .Bind<T>()
+                    .ToConstant(mock.Object);
+
+                return mock;
+            }
         }
 
-        private static void SetupStores(MoqMockingKernel Kernel, TestData data)
+        public static void UserStore(IKernel Kernel)
+        {
+            var store = Kernel
+                .GetMock<IUserStore<ApplicationUser>>();
+
+            Kernel.Bind<AccountController>()
+                .ToSelf()
+                .WithPropertyValue("UserManager", (ctx) => ctx.Kernel.Get<ApplicationUserManager>());
+        }
+
+        public static void FieldDataStores(IKernel Kernel, TestData data)
         {
             if (data.Series != null)
             {
-                Kernel.SetupStore<IStore<Collection.EventSeries, int>, Collection.EventSeries, int>(data.Series.AsQueryable());
+                Store<IStore<Collection.EventSeries, int>, Collection.EventSeries, int>(Kernel, data.Series.AsQueryable());
             }
 
             if (data.Events != null)
             {
-                Kernel.SetupStore<IStore<Collection.Event, int>, Collection.Event, int>(data.Events.AsQueryable());
+                Store<IStore<Collection.Event, int>, Collection.Event, int>(Kernel, data.Events.AsQueryable());
             }
 
             if (data.Specimen != null)
             {
-                Kernel.SetupStore<IStore<Collection.Specimen, int>, Collection.Specimen, int>(data.Specimen.AsQueryable());
+                Store<IStore<Collection.Specimen, int>, Collection.Specimen, int>(Kernel, data.Specimen.AsQueryable());
             }
 
             if (data.Identification != null)
             {
-                Kernel.SetupStore<IStore<Collection.Identification, int>, Collection.Identification, int>(data.Identification.AsQueryable());
+                Store<IStore<Collection.Identification, int>, Collection.Identification, int>(Kernel, data.Identification.AsQueryable());
             }
 
             if (data.IdentificationUnit != null)
             {
-                Kernel.SetupStore<IStore<Collection.IdentificationUnit, int>, Collection.IdentificationUnit, int>(data.IdentificationUnit.AsQueryable());
+                Store<IStore<Collection.IdentificationUnit, int>, Collection.IdentificationUnit, int>(Kernel, data.IdentificationUnit.AsQueryable());
             }
 
             if (data.IdentificationGeoAnalysis != null)
             {
-                Kernel.SetupStore<IStore<Collection.IdentificationUnitGeoAnalysis, int>, Collection.IdentificationUnitGeoAnalysis, int>(data.IdentificationGeoAnalysis.AsQueryable());
+                Store<IStore<Collection.IdentificationUnitGeoAnalysis, int>, Collection.IdentificationUnitGeoAnalysis, int>(Kernel, data.IdentificationGeoAnalysis.AsQueryable());
             }
         }
 
-        public static Mock<TStore> SetupStore<TStore, TEntity, TKey>(this MoqMockingKernel Kernel, IQueryable<TEntity> Data) where TStore : class, IStore<TEntity, TKey>
+        public static Mock<TStore> Store<TStore, TEntity, TKey>(IKernel Kernel, IQueryable<TEntity> Data) where TStore : class, IStore<TEntity, TKey>
         {
             var storeMock = Kernel
                 .GetMock<TStore>();
@@ -69,20 +99,20 @@
             return storeMock;
         }
 
-        private static Mock<IContextFactory> SetupContextFactory(MoqMockingKernel Kernel)
+        public static Mock<IContextFactory> ContextFactory(IKernel Kernel, TestData Data)
         {
             var factoryMock = Kernel
                 .GetMock<IContextFactory>();
             var ctxMock = Kernel
                 .GetMock<IContext>();
 
-            factoryMock.Setup(f => f.CreateContextAsync(It.IsAny<InternalCollectionServer>(), It.IsAny<string>(), It.IsAny<string>()))
+            factoryMock.Setup(f => f.CreateContextAsync(It.IsIn(Data.Servers ?? Enumerable.Empty<InternalCollectionServer>()), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(Task.FromResult(ctxMock.Object));
 
             return factoryMock;
         }
 
-        public static Mock<IConfigurationService> SetupServers(MoqMockingKernel Kernel, InternalCollectionServer[] Servers)
+        public static Mock<IConfigurationService> Servers(IKernel Kernel, InternalCollectionServer[] Servers)
         {
             Kernel.Unbind<IConfigurationService>();
 
@@ -99,7 +129,7 @@
             return cfgMock;
         }
 
-        public static Mock<IContext> SetupContext(MoqMockingKernel Kernel)
+        public static Mock<IContext> Context(IKernel Kernel)
         {
             var mock = Kernel.GetMock<IContext>();
 
@@ -110,7 +140,7 @@
             mock.Setup(x => x.BeginTransaction())
                 .Returns(transaction.Object);
 
-            // Stores
+            // FieldDataStores
 
             mock.SetupGet(x => x.Projects)
                 .Returns(Kernel.GetMock<IProjectStore>().Object);

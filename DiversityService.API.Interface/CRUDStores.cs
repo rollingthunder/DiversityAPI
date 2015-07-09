@@ -1,4 +1,4 @@
-﻿namespace DiversityService.API.Services
+﻿namespace DiversityService.API
 {
     using DiversityService.API.Model;
     using System;

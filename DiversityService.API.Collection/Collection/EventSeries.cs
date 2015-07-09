@@ -31,9 +31,9 @@ namespace DiversityService.DB.Collection
         private Nullable<int> ParentID { get; set; }
         public Nullable<System.DateTime> DateCache { get; set; }
     
-        public virtual ICollection<Event> Events { get; set; }
-        public virtual ICollection<EventSeriesImage> Images { get; set; }
-        public virtual ICollection<EventSeries> Children { get; set; }
-        public virtual EventSeries Parent { get; set; }
+        public ICollection<Event> Events { get; set; }
+        public ICollection<EventSeriesImage> Images { get; set; }
+        public ICollection<EventSeries> Children { get; set; }
+        public EventSeries Parent { get; set; }
     }
 }

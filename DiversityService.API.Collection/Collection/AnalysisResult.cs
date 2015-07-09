@@ -22,6 +22,6 @@ namespace DiversityService.DB.Collection
         public string Notes { get; set; }
         public System.Guid RowGUID { get; set; }
     
-        public virtual Analysis Analysis { get; set; }
+        public Analysis Analysis { get; set; }
     }
 }

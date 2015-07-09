@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Services
 {
     using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
     using DiversityService.DB.Collection;
     using Ninject;
     using System;

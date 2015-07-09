@@ -55,7 +55,7 @@ namespace DiversityService.API.WebHost
 
     public partial class TestStartup
     {
-        public const string AuthorizationToken = "arstarosidenasrtoienastrei";
+        public const string AuthorizationToken = "arstarstarstarstarstrst";
 
         public const string TestUserName = "test@user.com";
         public const string TestBackendUser = "Test";
@@ -77,8 +77,9 @@ namespace DiversityService.API.WebHost
                 if (auth != null && auth.ToLower() == string.Format("bearer {0}", AuthorizationToken))
                 {
                     var identity = CreateTestIdentity();
+                    var principal = new ClaimsPrincipal(new[] { identity });
 
-                    ctx.Authentication.User = new ClaimsPrincipal(new[] { identity });
+                    ctx.Authentication.User = principal;
 
                     req.Headers.Remove("Authorization");
                 }

@@ -33,6 +33,6 @@ namespace DiversityService.DB.Collection
         public string LicenseHolderAgentURI { get; set; }
         public string LicenseYear { get; set; }
     
-        public virtual EventSeries Series { get; set; }
+        public EventSeries Series { get; set; }
     }
 }

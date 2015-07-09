@@ -35,9 +35,9 @@ namespace DiversityService.DB.Collection
         private string CollectionTime { get; set; }
         private string CollectionDateCategory { get; set; }
     
-        public virtual EventSeries Series { get; set; }
-        public virtual ICollection<EventImage> Images { get; set; }
-        public virtual ICollection<EventProperty> Properties { get; set; }
-        public virtual ICollection<Specimen> Specimen { get; set; }
+        public EventSeries Series { get; set; }
+        public ICollection<EventImage> Images { get; set; }
+        public ICollection<EventProperty> Properties { get; set; }
+        public ICollection<Specimen> Specimen { get; set; }
     }
 }

@@ -5,6 +5,7 @@
     using DiversityService.API.Test;
     using DiversityService.API.WebHost;
     using Microsoft.Owin.Testing;
+    using Moq;
     using Ninject;
     using Ninject.MockingKernel;
     using Ninject.MockingKernel.Moq;
@@ -18,18 +19,20 @@
     internal class TestAPI : IDisposable
     {
         public readonly TestServer Server;
-        public readonly MoqMockingKernel Kernel;
+        public readonly IKernel Kernel;
         public readonly APIBrowser Browser;
 
         public HttpClient HttpClient { get { return Server.HttpClient; } }
 
-        public TestAPI(string relativeBase = "")
+        public TestAPI(string relativeBase = "", TestData data = null)
         {
-            Kernel = new MoqMockingKernel();
+            var Kernel = new TestKernel(data);
+
+            Kernel.Load<TestControllerModule>();
 
             var startup = new TestStartup(Kernel);
 
-            //Mocks.SetupMocks(Kernel, TestData.Default());
+            this.Kernel = Kernel;
 
             Server = TestServer.Create(startup.Configuration);
 

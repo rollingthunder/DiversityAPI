@@ -52,9 +52,9 @@ namespace DiversityService.DB.Collection
         public bool xx_IsAvailable { get; set; }
         public System.Guid TransactionGuid { get; set; }
     
-        public virtual Event CollectionEvent { get; set; }
-        public virtual ICollection<SpecimenImage> CollectionSpecimenImage { get; set; }
-        public virtual ICollection<IdentificationUnit> IdentificationUnit { get; set; }
-        public virtual ICollection<CollectionAgent> CollectionAgent { get; set; }
+        public Event CollectionEvent { get; set; }
+        public ICollection<SpecimenImage> CollectionSpecimenImage { get; set; }
+        public ICollection<IdentificationUnit> IdentificationUnit { get; set; }
+        public ICollection<CollectionAgent> CollectionAgent { get; set; }
     }
 }

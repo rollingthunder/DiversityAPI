@@ -27,23 +27,23 @@ namespace DiversityService.DB.Collection
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Analysis> Analysis { get; set; }
-        public virtual DbSet<AnalysisResult> AnalysisResult { get; set; }
-        public virtual DbSet<Event> CollectionEvent { get; set; }
-        public virtual DbSet<EventImage> CollectionEventImage { get; set; }
-        public virtual DbSet<EventProperty> CollectionEventProperty { get; set; }
-        public virtual DbSet<EventSeries> EventSeries { get; set; }
-        public virtual DbSet<EventSeriesImage> CollectionEventSeriesImage { get; set; }
-        public virtual DbSet<Specimen> CollectionSpecimen { get; set; }
-        public virtual DbSet<SpecimenImage> CollectionSpecimenImage { get; set; }
-        public virtual DbSet<Identification> Identification { get; set; }
-        public virtual DbSet<IdentificationUnit> IdentificationUnit { get; set; }
-        public virtual DbSet<IdentificationUnitAnalysis> IdentificationUnitAnalysis { get; set; }
-        public virtual DbSet<IdentificationUnitGeoAnalysis> IdentificationUnitGeoAnalysis { get; set; }
-        public virtual DbSet<CollectionAgent> CollectionAgent { get; set; }
-        public virtual DbSet<Property> Property { get; set; }
+        public DbSet<Analysis> Analysis { get; set; }
+        public DbSet<AnalysisResult> AnalysisResult { get; set; }
+        public DbSet<Event> CollectionEvent { get; set; }
+        public DbSet<EventImage> CollectionEventImage { get; set; }
+        public DbSet<EventProperty> CollectionEventProperty { get; set; }
+        public DbSet<EventSeries> EventSeries { get; set; }
+        public DbSet<EventSeriesImage> CollectionEventSeriesImage { get; set; }
+        public DbSet<Specimen> CollectionSpecimen { get; set; }
+        public DbSet<SpecimenImage> CollectionSpecimenImage { get; set; }
+        public DbSet<Identification> Identification { get; set; }
+        public DbSet<IdentificationUnit> IdentificationUnit { get; set; }
+        public DbSet<IdentificationUnitAnalysis> IdentificationUnitAnalysis { get; set; }
+        public DbSet<IdentificationUnitGeoAnalysis> IdentificationUnitGeoAnalysis { get; set; }
+        public DbSet<CollectionAgent> CollectionAgent { get; set; }
+        public DbSet<Property> Property { get; set; }
     
-        public virtual ObjectResult<UserTaxonList> DiversityMobile_UserTaxonLists(string loginName)
+        public ObjectResult<UserTaxonList> DiversityMobile_UserTaxonLists(string loginName)
         {
             var loginNameParameter = loginName != null ?
                 new ObjectParameter("LoginName", loginName) :
@@ -52,7 +52,7 @@ namespace DiversityService.DB.Collection
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<UserTaxonList>("DiversityMobile_UserTaxonLists", loginNameParameter);
         }
     
-        public virtual ObjectResult<UserTerminology> DiversityMobile_UserTerminologies(string loginName)
+        public ObjectResult<UserTerminology> DiversityMobile_UserTerminologies(string loginName)
         {
             var loginNameParameter = loginName != null ?
                 new ObjectParameter("LoginName", loginName) :
@@ -62,7 +62,7 @@ namespace DiversityService.DB.Collection
         }
     
         [DbFunction("DiversityCollection", "DiversityMobile_ProjectList")]
-        public virtual IQueryable<Project> DiversityMobile_ProjectList()
+        public IQueryable<Project> DiversityMobile_ProjectList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<Project>("[DiversityCollection].[DiversityMobile_ProjectList]()");
         }

@@ -7,19 +7,13 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web;
+    using System.Web.Http;
 
-    [ProjectAPI(Route.TAXA_CONTROLLER)]
+    [CollectionAPI(Route.TAXA_CONTROLLER)]
     public class TaxaController : DiversityController
     {
-        private ITaxa Taxa
-        {
-            get
-            {
-                return Request.GetCollectionContext().Taxa;
-            }
-        }
-
         private readonly IMappingEngine Mapping;
 
         public TaxaController(
@@ -30,8 +24,16 @@
             this.Mapping = Mapping;
         }
 
-        public IEnumerable<TaxonList> Get()
+        public async Task<IEnumerable<TaxonList>> Get()
         {
+            return null;
+        }
+
+        [Route("{listID}")]
+        public async Task<IEnumerable<TaxonName>> GetList(int listID, int take = 10, int skip = 0)
+        {
+            var knownLists = await Get();
+
             return null;
         }
     }

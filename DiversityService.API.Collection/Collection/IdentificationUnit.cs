@@ -53,14 +53,14 @@ namespace DiversityService.DB.Collection
         public string HierarchyCache { get; set; }
         public Nullable<int> ParentUnitID { get; set; }
     
-        public virtual Specimen CollectionSpecimen { get; set; }
-        public virtual ICollection<SpecimenImage> CollectionSpecimenImage { get; set; }
-        public virtual ICollection<Identification> Identification { get; set; }
-        public virtual ICollection<IdentificationUnit> IdentificationUnit1 { get; set; }
-        public virtual IdentificationUnit IdentificationUnit2 { get; set; }
-        public virtual ICollection<IdentificationUnit> IdentificationUnit11 { get; set; }
-        public virtual IdentificationUnit IdentificationUnit3 { get; set; }
-        public virtual ICollection<IdentificationUnitAnalysis> IdentificationUnitAnalysis { get; set; }
-        public virtual ICollection<IdentificationUnitGeoAnalysis> IdentificationUnitGeoAnalysis { get; set; }
+        public Specimen CollectionSpecimen { get; set; }
+        public ICollection<SpecimenImage> CollectionSpecimenImage { get; set; }
+        public ICollection<Identification> Identification { get; set; }
+        public ICollection<IdentificationUnit> IdentificationUnit1 { get; set; }
+        public IdentificationUnit IdentificationUnit2 { get; set; }
+        public ICollection<IdentificationUnit> IdentificationUnit11 { get; set; }
+        public IdentificationUnit IdentificationUnit3 { get; set; }
+        public ICollection<IdentificationUnitAnalysis> IdentificationUnitAnalysis { get; set; }
+        public ICollection<IdentificationUnitGeoAnalysis> IdentificationUnitGeoAnalysis { get; set; }
     }
 }

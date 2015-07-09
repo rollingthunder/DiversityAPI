@@ -28,7 +28,7 @@
 
             Controller.Request = new HttpRequestMessage();
 
-            var mock = Mocks.SetupContext(Kernel);
+            var mock = SetupMocks.Context(Kernel);
 
             // Set Request Context
 

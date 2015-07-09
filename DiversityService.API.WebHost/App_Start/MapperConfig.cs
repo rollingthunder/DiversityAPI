@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
     using DiversityService.API.Services;
     using NodaTime;
     using System;

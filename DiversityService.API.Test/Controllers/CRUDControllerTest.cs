@@ -1,9 +1,9 @@
 ﻿namespace DiversityService.API.Test
 {
+    using DiversityService.API;
     using DiversityService.API.Controllers;
     using DiversityService.API.Model;
     using DiversityService.API.Results;
-    using DiversityService.API.Services;
     using Moq;
     using System;
     using System.Collections.Generic;

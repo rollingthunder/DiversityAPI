@@ -14,7 +14,7 @@
 
     public class APIBrowser
     {
-        public const string HOME_URI = "/Home";
+        public const string HOME_URI = "Home";
 
         public HttpClient Client { get; private set; }
 

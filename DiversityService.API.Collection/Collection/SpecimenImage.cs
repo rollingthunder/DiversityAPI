@@ -36,7 +36,7 @@ namespace DiversityService.DB.Collection
         public string LicenseYear { get; set; }
         public Nullable<int> DisplayOrder { get; set; }
     
-        public virtual Specimen CollectionSpecimen { get; set; }
-        public virtual IdentificationUnit IdentificationUnit { get; set; }
+        public Specimen CollectionSpecimen { get; set; }
+        public IdentificationUnit IdentificationUnit { get; set; }
     }
 }

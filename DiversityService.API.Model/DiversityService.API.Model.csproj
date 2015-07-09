@@ -80,7 +80,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CollectionModule.Internal.cs" />
     <Compile Include="CollectionServer.cs" />
+    <Compile Include="CollectionServer.Internal.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventSeries.cs" />
     <Compile Include="Identification.cs" />
@@ -89,7 +91,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specimen.cs" />
-    <Compile Include="TaxonList.cs" />
+    <Compile Include="Taxa.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="NodaTime">

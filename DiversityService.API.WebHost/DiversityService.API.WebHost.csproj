@@ -318,7 +318,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AgentClaims.cs" />
     <Compile Include="Models\BackendClaims.cs" />
-    <Compile Include="Models\CollectionServer.Internal.cs" />
     <Compile Include="Models\Event.Validation.cs" />
     <Compile Include="Models\EventSeries.Validation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -346,9 +345,6 @@
     <Compile Include="Services\LinkFactory.cs" />
     <Compile Include="Services\LocalizationMapper.cs" />
     <Compile Include="Services\ProjectStore.cs" />
-    <Compile Include="Services\Store.cs" />
-    <Compile Include="Services\IStore.cs" />
-    <Compile Include="Services\Taxa.cs" />
     <Compile Include="App_Start\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -393,6 +389,10 @@
     <ProjectReference Include="..\DiversityService.API.Collection\DiversityService.API.Collection.csproj">
       <Project>{49e502ef-2918-4098-afc4-4461be012684}</Project>
       <Name>DiversityService.API.Collection</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DiversityService.API.Interface\DiversityService.API.Interface.csproj">
+      <Project>{970479fb-9b5b-4179-961d-a1218ca574f6}</Project>
+      <Name>DiversityService.API.Interface</Name>
     </ProjectReference>
     <ProjectReference Include="..\DiversityService.API.Model\DiversityService.API.Model.csproj">
       <Project>{0bdd8e4f-945e-4124-a914-c7ff50ea4e3c}</Project>

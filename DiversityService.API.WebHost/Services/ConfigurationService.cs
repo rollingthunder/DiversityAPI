@@ -2,6 +2,7 @@
 {
     using AutoMapper;
     using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
     using DiversityService.API.WebHost;
     using System;
     using System.Collections.Generic;

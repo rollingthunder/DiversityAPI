@@ -31,9 +31,9 @@ namespace DiversityService.DB.Collection
         public Nullable<bool> OnlyHierarchy { get; set; }
         public System.Guid RowGUID { get; set; }
     
-        public virtual ICollection<AnalysisResult> AnalysisResult { get; set; }
-        public virtual ICollection<Analysis> Analysis1 { get; set; }
-        public virtual Analysis Analysis2 { get; set; }
-        public virtual ICollection<IdentificationUnitAnalysis> IdentificationUnitAnalysis { get; set; }
+        public ICollection<AnalysisResult> AnalysisResult { get; set; }
+        public ICollection<Analysis> Analysis1 { get; set; }
+        public Analysis Analysis2 { get; set; }
+        public ICollection<IdentificationUnitAnalysis> IdentificationUnitAnalysis { get; set; }
     }
 }

@@ -1,13 +1,13 @@
-﻿using DiversityService.API.WebHost.Migrations;
-using DiversityService.API.WebHost.Models;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using System.Data.Entity;
-
-namespace DiversityService.API.WebHost
+﻿namespace DiversityService.API.WebHost
 {
+    using DiversityService.API.WebHost.Migrations;
+    using DiversityService.API.WebHost.Models;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity.Owin;
+    using Microsoft.Owin;
+    using System.Data.Entity;
+
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
@@ -22,7 +22,7 @@ namespace DiversityService.API.WebHost
 
             var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
 
-            // Configure validation logic for usernames
+            // Configure validation logic for user names
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,

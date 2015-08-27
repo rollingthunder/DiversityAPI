@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
     using DiversityService.API.Services;
     using Microsoft.Owin;
     using Moq;
@@ -14,6 +15,29 @@
     {
         protected T Controller;
 
+        protected readonly OwinContext OwinContext;
+        protected readonly HttpRequestMessage Request;
+        protected readonly CollectionServerLogin Login;
+        protected readonly AgentInfo Agent;
+
+        public ControllerTestBase()
+        {
+            Request = new HttpRequestMessage();
+
+            OwinContext = new OwinContext();
+            Request.SetOwinContext(OwinContext);
+
+            Login = new CollectionServerLogin();
+            Request.SetBackendCredentials(Login);
+
+            Agent = new AgentInfo()
+            {
+                Name = "Test, U.",
+                Uri = "testuri..."
+            };
+            Request.SetAgentInfo(Agent);
+        }
+
         protected void InitController()
         {
             Controller = Kernel.Get<T>();
@@ -26,23 +50,11 @@
                 DependencyResolver = new NinjectDependencyResolver(Kernel)
             };
 
-            Controller.Request = new HttpRequestMessage();
+            Controller.Request = Request;
 
             var mock = SetupMocks.Context(Kernel);
 
-            // Set Request Context
-
-            var octx = new OwinContext();
-
-            Controller.Request.SetOwinContext(octx);
             Controller.Request.SetCollectionContext(mock.Object);
-
-            var agent = new AgentInfo()
-            {
-                Name = "Test, U.",
-                Uri = "testuri..."
-            };
-            Controller.Request.SetAgentInfo(agent);
         }
     }
 }

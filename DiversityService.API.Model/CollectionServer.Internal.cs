@@ -31,5 +31,10 @@
                 this.User == other.User &&
                 this.Password == other.Password;
         }
+
+        public CollectionServerLogin Clone()
+        {
+            return (CollectionServerLogin)this.MemberwiseClone();
+        }
     }
 }

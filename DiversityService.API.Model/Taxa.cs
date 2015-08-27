@@ -8,6 +8,8 @@ namespace DiversityService.API.Model
 {
     public class TaxonList
     {
+        public string Catalog { get; set; }
+
         public int Id { get; set; }
 
         public string Name { get; set; }

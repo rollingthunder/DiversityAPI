@@ -178,5 +178,25 @@
 
             return Discovery;
         }
+
+        public static Mock<ITaxa> Taxa(IKernel Kernel, CollectionServerLogin Login,
+            string Catalog,
+            IEnumerable<TaxonList> Lists)
+        {
+            var Factory = Kernel.GetMock<ITaxaFactory>();
+            var Taxa = new Mock<ITaxa>();
+            var loginWithCatalog = Login.Clone();
+            loginWithCatalog.Catalog = Catalog;
+
+            Factory
+                .Setup(x => x.GetTaxa(It.Is<CollectionServerLogin>(l => loginWithCatalog.Equals(l))))
+                .Returns(Taxa.Object);
+
+            Taxa
+                .Setup(x => x.GetListsForUserAsync())
+                .Returns(() => Task.FromResult(Lists.AsEnumerable()));
+
+            return Taxa;
+        }
     }
 }

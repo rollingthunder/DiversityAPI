@@ -29,23 +29,23 @@ namespace DiversityService.DB.TaxonNames
     
     
         [DbFunction("TaxonNames", "DiversityMobile_TaxonList")]
-        public virtual IQueryable<DiversityMobile_TaxonList_Result> DiversityMobile_TaxonList(Nullable<int> listID)
+        public virtual IQueryable<TaxonName> DiversityMobile_TaxonList(Nullable<int> listID)
         {
             var listIDParameter = listID.HasValue ?
                 new ObjectParameter("ListID", listID) :
                 new ObjectParameter("ListID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DiversityMobile_TaxonList_Result>("[TaxonNames].[DiversityMobile_TaxonList](@ListID)", listIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<TaxonName>("[TaxonNames].[DiversityMobile_TaxonList](@ListID)", listIDParameter);
         }
     
         [DbFunction("TaxonNames", "DiversityMobile_TaxonListsForUser")]
-        public virtual IQueryable<DiversityMobile_TaxonListsForUser_Result> DiversityMobile_TaxonListsForUser(string login)
+        public virtual IQueryable<TaxonList> DiversityMobile_TaxonListsForUser(string login)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("Login", login) :
                 new ObjectParameter("Login", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<DiversityMobile_TaxonListsForUser_Result>("[TaxonNames].[DiversityMobile_TaxonListsForUser](@Login)", loginParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<TaxonList>("[TaxonNames].[DiversityMobile_TaxonListsForUser](@Login)", loginParameter);
         }
     }
 }

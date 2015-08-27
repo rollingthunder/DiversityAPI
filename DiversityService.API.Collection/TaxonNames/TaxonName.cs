@@ -11,7 +11,7 @@ namespace DiversityService.DB.TaxonNames
 {
     using System;
     
-    public partial class DiversityMobile_TaxonList_Result
+    public partial class TaxonName
     {
         public string NameURI { get; set; }
         public string TaxonNameCache { get; set; }

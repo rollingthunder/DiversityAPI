@@ -45,7 +45,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DiversityTaxonNames" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <ComplexType Name="DiversityMobile_TaxonList_Result">
+        <ComplexType Name="TaxonName">
           <Property Name="NameURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="TaxonNameCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="TaxonNameSinAuthors" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
@@ -58,7 +58,7 @@
           <Property Name="AcceptedNameCache" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="AcceptedNameURI" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </ComplexType>
-        <ComplexType Name="DiversityMobile_TaxonListsForUser_Result">
+        <ComplexType Name="TaxonList">
           <Property Name="ListID" Type="Int32" Nullable="false" />
           <Property Name="DataSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DisplayText" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -66,10 +66,10 @@
           <Property Name="DefaultProjectID" Type="Int32" />
         </ComplexType>
         <EntityContainer Name="TaxonNames" annotation:LazyLoadingEnabled="true">
-          <FunctionImport Name="DiversityMobile_TaxonList" IsComposable="true" ReturnType="Collection(DiversityTaxonNames.DiversityMobile_TaxonList_Result)">
+          <FunctionImport Name="DiversityMobile_TaxonList" IsComposable="true" ReturnType="Collection(DiversityTaxonNames.TaxonName)">
             <Parameter Name="ListID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="DiversityMobile_TaxonListsForUser" IsComposable="true" ReturnType="Collection(DiversityTaxonNames.DiversityMobile_TaxonListsForUser_Result)">
+          <FunctionImport Name="DiversityMobile_TaxonListsForUser" IsComposable="true" ReturnType="Collection(DiversityTaxonNames.TaxonList)">
             <Parameter Name="Login" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -81,7 +81,7 @@
         <EntityContainerMapping StorageEntityContainer="DiversityTaxonNamesStoreContainer" CdmEntityContainer="TaxonNames">
           <FunctionImportMapping FunctionName="DiversityTaxonNames.Store.DiversityMobile_TaxonList" FunctionImportName="DiversityMobile_TaxonList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DiversityTaxonNames.DiversityMobile_TaxonList_Result">
+              <ComplexTypeMapping TypeName="DiversityTaxonNames.TaxonName">
                 <ScalarProperty Name="NameURI" ColumnName="NameURI" />
                 <ScalarProperty Name="TaxonNameCache" ColumnName="TaxonNameCache" />
                 <ScalarProperty Name="TaxonNameSinAuthors" ColumnName="TaxonNameSinAuthors" />
@@ -98,7 +98,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionName="DiversityTaxonNames.Store.DiversityMobile_TaxonListsForUser" FunctionImportName="DiversityMobile_TaxonListsForUser">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DiversityTaxonNames.DiversityMobile_TaxonListsForUser_Result">
+              <ComplexTypeMapping TypeName="DiversityTaxonNames.TaxonList">
                 <ScalarProperty Name="ListID" ColumnName="ListID" />
                 <ScalarProperty Name="DataSource" ColumnName="DataSource" />
                 <ScalarProperty Name="DisplayText" ColumnName="DisplayText" />

@@ -170,6 +170,7 @@
     <Compile Include="Collection\UserTerminology.cs">
       <DependentUpon>DiversityCollection.tt</DependentUpon>
     </Compile>
+    <Compile Include="Interface\Taxa.cs" />
     <Compile Include="Module\Custom.cs" />
     <Compile Include="Module\DiversityModule.Context.cs">
       <AutoGen>True</AutoGen>
@@ -193,12 +194,6 @@
     <Compile Include="Services\Store.CRUD.cs" />
     <Compile Include="Services\Taxa.cs" />
     <Compile Include="TaxonNames\Custom.cs" />
-    <Compile Include="TaxonNames\DiversityMobile_TaxonListsForUser_Result.cs">
-      <DependentUpon>DiversityTaxonNames.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TaxonNames\DiversityMobile_TaxonList_Result.cs">
-      <DependentUpon>DiversityTaxonNames.tt</DependentUpon>
-    </Compile>
     <Compile Include="TaxonNames\DiversityTaxonNames.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -213,6 +208,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DiversityTaxonNames.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TaxonNames\TaxonList.cs">
+      <DependentUpon>DiversityTaxonNames.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaxonNames\TaxonName.cs">
+      <DependentUpon>DiversityTaxonNames.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

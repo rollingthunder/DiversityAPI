@@ -38,16 +38,11 @@
 
         public async Task<Uri> GetAccountUriAsync()
         {
-            RequireInitialized();
+            Contract.Requires<InvalidOperationException>(Home != null, "not initialized");
 
             return (from res in Home.Resources
                     where res.Relation == Relations.ACCOUNT
                     select res.Target).FirstOrDefault();
-        }
-
-        private void RequireInitialized()
-        {
-            Contract.Requires<InvalidOperationException>(Home != null, "not initialized");
         }
     }
 }

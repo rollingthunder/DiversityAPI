@@ -9,13 +9,14 @@
     using System.Text;
     using System.Threading.Tasks;
     using Xunit;
-    using Collection = DiversityService.DB.Collection;
+    using TaxonNames = DiversityService.DB.TaxonNames;
 
     public class TaxaControllerTest : ControllerTestBase<TaxaController>
     {
         private readonly Mock<IDiscoverDBModules> Discovery;
 
-        private readonly IDictionary<string, Model.TaxonList[]> ListsForModule;
+        private readonly CollectionServerLogin PublicLogin;
+        private readonly IDictionary<string, TaxonNames.TaxonList[]> ListsForModule;
 
         public TaxaControllerTest()
         {
@@ -26,15 +27,15 @@
                 new DBModule(DBModuleType.Unknown, "Unknown")
             };
 
-            ListsForModule = new Dictionary<string, Model.TaxonList[]>()
+            ListsForModule = new Dictionary<string, TaxonNames.TaxonList[]>()
             {
                 {"BTaxa", new[] {
-                    new Model.TaxonList() { Catalog = "BTaxa", Id = 0, Name = "B1", TaxonGroup = "plants" },
-                    new Model.TaxonList() { Catalog = "BTaxa", Id = 0, Name = "B2", TaxonGroup = "lichen" },
+                    new TaxonNames.TaxonList() { ListID = 0, DataSource = "B1", DisplayText = "ListB1", TaxonomicGroup = "plants" },
+                    new TaxonNames.TaxonList() { ListID = 0, DataSource = "B2", DisplayText = "ListB2", TaxonomicGroup = "lichen" },
                 }},
                 {"CTaxa", new[] {
-                    new Model.TaxonList() { Catalog = "CTaxa", Id = 0, Name = "C1", TaxonGroup = "plants" },
-                    new Model.TaxonList() { Catalog = "CTaxa", Id = 0, Name = "C2", TaxonGroup = "lichen" },
+                    new TaxonNames.TaxonList() { ListID = 0, DataSource = "C1", DisplayText = "ListC1", TaxonomicGroup = "plants" },
+                    new TaxonNames.TaxonList() { ListID = 0, DataSource = "C2", DisplayText = "ListC2", TaxonomicGroup = "plants" },
                 }}
             };
 
@@ -51,7 +52,7 @@
         public async Task CanDiscoverListsOnCurrentServer()
         {
             // Arrange
-            var expected = new HashSet<Model.TaxonList>(
+            var expected = new List<TaxonNames.TaxonList>(
                 ListsForModule["BTaxa"].Concat(ListsForModule["CTaxa"])
                 );
 
@@ -59,7 +60,7 @@
             var lists = await Controller.Get();
 
             // Assert
-            Assert.Equal(expected, lists);
+            Assert.True(lists.All(l => expected.Any(x => x.DisplayText == l.Name && x.TaxonomicGroup == l.TaxonGroup)));
         }
 
         [Fact]

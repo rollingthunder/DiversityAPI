@@ -138,6 +138,12 @@
                 .ForMember(x => x.RowGUID, map => map.Ignore())
                 // Ignore Navigation Properties
                 .ForMember(x => x.IdentificationUnit, map => map.Ignore());
+
+            // TaxonList -> Model.TaxonList
+            mappingConfiguration.CreateMap<DB.TaxonNames.TaxonList, TaxonList>()
+                .ForMember(x => x.Name, map => map.MapFrom(y => y.DisplayText))
+                .ForMember(x => x.TaxonGroup, map => map.MapFrom(y => y.TaxonomicGroup))
+                .ForMember(x => x.Id, map => map.MapFrom(y => y.GetSHA1Hash()));
         }
     }
 }

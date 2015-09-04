@@ -181,7 +181,7 @@
 
         public static Mock<ITaxa> Taxa(IKernel Kernel, CollectionServerLogin Login,
             string Catalog,
-            IEnumerable<TaxonList> Lists)
+            IEnumerable<DB.TaxonNames.TaxonList> Lists)
         {
             var Factory = Kernel.GetMock<ITaxaFactory>();
             var Taxa = new Mock<ITaxa>();

@@ -369,6 +369,7 @@
     <Compile Include="Models\AgentInfo.cs" />
     <Compile Include="Services\AgentInfoExtensions.cs" />
     <Compile Include="Services\CollectionContext.cs" />
+    <Compile Include="Services\MappingExtensions.cs" />
     <Compile Include="Services\OwinContextExtensions.cs" />
     <Compile Include="Services\CollectionContextExtensions.cs" />
     <Compile Include="Services\ConfigurationService.cs" />

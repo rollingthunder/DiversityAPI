@@ -1,7 +1,6 @@
 ﻿namespace DiversityService.DB.Services
 {
     using DiversityService.API;
-    using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
     using DiversityService.DB.TaxonNames;
     using System.Collections.Generic;

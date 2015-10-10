@@ -11,16 +11,16 @@
     {
         private const string COLLECTION_CONTEXT_KEY = "coll_context";
 
-        public static IContext GetCollectionContext(this HttpRequestMessage request)
+        public static IFieldDataContext GetCollectionContext(this HttpRequestMessage request)
         {
             var requestContext = request.GetOwinContext();
-            return requestContext.Get<IContext>(COLLECTION_CONTEXT_KEY);
+            return requestContext.Get<IFieldDataContext>(COLLECTION_CONTEXT_KEY);
         }
 
-        public static void SetCollectionContext(this HttpRequestMessage request, IContext ctx)
+        public static void SetCollectionContext(this HttpRequestMessage request, IFieldDataContext ctx)
         {
             var requestContext = request.GetOwinContext();
-            requestContext.Set<IContext>(COLLECTION_CONTEXT_KEY, ctx);
+            requestContext.Set<IFieldDataContext>(COLLECTION_CONTEXT_KEY, ctx);
         }
     }
 }

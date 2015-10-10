@@ -43,21 +43,42 @@
             this.TaxaFactory = TaxaFactory;
         }
 
-        public async Task<IEnumerable<TaxonList>> Get()
+        /// <summary>
+        /// Get taxon lists from the server we are currently connected to
+        /// </summary>
+        /// <returns></returns>
+        public Task<IEnumerable<TaxonList>> Get()
         {
-            // Lists from the current server
-            var privateLists = await enumerateTaxonListsForServer(Login);
-
-
-            return privateLists;
+            return this.enumerateTaxonListsForServer(Login);
         }
 
         [Route("{listID}")]
-        public async Task<IEnumerable<TaxonName>> GetList(int listID, int take = 10, int skip = 0)
+        public async Task<IEnumerable<TaxonName>> GetList(string listID, int take = 10, int skip = 0)
         {
             var knownLists = await Get();
 
+            return await getTaxonList(Login, knownLists, listID, take, skip);
+        }
+
+        [Route("public")]
+        public Task<IEnumerable<TaxonList>> GetPublic()
+        {
             return null;
+        }
+
+        [Route("public/{listID}")]
+        public async Task<IEnumerable<TaxonName>> GetPublicList(string listID, int take = 10, int skip = 0)
+        {
+            var knownLists = await GetPublic();
+
+            return await getTaxonList(Login, knownLists, listID, take, skip);
+        }
+
+        
+        private async Task<IEnumerable<TaxonName>> getTaxonList(CollectionServerLogin login, IEnumerable<TaxonList> knownLists, string listId, int take, int skip)
+        {
+            return null;
+
         }
 
         private async Task<IEnumerable<TaxonList>> enumerateTaxonListsForServer(CollectionServerLogin login)
@@ -76,7 +97,8 @@
 
                 var taxa = TaxaFactory.GetTaxa(taxaLogin);
 
-                var lists = await taxa.GetListsForUserAsync();
+                var lists = from list in await taxa.GetListsForUserAsync()
+                            select Mapper.Map<TaxonList>(list);
 
                 result.AddRange(lists);
             }

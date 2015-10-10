@@ -14,7 +14,7 @@
     public class ProjectControllerTest : ControllerTestBase<ProjectController>
     {
         private Mock<IProjectStore> Projects;
-        private Mock<IContext> CollectionContext;
+        private Mock<IFieldDataContext> CollectionContext;
 
         public ProjectControllerTest()
         {

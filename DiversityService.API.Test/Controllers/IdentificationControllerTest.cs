@@ -60,7 +60,7 @@
 
     public class IdentificationControllerTest : ControllerTestBase<IdentificationController>
     {
-        protected readonly Mock<IContext> MockContext;
+        protected readonly Mock<IFieldDataContext> MockContext;
         protected readonly Mock<ITransaction> MockTransaction;
         protected readonly Mock<IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey>> MockIUStore;
         protected readonly Mock<IStore<Collection.Identification, Collection.IdentificationKey>> MockIDStore;
@@ -72,7 +72,7 @@
             MockIDStore = Kernel.GetMock<IStore<Collection.Identification, Collection.IdentificationKey>>();
             MockIUGANStore = Kernel.GetMock<IStore<Collection.IdentificationUnitGeoAnalysis, Collection.IdentificationGeoKey>>();
             InitController();
-            MockContext = Kernel.GetMock<IContext>();
+            MockContext = Kernel.GetMock<IFieldDataContext>();
             MockTransaction = Kernel.GetMock<ITransaction>();
         }
 

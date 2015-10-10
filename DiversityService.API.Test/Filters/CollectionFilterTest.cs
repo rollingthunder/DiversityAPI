@@ -26,7 +26,7 @@
         private const string PASS = "pass";
         private const string AGENT_NAME = "Test, U.";
         private const string AGENT_URI = "http://snsb.info/agents/test_u";
-        private IContext Context;
+        private IFieldDataContext Context;
 
         private readonly InternalCollectionServer[] Servers = new[]{
             new InternalCollectionServer() {
@@ -298,15 +298,15 @@
                 .Setup(x => x.GetCollectionServers())
                 .Returns(Servers);
 
-            var contextMock = Kernel.GetMock<IContext>();
+            var contextMock = Kernel.GetMock<IFieldDataContext>();
 
             ContextFactory
                 .Setup(x => x.CreateContextAsync(It.IsAny<CollectionServerLogin>()))
-                .Returns(Task.FromResult<IContext>(null));
+                .Returns(Task.FromResult<IFieldDataContext>(null));
 
             ContextFactory
                 .Setup(x => x.CreateContextAsync(It.Is<CollectionServerLogin>(l => ExpectedLogin.Equals(l))))
-                .Returns(Task.FromResult<IContext>(contextMock.Object));
+                .Returns(Task.FromResult<IFieldDataContext>(contextMock.Object));
 
             contextMock.SetupProperty(x => x.ProjectId);
 

@@ -44,7 +44,7 @@
         }
     }
 
-    public class CollectionContext : IContext
+    public class CollectionContext : IFieldDataContext
     {
         public const string CONTEXT_ARGUMENT = "context";
 

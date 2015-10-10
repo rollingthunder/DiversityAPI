@@ -25,6 +25,7 @@
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
     <NuGetPackageImportStamp>0c078f26</NuGetPackageImportStamp>
     <ApplicationInsightsResourceId>/subscriptions/06fdabc9-a532-4bd0-b53e-7ce7c40473cd/resourcegroups/Diversity/providers/microsoft.insights/components/DiversityAPI</ApplicationInsightsResourceId>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -12,8 +12,6 @@
     {
         IEnumerable<InternalCollectionServer> GetCollectionServers();
 
-        CollectionServerLogin GetPublicTaxa();
-
-        CollectionServerLogin GetScientificTerms();
+        CollectionServerLogin GetPublicLogin(string type);
     }
 }

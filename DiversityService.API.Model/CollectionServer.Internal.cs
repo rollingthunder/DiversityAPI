@@ -1,6 +1,7 @@
 ﻿namespace DiversityService.API.Model.Internal
 {
     using System;
+    using System.Collections.Generic;
 
     public class InternalCollectionServer : CollectionServer, IEquatable<InternalCollectionServer>
     {
@@ -25,11 +26,14 @@
 
         public string Password { get; set; }
 
+        public string Kind { get; set; }
+
         public bool Equals(CollectionServerLogin other)
         {
             return this.Equals(other as InternalCollectionServer) &&
                 this.User == other.User &&
-                this.Password == other.Password;
+                this.Password == other.Password &&
+                this.Kind == other.Kind;
         }
 
         public CollectionServerLogin Clone()

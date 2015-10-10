@@ -33,7 +33,7 @@
         {
             // Arrange
             Request
-                .SetCollectionContext(Kernel.Get<IContext>());
+                .SetCollectionContext(Kernel.Get<IFieldDataContext>());
 
             // Act
             await ActionExecuting();

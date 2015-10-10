@@ -33,7 +33,7 @@
         {
             // Arrange
             Request
-                .SetCollectionContext(Kernel.Get<IContext>());
+                .SetCollectionContext(Kernel.Get<IFieldDataContext>());
 
             // Act
             await ActionExecuting();
@@ -47,14 +47,14 @@
         public async Task Accepts_With_Context_And_Id()
         {
             // Arrange
-            var ctx = Kernel.GetMock<IContext>();
+            var ctx = Kernel.GetMock<IFieldDataContext>();
 
             ctx
                 .SetupGet(x => x.ProjectId)
                 .Returns(0);
 
             Request
-                .SetCollectionContext(Kernel.Get<IContext>());
+                .SetCollectionContext(Kernel.Get<IFieldDataContext>());
 
             // Act
             await ActionExecuting();

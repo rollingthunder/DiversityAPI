@@ -17,11 +17,6 @@
 
     public partial class TestStartup : Startup
     {
-        public IKernel Kernel
-        {
-            get { return base.Kernel; }
-        }
-
         public TestStartup()
         {
         }

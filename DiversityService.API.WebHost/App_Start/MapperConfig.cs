@@ -15,9 +15,7 @@
         public static void Configure(IConfiguration mappingConfiguration)
         {
             mappingConfiguration.CreateMap<CollectionServerElement, InternalCollectionServer>();
-            mappingConfiguration.CreateMap<ServerLoginElement, CollectionServerLogin>();
-            mappingConfiguration.CreateMap<ServerLoginCatalogElement, CollectionServerLogin>()
-                .IncludeBase<ServerLoginElement, CollectionServerLogin>();
+            mappingConfiguration.CreateMap<ServerLoginCatalogElement, CollectionServerLogin>();
 
             mappingConfiguration.CreateMap<Collection.Project, Project>()
                 .ForMember(mem => mem.Id, map => map.MapFrom(x => x.ProjectID))

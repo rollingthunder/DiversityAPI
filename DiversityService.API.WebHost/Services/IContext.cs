@@ -9,7 +9,7 @@
         void Commit();
     }
 
-    public interface IContext : IDisposable
+    public interface IFieldDataContext : IDisposable
     {
         int? ProjectId { get; set; }
 

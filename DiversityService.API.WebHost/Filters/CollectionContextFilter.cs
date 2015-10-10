@@ -15,7 +15,7 @@
     public static class CollectionAPI
     {
         public const string COLLECTION = "collection";
-        public const string COLLECTION_TEMPLATE = "{" + COLLECTION + ":int}";
+        public const string COLLECTION_TEMPLATE = "{" + COLLECTION + "}";
         public const string PROJECT = "project";
         public const string PROJECT_TEMPLATE = "{" + PROJECT + ":int}";
         public const string API_PREFIX = "api/";
@@ -42,7 +42,7 @@
             AgentInfo Agent;
             CollectionServerLogin Login;
 
-            IContext ctx = null;
+            IFieldDataContext ctx = null;
 
             ExtractCollection(actionContext, out Login);
 
@@ -129,7 +129,7 @@
 
             var requestContext = actionContext.RequestContext;
 
-            // Check authenticated user and get their backend credentials
+            // Check authenticated user and get their back end credentials
             if (requestContext == null)
             {
                 SetErrorResponse(actionContext, HttpStatusCode.InternalServerError, "No Request Context Available");
@@ -238,7 +238,7 @@
 
         private async Task ExtractProject(
             HttpActionContext actionContext,
-            IContext collectionContext)
+            IFieldDataContext collectionContext)
         {
             var request = actionContext.Request;
 

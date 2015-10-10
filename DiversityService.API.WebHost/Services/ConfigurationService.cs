@@ -4,16 +4,21 @@
     using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
     using DiversityService.API.WebHost;
+    using Splat;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.Web;
 
-    public class ConfigurationService : IConfigurationService
+    public class ConfigurationService : IConfigurationService, IEnableLogger
     {
         private readonly Lazy<CollectionServerConfigurationSection> Section;
         private readonly IMappingEngine Mapper;
+
+        private IEnumerable<InternalCollectionServer> _Servers;
+
+        private IDictionary<string, IEnumerable<CollectionServerLogin>> _PublicServers;
 
         public ConfigurationService(
             IMappingEngine mapper
@@ -29,8 +34,6 @@
 
         #region IConfigurationService
 
-        private IEnumerable<InternalCollectionServer> _Servers;
-
         public IEnumerable<InternalCollectionServer> GetCollectionServers()
         {
             LoadConfigurationIfNecessary();
@@ -38,20 +41,17 @@
             return _Servers;
         }
 
-        private CollectionServerLogin _PublicTaxa;
-
-        public CollectionServerLogin GetPublicTaxa()
+        public CollectionServerLogin GetPublicLogin(string kind)
         {
             LoadConfigurationIfNecessary();
-            return _PublicTaxa;
-        }
 
-        private CollectionServerLogin _ScientificTerms;
+            IEnumerable<CollectionServerLogin> Logins;
+            if (_PublicServers.TryGetValue(kind, out Logins))
+            {
+                return Logins.First();
+            }
 
-        public CollectionServerLogin GetScientificTerms()
-        {
-            LoadConfigurationIfNecessary();
-            return _ScientificTerms;
+            return null;            
         }
 
         #endregion IConfigurationService
@@ -63,11 +63,29 @@
                 return;
             }
 
-            var section = Section.Value;
-
-            _PublicTaxa = Mapper.Map<CollectionServerLogin>(section.PublicServers.Taxa);
-            _ScientificTerms = Mapper.Map<CollectionServerLogin>(section.PublicServers.Terms);
+            _PublicServers = LoadPublicServers();
             _Servers = LoadCollectionServers();
+        }
+
+        private IDictionary<string, IEnumerable<CollectionServerLogin>> LoadPublicServers()
+        {
+            var res = new Dictionary<string, IEnumerable<CollectionServerLogin>>();
+
+            foreach (var server in Section.Value.PublicServers.Cast<ServerLoginCatalogElement>())
+            {
+                var login = Mapper.Map<CollectionServerLogin>(server);
+                
+                if (!res.ContainsKey(login.Kind))
+                {
+                    res[login.Kind] = new List<CollectionServerLogin>() { login };
+                }
+                else
+                {
+                    ((List<CollectionServerLogin>)res[login.Kind]).Add(login);
+                }
+            }
+
+            return res;
         }
 
         private IEnumerable<InternalCollectionServer> LoadCollectionServers()

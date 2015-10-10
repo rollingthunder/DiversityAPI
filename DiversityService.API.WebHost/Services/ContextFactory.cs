@@ -21,7 +21,7 @@
             Kernel = kernel;
         }
 
-        public async Task<IContext> CreateContextAsync(CollectionServerLogin server)
+        public async Task<IFieldDataContext> CreateContextAsync(CollectionServerLogin server)
         {
             try
             {

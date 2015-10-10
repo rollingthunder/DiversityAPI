@@ -10,6 +10,6 @@
 
     public interface IContextFactory
     {
-        Task<IContext> CreateContextAsync(CollectionServerLogin server);
+        Task<IFieldDataContext> CreateContextAsync(CollectionServerLogin server);
     }
 }

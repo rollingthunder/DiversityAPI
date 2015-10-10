@@ -104,7 +104,7 @@
             var factoryMock = Kernel
                 .GetMock<IContextFactory>();
             var ctxMock = Kernel
-                .GetMock<IContext>();
+                .GetMock<IFieldDataContext>();
             var servers = Data.Servers ?? Enumerable.Empty<InternalCollectionServer>();
             factoryMock.Setup(f => f.CreateContextAsync(It.Is<CollectionServerLogin>(l => servers.Any(s => s.Equals(l)))))
                 .Returns(Task.FromResult(ctxMock.Object));
@@ -129,9 +129,9 @@
             return cfgMock;
         }
 
-        public static Mock<IContext> Context(IKernel Kernel)
+        public static Mock<IFieldDataContext> Context(IKernel Kernel)
         {
-            var mock = Kernel.GetMock<IContext>();
+            var mock = Kernel.GetMock<IFieldDataContext>();
 
             // Transaction
 

@@ -8,12 +8,16 @@ namespace DiversityService.API.WebHost
 {
     public class CollectionServerConfigurationSection : ConfigurationSection
     {
-        [ConfigurationProperty("publicServers")]
-        public PublicServersElement PublicServers
+        [ConfigurationProperty("publicServers", IsDefaultCollection = false)]
+        [ConfigurationCollection(typeof(ServerLoginCollection),
+            AddItemName = "add",
+            ClearItemsName = "clear",
+            RemoveItemName = "remove")]
+        public ServerLoginCollection PublicServers
         {
             get
             {
-                return (PublicServersElement)this["publicServers"];
+                return (ServerLoginCollection)this["publicServers"];
             }
         }
 
@@ -29,27 +33,6 @@ namespace DiversityService.API.WebHost
                 ServersCollection urlsCollection =
                     (ServersCollection)base["servers"];
                 return urlsCollection;
-            }
-        }
-    }
-
-    public class PublicServersElement : ConfigurationElement
-    {
-        [ConfigurationProperty("taxa")]
-        public ServerLoginElement Taxa
-        {
-            get
-            {
-                return (ServerLoginElement)this["taxa"];
-            }
-        }
-
-        [ConfigurationProperty("terms")]
-        public ServerLoginCatalogElement Terms
-        {
-            get
-            {
-                return (ServerLoginCatalogElement)this["terms"];
             }
         }
     }
@@ -166,7 +149,88 @@ namespace DiversityService.API.WebHost
         }
     }
 
-    public class ServerLoginElement : ServerElement
+    public class ServerLoginCollection : ConfigurationElementCollection
+    {
+        public override ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return ConfigurationElementCollectionType.AddRemoveClearMap;
+            }
+        }
+
+        protected override ConfigurationElement CreateNewElement()
+        {
+            return new ServerLoginCatalogElement();
+        }
+
+        protected override Object GetElementKey(ConfigurationElement element)
+        {
+            return ((ServerLoginCatalogElement)element).Name;
+        }
+
+        public ServerLoginCatalogElement this[int index]
+        {
+            get
+            {
+                return (ServerLoginCatalogElement)BaseGet(index);
+            }
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+                BaseAdd(index, value);
+            }
+        }
+
+        new public ServerLoginCatalogElement this[string Name]
+        {
+            get
+            {
+                return (ServerLoginCatalogElement)BaseGet(Name);
+            }
+        }
+
+        public int IndexOf(ServerLoginCatalogElement url)
+        {
+            return BaseIndexOf(url);
+        }
+
+        public void Add(ServerLoginCatalogElement url)
+        {
+            BaseAdd(url);
+        }
+
+        protected override void BaseAdd(ConfigurationElement element)
+        {
+            BaseAdd(element, false);
+        }
+
+        public void Remove(ServerLoginCatalogElement url)
+        {
+            if (BaseIndexOf(url) >= 0)
+                BaseRemove(url.Name);
+        }
+
+        public void RemoveAt(int index)
+        {
+            BaseRemoveAt(index);
+        }
+
+        public void Remove(string name)
+        {
+            BaseRemove(name);
+        }
+
+        public void Clear()
+        {
+            BaseClear();
+        }
+    }
+
+    public class ServerLoginCatalogElement : ServerElement
     {
         [ConfigurationProperty("user", DefaultValue = "anon", IsRequired = true)]
         [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
@@ -191,11 +255,22 @@ namespace DiversityService.API.WebHost
                 this["password"] = value;
             }
         }
-    }
 
-    public class ServerLoginCatalogElement : ServerLoginElement
-    {
-        [ConfigurationProperty("catalog", DefaultValue = "DiversityCollection_Test", IsRequired = true)]
+        [ConfigurationProperty("name", DefaultValue = "taxa", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 5, MaxLength = 60)]
+        public string Name
+        {
+            get
+            {
+                return (string)this["name"];
+            }
+            set
+            {
+                this["name"] = value;
+            }
+        }
+
+        [ConfigurationProperty("catalog", DefaultValue = "", IsRequired = false)]
         [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 1, MaxLength = 60)]
         public string Catalog
         {
@@ -203,6 +278,20 @@ namespace DiversityService.API.WebHost
             { return (string)this["catalog"]; }
             set
             { this["catalog"] = value; }
+        }
+
+        [ConfigurationProperty("kind", DefaultValue = "taxa", IsRequired = true)]
+        [StringValidator(InvalidCharacters = "~!@#$%^&*()[]{}/;'\"|\\", MinLength = 5, MaxLength = 60)]
+        public string Kind
+        {
+            get
+            {
+                return (string)this["kind"];
+            }
+            set
+            {
+                this["kind"] = value;
+            }
         }
     }
 

@@ -16,8 +16,10 @@
     [CollectionAPI(Route.TAXA_CONTROLLER)]
     public class TaxaController : DiversityController
     {
+        public const string TAXON_LOGIN_KIND = "taxa";
+
         private readonly IMappingEngine Mapping;
-        private readonly IConfigurationService Configuration;
+        private new readonly IConfigurationService Configuration;
         private readonly IDiscoverDBModules ModuleDiscovery;
         private readonly ITaxaFactory TaxaFactory;
 
@@ -39,6 +41,7 @@
             : base(Mapping)
         {
             this.Mapping = Mapping;
+            this.Configuration = Configuration;
             this.ModuleDiscovery = ModuleDiscovery;
             this.TaxaFactory = TaxaFactory;
         }
@@ -55,15 +58,17 @@
         [Route("{listID}")]
         public async Task<IEnumerable<TaxonName>> GetList(string listID, int take = 10, int skip = 0)
         {
-            var knownLists = await Get();
+            var knownLists = await this.Get();
 
             return await getTaxonList(Login, knownLists, listID, take, skip);
         }
 
         [Route("public")]
-        public Task<IEnumerable<TaxonList>> GetPublic()
+        public async Task<IEnumerable<TaxonList>> GetPublic()
         {
-            return null;
+            var login = Configuration.GetPublicLogin(TAXON_LOGIN_KIND);
+
+            return await enumerateTaxonListsForServer(login);
         }
 
         [Route("public/{listID}")]
@@ -77,13 +82,26 @@
         
         private async Task<IEnumerable<TaxonName>> getTaxonList(CollectionServerLogin login, IEnumerable<TaxonList> knownLists, string listId, int take, int skip)
         {
-            return null;
+            var list = (from l in knownLists
+                       where l.Id == listId
+                       select l).FirstOrDefault();
 
+            if (list == null)
+            {
+                return Enumerable.Empty<TaxonName>();
+            }
+
+            var dbListId = list.DatabaseId;
+
+            var taxa = this.TaxaFactory.GetTaxa(login);
+
+            return from name in await taxa.GetTaxonNamesForList(dbListId, skip, take)
+                   select Mapper.Map<TaxonName>(name);
         }
 
         private async Task<IEnumerable<TaxonList>> enumerateTaxonListsForServer(CollectionServerLogin login)
         {
-            var taxaModules = from module in await ModuleDiscovery.DiscoverModules(Login)
+            var taxaModules = from module in await this.ModuleDiscovery.DiscoverModules(this.Login)
                               where module.Type == DBModuleType.TaxonNames
                               select module;
 

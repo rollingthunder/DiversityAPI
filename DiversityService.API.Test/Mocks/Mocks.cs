@@ -15,6 +15,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Collection = DiversityService.DB.Collection;
+    using DB.TaxonNames;
 
     public static class SetupMocks
     {
@@ -112,6 +113,12 @@
             return factoryMock;
         }
 
+        public static void TaxonNames(Mock<ITaxa> taxa, int listId, IEnumerable<DB.TaxonNames.TaxonName> names)
+        {
+            taxa.Setup(x => x.GetTaxonNamesForList(listId, It.IsAny<int>(), It.IsAny<int>()))
+                .Returns((int id, int skip, int take) => Task.FromResult(names.Skip(skip).Take(take).ToList() as IList<DB.TaxonNames.TaxonName>));
+        }
+
         public static Mock<IConfigurationService> Servers(IKernel Kernel, InternalCollectionServer[] Servers)
         {
             Kernel.Unbind<IConfigurationService>();
@@ -197,6 +204,21 @@
                 .Returns(() => Task.FromResult(Lists.AsEnumerable()));
 
             return Taxa;
+        }
+
+        public static Mock<IConfigurationService> Configuration(IKernel Kernel, IEnumerable<CollectionServerLogin> publicLogins)
+        {
+            var config = Kernel.GetMock<IConfigurationService>();
+
+            var lookup = publicLogins.ToLookup(l => l.Kind);
+
+            config.Setup(x => x.GetPublicLogin(It.IsAny<string>()))
+                .Returns((string kind) =>
+                {
+                    return lookup[kind].First();
+                });
+
+            return config;
         }
     }
 }

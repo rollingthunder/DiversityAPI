@@ -141,6 +141,7 @@
             mappingConfiguration.CreateMap<DB.TaxonNames.TaxonList, TaxonList>()
                 .ForMember(x => x.Name, map => map.MapFrom(y => y.DisplayText))
                 .ForMember(x => x.TaxonGroup, map => map.MapFrom(y => y.TaxonomicGroup))
+                .ForMember(x => x.DatabaseId, map => map.MapFrom(y => y.ListID))
                 .ForMember(x => x.Id, map => map.MapFrom(y => y.GetSHA1Hash()));
         }
     }

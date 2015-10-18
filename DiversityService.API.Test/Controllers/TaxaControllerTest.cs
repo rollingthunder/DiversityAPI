@@ -18,13 +18,13 @@
         private readonly FakeTaxonServer Local;
         private readonly FakeTaxonServer Public;
 
-        class FakeTaxonModule
+        private class FakeTaxonModule
         {
             public TaxonNames.TaxonList[] Lists { get; set; }
             public Mock<ITaxa> Mock { get; set; }
         }
 
-        class FakeTaxonServer
+        private class FakeTaxonServer
         {
             public Mock<IDiscoverDBModules> Discovery { get; set; }
             public IEnumerable<DBModule> Modules { get; set; }
@@ -33,7 +33,7 @@
 
         public TaxaControllerTest()
         {
-            PublicLogin = new CollectionServerLogin() { Kind = TaxaController.TAXON_LOGIN_KIND,  Name = "public", Password = "1234", User = "public" };
+            PublicLogin = new CollectionServerLogin() { Kind = TaxaController.TAXON_LOGIN_KIND, Name = "public", Password = "1234", User = "public" };
             SetupMocks.Configuration(Kernel, new[] { PublicLogin });
 
             Local = TestTaxaFor("", Login);
@@ -42,7 +42,7 @@
             InitController();
         }
 
-        private FakeTaxonServer TestTaxaFor(string prefix, CollectionServerLogin login )
+        private FakeTaxonServer TestTaxaFor(string prefix, CollectionServerLogin login)
         {
             var modules = new[] {
                 new DBModule(DBModuleType.Collection, "ACollection"),
@@ -154,11 +154,11 @@
 
             var lists = await Controller.Get();
             var id = (from l in lists
-                     where l.Name == list.DisplayText
-                     select l.Id).First();
-        
+                      where l.Name == list.DisplayText
+                      select l.Id).First();
+
             // Act
-            var names = await Controller.GetList(id, 10, 10);
+            var names = await Controller.GetList(id, expected.Count, 0);
 
             // Assert
             Assert.Equal(expected.Count, names.Count());

@@ -27,7 +27,15 @@
             OwinContext = new OwinContext();
             Request.SetOwinContext(OwinContext);
 
-            Login = new CollectionServerLogin();
+            Login = new CollectionServerLogin()
+            {
+                Name = "ControllerTestBase Login",
+                Address = "localhost",
+                Id = 1,
+                Password = "some",
+                Port = 1234,
+                User = "test"
+            };
             Request.SetBackendCredentials(Login);
 
             Agent = new AgentInfo()

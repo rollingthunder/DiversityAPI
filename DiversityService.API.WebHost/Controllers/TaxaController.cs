@@ -4,13 +4,11 @@
     using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
-    using Model.Internal;
     using DiversityService.API.Services;
-    using System;
+    using Model.Internal;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Http;
 
     [CollectionAPI(Route.TAXA_CONTROLLER)]
@@ -60,52 +58,56 @@
         {
             var knownLists = await this.Get();
 
-            return await getTaxonList(Login, knownLists, listID, take, skip);
+            return await getTaxonList(Login, listID, take, skip);
         }
 
         [Route("public")]
         public async Task<IEnumerable<TaxonList>> GetPublic()
         {
-            var login = Configuration.GetPublicLogin(TAXON_LOGIN_KIND);
+            var publicLogin = Configuration.GetPublicLogin(TAXON_LOGIN_KIND);
 
-            return await enumerateTaxonListsForServer(login);
+            return await enumerateTaxonListsForServer(publicLogin);
         }
 
         [Route("public/{listID}")]
         public async Task<IEnumerable<TaxonName>> GetPublicList(string listID, int take = 10, int skip = 0)
         {
-            var knownLists = await GetPublic();
-
-            return await getTaxonList(Login, knownLists, listID, take, skip);
+            return await getTaxonList(Login, listID, take, skip);
         }
 
-        
-        private async Task<IEnumerable<TaxonName>> getTaxonList(CollectionServerLogin login, IEnumerable<TaxonList> knownLists, string listId, int take, int skip)
+        private async Task<IEnumerable<TaxonName>> getTaxonList(CollectionServerLogin login, string listId, int take, int skip)
         {
-            var list = (from l in knownLists
-                       where l.Id == listId
-                       select l).FirstOrDefault();
+            var known = await discoverModulesAndLists(login);
 
-            if (list == null)
+            ServerTaxonList list;
+
+            if (!known.TryGetValue(listId, out list))
             {
                 return Enumerable.Empty<TaxonName>();
             }
 
-            var dbListId = list.DatabaseId;
+            var taxonLogin = login.Clone();
+            taxonLogin.Catalog = list.Module.Catalog;
 
-            var taxa = this.TaxaFactory.GetTaxa(login);
+            var taxa = this.TaxaFactory.GetTaxa(taxonLogin);
 
-            return from name in await taxa.GetTaxonNamesForList(dbListId, skip, take)
+            return from name in await taxa.GetTaxonNamesForList(list.DatabaseId, skip, take)
                    select Mapper.Map<TaxonName>(name);
         }
 
         private async Task<IEnumerable<TaxonList>> enumerateTaxonListsForServer(CollectionServerLogin login)
         {
+            var listByHash = await discoverModulesAndLists(login);
+            return listByHash.Values;
+        }
+
+        private async Task<IDictionary<string, ServerTaxonList>> discoverModulesAndLists(CollectionServerLogin login)
+        {
+            var result = new Dictionary<string, ServerTaxonList>();
+
             var taxaModules = from module in await this.ModuleDiscovery.DiscoverModules(this.Login)
                               where module.Type == DBModuleType.TaxonNames
                               select module;
-
-            var result = new List<TaxonList>();
 
             foreach (var tm in taxaModules)
             {
@@ -115,11 +117,17 @@
 
                 var taxa = TaxaFactory.GetTaxa(taxaLogin);
 
-                var lists = from list in await taxa.GetListsForUserAsync()
-                            select Mapper.Map<TaxonList>(list);
+                var lists = await taxa.GetListsForUserAsync();
 
-                result.AddRange(lists);
+                foreach (var l in lists)
+                {
+                    var mapped = Mapper.Map<ServerTaxonList>(l);
+                    mapped.Module = tm;
+                    result.Add(mapped.Id, mapped);
+                }
             }
+
+            // TODO Cache results
 
             return result;
         }

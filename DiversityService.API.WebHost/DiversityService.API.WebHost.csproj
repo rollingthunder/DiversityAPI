@@ -357,6 +357,7 @@
     <Compile Include="Models\EventSeries.Validation.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Identification.Validation.cs" />
+    <Compile Include="Models\ServerTaxonList.cs" />
     <Compile Include="Models\Specimen.Validation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

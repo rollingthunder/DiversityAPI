@@ -10,8 +10,6 @@ namespace DiversityService.API.Model
     {
         public string Id { get; set; }
 
-        public int DatabaseId { get; set; }
-
         public string Name { get; set; }
 
         public string TaxonGroup { get; set; }

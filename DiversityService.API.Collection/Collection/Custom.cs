@@ -3,12 +3,9 @@
     using DiversityService.API.Model;
     using NodaTime;
     using System;
-    using System.Collections;
     using System.Data.Entity;
     using System.Data.Entity.Core.Objects;
     using System.Data.Entity.Infrastructure;
-    using System.Globalization;
-    using System.Linq;
 
     public partial class Event : IIdentifiable, IGuidIdentifiable
     {

@@ -3,12 +3,9 @@
     using DiversityService.DB.Collection;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
-    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
-    using System.Web;
 
     public interface IProjectStore : IReadOnlyStore<Project, int>
     {

@@ -1,12 +1,9 @@
 ﻿namespace DiversityService.API.Model
 {
     using DiversityService.API.Resources;
-    using NodaTime;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Web;
 
     public class SpecimenBindingModel : SpecimenUpload, IValidatableObject
     {

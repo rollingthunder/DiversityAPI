@@ -10,7 +10,7 @@
 
     public class SeeOtherAtRouteResult : RedirectToRouteResult
     {
-        public SeeOtherAtRouteResult(string routeName, IDictionary<string, object> routeValues, ApiController controller) 
+        public SeeOtherAtRouteResult(string routeName, IDictionary<string, object> routeValues, ApiController controller)
             : base(routeName, routeValues, controller)
         {
         }

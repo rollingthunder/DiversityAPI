@@ -2,7 +2,6 @@
 {
     using DiversityService.API.Model;
     using DiversityService.API.Results;
-    using DiversityService.API.Services;
     using Moq;
     using Moq.Language.Flow;
     using System;

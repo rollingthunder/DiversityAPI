@@ -1,7 +1,6 @@
 ﻿namespace DiversityService.API.Filters
 {
     using DiversityService.API.Model;
-    using Newtonsoft.Json.Linq;
     using System;
     using System.Diagnostics.Contracts;
     using System.Web.Http;

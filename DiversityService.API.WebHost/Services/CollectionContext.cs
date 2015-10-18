@@ -7,8 +7,6 @@
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Diagnostics.Contracts;
-    using System.Linq;
-    using System.Web;
 
     internal class CollectionTransaction : ITransaction
     {

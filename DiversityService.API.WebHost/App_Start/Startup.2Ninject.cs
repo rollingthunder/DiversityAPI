@@ -3,8 +3,6 @@
     using Ninject;
     using Ninject.Web.Common.OwinHost;
     using Owin;
-    using System.Reflection;
-    using System.Web.Http;
 
     public partial class Startup
     {

@@ -1,11 +1,9 @@
 ﻿namespace DiversityService.API.Model
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Security.Claims;
-    using System.Web;
 
     public class BackendCredentialsClaim : Claim
     {

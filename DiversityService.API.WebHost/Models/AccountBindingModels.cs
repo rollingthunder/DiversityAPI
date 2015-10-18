@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using Newtonsoft.Json;
 
 namespace DiversityService.API.WebHost.Models
 {
@@ -91,7 +90,6 @@ namespace DiversityService.API.WebHost.Models
         [DataType(DataType.Password)]
         [MinLength(10)]
         [RegularExpression("[^'\"]+")]
-        public string BackendPassword { get; set; }        
-        
+        public string BackendPassword { get; set; }
     }
 }

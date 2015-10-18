@@ -3,7 +3,6 @@
     using AutoMapper;
     using DiversityService.API.Model;
     using DiversityService.API.Results;
-    using DiversityService.API.Services;
     using System;
     using System.Linq;
     using System.Net;

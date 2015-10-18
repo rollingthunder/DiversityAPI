@@ -1,7 +1,6 @@
 ﻿namespace DiversityService.API.Services
 {
     using AutoMapper;
-    using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
     using DiversityService.API.WebHost;
     using Splat;
@@ -9,7 +8,6 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-    using System.Web;
 
     public class ConfigurationService : IConfigurationService, IEnableLogger
     {
@@ -51,7 +49,7 @@
                 return Logins.First();
             }
 
-            return null;            
+            return null;
         }
 
         #endregion IConfigurationService
@@ -74,7 +72,7 @@
             foreach (var server in Section.Value.PublicServers.Cast<ServerLoginCatalogElement>())
             {
                 var login = Mapper.Map<CollectionServerLogin>(server);
-                
+
                 if (!res.ContainsKey(login.Kind))
                 {
                     res[login.Kind] = new List<CollectionServerLogin>() { login };

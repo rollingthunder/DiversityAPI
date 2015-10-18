@@ -1,7 +1,6 @@
 ﻿namespace DiversityService.API.Controllers
 {
     using DiversityService.API.Model;
-    using System;
 
     public static class Route
     {

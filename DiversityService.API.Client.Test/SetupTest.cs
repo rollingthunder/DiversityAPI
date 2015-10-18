@@ -5,7 +5,6 @@
     using DiversityService.API.Test;
     using DiversityService.API.WebHost;
     using DiversityService.API.WebHost.Models;
-    using Microsoft.Owin.Testing;
     using Ninject;
     using System;
     using System.Linq;

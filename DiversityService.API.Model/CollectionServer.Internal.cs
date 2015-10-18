@@ -1,7 +1,6 @@
 ﻿namespace DiversityService.API.Model.Internal
 {
     using System;
-    using System.Collections.Generic;
 
     public class InternalCollectionServer : CollectionServer, IEquatable<InternalCollectionServer>
     {

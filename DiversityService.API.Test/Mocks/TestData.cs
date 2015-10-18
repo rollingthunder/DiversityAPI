@@ -1,6 +1,5 @@
 ﻿namespace DiversityService.API.Test
 {
-    using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
     using Collection = DiversityService.DB.Collection;
 

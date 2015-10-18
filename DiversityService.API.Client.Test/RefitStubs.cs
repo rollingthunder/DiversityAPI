@@ -1,7 +1,4 @@
-﻿﻿using System;
-using System.Net.Http;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 
 /* ******** Hey You! *********
  *
@@ -11,10 +8,11 @@ using System.Linq;
 
 namespace RefitInternalGenerated
 {
-    [AttributeUsage (AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface | AttributeTargets.Delegate)]
-    sealed class PreserveAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Enum | AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Event | AttributeTargets.Interface | AttributeTargets.Delegate)]
+    internal sealed class PreserveAttribute : Attribute
     {
 #pragma warning disable 0649
+
         //
         // Fields
         //
@@ -24,5 +22,3 @@ namespace RefitInternalGenerated
 #pragma warning restore 0649
     }
 }
-
-

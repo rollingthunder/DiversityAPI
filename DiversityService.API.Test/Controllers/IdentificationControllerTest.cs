@@ -5,9 +5,7 @@
     using DiversityService.API.Results;
     using DiversityService.API.Services;
     using Moq;
-    using Ninject;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;

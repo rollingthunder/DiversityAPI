@@ -10,7 +10,6 @@
         public JsonHomeResult(HomeDocument document)
             : base(new HttpResponseMessage(HttpStatusCode.OK) { Content = new HomeContent(document) })
         {
-
         }
     }
 }

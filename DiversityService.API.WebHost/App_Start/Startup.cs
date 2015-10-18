@@ -1,6 +1,5 @@
 ﻿namespace DiversityService.API.WebHost
 {
-    using Microsoft.Owin;
     using Microsoft.Owin.Security;
     using Ninject;
     using Owin;

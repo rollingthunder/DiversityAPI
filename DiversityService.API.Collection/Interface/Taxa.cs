@@ -1,10 +1,9 @@
 ﻿namespace DiversityService.API
 {
-    using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
-    using TaxonNames = DB.TaxonNames;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using TaxonNames = DB.TaxonNames;
 
     public interface ITaxaFactory
     {

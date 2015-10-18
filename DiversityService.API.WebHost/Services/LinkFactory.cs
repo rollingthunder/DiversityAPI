@@ -1,6 +1,5 @@
 ﻿namespace DiversityService.API.WebHost.Services
 {
-    using DiversityService.API.Model;
     using System;
     using System.Linq;
     using System.Net.Http;
@@ -67,6 +66,7 @@
     public abstract class LinkFactory<TController> : LinkFactory
     {
         public LinkFactory(HttpRequestMessage request) :
-            base(request, typeof(TController)) { }
+            base(request, typeof(TController))
+        { }
     }
 }

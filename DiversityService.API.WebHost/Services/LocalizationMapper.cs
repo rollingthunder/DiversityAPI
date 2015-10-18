@@ -1,14 +1,11 @@
 ﻿namespace DiversityService.API.Services
 {
-    using AutoMapper;
     using DiversityService.API.Model;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Spatial;
-    using System.Diagnostics.Contracts;
     using System.Globalization;
     using System.Linq;
-    using System.Text;
 
     public static class LocalizationMapper
     {

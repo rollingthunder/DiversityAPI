@@ -1,6 +1,5 @@
 ﻿namespace DiversityService.API.Controllers
 {
-    using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
     using DiversityService.API.WebHost;
@@ -11,7 +10,6 @@
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.AspNet.Identity.Owin;
     using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.OAuth;
     using System;
     using System.Collections.Generic;
@@ -22,7 +20,6 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Http;
-    using System.Web.Http.ModelBinding;
 
     [Authorize]
     [RoutePrefix(Route.PREFIX_DEFAULT_API + Route.ACCOUNT_CONTROLLER)]

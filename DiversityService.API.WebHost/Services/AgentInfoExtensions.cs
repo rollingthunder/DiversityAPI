@@ -1,11 +1,8 @@
 ﻿namespace DiversityService.API.Services
 {
     using DiversityService.API.Model;
-    using Microsoft.Owin;
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
-    using System.Linq;
     using System.Net.Http;
     using System.Web;
 

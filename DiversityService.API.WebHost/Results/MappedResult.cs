@@ -2,7 +2,6 @@
 {
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
-    using DiversityService.API.Services;
     using System;
     using System.Diagnostics.Contracts;
     using System.Linq;

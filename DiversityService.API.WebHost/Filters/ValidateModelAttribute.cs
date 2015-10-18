@@ -1,10 +1,9 @@
 ﻿namespace DiversityService.API.Filters
 {
     using System.Net;
+    using System.Net.Http;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
-    using System.Net.Http;
-    using System.Linq;
 
     public class ValidateModelAttribute : ActionFilterAttribute
     {

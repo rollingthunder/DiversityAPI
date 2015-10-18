@@ -3,14 +3,8 @@
     using DiversityService.API.Controllers;
     using DiversityService.API.Model;
     using DiversityService.API.Results;
-    using DiversityService.API.Services;
-    using Moq;
-    using Ninject;
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using System.Web.Http.Results;
     using Xunit;
     using Collection = DiversityService.DB.Collection;
 

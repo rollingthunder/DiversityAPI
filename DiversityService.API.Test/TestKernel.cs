@@ -1,16 +1,9 @@
 ﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Controllers;
-    using DiversityService.API.Model;
-    using DiversityService.API.Services;
     using DiversityService.API.WebHost;
-    using DiversityService.API.WebHost.Models;
-    using Microsoft.AspNet.Identity;
-    using Moq;
     using Ninject;
-    using Ninject.MockingKernel.Moq;
     using Ninject.Modules;
-    using System.Collections.Generic;
 
     public class TestKernel : StandardKernel
     {

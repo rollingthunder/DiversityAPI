@@ -1,20 +1,11 @@
 ﻿namespace DiversityService.API.Client.Test
 {
-    using DiversityService.API.Model;
-    using DiversityService.API.Services;
     using DiversityService.API.Test;
     using DiversityService.API.WebHost;
     using Microsoft.Owin.Testing;
-    using Moq;
     using Ninject;
-    using Ninject.MockingKernel;
-    using Ninject.MockingKernel.Moq;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net.Http;
-    using System.Text;
-    using System.Threading.Tasks;
 
     internal class TestAPI : IDisposable
     {

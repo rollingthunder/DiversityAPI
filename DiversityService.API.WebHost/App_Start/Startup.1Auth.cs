@@ -3,13 +3,11 @@ using DiversityService.API.WebHost.Models;
 using DiversityService.API.WebHost.Providers;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.DataHandler;
 using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
-using System.Collections;
 using System.Configuration;
 using System.Security.Claims;
 

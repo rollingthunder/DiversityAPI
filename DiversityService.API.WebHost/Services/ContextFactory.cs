@@ -1,16 +1,10 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
-    using DiversityService.DB.Collection;
     using DiversityService.DB.Services;
     using Ninject;
     using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Linq;
     using System.Threading.Tasks;
-    using System.Web;
 
     public class ContextFactory : IContextFactory
     {

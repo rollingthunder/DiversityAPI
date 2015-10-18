@@ -1,9 +1,7 @@
 ﻿namespace DiversityService.API.Test
 {
     using AutoMapper;
-    using AutoMapper.Internal;
     using AutoMapper.Mappers;
-    using DiversityService.API.Services;
     using DiversityService.API.WebHost;
 
     public class TestBase

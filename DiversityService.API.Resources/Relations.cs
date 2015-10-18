@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace DiversityService.API
+﻿namespace DiversityService.API
 {
     public static class Relations
     {

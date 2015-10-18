@@ -3,11 +3,8 @@
     using Newtonsoft.Json.Linq;
     using Splat;
     using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Linq;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
 
     public class APIAuthentication : IEnableLogger

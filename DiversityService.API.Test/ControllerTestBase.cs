@@ -4,7 +4,6 @@
     using DiversityService.API.Model.Internal;
     using DiversityService.API.Services;
     using Microsoft.Owin;
-    using Moq;
     using Ninject;
     using Ninject.Web.WebApi;
     using System.Net.Http;

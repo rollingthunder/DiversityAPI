@@ -1,7 +1,6 @@
 ﻿namespace DiversityService.API.Test
 {
     using DiversityService.API.Controllers;
-    using DiversityService.API.Model;
     using DiversityService.API.Model.Internal;
     using DiversityService.API.Services;
     using DiversityService.API.WebHost;
@@ -12,10 +11,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Collection = DiversityService.DB.Collection;
-    using DB.TaxonNames;
 
     public static class SetupMocks
     {

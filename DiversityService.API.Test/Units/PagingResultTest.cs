@@ -1,18 +1,11 @@
 ﻿namespace DiversityService.API.Test
 {
-    using DiversityService.API.Filters;
     using DiversityService.API.Results;
-    using DiversityService.API.Services;
-    using Ninject;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Formatting;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Web.Http.Filters;
     using Xunit;
 
     public class PagingResultTest : TestBase

@@ -2,10 +2,8 @@
 {
     using DiversityService.API.Controllers;
     using DiversityService.API.Filters;
-    using DiversityService.API.Model;
     using DiversityService.API.Services;
     using Moq;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
@@ -54,8 +52,8 @@
             // Assert
             Assert.Equal(dbProjects.Length, publicProjects.Count());
             Assert.True(
-                // Each project should surface
-                // with the same ID
+               // Each project should surface
+               // with the same ID
                dbProjects
                .All(p => publicProjects.Any(x => x.Id == p.ProjectID))
            );

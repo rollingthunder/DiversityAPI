@@ -3,10 +3,8 @@
     using DiversityService.API.Controllers;
     using DiversityService.API.Model.Internal;
     using Moq;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Xunit;
     using TaxonNames = DiversityService.DB.TaxonNames;

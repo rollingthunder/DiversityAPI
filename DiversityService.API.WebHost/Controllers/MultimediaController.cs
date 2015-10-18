@@ -1,7 +1,7 @@
-﻿using System.Web.Http;
-
-namespace DiversityService.API.Controllers
+﻿namespace DiversityService.API.Controllers
 {
+    using System.Web.Http;
+
     public class MultimediaController : ApiController
     {
     }

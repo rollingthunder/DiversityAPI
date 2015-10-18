@@ -19,10 +19,7 @@
     {
         public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
         {
-            Contract.Requires<ArgumentNullException>(actionExecutedContext != null, "actionExecutedContext");
-
             var response = actionExecutedContext.Response;
-            Contract.Requires<ArgumentException>(response != null, "The argument MUST contain a Response Object.");
 
             var responseContent = actionExecutedContext.Response.Content as ObjectContent;
             if (responseContent != null && responseContent.Value != null)

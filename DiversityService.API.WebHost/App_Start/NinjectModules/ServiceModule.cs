@@ -21,7 +21,7 @@
                 .To<ConfigurationService>()
                 .InSingletonScope();
 
-            // Data Stores
+            // Data Stores 
             Bind<IProjectStore>()
                 .To<ProjectStore>()
                 .InRequestScope();

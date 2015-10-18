@@ -1,8 +1,8 @@
-﻿using System.Security.Cryptography;
-using System.Text;
-
-namespace DiversityService.API.Services
+﻿namespace DiversityService.API.Services
 {
+    using System.Security.Cryptography;
+    using System.Text;
+
     public static class MappingExtensions
     {
         public static string GetSHA1Hash(this DB.TaxonNames.TaxonList list)
@@ -12,7 +12,8 @@ namespace DiversityService.API.Services
                 return string.Empty;
             }
 
-            var id_string = string.Format("{0}_{1}_{2}_{3}",
+            var id_string = string.Format(
+                "{0}_{1}_{2}_{3}",
                 list.ListID,
                 list.DataSource,
                 list.DisplayText,

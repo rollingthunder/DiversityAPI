@@ -1,8 +1,5 @@
 ﻿namespace DiversityService.API.Filters
 {
-    using DiversityService.API.Model;
-    using DiversityService.API.Model.Internal;
-    using DiversityService.API.Services;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
@@ -11,48 +8,50 @@
     using System.Threading.Tasks;
     using System.Web.Http.Controllers;
     using System.Web.Http.Filters;
+    using DiversityService.API.Model;
+    using DiversityService.API.Model.Internal;
+    using DiversityService.API.Services;
 
     public static class CollectionAPI
     {
-        public const string COLLECTION = "collection";
-        public const string COLLECTION_TEMPLATE = "{" + COLLECTION + "}";
-        public const string PROJECT = "project";
-        public const string PROJECT_TEMPLATE = "{" + PROJECT + ":int}";
-        public const string API_PREFIX = "api/";
-        public const string COLLECTION_PREFIX = "collection/" + COLLECTION_TEMPLATE + "/";
-        public const string PROJECT_PREFIX = "project/{" + PROJECT_TEMPLATE + ":int}/";
+        public const string ApiPrefix = "api/";
+        public const string Collection = "collection";
+        public const string CollectionPrefix = "collection/" + CollectionTemplate + "/";
+        public const string CollectionTemplate = "{" + Collection + "}";
+        public const string Project = "project";
+        public const string ProjectPrefix = "project/{" + ProjectTemplate + ":int}/";
+        public const string ProjectTemplate = "{" + Project + ":int}";
     }
 
     public class CollectionContextFilter : ActionFilterAttribute
     {
-        private readonly IConfigurationService Configuration;
-        private readonly IContextFactory ContextFactory;
+        private readonly IConfigurationService configuration;
+        private readonly IContextFactory contextFactory;
 
         public CollectionContextFilter(
             IConfigurationService config,
-            IContextFactory contextFactory
-            )
+            IContextFactory contextFactory)
         {
-            Configuration = config;
-            ContextFactory = contextFactory;
+            configuration = config;
+            this.contextFactory = contextFactory;
         }
 
         public override async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            AgentInfo Agent;
-            CollectionServerLogin Login;
+            AgentInfo agent;
+            CollectionServerLogin login;
 
             IFieldDataContext ctx = null;
 
-            ExtractCollection(actionContext, out Login);
+            ExtractCollection(actionContext, out login);
 
             if (actionContext.Response != null)
             {
                 return;
             }
 
-            // Only require Identification if we are connecting to a collection
-            if (Login != null)
+            // Only require Identification if we are connecting to a collection 
+            if (login != null)
             {
                 ClaimsIdentity identity;
                 ExtractClaims(actionContext, out identity);
@@ -62,16 +61,16 @@
                     return;
                 }
 
-                // Backend Login Claims
+                // Backend Login Claims 
                 {
-                    ExtractBackendCredentials(actionContext, identity, Login);
+                    ExtractBackendCredentials(actionContext, identity, login);
 
                     if (actionContext.Response != null)
                     {
                         return;
                     }
 
-                    ctx = await ContextFactory.CreateContextAsync(Login);
+                    ctx = await contextFactory.CreateContextAsync(login);
 
                     if (ctx == null)
                     {
@@ -86,22 +85,22 @@
                         return;
                     }
 
-                    actionContext.Request.SetBackendCredentials(Login);
+                    actionContext.Request.SetBackendCredentials(login);
                     actionContext.Request.SetCollectionContext(ctx);
                 }
 
-                // Agent Claims
+                // Agent Claims 
                 {
-                    ExtractAgentInfo(actionContext, identity, out Agent);
+                    ExtractAgentInfo(actionContext, identity, out agent);
 
                     if (actionContext.Response != null)
                     {
                         return;
                     }
 
-                    if (Agent != null)
+                    if (agent != null)
                     {
-                        actionContext.Request.SetAgentInfo(Agent);
+                        actionContext.Request.SetAgentInfo(agent);
                     }
                 }
             }
@@ -121,15 +120,57 @@
             }
         }
 
-        private void ExtractClaims(
+        private static void SetErrorResponse(HttpActionContext actionContext, HttpStatusCode statusCode, string message)
+        {
+            actionContext.Response = actionContext.Request.CreateErrorResponse(statusCode, message);
+        }
+
+        private void ExtractAgentInfo(
+            HttpActionContext ctx,
+            ClaimsIdentity identity,
+            out AgentInfo info)
+        {
+            info = null;
+
+            var nameClaim = identity.FindFirst(AgentNameClaim.TYPE);
+            var uriClaim = identity.FindFirst(AgentUriClaim.TYPE);
+
+            // AgentInfo is optional, don't fail. 
+            if (nameClaim != null && uriClaim != null)
+            {
+                info = new AgentInfo()
+                {
+                    Name = nameClaim.Value,
+                    Uri = uriClaim.Value
+                };
+            }
+        }
+
+        private void ExtractBackendCredentials(
             HttpActionContext actionContext,
+            ClaimsIdentity identity,
+            CollectionServerLogin login)
+        {
+            var backendCredentials = identity.GetBackendCredentialsClaim();
+            if (backendCredentials == null)
+            {
+                SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "No Backend Credentials set");
+                return;
+            }
+
+            login.User = backendCredentials.User;
+            login.Password = backendCredentials.Password;
+        }
+
+        private void ExtractClaims(
+                                    HttpActionContext actionContext,
             out ClaimsIdentity identity)
         {
             identity = null;
 
             var requestContext = actionContext.RequestContext;
 
-            // Check authenticated user and get their back end credentials
+            // Check authenticated user and get their back end credentials 
             if (requestContext == null)
             {
                 SetErrorResponse(actionContext, HttpStatusCode.InternalServerError, "No Request Context Available");
@@ -153,43 +194,6 @@
             }
         }
 
-        private void ExtractBackendCredentials(
-            HttpActionContext actionContext,
-            ClaimsIdentity identity,
-            CollectionServerLogin login)
-        {
-            var backendCredentials = identity.GetBackendCredentialsClaim();
-            if (backendCredentials == null)
-            {
-                SetErrorResponse(actionContext, HttpStatusCode.Forbidden, "No Backend Credentials set");
-                return;
-            }
-
-            login.User = backendCredentials.User;
-            login.Password = backendCredentials.Password;
-        }
-
-        private void ExtractAgentInfo(
-            HttpActionContext _,
-            ClaimsIdentity identity,
-            out AgentInfo info)
-        {
-            info = null;
-
-            var nameClaim = identity.FindFirst(AgentNameClaim.TYPE);
-            var uriClaim = identity.FindFirst(AgentUriClaim.TYPE);
-
-            // AgentInfo is optional, don't fail.
-            if (nameClaim != null && uriClaim != null)
-            {
-                info = new AgentInfo()
-                {
-                    Name = nameClaim.Value,
-                    Uri = uriClaim.Value
-                };
-            }
-        }
-
         private void ExtractCollection(
             HttpActionContext actionContext,
             out CollectionServerLogin login)
@@ -205,9 +209,9 @@
                 return;
             }
 
-            if (routeData.Values.ContainsKey(CollectionAPI.COLLECTION))
+            if (routeData.Values.ContainsKey(CollectionAPI.Collection))
             {
-                var collection = routeData.Values[CollectionAPI.COLLECTION].ToString();
+                var collection = routeData.Values[CollectionAPI.Collection].ToString();
 
                 int collectionId;
 
@@ -217,7 +221,7 @@
                     return;
                 }
 
-                var servers = Configuration.GetCollectionServers();
+                var servers = configuration.GetCollectionServers();
                 var server = servers.FirstOrDefault(x => x.Id == collectionId);
 
                 if (server == null)
@@ -226,7 +230,7 @@
                     return;
                 }
 
-                // Copy over the information from the known server
+                // Copy over the information from the known server 
                 login = new CollectionServerLogin();
                 login.Id = server.Id;
                 login.Name = server.Name;
@@ -243,9 +247,9 @@
             var request = actionContext.Request;
 
             var routeData = request.GetRouteData();
-            if (routeData.Values.ContainsKey(CollectionAPI.PROJECT))
+            if (routeData.Values.ContainsKey(CollectionAPI.Project))
             {
-                var project = routeData.Values[CollectionAPI.PROJECT].ToString();
+                var project = routeData.Values[CollectionAPI.Project].ToString();
                 int projectId;
 
                 if (!int.TryParse(project, out projectId))
@@ -254,9 +258,9 @@
                     return;
                 }
 
-                var dbProject = await collectionContext.Projects.GetByIDAsync(projectId);
+                var databaseProject = await collectionContext.Projects.GetByIDAsync(projectId);
 
-                if (dbProject == null)
+                if (databaseProject == null)
                 {
                     SetErrorResponse(actionContext, HttpStatusCode.NotFound, string.Format("Project with id {0} not found", project));
                     return;
@@ -264,11 +268,6 @@
 
                 collectionContext.ProjectId = projectId;
             }
-        }
-
-        private static void SetErrorResponse(HttpActionContext actionContext, HttpStatusCode statusCode, string message)
-        {
-            actionContext.Response = actionContext.Request.CreateErrorResponse(statusCode, message);
         }
     }
 }

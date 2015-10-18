@@ -1,9 +1,9 @@
 ﻿namespace DiversityService.API.Model
 {
-    using DiversityService.API.Resources;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using DiversityService.API.Resources;
 
     public class EventSeriesBindingModel : EventSeriesUpload, IValidatableObject
     {
@@ -35,7 +35,7 @@
                 yield return new ValidationResult(Messages.Series_NoDescription);
             }
 
-            // DB: Series Code (nvarchar(50))
+            // DB: Series Code (nvarchar(50)) 
             if (this.Code != null && this.Code.Length > 50)
             {
                 yield return new ValidationResult(Messages.Series_CodeTooLong);

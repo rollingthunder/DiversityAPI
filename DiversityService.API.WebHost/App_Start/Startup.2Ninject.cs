@@ -6,7 +6,16 @@
 
     public partial class Startup
     {
-        protected IKernel Kernel;
+        protected IKernel Kernel
+        {
+            get; set;
+        }
+
+        public void ConfigureNinject(IAppBuilder app)
+        {
+            InitializeKernelIfNecessary();
+            app.UseNinjectMiddleware(() => Kernel);
+        }
 
         public void InitializeKernelIfNecessary(IKernel useKernel = null, bool testing = false)
         {
@@ -21,12 +30,6 @@
 
                 Kernel.Load<MapperModule>();
             }
-        }
-
-        public void ConfigureNinject(IAppBuilder app)
-        {
-            InitializeKernelIfNecessary();
-            app.UseNinjectMiddleware(() => Kernel);
         }
     }
 }

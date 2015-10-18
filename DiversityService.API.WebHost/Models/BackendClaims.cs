@@ -5,12 +5,32 @@
     using System.Linq;
     using System.Security.Claims;
 
+    public static class BackendCredentialsClaimExtensions
+    {
+        public static BackendCredentialsClaim GetBackendCredentialsClaim(this ClaimsIdentity @this)
+        {
+            Contract.Requires<ArgumentNullException>(@this != null, "This");
+
+            var claim = @this.FindFirst(BackendCredentialsClaim.TYPE);
+
+            if (claim != null)
+            {
+                return new BackendCredentialsClaim(claim);
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+
     public class BackendCredentialsClaim : Claim
     {
         public const string TYPE = "backend_credentials";
-        private const char VALUE_SPLIT = ':';
 
         public readonly string User, Password;
+
+        private const char ValueSplit = ':';
 
         public BackendCredentialsClaim(string user, string password)
             : base(TYPE, FormatValue(user, password))
@@ -29,7 +49,7 @@
         {
             Contract.Requires<ArgumentNullException>(user != null, "user");
             Contract.Requires<ArgumentNullException>(password != null, "password");
-            Contract.Requires<ArgumentException>(!user.Contains(VALUE_SPLIT), "user may not contain the split character");
+            Contract.Requires<ArgumentException>(!user.Contains(ValueSplit), "user may not contain the split character");
 
             return string.Format("{0}:{1}", user, password);
         }
@@ -38,7 +58,7 @@
         {
             Contract.Requires<ArgumentNullException>(value != null, "value");
 
-            var splitidx = value.IndexOf(VALUE_SPLIT);
+            var splitidx = value.IndexOf(ValueSplit);
 
             if (splitidx < 0)
             {
@@ -47,25 +67,6 @@
 
             user = value.Substring(0, splitidx);
             password = value.Substring(splitidx + 1);
-        }
-    }
-
-    public static class BackendCredentialsClaimExtensions
-    {
-        public static BackendCredentialsClaim GetBackendCredentialsClaim(this ClaimsIdentity This)
-        {
-            Contract.Requires<ArgumentNullException>(This != null, "This");
-
-            var claim = This.FindFirst(BackendCredentialsClaim.TYPE);
-
-            if (claim != null)
-            {
-                return new BackendCredentialsClaim(claim);
-            }
-            else
-            {
-                return null;
-            }
         }
     }
 }

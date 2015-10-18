@@ -1,22 +1,25 @@
 ﻿namespace DiversityService.API.Controllers
 {
-    using AutoMapper;
-    using DiversityService.API.Model;
-    using DiversityService.API.Results;
     using System;
     using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Routing;
+    using AutoMapper;
+    using DiversityService.API.Model;
+    using DiversityService.API.Results;
 
     public abstract class DiversityController : ApiController
     {
-        protected readonly IMappingEngine Mapper;
-
         public DiversityController(IMappingEngine mapper)
         {
             Mapper = mapper;
+        }
+
+        protected IMappingEngine Mapper
+        {
+            get; private set;
         }
 
         protected MappedSingleResult<TEntity, T> Mapped<TEntity, T>(TEntity entity)
@@ -34,35 +37,35 @@
             return new MappedQueryResult<TEntity, T>(Mapper, this, query);
         }
 
-        protected MappedQueryResult<TEntity, T> PagedAndMapped<TEntity, T>(IOrderedQueryable<TEntity> query)
-        {
-            return Mapped<TEntity, T>(Paged(query));
-        }
-
-        protected SeeOtherAtRouteResult SeeOtherAtRoute(string routeName, object routeValues)
-        {
-            return new SeeOtherAtRouteResult(routeName, new HttpRouteValueDictionary(routeValues), this);
-        }
-
         protected PagingResult<T> Paged<T>(IOrderedQueryable<T> query)
         {
             return new PagingResult<T>(HttpStatusCode.OK, query, this);
         }
 
-        protected async Task<SeeOtherAtRouteResult> RedirectToExisting<T, TKey>(IStore<T, TKey> This, Guid rowGuid, string routeName)
-            // class constraint avoids cast to interface which is incompatible with LINQ to Entities
+        protected MappedQueryResult<TEntity, T> PagedAndMapped<TEntity, T>(IOrderedQueryable<TEntity> query)
+        {
+            return Mapped<TEntity, T>(Paged(query));
+        }
+
+        protected async Task<SeeOtherAtRouteResult> RedirectToExisting<T, TKey>(IStore<T, TKey> @this, Guid rowGuid, string routeName)
+            /* class constraint avoids cast to interface which is incompatible with LINQ to Entities */
             where T : class, IGuidIdentifiable, IIdentifiable
         {
-            var existingRows = await This.GetAsync(
-                x => x.TransactionGuid == rowGuid
-                );
+            var existingRows = await @this.GetAsync(
+                x => x.TransactionGuid == rowGuid);
             var existing = existingRows.SingleOrDefault();
 
             if (existing != null)
             {
                 return SeeOtherAtRoute(routeName, Route.GetById(existing));
             }
+
             return null;
+        }
+
+        protected SeeOtherAtRouteResult SeeOtherAtRoute(string routeName, object routeValues)
+        {
+            return new SeeOtherAtRouteResult(routeName, new HttpRouteValueDictionary(routeValues), this);
         }
     }
 }

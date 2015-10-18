@@ -1,19 +1,19 @@
 ﻿namespace DiversityService.API.Filters
 {
-    using DiversityService.API.Model;
     using System;
     using System.Diagnostics.Contracts;
     using System.Web.Http;
+    using DiversityService.API.Model;
     using WebApiContrib.Formatting.Siren.Client;
 
     public class SeriesSirenProvider : ISirenProvider
     {
-        private HttpConfiguration Configuration;
+        private HttpConfiguration configuration;
 
         public SeriesSirenProvider(HttpConfiguration config)
         {
             Contract.Requires<ArgumentNullException>(config != null);
-            Configuration = config;
+            configuration = config;
         }
 
         public bool CanTranslate(Type type)
@@ -23,8 +23,6 @@
 
         public ISirenEntity Translate(object obj)
         {
-            Contract.Requires<ArgumentException>(obj is EventSeries);
-
             var series = obj as EventSeries;
 
             var siren = new SirenEntity();

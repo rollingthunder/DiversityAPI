@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
-using System.ComponentModel.DataAnnotations;
-
-namespace DiversityService.API.WebHost.Models
+﻿namespace DiversityService.API.WebHost.Models
 {
-    // Models used as parameters to AccountController actions.
+    using System.ComponentModel.DataAnnotations;
+    using Newtonsoft.Json;
+
+    // Models used as parameters to AccountController actions. 
     public class AddExternalLoginBindingModel
     {
         [Required]
@@ -13,10 +13,10 @@ namespace DiversityService.API.WebHost.Models
 
     public class ChangePasswordBindingModel
     {
-        [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
-        public string OldPassword { get; set; }
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -24,14 +24,19 @@ namespace DiversityService.API.WebHost.Models
         [Display(Name = "New password")]
         public string NewPassword { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; }
     }
 
     public class RegisterBindingModel
     {
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -41,11 +46,6 @@ namespace DiversityService.API.WebHost.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
     }
 
     public class RegisterExternalBindingModel
@@ -66,30 +66,30 @@ namespace DiversityService.API.WebHost.Models
         public string ProviderKey { get; set; }
     }
 
-    public class SetPasswordBindingModel
-    {
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "New password")]
-        public string NewPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-    }
-
     public class SetBackendBindingModel
     {
-        [Required]
-        [RegularExpression("[A-Za-z][A-Za-z0-9]*")]
-        public string BackendUser { get; set; }
-
         [Required]
         [DataType(DataType.Password)]
         [MinLength(10)]
         [RegularExpression("[^'\"]+")]
         public string BackendPassword { get; set; }
+
+        [Required]
+        [RegularExpression("[A-Za-z][A-Za-z0-9]*")]
+        public string BackendUser { get; set; }
+    }
+
+    public class SetPasswordBindingModel
+    {
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm new password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "New password")]
+        public string NewPassword { get; set; }
     }
 }

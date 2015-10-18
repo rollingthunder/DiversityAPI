@@ -1,14 +1,14 @@
 ﻿namespace DiversityService.API.Filters
 {
-    using DiversityService.API.Services;
     using System.Net;
     using System.Net.Http;
     using System.Web.Http.Controllers;
+    using DiversityService.API.Services;
 
     public class ProjectAPIAttribute : CollectionAPIAttribute
     {
         public ProjectAPIAttribute(string routePrefix)
-            : base(string.Format("{0}/{1}", CollectionAPI.PROJECT_PREFIX, routePrefix))
+            : base(string.Format("{0}/{1}", CollectionAPI.ProjectPrefix, routePrefix))
         {
         }
 

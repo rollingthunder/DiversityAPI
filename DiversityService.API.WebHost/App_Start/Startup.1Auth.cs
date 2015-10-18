@@ -1,22 +1,20 @@
-﻿using DiversityService.API.Model;
-using DiversityService.API.WebHost.Models;
-using DiversityService.API.WebHost.Providers;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin;
-using Microsoft.Owin.Security.DataHandler;
-using Microsoft.Owin.Security.DataProtection;
-using Microsoft.Owin.Security.OAuth;
-using Owin;
-using System;
-using System.Configuration;
-using System.Security.Claims;
-
-namespace DiversityService.API.WebHost
+﻿namespace DiversityService.API.WebHost
 {
+    using System;
+    using System.Configuration;
+    using System.Security.Claims;
+    using DiversityService.API.Model;
+    using DiversityService.API.WebHost.Models;
+    using DiversityService.API.WebHost.Providers;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.Owin;
+    using Microsoft.Owin.Security.DataHandler;
+    using Microsoft.Owin.Security.DataProtection;
+    using Microsoft.Owin.Security.OAuth;
+    using Owin;
+
     public partial class Startup
     {
-        public static readonly string PublicClientId = "self";
-
         public static readonly OAuthAuthorizationServerOptions OAuthOptions = new OAuthAuthorizationServerOptions
         {
             TokenEndpointPath = new PathString("/Token"),
@@ -26,22 +24,24 @@ namespace DiversityService.API.WebHost
             AllowInsecureHttp = false
         };
 
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        public static readonly string PublicClientId = "self";
+
+        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864 
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context and user manager to use a single instance per request
+            // Configure the db context and user manager to use a single instance per request 
             app.CreatePerOwinContext(ApplicationDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
 
             // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
+            // and to use a cookie to temporarily store information about a user logging in with a
+            // third party login provider
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
-            // Enable the application to use bearer tokens to authenticate users
+            // Enable the application to use bearer tokens to authenticate users 
             app.UseOAuthBearerTokens(OAuthOptions);
 
-            // Retrieve Client Id and Secret from AppSettings
-            // If there are none, use the Test Application
+            // Retrieve Client Id and Secret from AppSettings If there are none, use the Test Application 
             var clientId = ConfigurationManager.AppSettings["LiveClientId"] ?? "000000004C0FE46A";
             var clientSecret = ConfigurationManager.AppSettings["LiveClientSecret"] ?? "EarX-Ngmov1EebwO2Ia9CyLkvI9VJMhk";
 
@@ -55,17 +55,28 @@ namespace DiversityService.API.WebHost
     {
         public const string AuthorizationToken = "arstarstarstarstarstrst";
 
-        public const string TestUserName = "test@user.com";
-        public const string TestBackendUser = "Test";
         public const string TestBackendPass = "Pass";
+        public const string TestBackendUser = "Test";
+        public const string TestUserName = "test@user.com";
+
+        public static ClaimsIdentity CreateTestIdentity()
+        {
+            return new ClaimsIdentity(
+                new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, TestUserName),
+                    new BackendCredentialsClaim(TestBackendUser, TestBackendPass)
+                },
+                OAuthDefaults.AuthenticationType);
+        }
 
         public void ConfigureTestAuth(IAppBuilder app)
         {
-            // Default Data Fomat from Katana
-            // Necessary to satisfy IOC
+            // Default Data Fomat from Katana Necessary to satisfy IOC 
             IDataProtector dataProtecter = app.CreateDataProtector(
                     typeof(OAuthAuthorizationServerMiddleware).Namespace,
-                    "Access_Token", "v1");
+                    "Access_Token",
+                    "v1");
             OAuthOptions.AccessTokenFormat = new TicketDataFormat(dataProtecter);
 
             app.Use(async (ctx, next) =>
@@ -84,15 +95,6 @@ namespace DiversityService.API.WebHost
 
                 await next();
             });
-        }
-
-        public static ClaimsIdentity CreateTestIdentity()
-        {
-            return new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Name, TestUserName),
-                new BackendCredentialsClaim(TestBackendUser, TestBackendPass)
-            }, OAuthDefaults.AuthenticationType);
         }
     }
 }

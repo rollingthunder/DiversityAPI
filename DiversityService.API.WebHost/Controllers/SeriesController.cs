@@ -1,30 +1,29 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Http;
     using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Web.Http;
     using Collection = DiversityService.DB.Collection;
 
     [CollectionAPI("series")]
     public class SeriesController : DiversityController, IFieldDataController<EventSeriesBindingModel>
     {
+        public SeriesController(
+            IMappingEngine mapper)
+            : base(mapper)
+        {
+        }
+
         private IStore<Collection.EventSeries, int> Store
         {
             get
             {
                 return Request.GetCollectionContext().Series;
             }
-        }
-
-        public SeriesController(
-            IMappingEngine mapper
-            )
-            : base(mapper)
-        {
         }
 
         [Route]
@@ -49,7 +48,7 @@
             return PagedAndMapped<Collection.EventSeries, EventSeries>(query);
         }
 
-        [Route("{id}", Name = Route.SERIES_BYID)]
+        [Route("{id}", Name = Route.SeriesById)]
         public async Task<IHttpActionResult> Get(int id)
         {
             var series = await Store.GetByIDAsync(id);
@@ -67,7 +66,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(EventSeriesBindingModel value)
         {
-            var existing = await RedirectToExisting(Store, value.TransactionGuid, Route.SERIES_BYID);
+            var existing = await RedirectToExisting(Store, value.TransactionGuid, Route.SeriesById);
 
             if (existing != null)
             {
@@ -80,7 +79,7 @@
 
             var dto = Mapper.Map<EventSeries>(series);
 
-            return CreatedAtRoute<EventSeries>(Route.SERIES_BYID, Route.GetById(series), dto);
+            return CreatedAtRoute<EventSeries>(Route.SeriesById, Route.GetById(series), dto);
         }
     }
 }

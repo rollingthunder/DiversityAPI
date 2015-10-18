@@ -23,6 +23,7 @@
                 response.ReasonPhrase = "SSL Required";
                 return Task.FromResult<HttpResponseMessage>(response);
             }
+
             return base.SendAsync(request, cancellationToken);
         }
     }

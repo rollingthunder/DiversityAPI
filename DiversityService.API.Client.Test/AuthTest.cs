@@ -1,15 +1,15 @@
 ﻿namespace DiversityService.API.Client.Test
 {
-    using DiversityService.API.WebHost;
-    using Microsoft.Owin.Testing;
-    using Newtonsoft.Json.Linq;
-    using OpenQA.Selenium;
-    using OpenQA.Selenium.Firefox;
     using System;
     using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
+    using DiversityService.API.WebHost;
+    using Microsoft.Owin.Testing;
+    using Newtonsoft.Json.Linq;
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Firefox;
     using Xunit;
 
     public class AuthTest
@@ -114,7 +114,7 @@
             var api = new TestAPI("/Account/UserInfo");
 
             // Act
-            var authenticatingHandler = new AuthenticationHandler(api.Server.Handler, async () => TestStartup.AuthorizationToken);
+            var authenticatingHandler = new AuthenticationHandler(api.Server.Handler, () => Task.FromResult(TestStartup.AuthorizationToken));
             var authenticatedClient = new HttpClient(authenticatingHandler) { BaseAddress = api.Server.BaseAddress };
             authenticatedClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer");
             var response = await authenticatedClient.GetAsync("");

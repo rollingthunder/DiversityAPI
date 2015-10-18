@@ -3,7 +3,7 @@
     using DiversityService.API.Controllers;
     using DiversityService.API.Filters;
 
-    [CollectionAPI(Route.TERMS_CONTROLLER)]
+    [CollectionAPI(Route.TermsController)]
     public class TermsController
     {
     }

@@ -1,17 +1,25 @@
 ﻿namespace DiversityService.API.Controllers
 {
-    using AutoMapper;
-    using DiversityService.API.Filters;
-    using DiversityService.API.Model;
-    using DiversityService.API.Services;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
+    using AutoMapper;
+    using DiversityService.API.Filters;
+    using DiversityService.API.Model;
+    using DiversityService.API.Services;
 
     [CollectionAPI("project")]
     public class ProjectController : ApiController
     {
+        public ProjectController(
+             IMappingEngine mapper)
+        {
+            Mapper = mapper;
+        }
+
+        private IMappingEngine Mapper { get; set; }
+
         private IProjectStore ProjectStore
         {
             get
@@ -22,15 +30,6 @@
             }
         }
 
-        private readonly IMappingEngine Mapper;
-
-        public ProjectController(
-            IMappingEngine mapper
-            )
-        {
-            Mapper = mapper;
-        }
-
         [Route]
         public async Task<IEnumerable<Project>> Get()
         {
@@ -39,7 +38,7 @@
             return Mapper.Map<IEnumerable<Project>>(projects);
         }
 
-        [Route(CollectionAPI.PROJECT_TEMPLATE)]
+        [Route(CollectionAPI.ProjectTemplate)]
         public async Task<Project> GetById(int project)
         {
             var projects = await Get();

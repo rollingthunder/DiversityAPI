@@ -91,8 +91,8 @@
             // Arrange
 
             var routeValues = new HttpRouteValueDictionary();
-            routeValues[CollectionAPI.COLLECTION] = "not an int";
-            routeValues[CollectionAPI.PROJECT] = "6";
+            routeValues[CollectionAPI.Collection] = "not an int";
+            routeValues[CollectionAPI.Project] = "6";
             var routeData = new HttpRouteData(new HttpRoute(), routeValues);
             Request.SetRouteData(routeData);
 
@@ -261,12 +261,12 @@
 
             if (collectionId.HasValue)
             {
-                routeValues[CollectionAPI.COLLECTION] = collectionId.ToString();
+                routeValues[CollectionAPI.Collection] = collectionId.ToString();
             }
 
             if (projectId.HasValue)
             {
-                routeValues[CollectionAPI.PROJECT] = projectId.ToString();
+                routeValues[CollectionAPI.Project] = projectId.ToString();
             }
             var routeData = new HttpRouteData(new HttpRoute(), routeValues);
             Request.SetRouteData(routeData);

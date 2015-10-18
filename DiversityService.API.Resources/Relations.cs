@@ -2,9 +2,9 @@
 {
     public static class Relations
     {
-        public const string DOCUMENTATION_BASE = "https://api.snsb.info/";
+        public const string DocumentationBase = "https://api.snsb.info/";
 
-        private const string BASE_URL = DOCUMENTATION_BASE + "rels/";
+        private const string BASE_URL = DocumentationBase + "rels/";
 
         public const string SERIES_SINGLE = BASE_URL + "trip";
 

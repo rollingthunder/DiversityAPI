@@ -1,9 +1,9 @@
 ﻿namespace DiversityService.API.Model
 {
-    using DiversityService.API.Resources;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using DiversityService.API.Resources;
 
     public class EventBindingModel : EventUpload, IValidatableObject
     {

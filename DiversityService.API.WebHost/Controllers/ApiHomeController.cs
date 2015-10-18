@@ -1,9 +1,9 @@
 ﻿namespace DiversityService.API.Controllers
 {
-    using DiversityService.API.Results;
     using System;
     using System.Net.Http;
     using System.Web.Http;
+    using DiversityService.API.Results;
     using Tavis;
     using Tavis.Home;
     using Tavis.IANA;
@@ -13,21 +13,21 @@
     [RoutePrefix("Home")]
     public class ApiHomeController : ApiController
     {
-        private readonly HomeDocument Document;
+        private readonly HomeDocument document;
 
         public ApiHomeController()
         {
-            Document = new HomeDocument();
+            document = new HomeDocument();
 
-            // Account
+            // Account 
             var account = new Link()
             {
                 Relation = Relations.ACCOUNT,
-                Target = new Uri(Route.PREFIX_ACCOUNT, UriKind.Relative)
+                Target = new Uri(Route.PrefixAccount, UriKind.Relative)
             };
-            Document.AddResource(account);
+            document.AddResource(account);
 
-            // Series
+            // Series 
             var series = new Link()
             {
                 Relation = Relations.SERIES_SINGLE,
@@ -39,14 +39,14 @@
             allowedMethods.AddMethod(HttpMethod.Post);
             series.AddHint(allowedMethods);
 
-            Document.AddResource(series);
+            document.AddResource(series);
         }
 
         [HttpGet]
         [Route]
         public IHttpActionResult Get()
         {
-            return Home(Document);
+            return Home(document);
         }
 
         private JsonHomeResult Home(HomeDocument doc)

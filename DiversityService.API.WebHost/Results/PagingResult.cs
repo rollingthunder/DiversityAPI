@@ -13,27 +13,19 @@
 
     public class PagingResult<T> : IQueryResult<T>
     {
-        private readonly Lazy<NegotiatedContentResult<IQueryable<T>>> InnerResult;
+        public const uint DefaultSkip = 0;
+        public const uint DefaultTake = 20;
+        public const uint MaxTake = 50;
 
-        public IQueryable<T> Query { get; private set; }
-
-        public class PageDescriptor
-        {
-            public uint? skip { get; set; }
-
-            public uint? take { get; set; }
-        }
-
-        public const uint DEFAULT_SKIP = 0;
-        public const uint DEFAULT_TAKE = 20;
-        public const uint MAX_TAKE = 50;
+        private readonly Lazy<NegotiatedContentResult<IQueryable<T>>> innerResult;
 
         public PagingResult(HttpStatusCode statusCode, IOrderedQueryable<T> content, ApiController controller)
-            : this(statusCode, content,
-            controller.Configuration.Services.GetContentNegotiator(),
-            controller.Request,
-            controller.Configuration.Formatters
-            )
+            : this(
+                statusCode,
+                content,
+                controller.Configuration.Services.GetContentNegotiator(),
+                controller.Request,
+                controller.Configuration.Formatters)
         {
         }
 
@@ -41,10 +33,17 @@
         {
             Query = PageContent(content, request);
 
-            InnerResult = new Lazy<NegotiatedContentResult<IQueryable<T>>>(() =>
+            innerResult = new Lazy<NegotiatedContentResult<IQueryable<T>>>(() =>
             {
                 return new NegotiatedContentResult<IQueryable<T>>(statusCode, Query, negotiator, request, formatters);
             });
+        }
+
+        public IQueryable<T> Query { get; private set; }
+
+        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            return innerResult.Value.ExecuteAsync(cancellationToken);
         }
 
         private static IQueryable<T> PageContent(IOrderedQueryable<T> content, HttpRequestMessage request)
@@ -55,19 +54,21 @@
                 request.RequestUri.TryReadQueryAs<PageDescriptor>(out descriptor);
             }
 
-            if (descriptor.take.HasValue && descriptor.take > MAX_TAKE)
+            if (descriptor.Take.HasValue && descriptor.Take > MaxTake)
             {
-                descriptor.take = MAX_TAKE;
+                descriptor.Take = MaxTake;
             }
 
             return content
-                .Skip((int)(descriptor.skip ?? DEFAULT_SKIP))
-                .Take((int)(descriptor.take ?? DEFAULT_TAKE));
+                .Skip((int)(descriptor.Skip ?? DefaultSkip))
+                .Take((int)(descriptor.Take ?? DefaultTake));
         }
 
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        public class PageDescriptor
         {
-            return InnerResult.Value.ExecuteAsync(cancellationToken);
+            public uint? Skip { get; set; }
+
+            public uint? Take { get; set; }
         }
     }
 }

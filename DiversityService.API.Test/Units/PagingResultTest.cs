@@ -42,8 +42,8 @@
             Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Query.Count());
-            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DEFAULT_TAKE), Result.Query);
+            Assert.Equal(PagingResult<int>.DefaultTake, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DefaultTake), Result.Query);
         }
 
         [Fact]
@@ -58,8 +58,8 @@
             Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Query.Count());
-            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DEFAULT_TAKE), Result.Query);
+            Assert.Equal(PagingResult<int>.DefaultTake, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.DefaultTake), Result.Query);
         }
 
         [Fact]
@@ -74,8 +74,8 @@
             Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.DEFAULT_TAKE, (uint)Result.Query.Count());
-            Assert.Equal(Enumerable.Range(10, (int)PagingResult<int>.DEFAULT_TAKE), Result.Query);
+            Assert.Equal(PagingResult<int>.DefaultTake, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(10, (int)PagingResult<int>.DefaultTake), Result.Query);
         }
 
         [Fact]
@@ -90,8 +90,8 @@
             Result = CreateResult(data.AsQueryable().OrderBy(x => x));
 
             // Assert
-            Assert.Equal(PagingResult<int>.MAX_TAKE, (uint)Result.Query.Count());
-            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.MAX_TAKE), Result.Query);
+            Assert.Equal(PagingResult<int>.MaxTake, (uint)Result.Query.Count());
+            Assert.Equal(Enumerable.Range(1, (int)PagingResult<int>.MaxTake), Result.Query);
         }
 
         private void SetPageQuery(uint? take, uint? skip)

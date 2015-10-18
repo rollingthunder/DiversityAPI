@@ -1,15 +1,15 @@
 ﻿namespace DiversityService.API.Test
 {
-    using DiversityService.API;
-    using DiversityService.API.Controllers;
-    using DiversityService.API.Model;
-    using DiversityService.API.Results;
-    using Moq;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Results;
+    using DiversityService.API;
+    using DiversityService.API.Controllers;
+    using DiversityService.API.Model;
+    using DiversityService.API.Results;
+    using Moq;
     using Xunit;
 
     public abstract class CRUDControllerTest<TController, TEntity, TDto, TUpload> : ControllerTestBase<TController>
@@ -124,7 +124,7 @@
             MockStore.Verify(x => x.InsertAsync(It.IsAny<TEntity>()), Times.Never());
             Assert.NotNull(result);
             Assert.Contains("ById", result.RouteName);
-            Assert.Equal(id, (int)result.RouteValues[Route.PARAM_ID]);
+            Assert.Equal(id, (int)result.RouteValues[Route.ParamId]);
         }
     }
 }

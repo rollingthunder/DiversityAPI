@@ -1,43 +1,140 @@
 ﻿namespace DiversityService.API.Test
 {
-    using DiversityService.API.Controllers;
-    using DiversityService.API.Model.Internal;
-    using Moq;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using DiversityService.API.Controllers;
+    using DiversityService.API.Model.Internal;
+    using Moq;
     using Xunit;
     using TaxonNames = DiversityService.DB.TaxonNames;
 
     public class TaxaControllerTest : ControllerTestBase<TaxaController>
     {
-        public CollectionServerLogin PublicLogin { get; set; }
-
         private readonly FakeTaxonServer Local;
         private readonly FakeTaxonServer Public;
 
-        private class FakeTaxonModule
-        {
-            public TaxonNames.TaxonList[] Lists { get; set; }
-            public Mock<ITaxa> Mock { get; set; }
-        }
-
-        private class FakeTaxonServer
-        {
-            public Mock<IDiscoverDBModules> Discovery { get; set; }
-            public IEnumerable<DBModule> Modules { get; set; }
-            public IDictionary<string, FakeTaxonModule> ListsForModule { get; set; }
-        }
-
         public TaxaControllerTest()
         {
-            PublicLogin = new CollectionServerLogin() { Kind = TaxaController.TAXON_LOGIN_KIND, Name = "public", Password = "1234", User = "public" };
+            PublicLogin = new CollectionServerLogin() { Kind = TaxaController.TaxonLoginKind, Name = "public", Password = "1234", User = "public" };
             SetupMocks.Configuration(Kernel, new[] { PublicLogin });
 
             Local = TestTaxaFor("", Login);
             Public = TestTaxaFor("public", PublicLogin);
 
             InitController();
+        }
+
+        public CollectionServerLogin PublicLogin { get; set; }
+
+        [Fact]
+        public async Task CanDiscoverListsOnCurrentServer()
+        {
+            // Arrange 
+            var expected = new List<TaxonNames.TaxonList>(
+                Local.ListsForModule["BTaxa"].Lists.Concat(Local.ListsForModule["CTaxa"].Lists)
+                );
+
+            // Act 
+            var lists = await Controller.Get();
+
+            // Assert 
+            Assert.NotEmpty(lists);
+            Assert.True(lists.All(l => expected.Any(x => x.DisplayText == l.Name && x.TaxonomicGroup == l.TaxonGroup)));
+        }
+
+        [Fact]
+        public async Task CanDiscoverListsOnPublicServer()
+        {
+            // Arrange 
+            var expected = new List<TaxonNames.TaxonList>(
+                Public.ListsForModule["BTaxa"].Lists.Concat(Public.ListsForModule["CTaxa"].Lists)
+                );
+            // Act 
+            var lists = await Controller.GetPublic();
+
+            // Assert 
+            Assert.NotEmpty(lists);
+            Assert.True(lists.All(l => expected.Any(x => x.DisplayText == l.Name && x.TaxonomicGroup == l.TaxonGroup)));
+        }
+
+        [Fact]
+        public async Task CanRetrieveNamesOnCurrentServer()
+        {
+            // Arrange 
+            var fakeModule = Local.ListsForModule["BTaxa"];
+            var list = fakeModule.Lists[0];
+            var mock = fakeModule.Mock;
+
+            var expected = new HashSet<string>(
+                    from name in TestNamesForList(mock, list)
+                    select name.NameURI
+                    );
+
+            var lists = await Controller.Get();
+            var id = (from l in lists
+                      where l.Name == list.DisplayText
+                      select l.Id).First();
+
+            // Act 
+            var names = await Controller.GetList(id, expected.Count, 0);
+
+            // Assert 
+            Assert.Equal(expected.Count, names.Count());
+            Assert.True(names.All(x => expected.Contains(x.URI)));
+        }
+
+        [Fact]
+        public async Task CanRetrieveNamesOnPublicServer()
+        {
+            // Arrange 
+            var fakeModule = Public.ListsForModule["CTaxa"];
+            var list = fakeModule.Lists[0];
+            var mock = fakeModule.Mock;
+
+            var expected = new HashSet<string>(
+                    from name in TestNamesForList(mock, list)
+                    select name.NameURI
+                    );
+
+            var lists = await Controller.GetPublic();
+            var id = (from l in lists
+                      where l.Name == list.DisplayText
+                      select l.Id).First();
+
+            // Act 
+            var names = await Controller.GetPublicList(id, expected.Count, 0);
+
+            // Assert 
+            Assert.Equal(expected.Count, names.Count());
+            Assert.True(names.All(x => expected.Contains(x.URI)));
+        }
+
+        private IEnumerable<TaxonNames.TaxonName> TestNamesForList(Mock<ITaxa> taxa, TaxonNames.TaxonList list)
+        {
+            var names = new List<TaxonNames.TaxonName>();
+            for (int i = 0; i < 10; i++)
+            {
+                names.Add(
+                    new DB.TaxonNames.TaxonName()
+                    {
+                        AcceptedNameCache = "A",
+                        AcceptedNameURI = "Uri",
+                        Family = "Fam",
+                        GenusOrSupragenericName = "Gen",
+                        InfraspecificEpithet = "Infra",
+                        NameURI = list.ListID.ToString() + "nameUri" + i.ToString(),
+                        Order = "Order",
+                        SpeciesEpithet = "Species",
+                        Synonymy = "accepted",
+                        TaxonNameCache = "tn" + i.ToString(),
+                        TaxonNameSinAuthors = "tn"
+                    });
+            }
+
+            SetupMocks.TaxonNames(taxa, list.ListID, names);
+
+            return names;
         }
 
         private FakeTaxonServer TestTaxaFor(string prefix, CollectionServerLogin login)
@@ -79,114 +176,17 @@
             };
         }
 
-        private IEnumerable<TaxonNames.TaxonName> TestNamesForList(Mock<ITaxa> taxa, TaxonNames.TaxonList list)
+        private class FakeTaxonModule
         {
-            var names = new List<TaxonNames.TaxonName>();
-            for (int i = 0; i < 10; i++)
-            {
-                names.Add(
-                    new DB.TaxonNames.TaxonName()
-                    {
-                        AcceptedNameCache = "A",
-                        AcceptedNameURI = "Uri",
-                        Family = "Fam",
-                        GenusOrSupragenericName = "Gen",
-                        InfraspecificEpithet = "Infra",
-                        NameURI = list.ListID.ToString() + "nameUri" + i.ToString(),
-                        Order = "Order",
-                        SpeciesEpithet = "Species",
-                        Synonymy = "accepted",
-                        TaxonNameCache = "tn" + i.ToString(),
-                        TaxonNameSinAuthors = "tn"
-                    });
-            }
-
-            SetupMocks.TaxonNames(taxa, list.ListID, names);
-
-            return names;
+            public TaxonNames.TaxonList[] Lists { get; set; }
+            public Mock<ITaxa> Mock { get; set; }
         }
 
-        [Fact]
-        public async Task CanDiscoverListsOnCurrentServer()
+        private class FakeTaxonServer
         {
-            // Arrange
-            var expected = new List<TaxonNames.TaxonList>(
-                Local.ListsForModule["BTaxa"].Lists.Concat(Local.ListsForModule["CTaxa"].Lists)
-                );
-
-            // Act
-            var lists = await Controller.Get();
-
-            // Assert
-            Assert.NotEmpty(lists);
-            Assert.True(lists.All(l => expected.Any(x => x.DisplayText == l.Name && x.TaxonomicGroup == l.TaxonGroup)));
-        }
-
-        [Fact]
-        public async Task CanDiscoverListsOnPublicServer()
-        {
-            // Arrange
-            var expected = new List<TaxonNames.TaxonList>(
-                Public.ListsForModule["BTaxa"].Lists.Concat(Public.ListsForModule["CTaxa"].Lists)
-                );
-            // Act
-            var lists = await Controller.GetPublic();
-
-            // Assert
-            Assert.NotEmpty(lists);
-            Assert.True(lists.All(l => expected.Any(x => x.DisplayText == l.Name && x.TaxonomicGroup == l.TaxonGroup)));
-        }
-
-        [Fact]
-        public async Task CanRetrieveNamesOnCurrentServer()
-        {
-            // Arrange
-            var fakeModule = Local.ListsForModule["BTaxa"];
-            var list = fakeModule.Lists[0];
-            var mock = fakeModule.Mock;
-
-            var expected = new HashSet<string>(
-                    from name in TestNamesForList(mock, list)
-                    select name.NameURI
-                    );
-
-            var lists = await Controller.Get();
-            var id = (from l in lists
-                      where l.Name == list.DisplayText
-                      select l.Id).First();
-
-            // Act
-            var names = await Controller.GetList(id, expected.Count, 0);
-
-            // Assert
-            Assert.Equal(expected.Count, names.Count());
-            Assert.True(names.All(x => expected.Contains(x.URI)));
-        }
-
-        [Fact]
-        public async Task CanRetrieveNamesOnPublicServer()
-        {
-            // Arrange
-            var fakeModule = Public.ListsForModule["CTaxa"];
-            var list = fakeModule.Lists[0];
-            var mock = fakeModule.Mock;
-
-            var expected = new HashSet<string>(
-                    from name in TestNamesForList(mock, list)
-                    select name.NameURI
-                    );
-
-            var lists = await Controller.GetPublic();
-            var id = (from l in lists
-                      where l.Name == list.DisplayText
-                      select l.Id).First();
-
-            // Act
-            var names = await Controller.GetPublicList(id, expected.Count, 0);
-
-            // Assert
-            Assert.Equal(expected.Count, names.Count());
-            Assert.True(names.All(x => expected.Contains(x.URI)));
+            public Mock<IDiscoverDBModules> Discovery { get; set; }
+            public IDictionary<string, FakeTaxonModule> ListsForModule { get; set; }
+            public IEnumerable<DBModule> Modules { get; set; }
         }
     }
 }

@@ -1,90 +1,71 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.DB.Collection;
-    using Ninject;
-    using Ninject.Parameters;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Diagnostics.Contracts;
-
-    internal class CollectionTransaction : ITransaction
-    {
-        private readonly DbContextTransaction Inner;
-
-        private bool _IsClosed;
-
-        public bool IsClosed
-        {
-            get
-            {
-                return _IsClosed;
-            }
-        }
-
-        public CollectionTransaction(DbContextTransaction inner)
-        {
-            Inner = inner;
-            _IsClosed = false;
-        }
-
-        public void Commit()
-        {
-            Inner.Commit();
-            _IsClosed = true;
-        }
-
-        public void Dispose()
-        {
-            Inner.Rollback();
-            Inner.Dispose();
-            _IsClosed = true;
-        }
-    }
+    using DiversityService.DB.Collection;
+    using Ninject;
+    using Ninject.Parameters;
 
     public class CollectionContext : IFieldDataContext
     {
-        public const string CONTEXT_ARGUMENT = "context";
+        public const string ContextArgument = "context";
 
-        private readonly IKernel Kernel;
-        private readonly DiversityCollection Context;
-        private readonly IDictionary<Type, object> StoreCache;
+        private readonly DiversityCollection context;
+        private readonly IKernel kernel;
+        private readonly IDictionary<Type, object> storeCache;
 
-        private CollectionTransaction CurrentTransaction;
+        private CollectionTransaction currentTransaction;
 
         public CollectionContext(
             IKernel kernel,
-            DiversityCollection context
-            )
+            DiversityCollection context)
         {
             Contract.Requires<ArgumentNullException>(kernel != null);
             Contract.Requires<ArgumentNullException>(context != null);
 
-            Kernel = kernel;
-            Context = context;
-            StoreCache = new Dictionary<Type, object>();
+            this.kernel = kernel;
+            this.context = context;
+            storeCache = new Dictionary<Type, object>();
+        }
+
+        public IStore<Event, int> Events
+        {
+            get { return LazyWithContext<IStore<Event, int>>(); }
+        }
+
+        public IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey> IdentificationGeoAnalyses
+        {
+            get { return LazyWithContext<IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey>>(); }
+        }
+
+        public IStore<Identification, IdentificationKey> Identifications
+        {
+            get { return LazyWithContext<IStore<Identification, IdentificationKey>>(); }
+        }
+
+        public IStore<IdentificationUnit, IdentificationUnitKey> IdentificationUnits
+        {
+            get { return LazyWithContext<IStore<IdentificationUnit, IdentificationUnitKey>>(); }
         }
 
         public int? ProjectId
         {
             get
             {
-                return Context.ProjectId;
+                return context.ProjectId;
             }
+
             set
             {
-                Context.ProjectId = value;
+                context.ProjectId = value;
             }
         }
 
         public IProjectStore Projects
         {
             get { return LazyWithContext<IProjectStore>(); }
-        }
-
-        public IStore<Event, int> Events
-        {
-            get { return LazyWithContext<IStore<Event, int>>(); }
         }
 
         public IStore<EventSeries, int> Series
@@ -97,51 +78,70 @@
             get { return LazyWithContext<IStore<Specimen, int>>(); }
         }
 
-        public IStore<IdentificationUnit, IdentificationUnitKey> IdentificationUnits
-        {
-            get { return LazyWithContext<IStore<IdentificationUnit, IdentificationUnitKey>>(); }
-        }
-
-        public IStore<Identification, IdentificationKey> Identifications
-        {
-            get { return LazyWithContext<IStore<Identification, IdentificationKey>>(); }
-        }
-
-        public IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey> IdentificationGeoAnalyses
-        {
-            get { return LazyWithContext<IStore<IdentificationUnitGeoAnalysis, IdentificationGeoKey>>(); }
-        }
-
-        private T LazyWithContext<T>()
-            where T : class
-        {
-            var key = typeof(T);
-            object value;
-
-            if (!StoreCache.TryGetValue(key, out value))
-            {
-                value = Kernel.Get<T>(new ConstructorArgument(CONTEXT_ARGUMENT, Context));
-                StoreCache.Add(key, value);
-            }
-
-            return (T)value;
-        }
-
-        public void Dispose()
-        {
-            Context.Dispose();
-        }
-
         public ITransaction BeginTransaction()
         {
-            if (CurrentTransaction != null && !CurrentTransaction.IsClosed)
+            if (currentTransaction != null && !currentTransaction.IsClosed)
             {
                 throw new InvalidOperationException("Cannot open transaction, while there is still an open one");
             }
 
-            CurrentTransaction = new CollectionTransaction(Context.Database.BeginTransaction());
+            currentTransaction = new CollectionTransaction(context.Database.BeginTransaction());
 
-            return CurrentTransaction;
+            return currentTransaction;
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
+        }
+
+        private T LazyWithContext<T>()
+                            where T : class
+        {
+            var key = typeof(T);
+            object value;
+
+            if (!storeCache.TryGetValue(key, out value))
+            {
+                value = kernel.Get<T>(new ConstructorArgument(ContextArgument, context));
+                storeCache.Add(key, value);
+            }
+
+            return (T)value;
+        }
+    }
+
+    internal class CollectionTransaction : ITransaction
+    {
+        private readonly DbContextTransaction inner;
+
+        private bool isClosed;
+
+        public CollectionTransaction(DbContextTransaction inner)
+        {
+            this.inner = inner;
+            isClosed = false;
+        }
+
+        public bool IsClosed
+        {
+            get
+            {
+                return isClosed;
+            }
+        }
+
+        public void Commit()
+        {
+            inner.Commit();
+            isClosed = true;
+        }
+
+        public void Dispose()
+        {
+            inner.Rollback();
+            inner.Dispose();
+            isClosed = true;
         }
     }
 }

@@ -25,15 +25,15 @@
                         .FirstOrDefault(e => supportedCultures
                             .Contains(e.Value, StringComparer.OrdinalIgnoreCase));
 
-                // Case 1: We can support what client has asked for
+                // Case 1: We can support what client has asked for 
                 if (headerValue != null)
                 {
                     Thread.CurrentThread.CurrentUICulture =
                         CultureInfo.GetCultureInfo(headerValue.Value);
                 }
 
-                // Case 2: Client will accept anything we support except
-                // the ones explicitly specified as not preferred by setting q=0
+                // Case 2: Client will accept anything we support except the ones explicitly
+                // specified as not preferred by setting q=0
                 if (list.Any(e => e.Value == "*" &&
                     (!e.Quality.HasValue || e.Quality.Value > 0.0D)))
                 {

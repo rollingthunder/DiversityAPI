@@ -1,14 +1,14 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.API.Model;
     using System;
     using System.Diagnostics.Contracts;
     using System.Net.Http;
     using System.Web;
+    using DiversityService.API.Model;
 
     public static class AgentInfoExtensions
     {
-        public const string AGENT_INFO_KEY = "agent_info";
+        public const string AgentInfoKey = "agent_info";
 
         public static AgentInfo GetAgentInfo(this HttpRequestMessage request)
         {
@@ -17,7 +17,7 @@
             var ctx = request.GetOwinContext();
             if (ctx != null)
             {
-                return ctx.Get<AgentInfo>(AGENT_INFO_KEY);
+                return ctx.Get<AgentInfo>(AgentInfoKey);
             }
 
             return null;
@@ -30,7 +30,7 @@
             var ctx = request.GetOwinContext();
             if (ctx != null)
             {
-                ctx.Set<AgentInfo>(AGENT_INFO_KEY, value);
+                ctx.Set<AgentInfo>(AgentInfoKey, value);
             }
         }
     }

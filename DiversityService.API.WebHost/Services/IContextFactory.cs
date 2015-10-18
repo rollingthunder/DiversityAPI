@@ -1,7 +1,7 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.API.Model.Internal;
     using System.Threading.Tasks;
+    using DiversityService.API.Model.Internal;
 
     public interface IContextFactory
     {

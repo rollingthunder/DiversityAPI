@@ -1,32 +1,32 @@
 ﻿namespace DiversityService.API.Controllers
 {
-    using DiversityService.API.Filters;
-    using DiversityService.API.Model;
-    using DiversityService.API.Services;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+    using DiversityService.API.Filters;
+    using DiversityService.API.Model;
+    using DiversityService.API.Services;
 
-    [RoutePrefix(CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION)]
+    [RoutePrefix(CollectionAPI.ApiPrefix + CollectionAPI.Collection)]
     public class CollectionController : ApiController
     {
-        private new readonly IConfigurationService Configuration;
+        private readonly IConfigurationService configuration;
 
         public CollectionController(IConfigurationService config)
         {
-            Configuration = config;
+            configuration = config;
         }
 
         [Route]
         public IEnumerable<CollectionServer> Get()
         {
-            return Configuration.GetCollectionServers();
+            return configuration.GetCollectionServers();
         }
 
-        [Route(CollectionAPI.COLLECTION_TEMPLATE)]
+        [Route(CollectionAPI.CollectionTemplate)]
         public CollectionServer GetById(int collection)
         {
-            return Configuration
+            return configuration
                 .GetCollectionServers()
                 .Where(x => x.Id == collection)
                 .FirstOrDefault();

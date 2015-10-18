@@ -1,25 +1,31 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Http;
     using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Web.Http;
     using Collection = DiversityService.DB.Collection;
 
-    [CollectionAPI(Route.SPECIMEN_CONTROLLER + "/{sid:int}/" + Route.IDENTIFICATION_CONTROLLER)]
+    [CollectionAPI(Route.SpecimenController + "/{sid:int}/" + Route.IdentificationController)]
     public class IdentificationController : DiversityController
     {
-        private const string DEFAULT_NOTES = "Created by DiversityMobile";
-        private const string IDENTIFICATION_CATEGORY_ACTUAL = "actual";
+        private const string DefaultNotes = "Created by DiversityMobile";
+        private const string IdentificationCategoryActual = "actual";
 
-        private IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey> IUStore
+        public IdentificationController(
+            IMappingEngine mapper)
+            : base(mapper)
+        {
+        }
+
+        private AgentInfo AgentInfo
         {
             get
             {
-                return Request.GetCollectionContext().IdentificationUnits;
+                return Request.GetAgentInfo();
             }
         }
 
@@ -39,24 +45,12 @@
             }
         }
 
-        private ITransaction BeginTransaction()
-        {
-            return Request.GetCollectionContext().BeginTransaction();
-        }
-
-        private AgentInfo AgentInfo
+        private IStore<Collection.IdentificationUnit, Collection.IdentificationUnitKey> IUStore
         {
             get
             {
-                return Request.GetAgentInfo();
+                return Request.GetCollectionContext().IdentificationUnits;
             }
-        }
-
-        public IdentificationController(
-            IMappingEngine mapper
-            )
-            : base(mapper)
-        {
         }
 
         [Route]
@@ -71,7 +65,7 @@
             return PagedAndMapped<Collection.IdentificationUnit, Identification>(query);
         }
 
-        [Route("{id}", Name = Route.IDENTIFICATION_BYID)]
+        [Route("{id}", Name = Route.IdentificationById)]
         public async Task<IHttpActionResult> Get(int sid, int id)
         {
             var key = new Collection.IdentificationUnitKey() { SpecimenId = sid, IdentificationUnitId = id };
@@ -90,7 +84,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(int sid, IdentificationBindingModel value)
         {
-            var existing = await RedirectToExisting(IUStore, value.TransactionGuid, Route.IDENTIFICATION_BYID);
+            var existing = await RedirectToExisting(IUStore, value.TransactionGuid, Route.IdentificationById);
 
             if (existing != null)
             {
@@ -101,10 +95,9 @@
 
             using (var transaction = BeginTransaction())
             {
-                // Identification Info is stored in three distinct tables
+                // Identification Info is stored in three distinct tables 
 
-                // IdentificationUnit
-
+                // IdentificationUnit 
                 var newIU = Mapper.Map<Collection.IdentificationUnit>(value);
 
                 newIU.SpecimenId = sid;
@@ -114,23 +107,21 @@
 
                 dto.Id = newIU.Id;
 
-                // Identification
-
+                // Identification 
                 var newID = Mapper.Map<Collection.Identification>(dto);
 
-                newID.IdentificationCategory = IDENTIFICATION_CATEGORY_ACTUAL;
-                newID.Notes = DEFAULT_NOTES;
+                newID.IdentificationCategory = IdentificationCategoryActual;
+                newID.Notes = DefaultNotes;
                 newID.ResponsibleName = AgentInfo.Name;
                 newID.ResponsibleAgentURI = AgentInfo.Uri;
 
                 await IDStore.InsertAsync(newID);
 
-                // IdentificationUnitGeoAnalysis
-
+                // IdentificationUnitGeoAnalysis 
                 var newIUGAN = Mapper.Map<Collection.IdentificationUnitGeoAnalysis>(dto);
 
                 newIUGAN.Geography = dto.Localization.ToGeography();
-                newIUGAN.Notes = DEFAULT_NOTES;
+                newIUGAN.Notes = DefaultNotes;
                 newIUGAN.ResponsibleName = AgentInfo.Name;
                 newIUGAN.ResponsibleAgentURI = AgentInfo.Uri;
 
@@ -139,7 +130,12 @@
                 transaction.Commit();
             }
 
-            return CreatedAtRoute(Route.IDENTIFICATION_BYID, Route.GetById(dto), dto);
+            return CreatedAtRoute(Route.IdentificationById, Route.GetById(dto), dto);
+        }
+
+        private ITransaction BeginTransaction()
+        {
+            return Request.GetCollectionContext().BeginTransaction();
         }
     }
 }

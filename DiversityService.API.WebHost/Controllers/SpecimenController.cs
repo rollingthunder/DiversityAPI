@@ -1,18 +1,22 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Http;
     using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Web.Http;
     using Collection = DiversityService.DB.Collection;
 
-    [CollectionAPI(Route.SPECIMEN_CONTROLLER)]
+    [CollectionAPI(Route.SpecimenController)]
     public class SpecimenController : DiversityController, IFieldDataController<SpecimenBindingModel>
     {
-        private readonly IMappingEngine Mapper;
+        public SpecimenController(
+         IMappingEngine mapper)
+         : base(mapper)
+        {
+        }
 
         private IStore<Collection.Specimen, int> Store
         {
@@ -20,14 +24,6 @@
             {
                 return Request.GetCollectionContext().Specimen;
             }
-        }
-
-        public SpecimenController(
-            IMappingEngine mapper
-            )
-            : base(mapper)
-        {
-            this.Mapper = mapper;
         }
 
         [Route]
@@ -58,7 +54,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(SpecimenBindingModel value)
         {
-            var existing = await RedirectToExisting(Store, value.TransactionGuid, Route.SPECIMEN_BYID);
+            var existing = await RedirectToExisting(Store, value.TransactionGuid, Route.SpecimenById);
 
             if (existing != null)
             {
@@ -71,10 +67,10 @@
 
             var dto = Mapper.Map<Specimen>(newEntity);
 
-            return CreatedAtRoute(Route.SERIES_BYID, Route.GetById(newEntity), dto);
+            return CreatedAtRoute(Route.SeriesById, Route.GetById(newEntity), dto);
         }
 
-        [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.EVENT_CONTROLLER + "/{id:int}/specimen")]
+        [Route("~/" + CollectionAPI.ApiPrefix + CollectionAPI.CollectionPrefix + Route.EventController + "/{id:int}/specimen")]
         [HttpGet]
         public async Task<IHttpActionResult> SpecimenForEvent(int id)
         {

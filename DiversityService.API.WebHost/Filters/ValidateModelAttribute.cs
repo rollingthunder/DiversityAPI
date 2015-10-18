@@ -15,8 +15,7 @@
                     .Request
                     .CreateErrorResponse(
                         HttpStatusCode.BadRequest,
-                        actionContext.ModelState
-                    );
+                        actionContext.ModelState);
             }
         }
     }

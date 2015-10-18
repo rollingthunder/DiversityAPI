@@ -1,18 +1,22 @@
 ﻿namespace DiversityService.API.Controllers
 {
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Web.Http;
     using AutoMapper;
     using DiversityService.API.Filters;
     using DiversityService.API.Model;
     using DiversityService.API.Services;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Web.Http;
     using Collection = DiversityService.DB.Collection;
 
-    [CollectionAPI(Route.EVENT_CONTROLLER)]
+    [CollectionAPI(Route.EventController)]
     public class EventController : DiversityController, IFieldDataController<EventBindingModel>
     {
-        private readonly IMappingEngine Mapper;
+        public EventController(
+               IMappingEngine mapper)
+               : base(mapper)
+        {
+        }
 
         private IStore<Collection.Event, int> EventStore
         {
@@ -22,12 +26,25 @@
             }
         }
 
-        public EventController(
-            IMappingEngine mapper
-            )
-            : base(mapper)
+        [Route("~/" + CollectionAPI.ApiPrefix + CollectionAPI.CollectionPrefix + Route.SeriesController + "/noseries/events")]
+        [HttpGet]
+        public Task<IHttpActionResult> EventsForNullSeries()
         {
-            this.Mapper = mapper;
+            return EventsForSeries(null);
+        }
+
+        [Route("~/" + CollectionAPI.ApiPrefix + CollectionAPI.CollectionPrefix + Route.SeriesController + "/{seriesId:int}/events")]
+        [HttpGet]
+        public async Task<IHttpActionResult> EventsForSeries(int? seriesId)
+        {
+            var allEvents = await EventStore.GetQueryableAsync();
+
+            var eventsForSeries = from ev in allEvents
+                                  where ev.SeriesID == seriesId
+                                  orderby ev.Id
+                                  select ev;
+
+            return PagedAndMapped<Collection.Event, Event>(eventsForSeries);
         }
 
         [Route]
@@ -40,7 +57,7 @@
             return PagedAndMapped<Collection.Event, Event>(query);
         }
 
-        [Route("{id}", Name = Route.EVENT_BYID)]
+        [Route("{id}", Name = Route.EventById)]
         public async Task<IHttpActionResult> Get(int id)
         {
             var ev = await EventStore.GetByIDAsync(id);
@@ -58,7 +75,7 @@
         [Route]
         public async Task<IHttpActionResult> Post(EventBindingModel value)
         {
-            var existing = await RedirectToExisting(EventStore, value.TransactionGuid, Route.EVENT_BYID);
+            var existing = await RedirectToExisting(EventStore, value.TransactionGuid, Route.EventById);
 
             if (existing != null)
             {
@@ -71,28 +88,7 @@
 
             var dto = Mapper.Map<Event>(newEvent);
 
-            return CreatedAtRoute(Route.EVENT_BYID, Route.GetById(newEvent), dto);
-        }
-
-        [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.SERIES_CONTROLLER + "/noseries/events")]
-        [HttpGet]
-        public Task<IHttpActionResult> EventsForNullSeries()
-        {
-            return EventsForSeries(null);
-        }
-
-        [Route("~/" + CollectionAPI.API_PREFIX + CollectionAPI.COLLECTION_PREFIX + Route.SERIES_CONTROLLER + "/{seriesId:int}/events")]
-        [HttpGet]
-        public async Task<IHttpActionResult> EventsForSeries(int? seriesId)
-        {
-            var allEvents = await EventStore.GetQueryableAsync();
-
-            var eventsForSeries = from ev in allEvents
-                                  where ev.SeriesID == seriesId
-                                  orderby ev.Id
-                                  select ev;
-
-            return PagedAndMapped<Collection.Event, Event>(eventsForSeries);
+            return CreatedAtRoute(Route.EventById, Route.GetById(newEvent), dto);
         }
     }
 }

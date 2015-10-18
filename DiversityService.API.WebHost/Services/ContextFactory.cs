@@ -1,18 +1,18 @@
 ﻿namespace DiversityService.API.Services
 {
+    using System;
+    using System.Threading.Tasks;
     using DiversityService.API.Model.Internal;
     using DiversityService.DB.Services;
     using Ninject;
-    using System;
-    using System.Threading.Tasks;
 
     public class ContextFactory : IContextFactory
     {
-        private readonly IKernel Kernel;
+        private readonly IKernel kernel;
 
         public ContextFactory(IKernel kernel)
         {
-            Kernel = kernel;
+            this.kernel = kernel;
         }
 
         public async Task<IFieldDataContext> CreateContextAsync(CollectionServerLogin server)
@@ -21,17 +21,16 @@
             {
                 var ctx = DbContextHelpers.CreateCollection(server);
 
-                // Force immediate connection to validate settings
+                // Force immediate connection to validate settings 
                 await ctx.Database.Connection.OpenAsync();
 
                 return new CollectionContext(
-                    Kernel,
-                    ctx
-                );
+                    kernel,
+                    ctx);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                // TODO Log
+                // TODO Log 
                 return null;
             }
         }

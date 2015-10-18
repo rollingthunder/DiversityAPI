@@ -1,30 +1,27 @@
 ﻿namespace DiversityService.API.Services
 {
-    using AutoMapper;
-    using DiversityService.API.Model.Internal;
-    using DiversityService.API.WebHost;
-    using Splat;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
+    using AutoMapper;
+    using DiversityService.API.Model.Internal;
+    using DiversityService.API.WebHost;
+    using Splat;
 
     public class ConfigurationService : IConfigurationService, IEnableLogger
     {
-        private readonly Lazy<CollectionServerConfigurationSection> Section;
-        private readonly IMappingEngine Mapper;
-
-        private IEnumerable<InternalCollectionServer> _Servers;
-
-        private IDictionary<string, IEnumerable<CollectionServerLogin>> _PublicServers;
+        private readonly IMappingEngine mapper;
+        private readonly Lazy<CollectionServerConfigurationSection> section;
+        private IDictionary<string, IEnumerable<CollectionServerLogin>> publicServers;
+        private IEnumerable<InternalCollectionServer> servers;
 
         public ConfigurationService(
-            IMappingEngine mapper
-            )
+            IMappingEngine mapper)
         {
-            Mapper = mapper;
+            this.mapper = mapper;
 
-            Section = new Lazy<CollectionServerConfigurationSection>(() =>
+            section = new Lazy<CollectionServerConfigurationSection>(() =>
             {
                 return (CollectionServerConfigurationSection)ConfigurationManager.GetSection("collectionServers");
             });
@@ -36,17 +33,17 @@
         {
             LoadConfigurationIfNecessary();
 
-            return _Servers;
+            return servers;
         }
 
         public CollectionServerLogin GetPublicLogin(string kind)
         {
             LoadConfigurationIfNecessary();
 
-            IEnumerable<CollectionServerLogin> Logins;
-            if (_PublicServers.TryGetValue(kind, out Logins))
+            IEnumerable<CollectionServerLogin> logins;
+            if (publicServers.TryGetValue(kind, out logins))
             {
-                return Logins.First();
+                return logins.First();
             }
 
             return null;
@@ -54,24 +51,36 @@
 
         #endregion IConfigurationService
 
+        private IEnumerable<InternalCollectionServer> LoadCollectionServers()
+        {
+            var collectionServers = section.Value.Servers.Cast<CollectionServerElement>()
+                .Select(mapper.Map<InternalCollectionServer>)
+                .ToList();
+
+            // Throws if there are duplicate Ids 
+            collectionServers.ToDictionary(x => x.Id);
+
+            return collectionServers;
+        }
+
         private void LoadConfigurationIfNecessary()
         {
-            if (Section.IsValueCreated)
+            if (section.IsValueCreated)
             {
                 return;
             }
 
-            _PublicServers = LoadPublicServers();
-            _Servers = LoadCollectionServers();
+            publicServers = LoadPublicServers();
+            servers = LoadCollectionServers();
         }
 
         private IDictionary<string, IEnumerable<CollectionServerLogin>> LoadPublicServers()
         {
             var res = new Dictionary<string, IEnumerable<CollectionServerLogin>>();
 
-            foreach (var server in Section.Value.PublicServers.Cast<ServerLoginCatalogElement>())
+            foreach (var server in section.Value.PublicServers.Cast<ServerLoginCatalogElement>())
             {
-                var login = Mapper.Map<CollectionServerLogin>(server);
+                var login = mapper.Map<CollectionServerLogin>(server);
 
                 if (!res.ContainsKey(login.Kind))
                 {
@@ -84,18 +93,6 @@
             }
 
             return res;
-        }
-
-        private IEnumerable<InternalCollectionServer> LoadCollectionServers()
-        {
-            var collectionServers = Section.Value.Servers.Cast<CollectionServerElement>()
-                .Select(Mapper.Map<InternalCollectionServer>)
-                .ToList();
-
-            // Throws if there are duplicate Ids
-            collectionServers.ToDictionary(x => x.Id);
-
-            return collectionServers;
         }
     }
 }

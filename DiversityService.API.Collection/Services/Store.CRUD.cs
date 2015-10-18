@@ -1,14 +1,14 @@
 ﻿namespace DiversityService.API.Services
 {
-    using DiversityService.API;
-    using DiversityService.API.Model;
-    using DiversityService.DB.Collection;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
+    using DiversityService.API;
+    using DiversityService.API.Model;
+    using DiversityService.DB.Collection;
 
     public class Store<TEntity, TKey> : IStore<TEntity, TKey> where TEntity : class
     {
@@ -71,9 +71,9 @@
             await context.SaveChangesAsync();
         }
 
-        public async Task<IQueryable<TEntity>> GetQueryableAsync()
+        public Task<IQueryable<TEntity>> GetQueryableAsync()
         {
-            return dbSet;
+            return Task.FromResult<IQueryable<TEntity>>(dbSet);
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿namespace DiversityService.API.Results
 {
-    using AutoMapper;
-    using AutoMapper.QueryableExtensions;
     using System;
     using System.Diagnostics.Contracts;
     using System.Linq;
@@ -10,69 +8,28 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Results;
-
-    public class MappedSingleResult<TEntity, T> : IHttpActionResult, IChainedResult
-    {
-        private readonly Lazy<OkNegotiatedContentResult<T>> InnerResult;
-
-        public readonly IMappingEngine Mapper;
-        public readonly ApiController Controller;
-        public readonly TEntity Entity;
-
-        public MappedSingleResult(IMappingEngine mapper, ApiController controller, TEntity entity)
-        {
-            Mapper = mapper;
-            Controller = controller;
-            Entity = entity;
-
-            InnerResult = new Lazy<OkNegotiatedContentResult<T>>(() =>
-            {
-                var mapped = Mapper.Map<T>(Entity);
-                return new OkNegotiatedContentResult<T>(mapped, Controller);
-            });
-        }
-
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
-        {
-            return InnerResult.Value.ExecuteAsync(cancellationToken);
-        }
-
-        IHttpActionResult IChainedResult.InnerResult
-        {
-            get { return InnerResult.Value; }
-        }
-    }
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     public class MappedQueryResult<TEntity, T> : IQueryResult<T>, IChainedResult
     {
-        private readonly Lazy<IHttpActionResult> InnerResult;
-        private readonly Lazy<IQueryable<T>> MappedQuery;
+        private readonly ApiController controller;
+        private readonly Lazy<IHttpActionResult> innerResult;
+        private readonly Lazy<IQueryable<T>> mappedQuery;
 
-        private readonly IMappingEngine Mapper;
-        private readonly ApiController Controller;
-        private readonly IQueryable<TEntity> SourceQuery;
-
-        public IQueryable<T> Query
-        {
-            get { return MappedQuery.Value; }
-        }
-
-        private MappedQueryResult(IMappingEngine mapper, ApiController controller)
-        {
-            Mapper = mapper;
-            Controller = controller;
-        }
+        private readonly IMappingEngine mapper;
+        private readonly IQueryable<TEntity> sourceQuery;
 
         public MappedQueryResult(IMappingEngine mapper, ApiController controller, IQueryable<TEntity> source)
             : this(mapper, controller)
         {
-            SourceQuery = source;
+            sourceQuery = source;
 
-            MappedQuery = new Lazy<IQueryable<T>>(() => SourceQuery.Project(Mapper).To<T>());
+            mappedQuery = new Lazy<IQueryable<T>>(() => sourceQuery.Project(this.mapper).To<T>());
 
-            InnerResult = new Lazy<IHttpActionResult>(() =>
+            innerResult = new Lazy<IHttpActionResult>(() =>
             {
-                return new OkNegotiatedContentResult<IQueryable<T>>(Query, Controller);
+                return new OkNegotiatedContentResult<IQueryable<T>>(Query, this.controller);
             });
         }
 
@@ -82,21 +39,63 @@
             Contract.Requires<ArgumentException>(innerResult is IQueryResult<TEntity>);
 
             var queryresult = innerResult as IQueryResult<TEntity>;
-            SourceQuery = queryresult.Query;
+            sourceQuery = queryresult.Query;
 
-            MappedQuery = new Lazy<IQueryable<T>>(() => SourceQuery.Project(Mapper).To<T>());
+            mappedQuery = new Lazy<IQueryable<T>>(() => sourceQuery.Project(this.mapper).To<T>());
 
-            InnerResult = new Lazy<IHttpActionResult>(() => innerResult);
+            this.innerResult = new Lazy<IHttpActionResult>(() => innerResult);
         }
 
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        private MappedQueryResult(IMappingEngine mapper, ApiController controller)
         {
-            return InnerResult.Value.ExecuteAsync(cancellationToken);
+            this.mapper = mapper;
+            this.controller = controller;
         }
 
         IHttpActionResult IChainedResult.InnerResult
         {
-            get { return InnerResult.Value; }
+            get { return innerResult.Value; }
+        }
+
+        public IQueryable<T> Query
+        {
+            get { return mappedQuery.Value; }
+        }
+
+        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            return innerResult.Value.ExecuteAsync(cancellationToken);
+        }
+    }
+
+    public class MappedSingleResult<TEntity, T> : IHttpActionResult, IChainedResult
+    {
+        public readonly ApiController Controller;
+        public readonly TEntity Entity;
+        public readonly IMappingEngine Mapper;
+        private readonly Lazy<OkNegotiatedContentResult<T>> innerResult;
+
+        public MappedSingleResult(IMappingEngine mapper, ApiController controller, TEntity entity)
+        {
+            Mapper = mapper;
+            Controller = controller;
+            Entity = entity;
+
+            innerResult = new Lazy<OkNegotiatedContentResult<T>>(() =>
+            {
+                var mapped = Mapper.Map<T>(Entity);
+                return new OkNegotiatedContentResult<T>(mapped, Controller);
+            });
+        }
+
+        IHttpActionResult IChainedResult.InnerResult
+        {
+            get { return innerResult.Value; }
+        }
+
+        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        {
+            return innerResult.Value.ExecuteAsync(cancellationToken);
         }
     }
 }

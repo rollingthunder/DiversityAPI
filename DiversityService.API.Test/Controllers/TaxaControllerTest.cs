@@ -167,11 +167,26 @@
         public async Task CanRetrieveNamesOnPublicServer()
         {
             // Arrange
+            var fakeModule = Public.ListsForModule["CTaxa"];
+            var list = fakeModule.Lists[0];
+            var mock = fakeModule.Mock;
+
+            var expected = new HashSet<string>(
+                    from name in TestNamesForList(mock, list)
+                    select name.NameURI
+                    );
+
+            var lists = await Controller.GetPublic();
+            var id = (from l in lists
+                      where l.Name == list.DisplayText
+                      select l.Id).First();
 
             // Act
+            var names = await Controller.GetPublicList(id, expected.Count, 0);
 
             // Assert
-            Assert.False(true);
+            Assert.Equal(expected.Count, names.Count());
+            Assert.True(names.All(x => expected.Contains(x.URI)));
         }
     }
 }

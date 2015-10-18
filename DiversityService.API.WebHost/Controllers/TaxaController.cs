@@ -72,7 +72,9 @@
         [Route("public/{listID}")]
         public async Task<IEnumerable<TaxonName>> GetPublicList(string listID, int take = 10, int skip = 0)
         {
-            return await getTaxonList(Login, listID, take, skip);
+            var publicLogin = Configuration.GetPublicLogin(TAXON_LOGIN_KIND);
+
+            return await getTaxonList(publicLogin, listID, take, skip);
         }
 
         private async Task<IEnumerable<TaxonName>> getTaxonList(CollectionServerLogin login, string listId, int take, int skip)

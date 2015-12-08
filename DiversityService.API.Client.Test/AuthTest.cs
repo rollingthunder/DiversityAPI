@@ -11,7 +11,8 @@
     using OpenQA.Selenium;
     using OpenQA.Selenium.Firefox;
     using Xunit;
-
+    using Ninject;
+    using Controllers;
     public class AuthTest
     {
         private string PerformMSLogin(string msUri)
@@ -112,6 +113,9 @@
         {
             // Arrange
             var api = new TestAPI("/Account/UserInfo");
+
+            // Assert 1
+            api.Kernel.Get<AccountController>();
 
             // Act
             var authenticatingHandler = new AuthenticationHandler(api.Server.Handler, () => Task.FromResult(TestStartup.AuthorizationToken));

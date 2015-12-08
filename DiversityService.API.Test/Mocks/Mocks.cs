@@ -49,10 +49,6 @@
         {
             var store = Kernel
                 .GetMock<IUserStore<ApplicationUser>>();
-
-            Kernel.Bind<AccountController>()
-                .ToSelf()
-                .WithPropertyValue("UserManager", (ctx) => ctx.Kernel.Get<ApplicationUserManager>());
         }
 
         public static void FieldDataStores(IKernel Kernel, TestData data)

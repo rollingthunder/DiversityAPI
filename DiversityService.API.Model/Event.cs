@@ -8,7 +8,7 @@
 
         public Nullable<int> SeriesId { get; set; }
 
-        public string LocationDescription { get; set; }
+        public string LocalityDescription { get; set; }
 
         public string HabitatDescription { get; set; }
 

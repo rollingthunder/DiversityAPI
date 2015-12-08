@@ -99,6 +99,9 @@
                 Assert.Equal(dto.StartDateUTC, entity.StartDateUTC);
 
                 Assert.Equal(dto.TransactionGuid, entity.TransactionGuid);
+
+                // Not part of the mapping
+                Assert.Null(entity.Geography);
             }
         }
 

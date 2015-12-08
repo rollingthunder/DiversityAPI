@@ -15,7 +15,8 @@
         public static void Configure(IConfiguration mappingConfiguration)
         {
             mappingConfiguration.CreateMap<CollectionServerElement, InternalCollectionServer>();
-            mappingConfiguration.CreateMap<ServerLoginCatalogElement, CollectionServerLogin>();
+            mappingConfiguration.CreateMap<ServerLoginCatalogElement, CollectionServerLogin>()
+                .ForMember(x => x.Id, map => map.Ignore());
 
             mappingConfiguration.CreateMap<Collection.Project, Project>()
                 .ForMember(mem => mem.Id, map => map.MapFrom(x => x.ProjectID))
@@ -39,10 +40,12 @@
                 .ConvertUsing(x => x.ToGeography());
 
             // EventSeries 
-            mappingConfiguration.CreateMap<Collection.EventSeries, EventSeries>();
+            mappingConfiguration.CreateMap<Collection.EventSeries, EventSeries>()
+                .ForMember(x => x.Tour, map => map.Ignore());
 
             mappingConfiguration.CreateMap<EventSeriesBindingModel, Collection.EventSeries>()
                 .ForMember(x => x.DateCache, map => map.Ignore())
+                .ForMember(x => x.Geography, map => map.Ignore())
                 /* Ignore Navigation Properties */
                 .ForMember(x => x.Children, map => map.Ignore())
                 .ForMember(x => x.Parent, map => map.Ignore())
@@ -50,7 +53,8 @@
                 .ForMember(x => x.Images, map => map.Ignore());
 
             // Event 
-            mappingConfiguration.CreateMap<Collection.Event, Event>();
+            mappingConfiguration.CreateMap<Collection.Event, Event>()
+                .ForMember(x => x.Localization, map => map.Ignore());
 
             mappingConfiguration.CreateMap<Event, Collection.Event>()
                 .Include<EventBindingModel, Collection.Event>();

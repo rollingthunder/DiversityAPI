@@ -14,7 +14,7 @@
                 yield return new ValidationResult(Messages.Event_FutureDate);
             }
 
-            if (string.IsNullOrWhiteSpace(this.LocationDescription))
+            if (string.IsNullOrWhiteSpace(this.LocalityDescription))
             {
                 yield return new ValidationResult(Messages.Event_NoLocation);
             }

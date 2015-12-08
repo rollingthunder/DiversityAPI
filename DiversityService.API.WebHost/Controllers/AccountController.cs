@@ -106,8 +106,8 @@
             {
                 return BadRequest(ModelState);
             }
-
-            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            var userId = User.Identity.GetUserId();
+            var user = await UserManager.FindByIdAsync(userId);
 
             var existing = user.Claims.FirstOrDefault(c => c.ClaimType == BackendCredentialsClaim.TYPE);
             if (existing != null)

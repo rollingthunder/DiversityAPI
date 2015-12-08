@@ -64,6 +64,7 @@
             return new ClaimsIdentity(
                 new Claim[]
                 {
+                    new Claim(ClaimTypes.NameIdentifier, TestUserName),
                     new Claim(ClaimTypes.Name, TestUserName),
                     new BackendCredentialsClaim(TestBackendUser, TestBackendPass)
                 },

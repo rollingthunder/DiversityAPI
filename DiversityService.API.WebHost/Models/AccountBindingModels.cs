@@ -70,7 +70,6 @@
     {
         [Required]
         [DataType(DataType.Password)]
-        [MinLength(10)]
         [RegularExpression("[^'\"]+")]
         public string BackendPassword { get; set; }
 

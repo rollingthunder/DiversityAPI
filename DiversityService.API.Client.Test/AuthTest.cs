@@ -114,9 +114,6 @@
             // Arrange
             var api = new TestAPI("/Account/UserInfo");
 
-            // Assert 1
-            api.Kernel.Get<AccountController>();
-
             // Act
             var authenticatingHandler = new AuthenticationHandler(api.Server.Handler, () => Task.FromResult(TestStartup.AuthorizationToken));
             var authenticatedClient = new HttpClient(authenticatingHandler) { BaseAddress = api.Server.BaseAddress };

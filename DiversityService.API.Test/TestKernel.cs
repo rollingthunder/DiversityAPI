@@ -43,6 +43,7 @@
         {
             Bind<AccountController>()
                 .ToSelf()
+                .InSingletonScope()
                 .WithPropertyValue("UserManager", (ctx) => ctx.Kernel.Get<ApplicationUserManager>());
         }
     }

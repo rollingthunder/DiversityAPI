@@ -15,6 +15,8 @@
 
     public partial class Startup
     {
+        public static readonly string PublicClientId = "self";
+
         public static readonly OAuthAuthorizationServerOptions OAuthOptions = new OAuthAuthorizationServerOptions
         {
             TokenEndpointPath = new PathString("/Token"),
@@ -23,8 +25,6 @@
             AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
             AllowInsecureHttp = false
         };
-
-        public static readonly string PublicClientId = "self";
 
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864 
         public void ConfigureAuth(IAppBuilder app)

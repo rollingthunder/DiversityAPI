@@ -10,10 +10,17 @@
     using System.Data.Entity.Spatial;
     using Xunit;
     using Collection = DiversityService.DB.Collection;
+    using SqlServerTypes;
 
     public class MappingTest : TestBase
     {
         protected readonly IMappingEngine Mapper;
+
+        static MappingTest()
+        {
+            // Need to load these, so we can access the SQL Server types
+            Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+        }
 
         public MappingTest()
         {

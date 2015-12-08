@@ -42,7 +42,7 @@
             // Act
 
             // Assert
-            Assert.True(false);
+            throw new NotImplementedException();
         }
 
         [Fact]

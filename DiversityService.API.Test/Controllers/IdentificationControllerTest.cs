@@ -158,7 +158,7 @@
                 var result = await Controller.Get(sid, expected.Id) as OkNegotiatedContentResult<Identification>;
 
                 // Assert
-                Assert.False(true);
+                throw new NotImplementedException();
                 Assert.Equal(expected.Id, result.Content.Id);
             }
         }
@@ -226,7 +226,7 @@
                 var result = await Controller.Get(sid, expected.Id) as OkNegotiatedContentResult<Identification>;
 
                 // Assert
-                Assert.False(true);
+                throw new NotImplementedException();
                 Assert.Equal(expected.Id, result.Content.Id);
             }
         }

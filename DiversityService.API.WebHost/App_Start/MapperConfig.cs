@@ -57,9 +57,19 @@
                 .ForMember(x => x.Localization, map => map.Ignore());
 
             mappingConfiguration.CreateMap<Event, Collection.Event>()
-                .Include<EventBindingModel, Collection.Event>();
+                .ForMember(x => x.Notes, map => map.Ignore())
+                .ForMember(x => x.Version, map => map.Ignore())
+                .ForMember(x => x.TransactionGuid, map => map.Ignore())
+                /* Ignore Navigation Properties */
+                .ForMember(x => x.Series, map => map.Ignore())
+                .ForMember(x => x.Images, map => map.Ignore())
+                .ForMember(x => x.Properties, map => map.Ignore())
+                .ForMember(x => x.Specimen, map => map.Ignore())
+                .AfterMap((bm, dbo) => dbo.Notes = "Created via DiversityAPI");
 
-            mappingConfiguration.CreateMap<EventBindingModel, Collection.Event>();
+            mappingConfiguration.CreateMap<EventBindingModel, Collection.Event>()
+                .ForMember(x => x.TransactionGuid, map => map.MapFrom(y => y.TransactionGuid))
+                .IncludeBase<Event, Collection.Event>();
 
             // Specimen 
             mappingConfiguration.CreateMap<Collection.Specimen, Specimen>()

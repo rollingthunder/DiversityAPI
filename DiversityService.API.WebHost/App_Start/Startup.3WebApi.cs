@@ -42,6 +42,8 @@
             if (!testing)
             {
                 RegisterProductionFilters(config);
+
+                ConfigureSwagger(config);
             }
 
             RegisterCommonFilters(Kernel, config);

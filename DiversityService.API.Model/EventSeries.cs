@@ -11,9 +11,9 @@
 
         public string Code { get; set; }
 
-        public Nullable<DateTime> StartDateUTC { get; set; }
+        public DateTime? StartDateUTC { get; set; }
 
-        public Nullable<DateTime> EndDateUTC { get; set; }
+        public DateTime? EndDateUTC { get; set; }
 
         public IEnumerable<Localization> Tour { get; set; }
 

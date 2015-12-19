@@ -56,10 +56,10 @@ namespace DiversityService.API.Client
             return (Task<IEnumerable<EventSeries>>) methodImpls["Get"](Client, arguments);
         }
 
-        public virtual Task Create(EventSeriesUpload es)
+        public virtual Task<EventSeries> Create(EventSeriesUpload es)
         {
             var arguments = new object[] { es };
-            return (Task) methodImpls["Create"](Client, arguments);
+            return (Task<EventSeries>) methodImpls["Create"](Client, arguments);
         }
 
     }

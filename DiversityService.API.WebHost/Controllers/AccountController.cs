@@ -159,10 +159,18 @@
                 return new ChallengeResult(provider, this);
             }
 
-            ApplicationUser user = await UserManager.FindAsync(
-                new UserLoginInfo(
-                    externalLogin.LoginProvider,
-                    externalLogin.ProviderKey));
+            ApplicationUser user;
+            try {
+                user = await UserManager.FindAsync(
+                    new UserLoginInfo(
+                        externalLogin.LoginProvider,
+                        externalLogin.ProviderKey));
+            }
+            catch (Exception ex)
+            {
+                
+                return InternalServerError(ex);
+            }
 
             bool hasRegistered = user != null;
 
@@ -289,20 +297,16 @@
         [OverrideAuthentication]
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("RegisterExternal")]
-        public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
+        public async Task<IHttpActionResult> RegisterExternal()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var info = await Authentication.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 return InternalServerError();
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var email = User.Identity.GetUserName();
+            var user = new ApplicationUser() { UserName = email, Email = email };
 
             IdentityResult result = await UserManager.CreateAsync(user);
             if (!result.Succeeded)

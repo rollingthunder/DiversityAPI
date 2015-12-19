@@ -15,6 +15,6 @@
         Task<IEnumerable<EventSeries>> Get(int id, int take, int skip);
 
         [Post("")]
-        Task Create(EventSeriesUpload es);
+        Task<EventSeries> Create(EventSeriesUpload es);
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6D76AA66-D37B-4A90-9255-9FC60ABCB8A6}"
 	ProjectSection(SolutionItems) = preProject
@@ -40,6 +40,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Siren.Net", "External\Siren.Net\Siren.Net\Siren.Net.csproj", "{33911319-004E-488D-B583-3F93284AB4DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.Interface", "DiversityService.API.Interface\DiversityService.API.Interface.csproj", "{970479FB-9B5B-4179-961D-A1218CA574F6}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DiversityService.API.DNX", "DiversityService.API.DNX\DiversityService.API.DNX.xproj", "{A483EF48-5DA7-43F6-93D2-F90533F79F2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +197,26 @@ Global
 		{970479FB-9B5B-4179-961D-A1218CA574F6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{970479FB-9B5B-4179-961D-A1218CA574F6}.Release|x64.ActiveCfg = Release|Any CPU
 		{970479FB-9B5B-4179-961D-A1218CA574F6}.Release|x86.ActiveCfg = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|ARM.Build.0 = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|x64.Build.0 = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Debug|x86.Build.0 = Debug|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|ARM.Build.0 = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x64.ActiveCfg = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x64.Build.0 = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x86.ActiveCfg = Release|Any CPU
+		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

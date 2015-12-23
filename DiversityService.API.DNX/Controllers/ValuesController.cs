@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 
@@ -11,9 +12,9 @@ namespace DiversityService.API.DNX.Controllers
     {
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            return $"Authenticated: {User.Identity.IsAuthenticated} as {(User.Identity as ClaimsIdentity).Name} ({User.Identity.AuthenticationType})\nClaims: {string.Join(",",User.Claims.Select(c => c.ToString()))}";
         }
 
         // GET api/values/5

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,7 @@ using Swashbuckle.SwaggerGen;
 
 namespace DiversityService.API.DNX
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -19,7 +20,7 @@ namespace DiversityService.API.DNX
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json");
 
-            if (env.IsEnvironment("Development"))
+            if (env.IsDevelopment())
             {
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
                 builder.AddApplicationInsightsSettings(developerMode: true);
@@ -54,6 +55,8 @@ namespace DiversityService.API.DNX
             {
                 opt.DescribeAllEnumsAsStrings = true;
             });
+
+            services.AddSingleton<IControllerActivator, NinjectControllerActivator>(ConfigureNinject);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline

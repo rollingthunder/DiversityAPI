@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using IdentityServer3.Core;
+using IdentityServer3.Core.Services.InMemory;
+
+namespace DiversityService.API.Authentication
+{
+    static class Users
+    {
+        public static List<InMemoryUser> Get()
+        {
+            return new List<InMemoryUser>()
+            {
+                new InMemoryUser{Subject = "818727", Username = "alice", Password = "alice",
+                    Claims = new []
+                    {
+                        new Claim(Constants.ClaimTypes.Name, "Alice Smith"),
+                        new Claim(Constants.ClaimTypes.GivenName, "Alice"),
+                        new Claim(Constants.ClaimTypes.FamilyName, "Smith"),
+                        new Claim(Constants.ClaimTypes.Email, "AliceSmith@email.com"),
+                        new Claim(Constants.ClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
+                        new Claim(Constants.ClaimTypes.Role, "Admin"),
+                        new Claim(Constants.ClaimTypes.Role, "Geek"),
+                    }
+                },
+            };
+        }
+    }
+}

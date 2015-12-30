@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Authentication.JwtBearer;
 using Microsoft.AspNet.Builder;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Mvc.Controllers;
@@ -9,6 +10,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.SwaggerGen;
+using Microsoft.AspNet.Owin;
+using System.IdentityModel.Tokens.Jwt;
+using IdentityServer3.Core.Models;
 
 namespace DiversityService.API.DNX
 {
@@ -24,6 +28,8 @@ namespace DiversityService.API.DNX
             {
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
                 builder.AddApplicationInsightsSettings(developerMode: true);
+
+                builder.AddUserSecrets();
             }
 
             builder.AddEnvironmentVariables();
@@ -71,9 +77,46 @@ namespace DiversityService.API.DNX
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseStaticFiles();
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
+            app.UseJwtBearerAuthentication(options =>
+            {
+                options.Authority = Configuration["Authentication:EndpointUrl"];
+                options.RequireHttpsMetadata = false;
+
+                options.Audience = string.Format("{0}/resources", Configuration["Authentication:EndpointUrl"]);
+                options.AutomaticAuthenticate = false;
+
+                options.AuthenticationScheme = "Jwt";
+            });
+
+            app.UseCookieAuthentication(options =>
+            {
+                options.AuthenticationScheme = "Cookies";
+                options.AutomaticAuthenticate = true;
+            });
+
+            app.UseOpenIdConnectAuthentication(options =>
+            {
+                options.AutomaticChallenge = true;
+                options.AuthenticationScheme = "Oidc";
+                options.SignInScheme = "Cookies";
+
+                options.Authority = Configuration["Authentication:EndpointUrl"];
+                options.RequireHttpsMetadata = false;
+
+                options.ClientId = "diversityapi";
+                options.ResponseType = "id_token token";
+
+                options.Scope.Add("openid");
+                options.Scope.Add("email");
+                options.Scope.Add("diversityapi");
+            });
+
+            app.UseStaticFiles();
+            app.UseDeveloperExceptionPage();
             app.UseMvc();
+
 
             app.UseSwaggerGen();
             app.UseSwaggerUi();

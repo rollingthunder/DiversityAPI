@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
 
 namespace DiversityService.API.DNX.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     public class ValuesController : Controller
     {
         // GET: api/values
@@ -15,6 +17,7 @@ namespace DiversityService.API.DNX.Controllers
         public string Get()
         {
             return $"Authenticated: {User.Identity.IsAuthenticated} as {(User.Identity as ClaimsIdentity).Name} ({User.Identity.AuthenticationType})\nClaims: {string.Join(",",User.Claims.Select(c => c.ToString()))}";
+            
         }
 
         // GET api/values/5

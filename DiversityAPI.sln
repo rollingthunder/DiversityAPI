@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiversityService.API.Interf
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DiversityService.API.DNX", "DiversityService.API.DNX\DiversityService.API.DNX.xproj", "{A483EF48-5DA7-43F6-93D2-F90533F79F2C}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DiversityService.API.Authentication", "DiversityService.API.Authentication\DiversityService.API.Authentication.xproj", "{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +219,26 @@ Global
 		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x64.Build.0 = Release|Any CPU
 		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x86.ActiveCfg = Release|Any CPU
 		{A483EF48-5DA7-43F6-93D2-F90533F79F2C}.Release|x86.Build.0 = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|ARM.Build.0 = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|x64.Build.0 = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Debug|x86.Build.0 = Debug|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|ARM.Build.0 = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|x64.ActiveCfg = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|x64.Build.0 = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|x86.ActiveCfg = Release|Any CPU
+		{1FE1CA53-E9D8-424C-96C9-5B359D6C2FD2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

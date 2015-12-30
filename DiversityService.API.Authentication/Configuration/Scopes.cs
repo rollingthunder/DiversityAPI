@@ -13,12 +13,10 @@ namespace DiversityService.API.Authentication
             return StandardScopes.All.Concat(new[] {
                 new Scope()
                 {
+                    Enabled = true,
                     Name = "diversityapi",
                     DisplayName = "DiversityAPI",
-                    Claims = new List<ScopeClaim>
-                    {
-                        new ScopeClaim("role")
-                    }
+                    Type = ScopeType.Resource
                 }
             });
         }

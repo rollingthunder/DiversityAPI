@@ -3,6 +3,88 @@
   "version": 2,
   "targets": {
     "DNX,Version=v4.5.1": {
+      "EntityFramework.Core/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Ix-Async": "1.2.5",
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0-rc1-final",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0-rc1-final",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+          "Remotion.Linq": "2.0.1",
+          "System.Collections.Immutable": "1.1.36"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Collections",
+          "System.ComponentModel.DataAnnotations",
+          "System.Core",
+          "System.Diagnostics.Debug",
+          "System.Diagnostics.Tools",
+          "System.Globalization",
+          "System.Linq",
+          "System.Linq.Expressions",
+          "System.Linq.Queryable",
+          "System.ObjectModel",
+          "System.Reflection",
+          "System.Reflection.Extensions",
+          "System.Resources.ResourceManager",
+          "System.Runtime",
+          "System.Runtime.Extensions",
+          "System.Threading"
+        ],
+        "compile": {
+          "lib/dnx451/EntityFramework.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/EntityFramework.Core.dll": {}
+        }
+      },
+      "EntityFramework.Relational/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "EntityFramework.Core": "7.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net451/EntityFramework.Relational.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EntityFramework.Relational.dll": {}
+        }
+      },
+      "EntityFramework.Sqlite/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "EntityFramework.Relational": "7.0.0-rc1-final",
+          "Microsoft.Data.Sqlite": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/EntityFramework.Sqlite.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EntityFramework.Sqlite.dll": {}
+        }
+      },
       "IdentityServer3/2.3.0": {
         "type": "package",
         "dependencies": {
@@ -13,6 +95,19 @@
         },
         "runtime": {
           "lib/net45/IdentityServer3.dll": {}
+        }
+      },
+      "Ix-Async/1.2.5": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Interactive.Async.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -1054,6 +1149,25 @@
           "lib/net45/Microsoft.CodeAnalysis.CSharp.dll": {}
         }
       },
+      "Microsoft.Data.Sqlite/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Data"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Data.Sqlite.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Data.Sqlite.dll": {}
+        }
+      },
       "Microsoft.Dnx.Compilation.Abstractions/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1701,6 +1815,15 @@
           "lib/net40/Owin.dll": {}
         }
       },
+      "Remotion.Linq/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Remotion.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Remotion.Linq.dll": {}
+        }
+      },
       "Swashbuckle/6.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -1994,9 +2117,106 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "Thinktecture.IdentityModel.Client/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.5"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll": {}
+        }
       }
     },
     "DNX,Version=v4.5.1/win7-x86": {
+      "EntityFramework.Core/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Ix-Async": "1.2.5",
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0-rc1-final",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0-rc1-final",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+          "Remotion.Linq": "2.0.1",
+          "System.Collections.Immutable": "1.1.36"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Collections",
+          "System.ComponentModel.DataAnnotations",
+          "System.Core",
+          "System.Diagnostics.Debug",
+          "System.Diagnostics.Tools",
+          "System.Globalization",
+          "System.Linq",
+          "System.Linq.Expressions",
+          "System.Linq.Queryable",
+          "System.ObjectModel",
+          "System.Reflection",
+          "System.Reflection.Extensions",
+          "System.Resources.ResourceManager",
+          "System.Runtime",
+          "System.Runtime.Extensions",
+          "System.Threading"
+        ],
+        "compile": {
+          "lib/dnx451/EntityFramework.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/EntityFramework.Core.dll": {}
+        }
+      },
+      "EntityFramework.Relational/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "EntityFramework.Core": "7.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net451/EntityFramework.Relational.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EntityFramework.Relational.dll": {}
+        }
+      },
+      "EntityFramework.Sqlite/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "EntityFramework.Relational": "7.0.0-rc1-final",
+          "Microsoft.Data.Sqlite": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/EntityFramework.Sqlite.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EntityFramework.Sqlite.dll": {}
+        }
+      },
       "IdentityServer3/2.3.0": {
         "type": "package",
         "dependencies": {
@@ -2007,6 +2227,19 @@
         },
         "runtime": {
           "lib/net45/IdentityServer3.dll": {}
+        }
+      },
+      "Ix-Async/1.2.5": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Interactive.Async.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -3051,6 +3284,28 @@
           "lib/net45/Microsoft.CodeAnalysis.CSharp.dll": {}
         }
       },
+      "Microsoft.Data.Sqlite/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Data"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Data.Sqlite.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Data.Sqlite.dll": {}
+        },
+        "native": {
+          "runtimes/win7-x86/native/sqlite3.dll": {}
+        }
+      },
       "Microsoft.Dnx.Compilation.Abstractions/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3698,6 +3953,15 @@
           "lib/net40/Owin.dll": {}
         }
       },
+      "Remotion.Linq/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Remotion.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Remotion.Linq.dll": {}
+        }
+      },
       "Swashbuckle/6.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -3991,9 +4255,106 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "Thinktecture.IdentityModel.Client/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.5"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll": {}
+        }
       }
     },
     "DNX,Version=v4.5.1/win7-x64": {
+      "EntityFramework.Core/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Ix-Async": "1.2.5",
+          "Microsoft.Extensions.Caching.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Caching.Memory": "1.0.0-rc1-final",
+          "Microsoft.Extensions.DependencyInjection": "1.0.0-rc1-final",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging": "1.0.0-rc1-final",
+          "Microsoft.Extensions.Logging.Abstractions": "1.0.0-rc1-final",
+          "Microsoft.Extensions.OptionsModel": "1.0.0-rc1-final",
+          "Remotion.Linq": "2.0.1",
+          "System.Collections.Immutable": "1.1.36"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Collections",
+          "System.ComponentModel.DataAnnotations",
+          "System.Core",
+          "System.Diagnostics.Debug",
+          "System.Diagnostics.Tools",
+          "System.Globalization",
+          "System.Linq",
+          "System.Linq.Expressions",
+          "System.Linq.Queryable",
+          "System.ObjectModel",
+          "System.Reflection",
+          "System.Reflection.Extensions",
+          "System.Resources.ResourceManager",
+          "System.Runtime",
+          "System.Runtime.Extensions",
+          "System.Threading"
+        ],
+        "compile": {
+          "lib/dnx451/EntityFramework.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dnx451/EntityFramework.Core.dll": {}
+        }
+      },
+      "EntityFramework.Relational/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "EntityFramework.Core": "7.0.0-rc1-final",
+          "System.Diagnostics.DiagnosticSource": "4.0.0-beta-23516"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Data",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net451/EntityFramework.Relational.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EntityFramework.Relational.dll": {}
+        }
+      },
+      "EntityFramework.Sqlite/7.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "EntityFramework.Relational": "7.0.0-rc1-final",
+          "Microsoft.Data.Sqlite": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net451/EntityFramework.Sqlite.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EntityFramework.Sqlite.dll": {}
+        }
+      },
       "IdentityServer3/2.3.0": {
         "type": "package",
         "dependencies": {
@@ -4004,6 +4365,19 @@
         },
         "runtime": {
           "lib/net45/IdentityServer3.dll": {}
+        }
+      },
+      "Ix-Async/1.2.5": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "System.Core"
+        ],
+        "compile": {
+          "lib/net45/System.Interactive.Async.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Interactive.Async.dll": {}
         }
       },
       "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -5048,6 +5422,28 @@
           "lib/net45/Microsoft.CodeAnalysis.CSharp.dll": {}
         }
       },
+      "Microsoft.Data.Sqlite/1.0.0-rc1-final": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final"
+        },
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "mscorlib",
+          "System",
+          "System.Core",
+          "System.Data"
+        ],
+        "compile": {
+          "lib/net451/Microsoft.Data.Sqlite.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Microsoft.Data.Sqlite.dll": {}
+        },
+        "native": {
+          "runtimes/win7-x64/native/sqlite3.dll": {}
+        }
+      },
       "Microsoft.Dnx.Compilation.Abstractions/1.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -5695,6 +6091,15 @@
           "lib/net40/Owin.dll": {}
         }
       },
+      "Remotion.Linq/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Remotion.Linq.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Remotion.Linq.dll": {}
+        }
+      },
       "Swashbuckle/6.0.0-rc1-final": {
         "type": "package",
         "dependencies": {
@@ -5988,10 +6393,75 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "Thinktecture.IdentityModel.Client/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.5"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "EntityFramework.Core/7.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "afwsjOF4xM5KiwAxKMz9R0H8TigWE/jX0FwGBO/QtuA1ElEVLqlQVH4+7PyZaA35HguYRm0wOCmUq9RVTmiAfA==",
+      "files": [
+        "EntityFramework.Core.7.0.0-rc1-final.nupkg",
+        "EntityFramework.Core.7.0.0-rc1-final.nupkg.sha512",
+        "EntityFramework.Core.nuspec",
+        "lib/dnx451/EntityFramework.Core.dll",
+        "lib/dnx451/EntityFramework.Core.xml",
+        "lib/dotnet5.4/EntityFramework.Core.dll",
+        "lib/dotnet5.4/EntityFramework.Core.xml",
+        "lib/net451/EntityFramework.Core.dll",
+        "lib/net451/EntityFramework.Core.xml",
+        "lib/netcore50/EntityFramework.Core.dll",
+        "lib/netcore50/EntityFramework.Core.xml"
+      ]
+    },
+    "EntityFramework.Relational/7.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "0Feoct9mtKOIjovUgfESfVDL/odvxNXsIgK3bdlkx7Fsiqp5/tx8oiMx+qO7oNRYWsXN6XDlGKHLOzWEdUssKA==",
+      "files": [
+        "EntityFramework.Relational.7.0.0-rc1-final.nupkg",
+        "EntityFramework.Relational.7.0.0-rc1-final.nupkg.sha512",
+        "EntityFramework.Relational.nuspec",
+        "lib/dotnet5.4/EntityFramework.Relational.dll",
+        "lib/dotnet5.4/EntityFramework.Relational.xml",
+        "lib/net451/EntityFramework.Relational.dll",
+        "lib/net451/EntityFramework.Relational.xml",
+        "lib/netcore50/EntityFramework.Relational.dll",
+        "lib/netcore50/EntityFramework.Relational.xml"
+      ]
+    },
+    "EntityFramework.Sqlite/7.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "B+h4HHUnCSN/d4DIxW89B6q4efcZzQjajQb1yrlALEeZuCBDIzO0nrEdRZsRSNqJaNzmxRu/OsYqrZVOORUrGw==",
+      "files": [
+        "EntityFramework.Sqlite.7.0.0-rc1-final.nupkg",
+        "EntityFramework.Sqlite.7.0.0-rc1-final.nupkg.sha512",
+        "EntityFramework.Sqlite.nuspec",
+        "lib/dotnet5.4/EntityFramework.Sqlite.dll",
+        "lib/dotnet5.4/EntityFramework.Sqlite.xml",
+        "lib/net451/EntityFramework.Sqlite.dll",
+        "lib/net451/EntityFramework.Sqlite.xml",
+        "lib/netcore50/EntityFramework.Sqlite.dll",
+        "lib/netcore50/EntityFramework.Sqlite.xml"
+      ]
+    },
     "IdentityServer3/2.3.0": {
       "type": "package",
       "sha512": "7iXpVvnaB8YfzVmCKJP+5omLTPMoHeGRaYOefIAZgO1Fh4dl1gUSZ2x11xJn+cSeI/JUQrA38WDPXFvSWDpITQ==",
@@ -6002,6 +6472,21 @@
         "lib/net45/IdentityServer3.dll",
         "lib/net45/IdentityServer3.pdb",
         "lib/net45/IdentityServer3.xml"
+      ]
+    },
+    "Ix-Async/1.2.5": {
+      "type": "package",
+      "sha512": "8EXO8q7cpDUH9G2q+UOPOO/6uZ9aN7mx/4xjFIfkp+qLWVJiYuglkRhjY8Ggs2CucXzHR8GHnovJKB5yQoYaJg==",
+      "files": [
+        "Ix-Async.1.2.5.nupkg",
+        "Ix-Async.1.2.5.nupkg.sha512",
+        "Ix-Async.nuspec",
+        "lib/net40/System.Interactive.Async.dll",
+        "lib/net40/System.Interactive.Async.XML",
+        "lib/net45/System.Interactive.Async.dll",
+        "lib/net45/System.Interactive.Async.XML",
+        "lib/portable-windows8+net45+wp8/System.Interactive.Async.dll",
+        "lib/portable-windows8+net45+wp8/System.Interactive.Async.XML"
       ]
     },
     "Microsoft.ApplicationInsights/1.1.1-beta": {
@@ -6764,6 +7249,29 @@
         "ThirdPartyNotices.rtf"
       ]
     },
+    "Microsoft.Data.Sqlite/1.0.0-rc1-final": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "54F32OBWIWMIpeKggCMEX+Bp/TiAiKzBaQ4z+IRr61eNSnJhxMnLE/QWDs5YbCtbDlWIB4+VBC1rnT8PFGCtdw==",
+      "files": [
+        "build/net451/Microsoft.Data.Sqlite.props",
+        "build/netcore50/Microsoft.Data.Sqlite.targets",
+        "build/netcore50/win10-arm/native/sqlite3.dll",
+        "build/netcore50/win10-x64/native/sqlite3.dll",
+        "build/netcore50/win10-x86/native/sqlite3.dll",
+        "lib/dotnet5.4/Microsoft.Data.Sqlite.dll",
+        "lib/dotnet5.4/Microsoft.Data.Sqlite.xml",
+        "lib/net451/Microsoft.Data.Sqlite.dll",
+        "lib/net451/Microsoft.Data.Sqlite.xml",
+        "lib/netcore50/Microsoft.Data.Sqlite.dll",
+        "lib/netcore50/Microsoft.Data.Sqlite.xml",
+        "Microsoft.Data.Sqlite.1.0.0-rc1-final.nupkg",
+        "Microsoft.Data.Sqlite.1.0.0-rc1-final.nupkg.sha512",
+        "Microsoft.Data.Sqlite.nuspec",
+        "runtimes/win7-x64/native/sqlite3.dll",
+        "runtimes/win7-x86/native/sqlite3.dll"
+      ]
+    },
     "Microsoft.Dnx.Compilation.Abstractions/1.0.0-rc1-final": {
       "type": "package",
       "serviceable": true,
@@ -7347,6 +7855,23 @@
         "Owin.1.0.0.nupkg",
         "Owin.1.0.0.nupkg.sha512",
         "Owin.nuspec"
+      ]
+    },
+    "Remotion.Linq/2.0.1": {
+      "type": "package",
+      "sha512": "SIO6HDH6CU9GC2IZGBrc6q5X5vRhfatXrg9cVavCEG9W6v5e88b+vXjmLGQEorch4sYEIImRr+ODyUMyrmrqAg==",
+      "files": [
+        "lib/net35/Remotion.Linq.dll",
+        "lib/net35/Remotion.Linq.XML",
+        "lib/net40/Remotion.Linq.dll",
+        "lib/net40/Remotion.Linq.XML",
+        "lib/net45/Remotion.Linq.dll",
+        "lib/net45/Remotion.Linq.xml",
+        "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.dll",
+        "lib/portable-net45+win+wpa81+wp80/Remotion.Linq.xml",
+        "Remotion.Linq.2.0.1.nupkg",
+        "Remotion.Linq.2.0.1.nupkg.sha512",
+        "Remotion.Linq.nuspec"
       ]
     },
     "Swashbuckle/6.0.0-rc1-final": {
@@ -8185,6 +8710,19 @@
         "System.Threading.4.0.0.nupkg.sha512",
         "System.Threading.nuspec"
       ]
+    },
+    "Thinktecture.IdentityModel.Client/4.0.1": {
+      "type": "package",
+      "sha512": "NFVg10WkhINO1EEqh0KXJFyvS35kT20Rmh7rv/gXd1LX5thJpUmE4suDnwdyTAOTRPweGMm/91b8k5xteb1gXg==",
+      "files": [
+        "lib/net45/Thinktecture.IdentityModel.Client.Net45.dll",
+        "lib/net45/Thinktecture.IdentityModel.Client.Net45.pdb",
+        "lib/portable-net45+wp80+win8+wpa81/Thinktecture.IdentityModel.Client.dll",
+        "lib/portable-net45+wp80+win8+wpa81/Thinktecture.IdentityModel.Client.pdb",
+        "Thinktecture.IdentityModel.Client.4.0.1.nupkg",
+        "Thinktecture.IdentityModel.Client.4.0.1.nupkg.sha512",
+        "Thinktecture.IdentityModel.Client.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
@@ -8207,7 +8745,9 @@
       "Microsoft.AspNet.Authentication.OpenIdConnect >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Configuration.UserSecrets >= 1.0.0-rc1-final",
       "Microsoft.AspNet.Diagnostics >= 1.0.0-rc1-final",
-      "IdentityServer3 >= 2.3.0"
+      "IdentityServer3 >= 2.3.0",
+      "Thinktecture.IdentityModel.Client >= 4.0.1",
+      "EntityFramework.Sqlite >= 7.0.0-rc1-final"
     ],
     "DNX,Version=v4.5.1": [
       "Ninject >= 3.2.2"

@@ -13,6 +13,10 @@ using Swashbuckle.SwaggerGen;
 using Microsoft.AspNet.Owin;
 using System.IdentityModel.Tokens.Jwt;
 using IdentityServer3.Core.Models;
+using Microsoft.AspNet.Authentication.OpenIdConnect;
+using System.Security.Claims;
+using Thinktecture.IdentityModel.Client;
+using Microsoft.AspNet.Authentication;
 
 namespace DiversityService.API.DNX
 {
@@ -100,7 +104,7 @@ namespace DiversityService.API.DNX
             {
                 options.AutomaticChallenge = true;
                 options.AuthenticationScheme = "Oidc";
-                options.SignInScheme = "Cookies";
+                options.SignInScheme = "Jwt";
 
                 options.Authority = Configuration["Authentication:EndpointUrl"];
                 options.RequireHttpsMetadata = false;
@@ -111,6 +115,46 @@ namespace DiversityService.API.DNX
                 options.Scope.Add("openid");
                 options.Scope.Add("email");
                 options.Scope.Add("diversityapi");
+
+                //options.Events = new OpenIdConnectEvents()
+                //{
+                //    OnAuthorizationResponseReceived = async n =>
+                //    {
+                //        var nid = new ClaimsIdentity(
+                //            n.AuthenticationTicket.AuthenticationScheme,
+                //            ClaimTypes.GivenName,
+                //            ClaimTypes.Role);
+
+                //        // get userinfo data
+                //        var userInfoClient = new UserInfoClient(
+                //            new Uri(n.Options.Authority + "/connect/userinfo"),
+                //            n.ProtocolMessage.AccessToken);
+
+                //        var userInfo = await userInfoClient.GetAsync();
+                //        userInfo.Claims.ToList().ForEach(ui => nid.AddClaim(new Claim(ui.Item1, ui.Item2)));
+
+                //        // keep the id_token for logout
+                //        nid.AddClaim(new Claim("id_token", n.ProtocolMessage.IdToken));
+
+                //        // add access token for sample API
+                //        nid.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
+
+                //        // keep track of access token expiration
+                //        nid.AddClaim(new Claim("expires_at", DateTimeOffset.Now.AddSeconds(int.Parse(n.ProtocolMessage.ExpiresIn)).ToString()));
+
+                //        // add some other app specific claim
+                //        nid.AddClaim(new Claim("app_specific", "some data"));
+
+                //        n.AuthenticationTicket = new AuthenticationTicket(
+                //            new ClaimsPrincipal(nid),
+                //            n.AuthenticationTicket.Properties,
+                //            n.AuthenticationTicket.AuthenticationScheme);
+                //    }
+                //};
+            });
+
+            app.UseClaimsTransformation(principal =>
+            {
             });
 
             app.UseStaticFiles();

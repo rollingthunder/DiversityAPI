@@ -34,6 +34,25 @@ namespace DiversityService.API.Authentication
 
                         "diversityapi"
                     }
+                },
+
+                new Client
+                {
+                    ClientName = "DiversityMobile 2",
+                    ClientId = "diversitymobile2",
+                    Enabled = true,
+                    AccessTokenType = AccessTokenType.Jwt,
+
+                    Flow = Flows.AuthorizationCode,
+
+                    AllowedScopes = new List<string>
+                    {
+                        "openid",
+                        "email",
+                        "profile",
+
+                        "diversityapi"
+                    }
                 }
             };
         }

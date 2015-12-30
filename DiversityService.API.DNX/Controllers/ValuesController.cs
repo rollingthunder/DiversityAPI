@@ -16,7 +16,7 @@ namespace DiversityService.API.DNX.Controllers
         [HttpGet]
         public string Get()
         {
-            return $"Authenticated: {User.Identity.IsAuthenticated} as {(User.Identity as ClaimsIdentity).Name} ({User.Identity.AuthenticationType})\nClaims: {string.Join(",",User.Claims.Select(c => c.ToString()))}";
+            return $"Authenticated: {User.Identity.IsAuthenticated} as {(User.Identity as ClaimsIdentity).Name} ({User.Identity.AuthenticationType})\nClaims: {string.Join("\n",User.Claims.Select(c => c.ToString()))}";
             
         }
 
